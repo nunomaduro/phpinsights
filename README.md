@@ -1,4 +1,5 @@
 <p align="center">
+
   <img alt="PHP Insights" src="https://raw.githubusercontent.com/nunomaduro/phpinsights/feat/first/docs/banner.png" >
 
   <p align="center">
@@ -9,16 +10,35 @@
   </p>
 </p>
 
+
+**PHP Insights** was created by, and is maintained by [Nuno Maduro](https://github.com/nunomaduro), and is the perfect starting point to analyse the code quality of your project. It is
+carefully crafted to simplify the analyse of your code directly on your terminal.
+
 **🚨 This project is under development. Don't use it!**.
 
-PHP Insights provides the perfect starting point to analyse the code quality of your project. It is
-carefully crafted to simplify the analyse of your code directly on your terminal.
 
 ## ✨ Features
 
 - Analyse of **lines of code** and cyclomatic complexity
 - Beautiful overview of your **code structure** and it's dependencies
 - Contains built-in checks for making code reliable, loosely couple, **simple**, and **clean**
+
+## 👉🏻 Installation & Usage
+
+> **Requires:**
+- **[PHP 7.2+](https://php.net/releases/)**
+
+First, install PHP Insights via the Composer package manager:
+
+```bash
+composer require nunomaduro/phpinsights:dev-feat/first
+```
+
+Then use the `phpinsights` binary:
+
+```bash
+php ./vendor/bin/phpinsights
+```
 
 ## 💡 How to contribute
 
