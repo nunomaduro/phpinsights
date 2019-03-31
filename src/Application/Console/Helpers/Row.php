@@ -60,7 +60,7 @@ final class Row
             $name = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
 
             if ($metric instanceof HasPercentage) {
-                $name = '•' . str_replace(self::$category, '', $name);
+                $name = '• ' . trim(str_replace(self::$category, '', $name));
             } else {
                 self::$category = $name;
                 $name = "<bold>$name</bold>";
