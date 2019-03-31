@@ -1,0 +1,9 @@
+* text=auto
+*.css linguist-vendored
+*.scss linguist-vendored
+*.js linguist-vendored
+.scrutinizer.yml export-ignore
+.travis.yml export-ignore
+.styleci.yml export-ignore
+CHANGELOG.md export-ignore
+CONTRIBUTING.md export-ignore

@@ -1,0 +1,41 @@
+{
+    "name": "nunomaduro/phpinsights",
+    "description": "Instant PHP quality checks from your console.",
+    "keywords": ["php", "insights", "console", "quality", "source", "code"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nuno Maduro",
+            "email": "enunomaduro@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "narration/console": "dev-master",
+        "narration/container": "dev-master",
+        "phploc/phploc": "^5.0",
+        "symfony/finder": "^4.2"
+    },
+    "require-dev": {
+        "narration/testing": "dev-master"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "NunoMaduro\\PhpInsights\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "bin": [
+        "phpinsights"
+    ]
+}

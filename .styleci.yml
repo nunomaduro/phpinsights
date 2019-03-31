@@ -1,0 +1,3 @@
+preset: symfony
+disabled:
+  - self_accessor
