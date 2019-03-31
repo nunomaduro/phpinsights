@@ -12,4 +12,6 @@ $router->command('analyse', AnalyseCommand::class, [
     new InputArgument('directory', InputArgument::OPTIONAL),
 ]);
 
+$router->setDefault('analyse');
+
 return $router;
