@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 $router = new Router(require __DIR__ . '/../container.php');
 
 $router->command('analyse', AnalyseCommand::class, [
-    new InputArgument('directory', InputArgument::REQUIRED),
+    new InputArgument('directory', InputArgument::OPTIONAL),
 ]);
 
 return $router;

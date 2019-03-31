@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Console\Commands;
 
 use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
+use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -23,13 +24,22 @@ final class AnalyseCommand
     private $analyser;
 
     /**
+     * Holds an instance of the Files Repository.
+     *
+     * @var \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository
+     */
+    private $filesRepository;
+
+    /**
      * Creates a new instance of the Analyse Command.
      *
      * @param  \NunoMaduro\PhpInsights\Application\Console\Analyser  $analyser
+     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository  $filesRepository
      */
-    public function __construct(Analyser $analyser)
+    public function __construct(Analyser $analyser, FilesRepository $filesRepository)
     {
         $this->analyser = $analyser;
+        $this->filesRepository = $filesRepository;
     }
 
     /**
@@ -57,7 +67,7 @@ final class AnalyseCommand
     private function getDirectory(InputInterface $input): string
     {
         /** @var string $directory */
-        $directory = $input->getArgument('directory');
+        $directory = $input->getArgument('directory') ?: $this->filesRepository->getDefaultDirectory();
 
         if ($directory[0] === DIRECTORY_SEPARATOR) {
             $directory = getcwd() . DIRECTORY_SEPARATOR . $directory;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -25,6 +26,20 @@ final class LocalFilesRepository implements FilesRepository
     public function __construct(Finder $finder)
     {
         $this->finder = $finder;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultDirectory(): string
+    {
+        foreach (['src', 'app'] as $directory) {
+            if (file_exists($directory)) {
+                return $directory;
+            }
+        }
+
+        throw new DirectoryNotFoundException();
     }
 
     /**

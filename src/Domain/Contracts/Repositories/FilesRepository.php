@@ -10,6 +10,13 @@ namespace NunoMaduro\PhpInsights\Domain\Contracts\Repositories;
 interface FilesRepository
 {
     /**
+     * Get the default repository.
+     *
+     * @return string
+     */
+    public function getDefaultDirectory(): string;
+
+    /**
      * Get the files.
      *
      * @return \Symfony\Component\Finder\SplFileInfo[]
