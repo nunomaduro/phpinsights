@@ -14,7 +14,7 @@ use SebastianBergmann\PHPLOC\Collector as BaseCollector;
 final class Collector extends BaseCollector
 {
     /**
-     * @var array<array<string>>
+     * @var string[]
      */
     private $constants = [];
 
@@ -51,10 +51,10 @@ final class Collector extends BaseCollector
 
         if ($this->currentFilename !== null) {
             if (! array_key_exists($this->currentFilename, $this->constants)) {
-                $this->constants[$this->currentFilename] = [];
+                $this->constants[$this->currentFilename] = '';
             }
 
-            $this->constants[$this->currentFilename][] = $name;
+            $this->constants[$this->currentFilename] .= "$name ";
         }
     }
 
@@ -105,7 +105,7 @@ final class Collector extends BaseCollector
     /**
      * Returns the declared constants.
      *
-     * @return array<array<string>>
+     * @return string[]
      */
     public function getConstants(): array
     {

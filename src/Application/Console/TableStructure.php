@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
-use NunoMaduro\PhpInsights\Domain\Dependencies;
-use NunoMaduro\PhpInsights\Domain\LinesOfCode;
-use NunoMaduro\PhpInsights\Domain\Structure;
+use NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
+use NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
+use NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
 /**
  * @internal

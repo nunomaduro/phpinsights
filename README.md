@@ -69,11 +69,7 @@ final class FooUsage extends Insight
 }
 ```
 
-2. Attach the `Insight` to a specific inside `Metric`. The `Metrics` can be found under the folders:
-
-- `Domain/Dependencies`
-- `Domain/LinesOfCode`
-- `Domain/Structure`
+2. Attach the `Insight` to a specific inside `Domain/Metrics/`:
 
 ```php
 final class Bar implements Metric, HasInsights

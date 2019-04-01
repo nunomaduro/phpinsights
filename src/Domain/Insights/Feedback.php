@@ -92,6 +92,6 @@ final class Feedback
             }
         }
 
-        return $issuesFound ? (($issuesFound * 100.0) / $total) : 100.0;
+        return (bool) $issuesFound ? (($issuesFound * 100.0) / $total) : 100.0;
     }
 }

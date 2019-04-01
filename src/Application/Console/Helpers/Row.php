@@ -55,12 +55,12 @@ final class Row
             $metric = new $name();
 
             /** @var string $a */
-            $name = ucfirst($a = substr($a = strrchr($name, "\\"), 1));
+            $name = ucfirst(substr((string) strrchr($name, "\\"), 1));
 
-            $name = trim(preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
+            $name = trim((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
 
             if ($metric instanceof HasPercentage) {
-                $name = '• ' . trim(str_replace(self::$category, '', $name));
+                $name = '• ' . trim(str_replace((string) self::$category, '', $name));
             } else {
                 self::$category = $name;
                 $name = "<bold>$name</bold>";

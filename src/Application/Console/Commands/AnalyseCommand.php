@@ -26,7 +26,7 @@ final class AnalyseCommand
     /**
      * Holds an instance of the Files Repository.
      *
-     * @var \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository
+     * @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
     private $filesRepository;
 
@@ -34,7 +34,7 @@ final class AnalyseCommand
      * Creates a new instance of the Analyse Command.
      *
      * @param  \NunoMaduro\PhpInsights\Application\Console\Analyser  $analyser
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository  $filesRepository
+     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      */
     public function __construct(Analyser $analyser, FilesRepository $filesRepository)
     {
