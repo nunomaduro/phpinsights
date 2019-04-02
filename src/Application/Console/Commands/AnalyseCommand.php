@@ -54,7 +54,7 @@ final class AnalyseCommand
     {
         $style = new SymfonyStyle($input, OutputDecorator::decorate($output));
 
-        $this->analyser->analyse($style, [$this->getDirectory($input)]);
+        $this->analyser->analyse($style, $this->getDirectory($input));
     }
 
     /**
@@ -66,11 +66,12 @@ final class AnalyseCommand
      */
     private function getDirectory(InputInterface $input): string
     {
-        /** @var string $directory */
-        $directory = $input->getArgument('directory') ?: $this->filesRepository->getDefaultDirectory();
+        $directory = $input->getArgument('directory');
 
-        if ($directory[0] === DIRECTORY_SEPARATOR) {
+        if (is_string($directory) && $directory[0] === DIRECTORY_SEPARATOR) {
             $directory = getcwd() . DIRECTORY_SEPARATOR . $directory;
+        } else {
+            $directory = $this->filesRepository->getDefaultDirectory();
         }
 
         return $directory;

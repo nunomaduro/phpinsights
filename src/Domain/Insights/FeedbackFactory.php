@@ -41,12 +41,12 @@ final class FeedbackFactory
      *
      * @throws \ReflectionException
      */
-    public function get(array $metrics, array $dirs): Feedback
+    public function get(array $metrics, string $dir): Feedback
     {
         try {
             $files = array_map(function (SplFileInfo $file) {
                 return $file->getRealPath();
-            }, iterator_to_array($this->filesRepository->in($dirs)->getFiles()));
+            }, iterator_to_array($this->filesRepository->in($dir)->getFiles()));
         } catch (InvalidArgumentException $e) {
             throw new DirectoryNotFoundException($e->getMessage());
         }
@@ -64,8 +64,8 @@ final class FeedbackFactory
         foreach ($metrics as $metricClass) {
             $metric = new $metricClass();
 
-            $insights = array_merge($insights, array_map(function ($insightClass) use ($dirs, $collector, $publisher) {
-                return new $insightClass($this->filesRepository->in($dirs), $collector, $publisher);
+            $insights = array_merge($insights, array_map(function ($insightClass) use ($dir, $collector, $publisher) {
+                return new $insightClass($this->filesRepository->in($dir), $collector, $publisher);
             }, $metric->getInsights($publisher)));
         }
 

@@ -43,13 +43,13 @@ final class Analyser
      * Analyse the given dirs.
      *
      * @param  \Symfony\Component\Console\Style\SymfonyStyle  $style
-     * @param  string[]  $dirs
+     * @param  string  $dir
      *
      * @return void
      */
-    public function analyse(SymfonyStyle $style, array $dirs): void
+    public function analyse(SymfonyStyle $style, string $dir): void
     {
-        $feedback = $this->feedbackFactory->get($metrics = TableStructure::make(), $dirs);
+        $feedback = $this->feedbackFactory->get($metrics = TableStructure::make(), $dir);
 
         $rows = [];
         foreach ($metrics as $line => $metricClass) {

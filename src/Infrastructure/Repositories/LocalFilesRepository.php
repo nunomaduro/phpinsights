@@ -33,13 +33,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function getDefaultDirectory(): string
     {
-        foreach (['src', 'app'] as $directory) {
-            if (file_exists($directory)) {
-                return $directory;
-            }
-        }
-
-        throw new DirectoryNotFoundException();
+        return getcwd();
     }
 
     /**
@@ -53,9 +47,9 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * {@inheritdoc}
      */
-    public function in(array $dirs): FilesRepository
+    public function in(string $dir): FilesRepository
     {
-        $this->finder->files()->in($dirs);
+        $this->finder->files()->in([$dir])->exclude('vendor');;
 
         return $this;
     }

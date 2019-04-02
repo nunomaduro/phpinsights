@@ -26,9 +26,9 @@ interface FilesRepository
     /**
      * Sets the current files dirs.
      *
-     * @param  string[]  $dirs
+     * @param  string
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
-    public function in(array $dirs): FilesRepository;
+    public function in(string $dir): FilesRepository;
 }

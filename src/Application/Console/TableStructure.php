@@ -53,6 +53,7 @@ final class TableStructure
             '',
             '<title>🧱  Structure</title>',
             '',
+            Structure\Composer::class,
             Structure\Namespaces::class,
             Structure\Interfaces::class,
             Structure\Traits::class,
