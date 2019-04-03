@@ -66,7 +66,10 @@ final class Row
                 self::$category = $name;
                 $name = "<bold>$name</bold>";
             }
-            $name .= $metric instanceof HasPercentage ? sprintf(' %.2f%%', $metric->getPercentage($this->feedback->getPublisher())) : '';
+
+            if ($metric instanceof HasPercentage && $percentage = $metric->getPercentage($this->feedback->getPublisher()) !== 0.00) {
+                $name .= sprintf(' %.2f%%', $metric->getPercentage($this->feedback->getPublisher()));
+            }
         }
 
         return trim($name);
@@ -82,8 +85,8 @@ final class Row
         $metric = new $this->metricClass();
 
         $cell = $metric instanceof HasValue ? $metric->getValue($this->feedback->getPublisher()) : '';
-        $cell .= $metric instanceof HasAvg ? sprintf(' avg:%s', $metric->getAvg($this->feedback->getPublisher())) : '';
-        $cell .= $metric instanceof HasMax ? sprintf(' max:%s', $metric->getMax($this->feedback->getPublisher())) : '';
+        $cell .= $metric instanceof HasAvg ? sprintf(' <fg=magenta>avg %s</>', $metric->getAvg($this->feedback->getPublisher())) : '';
+        $cell .= $metric instanceof HasMax ? sprintf(' <fg=yellow>max %s</>', $metric->getMax($this->feedback->getPublisher())) : '';
         foreach ($this->feedback->allFrom($metric) as $insight) {
             $cell .= $insight->hasIssue() ? "<fg=red> ✘ --> </>" : ' <info>✔</info>';
             if ($insight->hasIssue()) {
