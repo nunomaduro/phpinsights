@@ -49,7 +49,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function in(string $dir): FilesRepository
     {
-        $this->finder->files()->in([$dir])->exclude('vendor');;
+        $this->finder->files()->in([$dir])->exclude(['vendor', 'tests']);;
 
         return $this;
     }
