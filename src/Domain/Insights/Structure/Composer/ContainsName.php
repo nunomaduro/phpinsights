@@ -33,6 +33,6 @@ final class ContainsName extends Insight
      */
     public function getTitle(): string
     {
-        return 'The `composer.json` file was not found';
+        return 'The name property in the `composer.json` contains the default value';
     }
 }

@@ -61,7 +61,6 @@ final class Analyser
             }
 
             $rows[$line][1] = $row->getSecondCell();
-            $rows[$line][2] = $row->getThirdCell();
         }
 
         $quality = $feedback->quality();

@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Contracts\SubCategory;
 use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
 
 /**
@@ -55,12 +56,12 @@ final class Row
             $metric = new $name();
 
             /** @var string $a */
-            $name = ucfirst(substr((string) strrchr($name, "\\"), 1));
+            $name = ucfirst(substr((string)strrchr($name, "\\"), 1));
 
-            $name = trim((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
+            $name = trim((string)preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
 
-            if ($metric instanceof HasPercentage) {
-                $name = '• ' . trim(str_replace((string) self::$category, '', $name));
+            if ($metric instanceof HasPercentage || $metric instanceof SubCategory) {
+                $name = '• ' . trim(str_replace((string)self::$category, '', $name));
             } else {
                 self::$category = $name;
                 $name = "<bold>$name</bold>";
@@ -83,32 +84,20 @@ final class Row
         $cell = $metric instanceof HasValue ? $metric->getValue($this->feedback->getPublisher()) : '';
         $cell .= $metric instanceof HasAvg ? sprintf(' avg:%s', $metric->getAvg($this->feedback->getPublisher())) : '';
         $cell .= $metric instanceof HasMax ? sprintf(' max:%s', $metric->getMax($this->feedback->getPublisher())) : '';
-
-        return trim($cell);
-    }
-
-    /**
-     * Gets the content of the third cell.
-     *
-     * @return string
-     */
-    public function getThirdCell(): string
-    {
-        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\HasValue $metric */
-        $metric = new $this->metricClass();
-
-        $cell = '';
-
         foreach ($this->feedback->allFrom($metric) as $insight) {
-            $cell .= $insight->hasIssue() ? " <fg=red><-- </>{$insight->getTitle()}" : ' <info>✔</info>';
-            if ($insight instanceof HasDetails) {
-                foreach ($insight->getDetails() as $detail) {
-                    $detail = str_replace(getcwd() . '/', '', $detail);
-                    $cell .= "\n     <fg=red>•</> $detail";
+            $cell .= $insight->hasIssue() ? "<fg=red> ✘ --> </>" : ' <info>✔</info>';
+            if ($insight->hasIssue()) {
+                $cell .= "{$insight->getTitle()}:";
+                if ($insight instanceof HasDetails) {
+                    foreach ($insight->getDetails() as $detail) {
+                        $detail = str_replace(getcwd() . '/', '', $detail);
+                        $cell .= "\n<fg=red>•</> $detail";
+                    }
                 }
             }
+
         }
 
-        return $cell;
+        return trim($cell);
     }
 }

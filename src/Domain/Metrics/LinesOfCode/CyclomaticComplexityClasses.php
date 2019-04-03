@@ -6,12 +6,13 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Contracts\SubCategory;
 use NunoMaduro\PhpInsights\Domain\Publisher;
 
 /**
  * @internal
  */
-final class CyclomaticComplexityClasses implements HasValue, HasMax
+final class CyclomaticComplexityClasses implements HasValue, HasMax, SubCategory
 {
     /**
      * {@inheritdoc}

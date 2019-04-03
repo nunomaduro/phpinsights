@@ -53,7 +53,6 @@ final class TableStructure
             '',
             '<title>🧱  Structure</title>',
             '',
-            Structure\Composer::class,
             Structure\Namespaces::class,
             Structure\Interfaces::class,
             Structure\Traits::class,
@@ -71,6 +70,10 @@ final class TableStructure
             Structure\Constants::class,
             Structure\ConstantsGlobal::class,
             Structure\ConstantsClass::class,
+            '',
+            '<title>🤷🏻‍♂️ Misc</title>',
+            '',
+            Structure\Composer::class,
         ];
     }
 }
