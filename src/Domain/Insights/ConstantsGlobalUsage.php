@@ -24,7 +24,7 @@ final class ConstantsGlobalUsage extends Insight implements HasDetails
      */
     public function getTitle(): string
     {
-        return 'The use of `traits` is prohibited';
+        return 'The use of `globals` is prohibited';
     }
 
 
