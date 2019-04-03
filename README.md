@@ -11,17 +11,17 @@
 </p>
 
 
-**PHP Insights** was created by, and is maintained by [Nuno Maduro](https://github.com/nunomaduro), and is the perfect starting point to analyse the code quality of your project. It is
-carefully crafted to simplify the analyse of your code directly on your terminal.
+**PHP Insights** created and maintained by [Nuno Maduro](https://github.com/nunomaduro), is the perfect starting point to analyze the code quality of your PHP projects. 
+Carefully crafted to simplify the analysis of your code directly on your terminal.
 
 **🚨 This project is under development. Don't use it!**.
 
 
 ## ✨ Features
 
-- Analyse of **lines of code** and cyclomatic complexity
+- Analysis of **lines of code** and cyclomatic complexity
 - Beautiful overview of your **code structure** and it's dependencies
-- Contains built-in checks for making code reliable, loosely couple, **simple**, and **clean**
+- Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 
 ## 👉🏻 Installation & Usage
 
