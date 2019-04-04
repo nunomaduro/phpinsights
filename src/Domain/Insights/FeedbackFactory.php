@@ -51,9 +51,7 @@ final class FeedbackFactory
             throw new DirectoryNotFoundException($e->getMessage());
         }
 
-        ($analyser = new Analyser())->countFiles($files, true);
-
-        $collector = $analyser->getCollector();
+        $collector = (new Analyser())->analyse($files);
         $publisher = $collector->getPublisher();
 
         $metrics = array_filter($metrics, function ($metricClass) {

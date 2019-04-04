@@ -36,13 +36,6 @@ final class Collector extends BaseCollector
     private $currentFilename;
 
     /**
-     * Holds the current class.
-     *
-     * @var string|null
-     */
-    private $currentClass;
-
-    /**
      * {@inheritDoc}
      */
     public function addConstant($name): void
