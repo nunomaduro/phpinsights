@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use Closure;
 use ReflectionClass;
 use SebastianBergmann\PHPLOC\Collector as BaseCollector;
 
@@ -13,6 +12,11 @@ use SebastianBergmann\PHPLOC\Collector as BaseCollector;
  */
 final class Collector extends BaseCollector
 {
+    /**
+     * @var string[]
+     */
+    private $finalClasses = [];
+
     /**
      * @var string[]
      */
@@ -122,6 +126,16 @@ final class Collector extends BaseCollector
     public function getPublisher(): Publisher
     {
         return new Publisher($this->getParent('counts'));
+    }
+
+    /**
+     * @param  string  $classname
+     *
+     * @return void
+     */
+    public function addFinalClass(string $classname): void
+    {
+        $this->finalClasses[] = $classname;
     }
 
     /**

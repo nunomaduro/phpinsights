@@ -167,7 +167,11 @@ final class Analyser
                         if (isset($tokens[$i - 2]) &&
                             \is_array($tokens[$i - 2]) &&
                             $tokens[$i - 2][0] === \T_ABSTRACT) {
-                            $collector->incrementAbstractClasses();
+                            if ($tokens[$i - 2][0] === \T_ABSTRACT) {
+                                $collector->incrementAbstractClasses();
+                            } else if ($tokens[$i - 2][0] === \T_FINAL) {
+                                $collector->incrementConcreteFinalClasses($className);
+                            }
                         } else {
                             $collector->incrementConcreteClasses();
                         }
