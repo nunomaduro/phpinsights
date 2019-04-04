@@ -56,23 +56,25 @@ final class Row
             $metric = new $name();
 
             /** @var string $a */
-            $name = ucfirst(substr((string)strrchr($name, "\\"), 1));
+            $name = ucfirst(substr((string) strrchr($name, "\\"), 1));
 
-            $name = trim((string)preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
+            $name = trim((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name));
 
             if ($metric instanceof HasPercentage || $metric instanceof SubCategory) {
-                $name = '• ' . trim(str_replace((string)self::$category, '', $name));
+                $name = '• ' . trim(str_replace((string) self::$category, '', $name));
             } else {
                 self::$category = $name;
                 $name = "<bold>$name</bold>";
             }
 
+            $name = str_pad(trim($name), 21, ' ');
+
             if ($metric instanceof HasPercentage && $percentage = $metric->getPercentage($this->feedback->getPublisher()) !== 0.00) {
-                $name .= sprintf(' %.2f%%', $metric->getPercentage($this->feedback->getPublisher()));
+                $name .= sprintf('%.2f%%', $metric->getPercentage($this->feedback->getPublisher()));
             }
         }
 
-        return trim($name);
+        return $name;
     }
 
     /**
