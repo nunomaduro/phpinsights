@@ -308,7 +308,7 @@ final class Analyser
                         while (isset($tokens[$j]) && $tokens[$j] != ';') {
                             if (\is_array($tokens[$j]) &&
                                 $tokens[$j][0] === \T_CONSTANT_ENCAPSED_STRING) {
-                                echo $tokens[$j][1];
+
                                 $collector->addConstant(\str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
