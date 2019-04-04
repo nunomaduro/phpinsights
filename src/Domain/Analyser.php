@@ -9,6 +9,11 @@ use ReflectionMethod;
 /**
  * Code originally taken from {SebastianBergmann\PHPLOC\Analyser}
  *
+ * @method string    getNamespaceName(array $tolens, int $i)
+ * @method bool      isClassDeclaration(array $tokens, int $i)
+ * @method int|bool  getPreviousNonWhitespaceTokenPos(array $tokens, $start)
+ * @method int|bool  getNextNonWhitespaceTokenPos(array $tokens, $start)
+ * @method string    getClassName(string $namespace, array $tokens, int $i)
  * @internal
  */
 final class Analyser
@@ -53,14 +58,14 @@ final class Analyser
     /**
      * Processes a single file.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector
+     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  string  $filename
      *
      * @return void
      */
     private function analyseFile(Collector $collector, string $filename): void
     {
-        $buffer = \file_get_contents($filename);
+        $buffer = (string) \file_get_contents($filename);
         $collector->incrementLines(\substr_count($buffer, "\n"));
         $tokens = \token_get_all($buffer);
         $numTokens = \count($tokens);
@@ -74,7 +79,6 @@ final class Analyser
         $namespace = false;
         $className = null;
         $functionName = null;
-        $testClass = false;
         $collector->currentClassReset();
         $isInMethod = false;
 
@@ -83,7 +87,7 @@ final class Analyser
                 $token = \trim($tokens[$i]);
 
                 if ($token === ';') {
-                    if ($className !== null && ! $testClass) {
+                    if ($className !== null) {
                         $collector->currentClassIncrementLines();
 
                         if ($functionName !== null) {
@@ -94,7 +98,7 @@ final class Analyser
                     }
 
                     $collector->incrementLogicalLines();
-                } elseif ($token === '?' && ! $testClass) {
+                } elseif ($token === '?') {
                     if ($className !== null) {
                         $collector->currentClassIncrementComplexity();
                         $collector->currentMethodIncrementComplexity();
@@ -126,7 +130,6 @@ final class Analyser
                             }
                         } elseif ($block === $className) {
                             $className = null;
-                            $testClass = false;
                             $collector->currentClassReset();
                         }
                     }
@@ -153,7 +156,7 @@ final class Analyser
 
                     $collector->currentClassReset();
                     $collector->currentClassIncrementComplexity();
-                    $className = $this->getClassName($namespace, $tokens, $i);
+                    $className = $this->getClassName((string) $namespace, $tokens, $i);
                     $currentBlock = \T_CLASS;
 
                     if ($token === \T_TRAIT) {
@@ -277,14 +280,12 @@ final class Analyser
                 case \T_LOGICAL_AND:
                 case \T_BOOLEAN_OR:
                 case \T_LOGICAL_OR:
-                    if (! $testClass) {
-                        if ($isInMethod) {
-                            $collector->currentClassIncrementComplexity();
-                            $collector->currentMethodIncrementComplexity();
-                        }
-
-                        $collector->incrementComplexity();
+                    if ($isInMethod) {
+                        $collector->currentClassIncrementComplexity();
+                        $collector->currentMethodIncrementComplexity();
                     }
+
+                    $collector->incrementComplexity();
 
                     break;
 
@@ -326,7 +327,7 @@ final class Analyser
                     $n = $this->getNextNonWhitespaceTokenPos($tokens, $i);
                     $nn = $this->getNextNonWhitespaceTokenPos($tokens, $n);
 
-                    if ($n && $nn &&
+                    if ((bool) $n && (bool) $nn &&
                         isset($tokens[$n][0]) &&
                         ($tokens[$n][0] === \T_STRING ||
                             $tokens[$n][0] === \T_VARIABLE) &&

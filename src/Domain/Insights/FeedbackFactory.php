@@ -9,8 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFoundException;
-use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
-use SebastianBergmann\PHPLOC\Publisher;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
