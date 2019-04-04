@@ -12,7 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 final class ContainsName extends Insight
 {
     /**
-     * @var string
+     * @var string[]
      */
     private $defaults = [
         'laravel/laravel'

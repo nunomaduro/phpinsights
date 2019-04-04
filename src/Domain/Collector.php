@@ -16,7 +16,7 @@ final class Collector extends BaseCollector
     /**
      * @var string[]
      */
-    private $constants = [];
+    private $globalConstants = [];
 
     /**
      * @var string[]
@@ -50,11 +50,11 @@ final class Collector extends BaseCollector
         parent::addConstant($name);
 
         if ($this->currentFilename !== null) {
-            if (! array_key_exists($this->currentFilename, $this->constants)) {
-                $this->constants[$this->currentFilename] = '';
+            if (! array_key_exists($this->currentFilename, $this->globalConstants)) {
+                $this->globalConstants[$this->currentFilename] = '';
             }
 
-            $this->constants[$this->currentFilename] .= "$name ";
+            $this->globalConstants[$this->currentFilename] .= "$name ";
         }
     }
 
@@ -107,9 +107,9 @@ final class Collector extends BaseCollector
      *
      * @return string[]
      */
-    public function getConstants(): array
+    public function getGlobalConstants(): array
     {
-        return $this->constants;
+        return $this->globalConstants;
     }
 
 

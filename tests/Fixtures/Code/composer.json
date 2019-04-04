@@ -1,0 +1,10 @@
+{
+    "name": "nunomaduro/code",
+    "authors": [
+        {
+            "name": "Nuno Maduro",
+            "email": "enunomaduro@gmail.com"
+        }
+    ],
+    "require": {}
+}

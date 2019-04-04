@@ -33,6 +33,10 @@ final class ConstantsGlobalUsage extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        return $this->collector->getConstants();
+        $globalConstants = $this->collector->getGlobalConstants();
+
+        return array_map(function ($file, $constant) {
+            return "$file <fg=red> --> </> $constant";
+        }, array_keys($globalConstants), $globalConstants);
     }
 }

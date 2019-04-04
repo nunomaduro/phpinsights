@@ -68,8 +68,10 @@ final class AnalyseCommand
     {
         $directory = $input->getArgument('directory');
 
-        if (is_string($directory) && $directory[0] === DIRECTORY_SEPARATOR) {
-            $directory = getcwd() . DIRECTORY_SEPARATOR . $directory;
+        if (is_string($directory)) {
+            if ($directory[0] === DIRECTORY_SEPARATOR) {
+                $directory = getcwd() . DIRECTORY_SEPARATOR . $directory;
+            }
         } else {
             $directory = $this->filesRepository->getDefaultDirectory();
         }

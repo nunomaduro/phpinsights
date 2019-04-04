@@ -35,7 +35,7 @@ final class FeedbackFactory
 
     /**
      * @param  array  $metrics
-     * @param  array  $dirs
+     * @param  string  $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Feedback
      *

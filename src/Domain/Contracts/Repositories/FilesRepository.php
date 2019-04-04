@@ -26,7 +26,7 @@ interface FilesRepository
     /**
      * Sets the current files dirs.
      *
-     * @param  string
+     * @param  string  $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */

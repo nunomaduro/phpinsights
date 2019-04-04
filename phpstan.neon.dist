@@ -6,6 +6,7 @@ parameters:
     paths:
         - config
         - src
+        - tests/Unit
     ignoreErrors:
         - '#iterator_to_array expects Traversable, iterable#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addConstant\(\) has parameter \$name with no typehint specified#'
