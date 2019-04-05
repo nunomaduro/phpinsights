@@ -651,9 +651,9 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return int
      */
-    public function getClassConstants(): array
+    public function getClassConstants(): int
     {
         return $this->classConstants;
     }
