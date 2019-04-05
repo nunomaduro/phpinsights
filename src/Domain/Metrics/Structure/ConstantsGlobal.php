@@ -8,7 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\ConstantsGlobalUsage;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -18,17 +18,17 @@ final class ConstantsGlobal implements HasValue, HasPercentage, HasInsights
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getGlobalConstants());
+        return sprintf('%d', count($collector->getGlobalConstants()));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getConstants() > 0 ? ($publisher->getGlobalConstants() / $publisher->getConstants()) * 100 : 0;
+        return $collector->getConstants() > 0 ? (count($collector->getGlobalConstants()) / $collector->getConstants()) * 100 : 0;
     }
 
     /**

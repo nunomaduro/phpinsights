@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\TraitsUsage;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -17,9 +17,9 @@ final class Traits implements HasValue, HasInsights
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getTraits());
+        return sprintf('%d', count($collector->getTraits()));
     }
 
     /**

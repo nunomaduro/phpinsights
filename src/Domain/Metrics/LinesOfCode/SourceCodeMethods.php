@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -17,15 +17,15 @@ final class SourceCodeMethods implements HasAvg, HasMax, HasPercentage
     /**
      * {@inheritdoc}
      */
-    public function getAvg(Publisher $publisher): string
+    public function getAvg(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getAverageMethodLength());
+        return sprintf('%d', $collector->getAverageMethodLength());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
         // @todo
         return 0.0;
@@ -34,8 +34,8 @@ final class SourceCodeMethods implements HasAvg, HasMax, HasPercentage
     /**
      * {@inheritdoc}
      */
-    public function getMax(Publisher $publisher): string
+    public function getMax(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getMaximumMethodLength());
+        return sprintf('%d', $collector->getMaximumMethodLength());
     }
 }

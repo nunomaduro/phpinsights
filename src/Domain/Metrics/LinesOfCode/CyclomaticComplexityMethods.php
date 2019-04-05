@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Contracts\SubCategory;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -17,16 +17,16 @@ final class CyclomaticComplexityMethods implements HasValue, HasMax, SubCategory
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%.2f', $publisher->getAverageComplexityPerMethod());
+        return sprintf('%.2f', $collector->getAverageComplexityPerMethod());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMax(Publisher $publisher): string
+    public function getMax(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getMaximumMethodComplexity());
+        return sprintf('%d', $collector->getMaximumMethodComplexity());
     }
 }

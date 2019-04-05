@@ -7,7 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Publisher;
 
 /**
  * @internal
@@ -15,30 +14,17 @@ use NunoMaduro\PhpInsights\Domain\Publisher;
 abstract class Insight implements InsightContract
 {
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
-     */
-    protected $filesRepository;
-
-    /**
      * @var \NunoMaduro\PhpInsights\Domain\Collector
      */
     protected $collector;
 
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Publisher
-     */
-    protected $publisher;
-
-    /**
      * Creates an new instance of the Insight.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  \NunoMaduro\PhpInsights\Domain\Publisher  $publisher
+     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      */
-    final public function __construct(FilesRepository $filesRepository, Collector $collector, Publisher $publisher)
+    final public function __construct(Collector $collector)
     {
-        $this->filesRepository = $filesRepository;
         $this->collector = $collector;
-        $this->publisher = $publisher;
     }
 }

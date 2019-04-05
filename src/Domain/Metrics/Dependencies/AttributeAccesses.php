@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -15,8 +15,8 @@ final class AttributeAccesses implements HasValue
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getAttributeAccesses());
+        return sprintf('%d', $collector->getAttributeAccesses());
     }
 }

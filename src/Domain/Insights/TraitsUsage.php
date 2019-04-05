@@ -16,7 +16,7 @@ final class TraitsUsage extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (int)$this->publisher->getTraits() > 0;
+        return (int) count($this->collector->getTraits()) > 0;
     }
 
     /**

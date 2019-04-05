@@ -25,10 +25,12 @@ final class FeedbackFactory
      * Creates a new instance of Feedback Factory.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
+     * @param  \NunoMaduro\PhpInsights\Domain\Analyser  $analyser
      */
-    public function __construct(FilesRepository $filesRepository)
+    public function __construct(FilesRepository $filesRepository, Analyser $analyser)
     {
         $this->filesRepository = $filesRepository;
+        $this->analyser = $analyser;
     }
 
     /**
@@ -49,8 +51,7 @@ final class FeedbackFactory
             throw new DirectoryNotFoundException($e->getMessage());
         }
 
-        $collector = (new Analyser())->analyse($files);
-        $publisher = $collector->getPublisher();
+        $collector = $this->analyser->analyse($files);
 
         $metrics = array_filter($metrics, function ($metricClass) {
             return class_exists($metricClass) && array_key_exists(HasInsights::class, class_implements($metricClass));
@@ -60,11 +61,11 @@ final class FeedbackFactory
         foreach ($metrics as $metricClass) {
             $metric = new $metricClass();
 
-            $insights = array_merge($insights, array_map(function ($insightClass) use ($dir, $collector, $publisher) {
-                return new $insightClass($this->filesRepository->in($dir), $collector, $publisher);
-            }, $metric->getInsights($publisher)));
+            $insights = array_merge($insights, array_map(function ($insightClass) use ($collector) {
+                return new $insightClass($collector);
+            }, $metric->getInsights($collector)));
         }
 
-        return new Feedback($publisher, $insights);
+        return new Feedback($collector, $insights);
     }
 }

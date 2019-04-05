@@ -11,7 +11,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\BiggerClass;
 use NunoMaduro\PhpInsights\Domain\Insights\BiggerMethod;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -21,33 +21,33 @@ final class SourceCodeClasses implements HasValue, HasPercentage, HasAvg, HasMax
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getClassLines());
+        return sprintf('%d', $collector->getClassLines());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getLogicalLines() > 0 ? ($publisher->getClassLines() / $publisher->getLogicalLines()) * 100 : 0;
+        return $collector->getLogicalLines() > 0 ? ($collector->getClassLines() / $collector->getLogicalLines()) * 100 : 0;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAvg(Publisher $publisher): string
+    public function getAvg(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getAverageClassLength());
+        return sprintf('%d', $collector->getAverageClassLength());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getMax(Publisher $publisher): string
+    public function getMax(Collector $collector): string
     {
-        return sprintf(' % d', $publisher->getMaximumClassLength());
+        return sprintf(' % d', $collector->getMaximumClassLength());
     }
 
     /**

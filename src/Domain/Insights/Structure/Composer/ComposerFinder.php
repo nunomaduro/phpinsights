@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Structure\Composer;
 
-use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\Collector;
 use RuntimeException;
 
 /**
@@ -13,31 +13,15 @@ use RuntimeException;
 final class ComposerFinder
 {
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     *
-     * @return bool
-     */
-    public static function exists(FilesRepository $filesRepository): bool
-    {
-        foreach ($filesRepository->getFiles() as $file) {
-            if ($file->getFilename() === 'composer.json') {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
+     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      *
      * @return string
      */
-    public static function contents(FilesRepository $filesRepository): string
+    public static function contents(Collector $collector): string
     {
-        foreach ($filesRepository->getFiles() as $file) {
+        foreach ($collector->getFiles() as $file) {
             if ($file->getFilename() === 'composer.json') {
-                return $file->getContents();
+                return file_get_contents($file->getRealPath());
             }
         }
 

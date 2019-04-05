@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -16,16 +16,16 @@ final class FunctionsAnonymous implements HasValue, HasPercentage
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getAnonymousFunctions());
+        return sprintf('%d', $collector->getAnonymousFunctions());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getFunctions() > 0 ? ($publisher->getAnonymousFunctions() / $publisher->getFunctions()) * 100 : 0;
+        return $collector->getFunctions() > 0 ? ($collector->getAnonymousFunctions() / $collector->getFunctions()) * 100 : 0;
     }
 }

@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -17,24 +17,24 @@ final class SourceCodeFunctions implements HasValue, HasPercentage, HasAvg
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getFunctionLines());
+        return sprintf('%d', $collector->getFunctionLines());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getLogicalLines() > 0 ? ($publisher->getFunctionLines() / $publisher->getLogicalLines()) * 100 : 0;
+        return $collector->getLogicalLines() > 0 ? ($collector->getFunctionLines() / $collector->getLogicalLines()) * 100 : 0;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAvg(Publisher $publisher): string
+    public function getAvg(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getAverageFunctionLength());
+        return sprintf('%d', $collector->getAverageFunctionLength());
     }
 }

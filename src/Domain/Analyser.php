@@ -93,22 +93,22 @@ final class Analyser
                         if ($functionName !== null) {
                             $collector->currentMethodIncrementLines();
                         }
-                    } elseif ($functionName !== null) {
+                    } else if ($functionName !== null) {
                         $collector->incrementFunctionLines();
                     }
 
                     $collector->incrementLogicalLines();
-                } elseif ($token === '?') {
+                } else if ($token === '?') {
                     if ($className !== null) {
                         $collector->currentClassIncrementComplexity();
                         $collector->currentMethodIncrementComplexity();
                     }
 
                     $collector->incrementComplexity();
-                } elseif ($token === '{') {
+                } else if ($token === '{') {
                     if ($currentBlock === \T_CLASS) {
                         $block = $className;
-                    } elseif ($currentBlock === \T_FUNCTION) {
+                    } else if ($currentBlock === \T_FUNCTION) {
                         $block = $functionName;
                     } else {
                         $block = false;
@@ -117,7 +117,7 @@ final class Analyser
                     \array_push($blocks, $block);
 
                     $currentBlock = false;
-                } elseif ($token === '}') {
+                } else if ($token === '}') {
                     $block = \array_pop($blocks);
 
                     if ($block !== false && $block !== null) {
@@ -128,7 +128,7 @@ final class Analyser
                                 $collector->currentMethodStop();
                                 $isInMethod = false;
                             }
-                        } elseif ($block === $className) {
+                        } else if ($block === $className) {
                             $className = null;
                             $collector->currentClassReset();
                         }
@@ -161,19 +161,18 @@ final class Analyser
 
                     if ($token === \T_TRAIT) {
                         $collector->incrementTraits();
-                    } elseif ($token === \T_INTERFACE) {
+                    } else if ($token === \T_INTERFACE) {
                         $collector->incrementInterfaces();
                     } else {
                         if (isset($tokens[$i - 2]) &&
-                            \is_array($tokens[$i - 2]) &&
-                            $tokens[$i - 2][0] === \T_ABSTRACT) {
+                            \is_array($tokens[$i - 2])) {
                             if ($tokens[$i - 2][0] === \T_ABSTRACT) {
                                 $collector->incrementAbstractClasses();
                             } else if ($tokens[$i - 2][0] === \T_FINAL) {
                                 $collector->incrementConcreteFinalClasses($className);
                             }
                         } else {
-                            $collector->incrementConcreteClasses();
+                            $collector->incrementConcreteNonFinalClasses($className);
                         }
                     }
 
@@ -304,8 +303,10 @@ final class Analyser
                     break;
 
                 case \T_STRING:
-                    if ($value === 'define' && ($tokens[$i - 1][1] !== "::" && $tokens[$i - 1][1] !== "->")) {
-                        $collector->incrementGlobalConstants();
+                    if ($value === 'define'
+                        && $tokens[$i - 1][1] !== "::"
+                        && $tokens[$i - 1][1] !== "->"
+                        && (! isset($tokens[$i - 2][1]) || $tokens[$i - 2][1] !== 'function')) {
 
                         $j = $i + 1;
 
@@ -313,7 +314,7 @@ final class Analyser
                             if (\is_array($tokens[$j]) &&
                                 $tokens[$j][0] === \T_CONSTANT_ENCAPSED_STRING) {
 
-                                $collector->addConstant(\str_replace('\'', '', $tokens[$j][1]));
+                                $collector->addGlobalConstant(\str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
                             }
@@ -345,7 +346,7 @@ final class Analyser
                         if ($token === \T_DOUBLE_COLON &&
                             $tokens[$n][0] === \T_VARIABLE) {
                             $collector->incrementStaticAttributeAccesses();
-                        } elseif ($token === \T_OBJECT_OPERATOR) {
+                        } else if ($token === \T_OBJECT_OPERATOR) {
                             $collector->incrementNonStaticAttributeAccesses();
                         }
                     }
@@ -360,7 +361,7 @@ final class Analyser
                 case \T_VARIABLE:
                     if ($value === '$GLOBALS') {
                         $collector->incrementGlobalVariableAccesses();
-                    } elseif (isset($this->superGlobals[$value])) {
+                    } else if (isset(array_flip($this->superGlobals)[$value])) {
                         $collector->incrementSuperGlobalVariableAccesses();
                     }
 

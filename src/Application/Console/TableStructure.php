@@ -31,6 +31,7 @@ final class TableStructure
             LinesOfCode\SourceCodeMethods::class,
             LinesOfCode\SourceCodeFunctions::class,
             LinesOfCode\SourceCodeGlobal::class,
+
             '',
             '<title>👔  Cyclomatic Complexity</title>',
             '',
@@ -40,12 +41,14 @@ final class TableStructure
             '',
             '<title>🧱  Structure</title>',
             '',
+
             Structure\Namespaces::class,
             Structure\Interfaces::class,
             Structure\Traits::class,
             Structure\Classes::class,
             Structure\ClassesAbstract::class,
-            Structure\ClassesConcrete::class,
+            Structure\ClassesFinal::class,
+            Structure\ClassesNormal::class,
             Structure\Methods::class,
             Structure\MethodsStatic::class,
             Structure\MethodsNonStatic::class,

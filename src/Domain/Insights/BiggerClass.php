@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -18,7 +16,7 @@ final class BiggerClass extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (int)$this->publisher->getMaximumClassLength() > 30;
+        return (int) $this->collector->getMaximumClassLength() > 30;
     }
 
     /**
@@ -34,20 +32,16 @@ final class BiggerClass extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $classLines = $this->collector->getClassLines();
+        $classLines = $this->collector->getPerClassLines();
 
         uasort($classLines, function ($a, $b) {
-            return $a + $b;
+            return $b - $a;
         });
 
-        $classLines = array_filter($classLines, function ($lines) {
-            return $lines > 30;
-        });
-
-        $classLines = array_slice($classLines, -3, 3, true);
+        $classLines = array_reverse($classLines);
 
         return array_map(function ($class, $lines) {
-            return "$class <fg=red> --> </> $lines lines";
+            return "$class: $lines lines";
         }, array_keys($classLines), $classLines);
     }
 }

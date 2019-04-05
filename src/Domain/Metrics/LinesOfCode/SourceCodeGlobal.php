@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -16,16 +16,16 @@ final class SourceCodeGlobal implements HasValue, HasPercentage
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getNotInClassesOrFunctions());
+        return sprintf('%d', $collector->getNotInClassesOrFunctions());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getLogicalLines() > 0 ? ($publisher->getNotInClassesOrFunctions() / $publisher->getLogicalLines()) * 100 : 0;
+        return $collector->getLogicalLines() > 0 ? ($collector->getNotInClassesOrFunctions() / $collector->getLogicalLines()) * 100 : 0;
     }
 }

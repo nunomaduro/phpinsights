@@ -69,8 +69,8 @@ final class Row
 
             $name = str_pad(trim($name), 21, ' ');
 
-            if ($metric instanceof HasPercentage && $percentage = $metric->getPercentage($this->feedback->getPublisher()) !== 0.00) {
-                $name .= sprintf('%.2f%%', $metric->getPercentage($this->feedback->getPublisher()));
+            if ($metric instanceof HasPercentage && $percentage = $metric->getPercentage($this->feedback->getCollector()) !== 0.00) {
+                $name .= sprintf('%.2f%%', $metric->getPercentage($this->feedback->getCollector()));
             }
         }
 
@@ -86,15 +86,18 @@ final class Row
     {
         $metric = new $this->metricClass();
 
-        $cell = $metric instanceof HasValue ? $metric->getValue($this->feedback->getPublisher()) : '';
-        $cell .= $metric instanceof HasAvg ? sprintf(' <fg=magenta>avg %s</>', $metric->getAvg($this->feedback->getPublisher())) : '';
-        $cell .= $metric instanceof HasMax ? sprintf(' <fg=yellow>max %s</>', $metric->getMax($this->feedback->getPublisher())) : '';
+        $cell = $metric instanceof HasValue ? $metric->getValue($this->feedback->getCollector()) : '';
+        $cell .= $metric instanceof HasAvg ? sprintf(' <fg=magenta>avg %s</>', $metric->getAvg($this->feedback->getCollector())) : '';
+        $cell .= $metric instanceof HasMax ? sprintf(' <fg=yellow>max %s</>', $metric->getMax($this->feedback->getCollector())) : '';
         foreach ($this->feedback->allFrom($metric) as $insight) {
             $cell .= $insight->hasIssue() ? "<fg=red> ✘ --> </>" : ' <info>✔</info>';
             if ($insight->hasIssue()) {
                 $cell .= "{$insight->getTitle()}:";
                 if ($insight instanceof HasDetails) {
-                    foreach ($insight->getDetails() as $detail) {
+                    $details = $insight->getDetails();
+                    $details = array_slice($details, -3, 3, true);
+
+                    foreach ($details as $detail) {
                         $detail = str_replace(getcwd() . '/', '', $detail);
                         $cell .= "\n<fg=red>•</> $detail";
                     }

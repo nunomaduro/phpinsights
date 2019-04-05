@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -19,19 +19,19 @@ final class Feedback
     private $insights = [];
 
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Publisher
+     * @var \NunoMaduro\PhpInsights\Domain\Collector
      */
-    private $publisher;
+    private $collector;
 
     /**
      * Creates a new instance of the feedback.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Publisher  $publisher
+     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]  $insights
      */
-    public function __construct(Publisher $publisher, array $insights)
+    public function __construct(Collector $collector, array $insights)
     {
-        $this->publisher = $publisher;
+        $this->collector = $collector;
 
         foreach ($insights as $insight) {
             $this->insights[get_class($insight)] = $insight;
@@ -39,11 +39,11 @@ final class Feedback
     }
 
     /**
-     * @return \NunoMaduro\PhpInsights\Domain\Publisher
+     * @return \NunoMaduro\PhpInsights\Domain\Collector
      */
-    public function getPublisher(): Publisher
+    public function getCollector(): Collector
     {
-        return $this->publisher;
+        return $this->collector;
     }
 
     /**

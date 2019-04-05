@@ -14,7 +14,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\PublisherRepository;
 use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
 use NunoMaduro\PhpInsights\Domain\Insights\FeedbackFactory;
 use Symfony\Component\Console\Style\SymfonyStyle;

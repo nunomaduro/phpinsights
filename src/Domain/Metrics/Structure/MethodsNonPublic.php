@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -16,16 +16,16 @@ final class MethodsNonPublic implements HasValue, HasPercentage
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getNonPublicMethods());
+        return sprintf('%d', $collector->getNonPublicMethods());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getMethods() > 0 ? ($publisher->getNonPublicMethods() / $publisher->getMethods()) * 100 : 0;
+        return $collector->getMethods() > 0 ? ($collector->getNonPublicMethods() / $collector->getMethods()) * 100 : 0;
     }
 }

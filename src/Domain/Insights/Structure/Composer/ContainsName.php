@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Insights\Structure\Composer;
 
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
+use RuntimeException;
 
 /**
  * @internal
@@ -15,7 +16,7 @@ final class ContainsName extends Insight
      * @var string[]
      */
     private $defaults = [
-        'laravel/laravel'
+        'laravel/laravel',
     ];
 
     /**
@@ -23,7 +24,7 @@ final class ContainsName extends Insight
      */
     public function hasIssue(): bool
     {
-        $contents = json_decode(ComposerFinder::contents($this->filesRepository), true);
+        $contents = json_decode(ComposerFinder::contents($this->collector), true);
 
         return ! array_key_exists('name', $contents) || array_key_exists($contents['name'], array_flip($this->defaults));
     }

@@ -16,7 +16,13 @@ final class Exists extends Insight
      */
     public function hasIssue(): bool
     {
-        return ! ComposerFinder::exists($this->filesRepository);
+        try {
+            ComposerFinder::contents($this->collector);
+        } catch (\RuntimeException $e) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

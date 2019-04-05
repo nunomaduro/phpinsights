@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Publisher;
+use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
@@ -16,17 +16,17 @@ final class AttributeAccessesStatic implements HasValue, HasPercentage
     /**
      * {@inheritdoc}
      */
-    public function getValue(Publisher $publisher): string
+    public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $publisher->getStaticAttributeAccesses());
+        return sprintf('%d', $collector->getStaticAttributeAccesses());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPercentage(Publisher $publisher): float
+    public function getPercentage(Collector $collector): float
     {
-        return $publisher->getAttributeAccesses() > 0 ?
-            ($publisher->getStaticAttributeAccesses() / $publisher->getAttributeAccesses()) * 100 : 0;
+        return $collector->getAttributeAccesses() > 0 ?
+            ($collector->getStaticAttributeAccesses() / $collector->getAttributeAccesses()) * 100 : 0;
     }
 }
