@@ -11,14 +11,14 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 /**
  * @internal
  */
-final class MethodsNonPublic implements HasValue, HasPercentage
+final class MethodsPrivate implements HasValue, HasPercentage
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getNonPublicMethods());
+        return sprintf('%d', $collector->getPrivateMethods());
     }
 
     /**
@@ -26,6 +26,6 @@ final class MethodsNonPublic implements HasValue, HasPercentage
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getMethods() > 0 ? ($collector->getNonPublicMethods() / $collector->getMethods()) * 100 : 0;
+        return $collector->getMethods() > 0 ? ($collector->getPrivateMethods() / $collector->getMethods()) * 100 : 0;
     }
 }

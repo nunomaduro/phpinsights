@@ -170,7 +170,12 @@ final class Collector
     /**
      * @var int
      */
-    private $nonPublicMethods = 0;
+    private $protectedMethods = 0;
+
+    /**
+     * @var int
+     */
+    private $privateMethods = 0;
 
     /**
      * @var int
@@ -453,9 +458,17 @@ final class Collector
     /**
      * @return void
      */
-    public function incrementNonPublicMethods(): void
+    public function incrementProtectedMethods(): void
     {
-        $this->nonPublicMethods++;
+        $this->protectedMethods++;
+    }
+
+    /**
+     * @return void
+     */
+    public function incrementPrivateMethods(): void
+    {
+        $this->privateMethods++;
     }
 
     /**
@@ -797,9 +810,17 @@ final class Collector
     /**
      * @return mixed
      */
-    public function getNonPublicMethods()
+    public function getProtectedMethods()
     {
-        return $this->nonPublicMethods;
+        return $this->protectedMethods;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrivateMethods()
+    {
+        return $this->privateMethods;
     }
 
     /**

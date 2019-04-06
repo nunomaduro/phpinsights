@@ -14,7 +14,7 @@ final class BiggerMethod extends Insight
      */
     public function hasIssue(): bool
     {
-        return (int)$this->collector->getMaximumMethodLength() > 5;
+        return (int) $this->collector->getMaximumMethodLength() > 5;
     }
 
     /**
