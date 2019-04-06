@@ -169,7 +169,7 @@ final class Analyser
                             if ($tokens[$i - 2][0] === \T_ABSTRACT) {
                                 $collector->incrementAbstractClasses();
                             } else if ($tokens[$i - 2][0] === \T_FINAL) {
-                                $collector->incrementConcreteFinalClasses($className);
+                                $collector->addConcreteFinalClasses($className);
                             }
                         } else {
                             $collector->incrementConcreteNonFinalClasses($className);
