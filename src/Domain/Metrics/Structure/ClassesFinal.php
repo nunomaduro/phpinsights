@@ -18,7 +18,7 @@ final class ClassesFinal implements HasValue, HasPercentage
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getConcreteFinalClasses());
+        return sprintf('%d', count($collector->getConcreteFinalClasses()));
     }
 
     /**
@@ -26,6 +26,6 @@ final class ClassesFinal implements HasValue, HasPercentage
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getClasses() > 0 ? ($collector->getConcreteFinalClasses() / $collector->getClasses()) * 100 : 0;
+        return $collector->getClasses() > 0 ? (count($collector->getConcreteFinalClasses()) / $collector->getClasses()) * 100 : 0;
     }
 }
