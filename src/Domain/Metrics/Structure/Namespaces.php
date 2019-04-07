@@ -17,6 +17,6 @@ final class Namespaces implements HasValue
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getNamespaces());
+        return sprintf('%d', count($collector->getNamespaces()));
     }
 }

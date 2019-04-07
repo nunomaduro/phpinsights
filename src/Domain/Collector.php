@@ -54,9 +54,9 @@ final class Collector
     private $concreteFinalClasses = [];
 
     /**
-     * @var int
+     * @var string[]
      */
-    private $abstractClasses = 0;
+    private $abstractClasses = [];
 
     /**
      * @var string[]
@@ -409,11 +409,13 @@ final class Collector
     }
 
     /**
+     * @param  string  $name
+     *
      * @return void
      */
-    public function incrementAbstractClasses(): void
+    public function addAbstractClass(string $name): void
     {
-        $this->abstractClasses++;
+        $this->abstractClasses[] = $name;
     }
 
     /**
@@ -421,7 +423,7 @@ final class Collector
      *
      * @return void
      */
-    public function addConcreteFinalClasses(string $name): void
+    public function addConcreteFinalClass(string $name): void
     {
         $this->concreteFinalClasses[] = $name;
     }
@@ -431,7 +433,7 @@ final class Collector
      *
      * @return void
      */
-    public function incrementConcreteNonFinalClasses(string $name): void
+    public function addConcreteNonFinalClass(string $name): void
     {
         $this->concreteNonFinalClasses[] = $name;
     }
@@ -683,87 +685,87 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getPossibleConstantAccesses()
+    public function getPossibleConstantAccesses(): array
     {
         return $this->possibleConstantAccesses;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getGlobalVariableAccesses()
+    public function getGlobalVariableAccesses(): int
     {
         return $this->globalVariableAccesses;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNonStaticMethodCalls()
+    public function getNonStaticMethodCalls(): int
     {
         return $this->nonStaticMethodCalls;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNonStaticAttributeAccesses()
+    public function getNonStaticAttributeAccesses(): int
     {
         return $this->nonStaticAttributeAccesses;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getAnonymousFunctions()
+    public function getAnonymousFunctions(): int
     {
         return $this->anonymousFunctions;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNamedFunctions()
+    public function getNamedFunctions(): int
     {
         return $this->namedFunctions;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getPublicMethods()
+    public function getPublicMethods(): int
     {
         return $this->publicMethods;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getStaticMethods()
+    public function getStaticMethods(): int
     {
         return $this->staticMethods;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNonStaticMethods()
+    public function getNonStaticMethods(): int
     {
         return $this->nonStaticMethods;
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getConcreteNonFinalClasses()
+    public function getConcreteNonFinalClasses(): array
     {
         return $this->concreteNonFinalClasses;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getConcreteFinalClasses(): array
     {
@@ -771,11 +773,11 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getNamespaces()
+    public function getNamespaces(): array
     {
-        return count($this->namespaces);
+        return $this->namespaces;
     }
 
     /**
@@ -819,9 +821,9 @@ final class Collector
     }
 
     /**
-     * @return int
+     * @return string[]
      */
-    public function getAbstractClasses(): int
+    public function getAbstractClasses(): array
     {
         return $this->abstractClasses;
     }
@@ -1022,7 +1024,7 @@ final class Collector
      */
     public function getClasses(): int
     {
-        return $this->getAbstractClasses() + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
+        return count($this->getAbstractClasses()) + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
     }
 
     /**

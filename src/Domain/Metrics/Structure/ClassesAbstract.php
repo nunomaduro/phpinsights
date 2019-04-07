@@ -18,7 +18,7 @@ final class ClassesAbstract implements HasValue, HasPercentage
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getAbstractClasses());
+        return sprintf('%d', count($collector->getAbstractClasses()));
     }
 
     /**
@@ -26,6 +26,6 @@ final class ClassesAbstract implements HasValue, HasPercentage
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getClasses() > 0 ? ($collector->getAbstractClasses() / $collector->getClasses()) * 100 : 0;
+        return $collector->getClasses() > 0 ? (count($collector->getAbstractClasses()) / $collector->getClasses()) * 100 : 0;
     }
 }
