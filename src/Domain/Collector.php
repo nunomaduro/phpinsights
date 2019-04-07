@@ -518,16 +518,6 @@ final class Collector
     }
 
     /**
-     * @param  string  $classname
-     *
-     * @return void
-     */
-    public function addFinalClass(string $classname): void
-    {
-        $this->finalClasses[] = $classname;
-    }
-
-    /**
      * @return int
      */
     public function getLines(): int
@@ -559,14 +549,6 @@ final class Collector
     public function getDirectories(): array
     {
         return $this->directories;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getFinalClasses(): array
-    {
-        return $this->finalClasses;
     }
 
     /**
