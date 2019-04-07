@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\CyclomaticComplexity;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityAbuse;
+use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
@@ -28,7 +28,7 @@ final class CyclomaticComplexity implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            CyclomaticComplexityAbuse::class
+            CyclomaticComplexityIsHigh::class
         ];
     }
 }

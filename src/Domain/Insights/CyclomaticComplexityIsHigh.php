@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 /**
  * @internal
  */
-final class CyclomaticComplexityAbuse extends Insight
+final class CyclomaticComplexityIsHigh extends Insight
 {
     /**
      * {@inheritdoc}

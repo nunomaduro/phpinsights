@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * @internal
  */
-final class ComposerExists extends Insight
+final class ComposerMustExist extends Insight
 {
     /**
      * {@inheritdoc}

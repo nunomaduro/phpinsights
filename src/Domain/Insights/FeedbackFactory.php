@@ -88,8 +88,8 @@ final class FeedbackFactory
 
         $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
 
-        $insights = array_diff($insights, $config['remove'] ?? []);
+        $insights = array_merge($insights, $config['add'][$metricClass] ?? []);
 
-        return array_merge($insights, $config['add'][$metricClass] ?? []);
+        return array_diff($insights, $config['remove'] ?? []);
     }
 }

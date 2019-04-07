@@ -46,25 +46,27 @@ The project is under development. As such, any help is welcome!
 
 ### Create a new `Insight`
 
+Imagine that you want to create a new `Insight` that don't allow the usage of final classes:
+
 1. Create a new file under `Domain\Insights` with the content:
 
 ```php
-final class FooUsage extends Insight
+final class ForbiddenFinalClasses extends Insight
 {
     /**
-     * Checks if there is an issue.
+     * {@inheritdoc}
      */
     public function hasIssue(): bool
     {
-        return true;
+        return (bool) count($this->collector->getConcreteFinalClasses());
     }
 
     /**
-     * Describes the problem.
+     * {@inheritdoc}
      */
     public function getTitle(): string
     {
-        return 'The use of `foo` is prohibited';
+        return 'The use of `final` classes is prohibited';
     }
 }
 ```
@@ -72,17 +74,17 @@ final class FooUsage extends Insight
 2. Attach the `Insight` to a specific inside `Domain/Metrics/`:
 
 ```php
-final class Bar implements Metric, HasInsights
+final class ClassesFinal implements HasValue, HasPercentage, HasInsights
 {
+    // ...
+    
     /**
-     * Returns the insights classes applied on the metric.
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getInsights(): array
     {
         return [
-            FooUsage::class,
+            ForbiddenFinalClasses::class,
         ];
     }
 }

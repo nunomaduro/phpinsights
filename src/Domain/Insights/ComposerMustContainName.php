@@ -9,13 +9,14 @@ use RuntimeException as RuntimeExceptionAlias;
 /**
  * @internal
  */
-final class ComposerContainsName extends Insight
+final class ComposerMustContainName extends Insight
 {
     /**
      * @var string[]
      */
     private $defaults = [
         'laravel/laravel',
+        'symfony/symfony',
     ];
 
     /**
