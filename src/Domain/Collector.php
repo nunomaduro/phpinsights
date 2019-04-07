@@ -45,7 +45,7 @@ final class Collector
     /**
      * @var int
      */
-    private $concreteNonFinalClasses = 0;
+    private $concreteNonFinalClasses = [];
 
     /**
      * @var string[]
@@ -426,11 +426,13 @@ final class Collector
     }
 
     /**
+     * @param  string  $name
+     *
      * @return void
      */
-    public function incrementConcreteNonFinalClasses(): void
+    public function incrementConcreteNonFinalClasses(string $name): void
     {
-        $this->concreteNonFinalClasses++;
+        $this->concreteNonFinalClasses[] = $name;
     }
 
     /**
@@ -1080,7 +1082,7 @@ final class Collector
      */
     public function getClasses()
     {
-        return $this->getAbstractClasses() + $this->getConcreteNonFinalClasses() + count($this->getConcreteFinalClasses());
+        return $this->getAbstractClasses() + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
     }
 
     /**

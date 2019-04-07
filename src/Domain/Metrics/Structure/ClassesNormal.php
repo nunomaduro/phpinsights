@@ -18,7 +18,7 @@ final class ClassesNormal implements HasValue, HasPercentage
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getConcreteNonFinalClasses());
+        return sprintf('%d', count($collector->getConcreteNonFinalClasses()));
     }
 
     /**
@@ -26,6 +26,6 @@ final class ClassesNormal implements HasValue, HasPercentage
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getClasses() > 0 ? ($collector->getConcreteNonFinalClasses() / $collector->getClasses()) * 100 : 0;
+        return $collector->getClasses() > 0 ? (count($collector->getConcreteNonFinalClasses()) / $collector->getClasses()) * 100 : 0;
     }
 }

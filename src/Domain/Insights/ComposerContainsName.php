@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights\Structure\Composer;
-
-use NunoMaduro\PhpInsights\Domain\Insights\Insight;
-use RuntimeException;
+namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 /**
  * @internal
  */
-final class ContainsName extends Insight
+final class ComposerContainsName extends Insight
 {
     /**
      * @var string[]

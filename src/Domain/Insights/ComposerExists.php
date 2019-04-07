@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights\Structure\Composer;
-
-use NunoMaduro\PhpInsights\Domain\Insights\Insight;
+namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 /**
  * @internal
  */
-final class Exists extends Insight
+final class ComposerExists extends Insight
 {
     /**
      * {@inheritdoc}
