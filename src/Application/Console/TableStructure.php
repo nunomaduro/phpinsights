@@ -55,7 +55,7 @@ final class TableStructure
             Structure\MethodsProtected::class,
             Structure\MethodsPrivate::class,
             Structure\Functions::class,
-            Structure\FunctionsNamed::class,
+            Structure\FunctionsGlobalHelpers::class,
             Structure\FunctionsAnonymous::class,
             Structure\Constants::class,
             Structure\ConstantsGlobal::class,

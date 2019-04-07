@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 /**
  * @internal
  */
-final class ForbiddenFunctionsNamed extends Insight implements HasDetails
+final class ForbiddenFunctionsGlobalHelpers extends Insight implements HasDetails
 {
     /**
      * {@inheritdoc}
@@ -38,7 +38,7 @@ final class ForbiddenFunctionsNamed extends Insight implements HasDetails
         foreach ($namedFunctionsPerFile as $file => $namedFunctions) {
             foreach ($namedFunctions as $key => $namedFunction) {
                 $number = $key + 1;
-                $details["$file - {$number}"] = $namedFunction;
+                $details["$file: {$number}"] = $namedFunction;
             }
         }
 

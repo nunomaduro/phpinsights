@@ -8,12 +8,12 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Collector;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFunctionsNamed;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFunctionsGlobalHelpers;
 
 /**
  * @internal
  */
-final class FunctionsNamed implements HasValue, HasPercentage, HasInsights
+final class FunctionsGlobalHelpers implements HasValue, HasPercentage, HasInsights
 {
     /**
      * {@inheritdoc}
@@ -43,7 +43,7 @@ final class FunctionsNamed implements HasValue, HasPercentage, HasInsights
     public function getInsights(): array
     {
         return [
-            ForbiddenFunctionsNamed::class,
+            ForbiddenFunctionsGlobalHelpers::class,
         ];
     }
 }
