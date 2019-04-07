@@ -21,7 +21,7 @@ final class ComposerFinder
     {
         foreach ($collector->getFiles() as $file) {
             if ($file->getFilename() === 'composer.json') {
-                return file_get_contents($file->getRealPath());
+                return (string) file_get_contents((string) $file->getRealPath());
             }
         }
 

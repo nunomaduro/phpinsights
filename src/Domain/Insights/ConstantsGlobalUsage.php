@@ -16,7 +16,7 @@ final class ConstantsGlobalUsage extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (int) count($this->collector->getGlobalConstants()) > 0;
+        return count($this->collector->getGlobalConstants()) > 0;
     }
 
     /**

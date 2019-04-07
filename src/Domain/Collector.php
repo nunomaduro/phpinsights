@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use function count;
 use function max;
 use SplFileInfo;
 
@@ -43,7 +44,7 @@ final class Collector
     private $directories = [];
 
     /**
-     * @var int
+     * @var string[]
      */
     private $concreteNonFinalClasses = [];
 
@@ -88,12 +89,12 @@ final class Collector
     private $totalMethodComplexity = 0;
 
     /**
-     * @var string[]
+     * @var int[]
      */
     private $methodComplexity = [];
 
     /**
-     * @var string[]
+     * @var array<string, float>
      */
     private $classComplexity = [];
 
@@ -103,12 +104,12 @@ final class Collector
     private $classConstants = 0;
 
     /**
-     * @var string[]
+     * @var int[]
      */
     private $methodLines = [];
 
     /**
-     * @var string[]
+     * @var array<string, float>
      */
     private $classLines = [];
 
@@ -574,23 +575,15 @@ final class Collector
      */
     public function getClassLines(): int
     {
-        return $this->getSum($this->classLines);
+        return (int) $this->getSum($this->classLines);
     }
 
     /**
-     * @return string[]
+     * @return array<string, float>
      */
     public function getPerClassLines(): array
     {
         return $this->classLines;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getLinesPerClass(): array
-    {
-        return $this->linesPerClass;
     }
 
     /**
@@ -786,9 +779,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getClassComplexity()
+    public function getClassComplexity(): array
     {
         return $this->classComplexity;
     }
@@ -858,21 +851,21 @@ final class Collector
     }
 
     /**
-     * @param $array
+     * @param  array<float>  $array
      *
-     * @return float|int
+     * @return float
      */
-    private function getAverage($array)
+    private function getAverage($array): float
     {
         return $this->divide($this->getSum($array), $this->getCount($array));
     }
 
     /**
-     * @param $array
+     * @param  array  $array
      *
      * @return int
      */
-    private function getCount($array)
+    private function getCount(array $array): int
     {
         return count($array);
     }
@@ -880,9 +873,9 @@ final class Collector
     /**
      * Returns the sum value from the given array.
      *
-     * @param  string  $array
+     * @param  array  $array
      *
-     * @return int
+     * @return int|float
      */
     private function getSum(array $array)
     {
@@ -892,7 +885,7 @@ final class Collector
     /**
      * Returns the maximum value from the given array.
      *
-     * @param  string  $array
+     * @param  array  $array
      *
      * @return int
      */
@@ -902,43 +895,14 @@ final class Collector
     }
 
     /**
-     * @param $key
+     * @param  float  $x
+     * @param  float  $y
      *
-     * @return int|mixed
+     * @return float
      */
-    private function getMinimum($key)
-    {
-        return isset($this->counts[$key]) ? \min($this->counts[$key]) : 0;
-    }
-
-    /**
-     * @param $key
-     * @param  int  $default
-     *
-     * @return int
-     */
-    private function getValue($key, $default = 0)
-    {
-        return isset($this->counts[$key]) ? $this->counts[$key] : $default;
-    }
-
-    /**
-     * @param $x
-     * @param $y
-     *
-     * @return float|int
-     */
-    private function divide($x, $y)
+    private function divide(float $x, float $y): float
     {
         return $y != 0 ? $x / $y : 0;
-    }
-
-    /**
-     * @return int|mixed
-     */
-    public function getMinimumClassLength()
-    {
-        return $this->getMinimum('class lines');
     }
 
     /**
@@ -950,35 +914,27 @@ final class Collector
     }
 
     /**
-     * @return float|int
+     * @return int
      */
-    public function getAverageMethodLength()
+    public function getAverageMethodLength(): int
     {
-        return $this->getAverage($this->methodLines);
-    }
-
-    /**
-     * @return int|mixed
-     */
-    public function getMinimumMethodLength()
-    {
-        return $this->getMinimum($this->methodLines);
+        return (int) $this->getAverage($this->methodLines);
     }
 
     /**
      * @return int
      */
-    public function getMaximumMethodLength()
+    public function getMaximumMethodLength(): int
     {
         return $this->getMaximum($this->methodLines);
     }
 
     /**
-     * @return float|int
+     * @return int
      */
-    public function getAverageFunctionLength()
+    public function getAverageFunctionLength(): int
     {
-        return $this->divide($this->getFunctionLines(), $this->getFunctions());
+        return (int) $this->divide($this->getFunctionLines(), $this->getFunctions());
     }
 
     /**
@@ -1006,14 +962,6 @@ final class Collector
     }
 
     /**
-     * @return int|mixed
-     */
-    public function getMinimumClassComplexity()
-    {
-        return $this->getMinimum($this->classComplexity);
-    }
-
-    /**
      * @return int
      */
     public function getMaximumClassComplexity()
@@ -1022,25 +970,17 @@ final class Collector
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getAverageComplexityPerMethod()
+    public function getAverageComplexityPerMethod(): float
     {
         return $this->getAverage($this->methodComplexity);
     }
 
     /**
-     * @return int|mixed
+     * @return float
      */
-    public function getMinimumMethodComplexity()
-    {
-        return $this->getMinimum($this->methodComplexity);
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaximumMethodComplexity()
+    public function getMaximumMethodComplexity(): float
     {
         return $this->getMaximum($this->methodComplexity);
     }
@@ -1058,7 +998,7 @@ final class Collector
      */
     public function getGlobalConstantAccesses()
     {
-        return \count(\array_intersect($this->getValue('possible constant accesses', []), $this->getValue('constant', [])));
+        return count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
     }
 
     /**

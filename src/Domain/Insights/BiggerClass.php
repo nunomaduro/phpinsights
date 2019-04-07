@@ -16,7 +16,7 @@ final class BiggerClass extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (int) $this->collector->getMaximumClassLength() > 30;
+        return $this->collector->getMaximumClassLength() > 30;
     }
 
     /**
