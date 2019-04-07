@@ -14,7 +14,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 final class Feedback
 {
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
+     * @var array<string, \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]>
      */
     private $insightsPerMetric = [];
 

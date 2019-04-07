@@ -14,7 +14,7 @@ final class ConfigResolver
     /**
      * Merge the given config with the specified preset.
      *
-     * @param  <array[string, string|int]  $config
+     * @param  array<string, string|int|array>  $config
      *
      * @return array
      */

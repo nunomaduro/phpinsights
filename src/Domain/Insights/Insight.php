@@ -19,6 +19,11 @@ abstract class Insight implements InsightContract
     protected $collector;
 
     /**
+     * @var array<string, string|int>
+     */
+    protected $config;
+
+    /**
      * Creates an new instance of the Insight.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector

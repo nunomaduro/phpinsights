@@ -22,6 +22,6 @@ final class ForbiddenNormalClasses extends Insight
      */
     public function getTitle(): string
     {
-        return $this->config['title'] ?? 'Normal classes are forbidden. Classes must be final or abstract.';
+        return (string) $this->config['title'] ?? 'Normal classes are forbidden. Classes must be final or abstract.';
     }
 }

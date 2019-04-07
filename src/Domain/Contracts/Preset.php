@@ -12,7 +12,7 @@ interface Preset
     /**
      * Returns the configuration preset.
      *
-     * @return <string, string|int>
+     * @return array<string, string|int|array>
      */
     public static function get(): array;
 }

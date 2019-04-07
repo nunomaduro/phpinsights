@@ -31,7 +31,6 @@ final class FeedbackFactory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  \NunoMaduro\PhpInsights\Domain\Analyser  $analyser
-     * @param  array<string, int|string>  $config
      */
     public function __construct(FilesRepository $filesRepository, Analyser $analyser)
     {

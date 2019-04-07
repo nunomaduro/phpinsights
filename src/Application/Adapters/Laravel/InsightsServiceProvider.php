@@ -21,8 +21,6 @@ final class InsightsServiceProvider extends ServiceProvider
         foreach ($this->app->make(Repositories::class)->__invoke() as $abstract => $concrete) {
             $this->app->bind($abstract, $concrete);
         }
-
-        $config = $this->app['config']->get('insights');
     }
 
     /**
@@ -31,7 +29,7 @@ final class InsightsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../../../../stubs/config.php' => config_path('insights.php'),
+            __DIR__ . '/../../../../stubs/config.php' => $this->app->configPath('insights.php'),
         ], 'config');
 
         $this->commands([

@@ -763,9 +763,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getConcreteFinalClasses()
+    public function getConcreteFinalClasses(): array
     {
         return $this->concreteFinalClasses;
     }
@@ -819,9 +819,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getAbstractClasses()
+    public function getAbstractClasses(): int
     {
         return $this->abstractClasses;
     }
@@ -986,9 +986,9 @@ final class Collector
     }
 
     /**
-     * @return int|mixed
+     * @return int
      */
-    public function getGlobalAccesses()
+    public function getGlobalAccesses(): int
     {
         return $this->getGlobalConstantAccesses() + $this->getGlobalVariableAccesses() + $this->getSuperGlobalVariableAccesses();
     }
@@ -996,55 +996,55 @@ final class Collector
     /**
      * @return int
      */
-    public function getGlobalConstantAccesses()
+    public function getGlobalConstantAccesses(): int
     {
         return count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getAttributeAccesses()
+    public function getAttributeAccesses(): int
     {
         return $this->getNonStaticAttributeAccesses() + $this->getStaticAttributeAccesses();
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getMethodCalls()
+    public function getMethodCalls(): int
     {
         return $this->getNonStaticMethodCalls() + $this->getStaticMethodCalls();
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getClasses()
+    public function getClasses(): int
     {
         return $this->getAbstractClasses() + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getMethods()
+    public function getMethods(): int
     {
         return $this->getNonStaticMethods() + $this->getStaticMethods();
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getFunctions()
+    public function getFunctions(): int
     {
         return $this->getNamedFunctions() + $this->getAnonymousFunctions();
     }
 
     /**
-     * @return int|mixed
+     * @return int
      */
-    public function getConstants()
+    public function getConstants(): int
     {
         return count($this->getGlobalConstants()) + $this->getClassConstants();
     }

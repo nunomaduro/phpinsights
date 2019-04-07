@@ -67,7 +67,7 @@ final class AnalyseCommand
      */
     private function getConfig(InputInterface $input): array
     {
-        if (! $config = $input->getArgument('config-path')) {
+        if (! (bool) $config = $input->getArgument('config-path')) {
             if (file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
                 $config = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
             }

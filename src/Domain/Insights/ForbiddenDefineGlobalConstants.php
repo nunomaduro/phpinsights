@@ -16,7 +16,10 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return count(array_diff($this->collector->getGlobalConstants(), $this->config['ignore'] ?? [])) > 0;
+        /** @var string[] $ignore */
+        $ignore = $this->config['ignore'] ?? [];
+
+        return count(array_diff($this->collector->getGlobalConstants(), $ignore)) > 0;
     }
 
     /**
@@ -33,7 +36,10 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $globalConstants = $this->collector->getGlobalConstants();
+        /** @var string[] $ignore */
+        $ignore = $this->config['ignore'] ?? [];
+
+        $globalConstants = array_diff($this->collector->getGlobalConstants(), $ignore);
 
         return array_map(function ($file, $constant) {
             return "$file <fg=red> --> </> $constant";
