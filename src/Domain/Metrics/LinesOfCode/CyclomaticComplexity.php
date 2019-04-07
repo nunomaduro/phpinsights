@@ -12,7 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 /**
  * @internal
  */
-final class Complexity implements HasValue, HasInsights
+final class CyclomaticComplexity implements HasValue, HasInsights
 {
     /**
      * {@inheritdoc}

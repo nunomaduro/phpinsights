@@ -12,14 +12,14 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 /**
  * @internal
  */
-final class ClassesComplexity implements HasValue, HasMax, SubCategory
+final class CyclomaticComplexityMethods implements HasValue, HasMax, SubCategory
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%.2f', $collector->getAverageComplexityPerClass());
+        return sprintf('%.2f', $collector->getAverageComplexityPerMethod());
     }
 
     /**
@@ -27,6 +27,6 @@ final class ClassesComplexity implements HasValue, HasMax, SubCategory
      */
     public function getMax(Collector $collector): string
     {
-        return sprintf('%d', $collector->getMaximumClassComplexity());
+        return sprintf('%d', $collector->getMaximumMethodComplexity());
     }
 }
