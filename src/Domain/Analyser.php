@@ -205,7 +205,7 @@ final class Analyser
                     if ($currentBlock === \T_FUNCTION) {
                         if ($className === null &&
                             $functionName != 'anonymous function') {
-                            $collector->incrementNamedFunctions();
+                            $collector->addNamedFunctions($functionName);
                         } else {
                             $static = false;
                             $visibility = \T_PUBLIC;

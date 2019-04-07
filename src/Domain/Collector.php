@@ -149,9 +149,9 @@ final class Collector
     private $anonymousFunctions = 0;
 
     /**
-     * @var int
+     * @var array<string, string[]>
      */
-    private $namedFunctions = 0;
+    private $namedFunctions = [];
 
     /**
      * @var int
@@ -479,11 +479,17 @@ final class Collector
     }
 
     /**
+     * @param  string  $name
+     *
      * @return void
      */
-    public function incrementNamedFunctions(): void
+    public function addNamedFunctions(string $name): void
     {
-        $this->namedFunctions++;
+        if (! array_key_exists($this->currentFilename, $this->namedFunctions)) {
+            $this->namedFunctions[$this->currentFilename] = [];
+        }
+
+        $this->namedFunctions[$this->currentFilename][] = $name;
     }
 
     /**
@@ -725,9 +731,9 @@ final class Collector
     }
 
     /**
-     * @return int
+     * @return array<string, string[]>
      */
-    public function getNamedFunctions(): int
+    public function getNamedFunctions(): array
     {
         return $this->namedFunctions;
     }
@@ -1040,7 +1046,7 @@ final class Collector
      */
     public function getFunctions(): int
     {
-        return $this->getNamedFunctions() + $this->getAnonymousFunctions();
+        return count($this->getNamedFunctions()) + $this->getAnonymousFunctions();
     }
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application;
 
-use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
+use NunoMaduro\PhpInsights\Domain\Adapters\Laravel\Preset as LaravelPreset;
 
 /**
  * @internal
