@@ -61,6 +61,7 @@ final class TableStructure
             Structure\Constants::class,
             Structure\ConstantsGlobal::class,
             Structure\ConstantsClass::class,
+            Structure\Composer::class,
             '',
             '<title>🔗  Dependencies</title>',
             '',
@@ -74,10 +75,6 @@ final class TableStructure
             Dependencies\MethodCalls::class,
             Dependencies\MethodCallsStatic::class,
             Dependencies\MethodCallsNonStatic::class,
-            '',
-            '<title>🤷🏻‍♂️ Misc</title>',
-            '',
-            Structure\Composer::class,
         ];
     }
 }

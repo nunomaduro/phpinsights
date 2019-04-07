@@ -80,9 +80,11 @@ final class Row
     /**
      * Gets the content of the second cell.
      *
+     * @param  string  $dir
+     *
      * @return string
      */
-    public function getSecondCell(): string
+    public function getSecondCell(string $dir): string
     {
         $metric = new $this->metricClass();
 
@@ -98,7 +100,7 @@ final class Row
                     $details = array_slice($details, -3, 3, true);
 
                     foreach ($details as $detail) {
-                        $detail = str_replace(getcwd() . '/', '', $detail);
+                        $detail = str_replace(realpath($dir) . '/', '', $detail);
                         $cell .= "\n<fg=red>•</> $detail";
                     }
                 }

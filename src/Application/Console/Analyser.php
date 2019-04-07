@@ -59,7 +59,7 @@ final class Analyser
                 continue;
             }
 
-            $rows[$line][1] = $row->getSecondCell();
+            $rows[$line][1] = $row->getSecondCell($dir);
         }
 
         $quality = $feedback->quality();
