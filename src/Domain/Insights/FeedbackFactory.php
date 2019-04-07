@@ -22,6 +22,11 @@ final class FeedbackFactory
     private $filesRepository;
 
     /**
+     * @var \NunoMaduro\PhpInsights\Domain\Analyser
+     */
+    private $analyser;
+
+    /**
      * Creates a new instance of Feedback Factory.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
