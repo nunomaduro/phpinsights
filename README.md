@@ -34,10 +34,28 @@ First, install PHP Insights via the Composer package manager:
 composer require nunomaduro/phpinsights:dev-feat/first
 ```
 
-Then use the `phpinsights` binary:
+### Without frameworks
+
+Use the `phpinsights` binary:
 
 ```bash
 php ./vendor/bin/phpinsights
+```
+
+### Within Laravel
+
+You can publish the config-file with:
+
+```bash
+php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider" 
+```
+
+Open `config/insights.php`, and update the preset to `laravel`.
+
+Use the `insights` Artisan command:
+
+```bash
+php artisan insights
 ```
 
 ## 💡 How to contribute
