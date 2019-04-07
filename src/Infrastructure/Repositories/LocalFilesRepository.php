@@ -41,7 +41,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function getFiles(): iterable
     {
-        return $this->finder->getIterator();
+        return $this->finder->exclude(['vendor', 'tests'])->name(['*.php', '*.json'])->getIterator();
     }
 
     /**
@@ -49,7 +49,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function in(string $dir): FilesRepository
     {
-        $this->finder->files()->in([$dir])->exclude(['vendor', 'tests']);;
+        $this->finder->files()->in([$dir]);
 
         return $this;
     }

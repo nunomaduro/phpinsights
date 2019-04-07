@@ -94,8 +94,9 @@ final class Row
         foreach ($this->feedback->allFrom($metric) as $insight) {
             $cell .= $insight->hasIssue() ? "<fg=red> ✘ --> </>" : ' <info>✔</info>';
             if ($insight->hasIssue()) {
-                $cell .= "{$insight->getTitle()}:";
+                $cell .= "{$insight->getTitle()}";
                 if ($insight instanceof HasDetails) {
+                    $cell .= ':';
                     $details = $insight->getDetails();
                     $details = array_slice($details, -3, 3, true);
 
@@ -104,8 +105,8 @@ final class Row
                         $cell .= "\n<fg=red>•</> $detail";
                     }
                 }
+                break;
             }
-
         }
 
         return trim($cell);

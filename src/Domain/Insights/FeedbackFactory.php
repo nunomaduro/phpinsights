@@ -31,6 +31,7 @@ final class FeedbackFactory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  \NunoMaduro\PhpInsights\Domain\Analyser  $analyser
+     * @param  array<string, int|string>  $config
      */
     public function __construct(FilesRepository $filesRepository, Analyser $analyser)
     {
@@ -40,13 +41,13 @@ final class FeedbackFactory
 
     /**
      * @param  array  $metrics
+     * @param  array  $config
      * @param  string  $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Feedback
      *
-     * @throws \ReflectionException
      */
-    public function get(array $metrics, string $dir): Feedback
+    public function get(array $metrics, array $config, string $dir): Feedback
     {
         try {
             $files = array_map(function (SplFileInfo $file) {
@@ -59,18 +60,36 @@ final class FeedbackFactory
         $collector = $this->analyser->analyse($files);
 
         $metrics = array_filter($metrics, function ($metricClass) {
-            return class_exists($metricClass) && array_key_exists(HasInsights::class, class_implements($metricClass));
+            return class_exists($metricClass);
         });
 
         $insights = [];
         foreach ($metrics as $metricClass) {
-            $metric = new $metricClass();
-
-            $insights = array_merge($insights, array_map(function ($insightClass) use ($collector) {
-                return new $insightClass($collector);
-            }, $metric->getInsights($collector)));
+            $insights[$metricClass] = array_map(function ($insightClass) use ($collector, $config) {
+                return new $insightClass($collector, $config['config'][$insightClass] ?? []);
+            }, $this->getInsights($metricClass, $config));
         }
 
         return new Feedback($collector, $insights);
+    }
+
+
+    /**
+     * Returns the `Insights` from the given metric class.
+     *
+     * @param  string  $metricClass
+     * @param  array  $config
+     *
+     * @return array
+     */
+    private function getInsights(string $metricClass, array $config): array
+    {
+        $metric = new $metricClass;
+
+        $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
+
+        $insights = array_diff($insights, $config['remove'] ?? []);
+
+        return array_merge($insights, $config['add'][$metricClass] ?? []);
     }
 }

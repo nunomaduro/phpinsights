@@ -10,16 +10,9 @@ namespace NunoMaduro\PhpInsights\Domain\Contracts;
 interface Preset
 {
     /**
-     * Returns the `Insights` added by the preset.
+     * Returns the configuration preset.
      *
-     * @return string[]
+     * @return <string, string|int>
      */
-    public static function adds(): array;
-
-    /**
-     * Returns the `Insights` ignored by the preset.
-     *
-     * @return string[]
-     */
-    public static function ignores(): array;
+    public static function get(): array;
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use RuntimeException;
+
 /**
  * @internal
  */
@@ -16,7 +18,7 @@ final class ComposerExists extends Insight
     {
         try {
             ComposerFinder::contents($this->collector);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             return true;
         }
 

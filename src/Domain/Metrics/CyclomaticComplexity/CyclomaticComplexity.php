@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\CyclomaticComplexity;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
@@ -28,7 +28,7 @@ final class CyclomaticComplexity implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            CyclomaticComplexityAbuse::class,
+            CyclomaticComplexityAbuse::class
         ];
     }
 }

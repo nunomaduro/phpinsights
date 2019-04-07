@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\ConstantsGlobalUsage;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
@@ -37,7 +37,7 @@ final class ConstantsGlobal implements HasValue, HasPercentage, HasInsights
     public function getInsights(): array
     {
         return [
-            ConstantsGlobalUsage::class,
+            ForbiddenDefineGlobalConstants::class,
         ];
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use RuntimeException as RuntimeExceptionAlias;
+
 /**
  * @internal
  */
@@ -21,7 +23,11 @@ final class ComposerContainsName extends Insight
      */
     public function hasIssue(): bool
     {
-        $contents = json_decode(ComposerFinder::contents($this->collector), true);
+        try {
+            $contents = json_decode(ComposerFinder::contents($this->collector), true);
+        } catch (RuntimeExceptionAlias $e) {
+            return true;
+        }
 
         return ! array_key_exists('name', $contents) || array_key_exists($contents['name'], array_flip($this->defaults));
     }

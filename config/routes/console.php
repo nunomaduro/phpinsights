@@ -10,6 +10,7 @@ $router = new Router(require __DIR__ . '/../container.php');
 
 $router->command('analyse', AnalyseCommand::class, [
     new InputArgument('directory', InputArgument::OPTIONAL),
+    new InputArgument('config-path', InputArgument::OPTIONAL),
 ]);
 
 $router->setDefault('analyse');

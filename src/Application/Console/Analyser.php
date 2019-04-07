@@ -46,9 +46,9 @@ final class Analyser
      *
      * @return void
      */
-    public function analyse(SymfonyStyle $style, string $dir): void
+    public function analyse(SymfonyStyle $style, array $config, string $dir): void
     {
-        $feedback = $this->feedbackFactory->get($metrics = TableStructure::make(), $dir);
+        $feedback = $this->feedbackFactory->get($metrics = TableStructure::make(), $config, $dir);
 
         $rows = [];
         foreach ($metrics as $line => $metricClass) {

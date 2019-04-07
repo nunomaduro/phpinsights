@@ -16,7 +16,7 @@ final class Feedback
     /**
      * @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
      */
-    private $insights = [];
+    private $insightsPerMetric = [];
 
     /**
      * @var \NunoMaduro\PhpInsights\Domain\Collector
@@ -27,15 +27,12 @@ final class Feedback
      * Creates a new instance of the feedback.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]  $insights
+     * @param  array  $insightsPerMetric
      */
-    public function __construct(Collector $collector, array $insights)
+    public function __construct(Collector $collector, array $insightsPerMetric)
     {
         $this->collector = $collector;
-
-        foreach ($insights as $insight) {
-            $this->insights[get_class($insight)] = $insight;
-        }
+        $this->insightsPerMetric = $insightsPerMetric;
     }
 
     /**
@@ -53,7 +50,15 @@ final class Feedback
      */
     public function all(): array
     {
-        return $this->insights;
+        $all = [];
+
+        foreach ($this->insightsPerMetric as $metricClass => $insights) {
+            foreach ($insights as $insight) {
+                $all[] = $insight;
+            }
+        }
+
+        return $all;
     }
 
     /**
@@ -65,15 +70,7 @@ final class Feedback
      */
     public function allFrom(Metric $metric): array
     {
-        if (! $metric instanceof HasInsights) {
-            return [];
-        }
-
-        $insightsClasses = array_flip($metric->getInsights());
-
-        return array_filter($this->insights, function ($insight) use ($insightsClasses) {
-            return array_key_exists(get_class($insight), $insightsClasses);
-        });
+        return $this->insightsPerMetric[get_class($metric)] ?? [];
     }
 
     /**
@@ -83,15 +80,15 @@ final class Feedback
      */
     public function quality(): float
     {
-        $total = count($this->insights);
-        $issuesFound = 0;
+        $total = count($this->all());
+        $issuesNotFound = 0;
 
         foreach ($this->all() as $insight) {
-            if ($insight->hasIssue()) {
-                $issuesFound++;
+            if (! $insight->hasIssue()) {
+                $issuesNotFound++;
             }
         }
 
-        return (bool) $issuesFound ? (($issuesFound * 100.0) / $total) : 100.0;
+        return (bool) $issuesNotFound ? (($issuesNotFound * 100.0) / $total) : 100.0;
     }
 }

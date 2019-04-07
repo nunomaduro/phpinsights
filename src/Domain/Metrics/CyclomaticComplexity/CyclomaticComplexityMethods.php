@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\CyclomaticComplexity;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;

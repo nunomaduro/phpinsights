@@ -9,14 +9,14 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 /**
  * @internal
  */
-final class ConstantsGlobalUsage extends Insight implements HasDetails
+final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
 {
     /**
      * {@inheritdoc}
      */
     public function hasIssue(): bool
     {
-        return count($this->collector->getGlobalConstants()) > 0;
+        return count(array_diff($this->collector->getGlobalConstants(), $this->config['ignore'] ?? [])) > 0;
     }
 
     /**

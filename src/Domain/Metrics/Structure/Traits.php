@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\TraitsUsage;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
@@ -28,7 +28,7 @@ final class Traits implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            TraitsUsage::class,
+            ForbiddenTraits::class,
         ];
     }
 }

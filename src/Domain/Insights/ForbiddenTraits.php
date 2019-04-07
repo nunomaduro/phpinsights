@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 /**
  * @internal
  */
-final class TraitsUsage extends Insight implements HasDetails
+final class ForbiddenTraits extends Insight implements HasDetails
 {
     /**
      * {@inheritdoc}

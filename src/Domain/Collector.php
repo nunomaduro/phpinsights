@@ -795,9 +795,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getPrivateMethods()
+    public function getPrivateMethods(): int
     {
         return $this->privateMethods;
     }

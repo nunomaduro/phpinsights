@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Commands;
 
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
@@ -54,7 +55,25 @@ final class AnalyseCommand
     {
         $style = new SymfonyStyle($input, OutputDecorator::decorate($output));
 
-        $this->analyser->analyse($style, $this->getDirectory($input));
+        $this->analyser->analyse($style, $this->getConfig($input), $this->getDirectory($input));
+    }
+
+    /**
+     * Gets the config from the given input.
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     *
+     * @return array
+     */
+    private function getConfig(InputInterface $input): array
+    {
+        if (! $config = $input->getArgument('config-path')) {
+            if (file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
+                $config = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
+            }
+        }
+
+        return is_string($config) ? ConfigResolver::resolve(include $config) : [];
     }
 
     /**
@@ -69,7 +88,7 @@ final class AnalyseCommand
         $directory = $input->getArgument('directory');
 
         if (is_string($directory)) {
-            if ($directory[0] === DIRECTORY_SEPARATOR) {
+            if ($directory[0] !== DIRECTORY_SEPARATOR) {
                 $directory = getcwd() . DIRECTORY_SEPARATOR . $directory;
             }
         } else {

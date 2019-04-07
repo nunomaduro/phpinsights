@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
+use NunoMaduro\PhpInsights\Domain\Metrics\CyclomaticComplexity;
 use NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
 use NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 use NunoMaduro\PhpInsights\Domain\Metrics\Structure;
@@ -31,17 +32,15 @@ final class TableStructure
             LinesOfCode\SourceCodeMethods::class,
             LinesOfCode\SourceCodeFunctions::class,
             LinesOfCode\SourceCodeGlobal::class,
-
             '',
             '<title>👔  Cyclomatic Complexity</title>',
             '',
-            LinesOfCode\CyclomaticComplexity::class,
-            LinesOfCode\CyclomaticComplexityClasses::class,
-            LinesOfCode\CyclomaticComplexityMethods::class,
+            CyclomaticComplexity\CyclomaticComplexity::class,
+            CyclomaticComplexity\CyclomaticComplexityClasses::class,
+            CyclomaticComplexity\CyclomaticComplexityMethods::class,
             '',
             '<title>🧱  Structure</title>',
             '',
-
             Structure\Namespaces::class,
             Structure\Interfaces::class,
             Structure\Traits::class,

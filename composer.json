@@ -17,6 +17,8 @@
         "symfony/finder": "^4.2"
     },
     "require-dev": {
+        "illuminate/console": "^5.8",
+        "illuminate/support": "^5.8",
         "narration/testing": "dev-master"
     },
     "autoload-dev": {
@@ -34,6 +36,20 @@
     "config": {
         "sort-packages": true,
         "preferred-install": "dist"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider"
+            ]
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NunoMaduro\\PhpInsights\\Application\\Adapters\\Laravel\\InsightsServiceProvider"
+            ]
+        }
     },
     "bin": [
         "phpinsights"
