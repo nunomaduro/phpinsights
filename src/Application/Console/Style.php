@@ -37,7 +37,8 @@ final class Style extends SymfonyStyle
     }
 
     /**
-     * @return \NunoMaduro\PhpInsights\Application\Console\Style
+     * @param  string  $type
+     * @param  string  $letter
      *
      * @return string
      */

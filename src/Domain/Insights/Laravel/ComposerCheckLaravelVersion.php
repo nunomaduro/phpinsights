@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights;
+namespace NunoMaduro\PhpInsights\Domain\Insights\Laravel;
 
-use RuntimeException as RuntimeExceptionAlias;
+use NunoMaduro\PhpInsights\Domain\Insights\ComposerFinder;
+use NunoMaduro\PhpInsights\Domain\Insights\Insight;
+use RuntimeException;
+
 
 /**
  * @internal
@@ -18,7 +21,7 @@ final class ComposerCheckLaravelVersion extends Insight
     {
         try {
             $contents = json_decode(ComposerFinder::contents($this->collector), true);
-        } catch (RuntimeExceptionAlias $e) {
+        } catch (RuntimeException $e) {
             return true;
         }
 

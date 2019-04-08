@@ -12,12 +12,19 @@ use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
 final class Quality
 {
     public const VERY_GOOD = 'A';
-
     public const OK = 'B';
-
     public const BAD = 'C';
-
     public const NOT_GOOD = 'D';
+
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Collector
+     */
+    private $collector;
+
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Insights\Feedback
+     */
+    private $feedback;
 
     /**
      * Quality constructor.

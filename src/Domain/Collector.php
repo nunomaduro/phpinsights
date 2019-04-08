@@ -104,7 +104,7 @@ final class Collector
     private $classConstants = 0;
 
     /**
-     * @var int[]
+     * @var array<string, int>
      */
     private $methodLines = [];
 
@@ -669,7 +669,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string, int>
      */
     public function getMethodLines(): array
     {

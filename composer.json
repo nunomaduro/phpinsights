@@ -14,7 +14,8 @@
         "narration/console": "dev-master",
         "narration/container": "dev-master",
         "phploc/phploc": "^5.0",
-        "symfony/finder": "^4.2"
+        "symfony/finder": "^4.2",
+        "ext-json": "*"
     },
     "require-dev": {
         "illuminate/console": "^5.8",
@@ -36,13 +37,6 @@
     "config": {
         "sort-packages": true,
         "preferred-install": "dist"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider"
-            ]
-        }
     },
     "extra": {
         "laravel": {
