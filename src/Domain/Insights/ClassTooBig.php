@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 /**
  * @internal
  */
-final class BiggerClass extends Insight implements HasDetails
+final class ClassTooBig extends Insight implements HasDetails
 {
     /**
      * {@inheritdoc}
@@ -32,7 +32,9 @@ final class BiggerClass extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $classLines = $this->collector->getPerClassLines();
+        $classLines = array_filter($this->collector->getPerClassLines(), function ($lines) {
+            return $lines > 100;
+        });
 
         uasort($classLines, function ($a, $b) {
             return $b - $a;

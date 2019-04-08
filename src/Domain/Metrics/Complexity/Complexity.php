@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\CyclomaticComplexity;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
@@ -12,7 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 /**
  * @internal
  */
-final class CyclomaticComplexity implements HasValue, HasInsights
+final class Complexity implements HasValue, HasInsights
 {
     /**
      * {@inheritdoc}

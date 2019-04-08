@@ -33,7 +33,15 @@ final class MethodTooBig extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $methodLines = $this->collector->getMethodLines();
+        $methodLines = array_filter($this->collector->getMethodLines(), function ($lines) {
+            return $lines > 25;
+        });
+
+        uasort($methodLines, function ($a, $b) {
+            return $b - $a;
+        });
+
+        $methodLines = array_reverse($methodLines);
 
         return array_map(function ($class, $lines) {
             return "$class: $lines lines";

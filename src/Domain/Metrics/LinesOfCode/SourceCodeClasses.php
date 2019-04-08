@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\BiggerClass;
+use NunoMaduro\PhpInsights\Domain\Insights\ClassTooBig;
 use NunoMaduro\PhpInsights\Domain\Insights\BiggerMethod;
 use NunoMaduro\PhpInsights\Domain\Collector;
 
@@ -56,7 +56,7 @@ final class SourceCodeClasses implements HasValue, HasPercentage, HasAvg, HasMax
     public function getInsights(): array
     {
         return [
-            BiggerClass::class,
+            ClassTooBig::class,
         ];
     }
 }
