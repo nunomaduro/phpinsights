@@ -308,12 +308,14 @@ final class Collector
     }
 
     /**
+     * @param  string  $name
+     *
      * @return void
      */
-    public function currentMethodStop(): void
+    public function currentMethodStop(string $name): void
     {
         $this->methodComplexity[] = $this->currentMethodComplexity;
-        $this->methodLines[] = $this->currentMethodLines;
+        $this->methodLines[$this->currentFilename . ':' . $name] = $this->currentMethodLines;
     }
 
     /**
@@ -667,9 +669,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getMethodLines()
+    public function getMethodLines(): array
     {
         return $this->methodLines;
     }

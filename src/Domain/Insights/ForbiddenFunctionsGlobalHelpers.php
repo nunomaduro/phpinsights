@@ -38,7 +38,7 @@ final class ForbiddenFunctionsGlobalHelpers extends Insight implements HasDetail
         foreach ($namedFunctionsPerFile as $file => $namedFunctions) {
             foreach ($namedFunctions as $key => $namedFunction) {
                 $number = $key + 1;
-                $details["$file: {$number}"] = $namedFunction;
+                $details[] = "$file:{$number}:$namedFunction";
             }
         }
 

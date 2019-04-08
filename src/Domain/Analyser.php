@@ -122,12 +122,12 @@ final class Analyser
 
                     if ($block !== false && $block !== null) {
                         if ($block === $functionName) {
-                            $functionName = null;
 
                             if ($isInMethod) {
-                                $collector->currentMethodStop();
+                                $collector->currentMethodStop($functionName);
                                 $isInMethod = false;
                             }
+                            $functionName = null;
                         } else if ($block === $className) {
                             $className = null;
                             $collector->currentClassReset();
