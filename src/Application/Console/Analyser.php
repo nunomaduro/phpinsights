@@ -7,16 +7,9 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 use function count;
 
 use NunoMaduro\PhpInsights\Application\Console\Helpers\Row;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
-use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
 use NunoMaduro\PhpInsights\Domain\Insights\FeedbackFactory;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use NunoMaduro\PhpInsights\Application\Console\Style;
+use NunoMaduro\PhpInsights\Domain\Quality;
 
 /**
  * @internal
@@ -41,12 +34,13 @@ final class Analyser
     /**
      * Analyse the given dirs.
      *
-     * @param  \Symfony\Component\Console\Style\SymfonyStyle  $style
+     * @param  \NunoMaduro\PhpInsights\Application\Console\Style  $style
+     * @param  array  $config
      * @param  string  $dir
      *
      * @return void
      */
-    public function analyse(SymfonyStyle $style, array $config, string $dir): void
+    public function analyse(Style $style, array $config, string $dir): void
     {
         $feedback = $this->feedbackFactory->get($metrics = TableStructure::make(), $config, $dir);
 
@@ -64,12 +58,35 @@ final class Analyser
 
         $quality = $feedback->quality();
 
-        $rows[0][1] = sprintf(
-            '<fg=default;options=bold>🔎  Code Quality at </><fg=%s;options=bold>%0.2f%%</>',
-            $quality === 100.0 ? 'green' : 'red',
-            $quality
-        );
+        TableFactory::make($style, [
+            [$style->letter($this->getLetterType($quality->getLetter()), $quality->getLetter()),
+                sprintf(
+                    "
+<fg=default>Code Quality at </><fg=white;options=bold>%0.2f%%</> with <fg=white;options=bold>%d</> issues
+                    ",
+                    $quality->getPercentage(), $feedback->issuesCount()
+                )],
+        ])->render();
+
 
         TableFactory::make($style, $rows)->render();
+    }
+
+    /**
+     * Returns the type of message of the letter.
+     *
+     * @return string
+     */
+    private function getLetterType(string $letter): string
+    {
+        if ($letter === Quality::VERY_GOOD) {
+            return 'green';
+        } else if ($letter === Quality::OK) {
+            return 'yellow';
+        } else if ($letter === Quality::BAD) {
+            return 'red';
+        } else {
+            return 'black';
+        }
     }
 }

@@ -7,10 +7,10 @@ namespace NunoMaduro\PhpInsights\Application\Console\Commands;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
+use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @internal
@@ -53,7 +53,7 @@ final class AnalyseCommand
      */
     public function __invoke(InputInterface $input, OutputInterface $output): void
     {
-        $style = new SymfonyStyle($input, OutputDecorator::decorate($output));
+        $style = new Style($input, OutputDecorator::decorate($output));
 
         $this->analyser->analyse($style, $this->getConfig($input), $this->getDirectory($input));
     }

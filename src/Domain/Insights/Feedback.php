@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Quality;
 
 /**
  * @internal
@@ -62,6 +63,26 @@ final class Feedback
     }
 
     /**
+     * Gets all insights.
+     *
+     * @return int
+     */
+    public function issuesCount(): int
+    {
+        $count = 0;
+
+        foreach ($this->insightsPerMetric as $metricClass => $insights) {
+            foreach ($insights as $insight) {
+                if ($insight->hasIssue()) {
+                    $count += 1;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+    /**
      * Gets all insights from given metric.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Metric  $metric
@@ -76,19 +97,10 @@ final class Feedback
     /**
      * Returns the quality of the code taking in consideration the current insights.
      *
-     * @return float
+     * @return \NunoMaduro\PhpInsights\Domain\Quality
      */
-    public function quality(): float
+    public function quality(): Quality
     {
-        $total = count($this->all());
-        $issuesNotFound = 0;
-
-        foreach ($this->all() as $insight) {
-            if (! $insight->hasIssue()) {
-                $issuesNotFound++;
-            }
-        }
-
-        return (bool) $issuesNotFound ? (($issuesNotFound * 100.0) / $total) : 100.0;
+        return new Quality($this, $this->collector);
     }
 }
