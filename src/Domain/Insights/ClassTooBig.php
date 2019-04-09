@@ -24,7 +24,7 @@ final class ClassTooBig extends Insight implements HasDetails
      */
     public function getTitle(): string
     {
-        return 'Having `classes` with more than 100 lines is prohibited';
+        return 'Having `classes` with more than 100 lines is prohibited - Consider refactoring';
     }
 
     /**

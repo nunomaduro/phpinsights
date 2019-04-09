@@ -25,7 +25,9 @@ final class ComposerCheckLaravelVersion extends Insight
             return true;
         }
 
-        return strpos('5.8.*', $contents['require']['laravel/framework']) === false;
+        return ! array_key_exists('require', $contents)
+            || ! array_key_exists('laravel/framework', $contents['require'])
+            || strpos('5.8.*', $contents['require']['laravel/framework']) === false;
     }
 
     /**
@@ -33,6 +35,6 @@ final class ComposerCheckLaravelVersion extends Insight
      */
     public function getTitle(): string
     {
-        return 'Your laravel version is outdated.';
+        return 'Your laravel version is outdated: Consider update your project to Laravel 5.8';
     }
 }
