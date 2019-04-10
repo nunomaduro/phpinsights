@@ -47,8 +47,10 @@ final class Analyser
     public function analyse(array $files): Collector
     {
         $collector = new Collector();
+        $sniffer = new Sniffer($collector);
 
         foreach ($files as $file) {
+            $sniffer->sniff($file);
             $this->analyseFile($collector, $file);
         }
 
@@ -83,6 +85,7 @@ final class Analyser
         $isInMethod = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
+
             if (\is_string($tokens[$i])) {
                 $token = \trim($tokens[$i]);
 

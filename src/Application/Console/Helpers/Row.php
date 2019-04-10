@@ -92,9 +92,12 @@ final class Row
         $cell .= $metric instanceof HasAvg ? sprintf(' <fg=magenta>avg %s</>', $metric->getAvg($this->feedback->getCollector())) : '';
         $cell .= $metric instanceof HasMax ? sprintf(' <fg=yellow>max %s</>', $metric->getMax($this->feedback->getCollector())) : '';
         foreach ($this->feedback->allFrom($metric) as $insight) {
-            $cell .= $insight->hasIssue() ? "<fg=red> ✘ --> </>" : ' <info>✔</info>';
+            $cell .= $insight->hasIssue() ?: ' <info>✔</info>';
+        }
+
+        foreach ($this->feedback->allFrom($metric) as $insight) {
             if ($insight->hasIssue()) {
-                $cell .= "{$insight->getTitle()}";
+                $cell .= "\n<fg=red>✘ --> </>{$insight->getTitle()}";
                 if ($insight instanceof HasDetails) {
                     $cell .= ':';
                     $details = $insight->getDetails();
@@ -105,7 +108,6 @@ final class Row
                         $cell .= "\n<fg=red>•</> $detail";
                     }
                 }
-                break;
             }
         }
 

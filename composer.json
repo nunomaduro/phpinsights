@@ -11,11 +11,12 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-json": "*",
         "narration/console": "dev-master",
         "narration/container": "dev-master",
         "phploc/phploc": "^5.0",
-        "symfony/finder": "^4.2",
-        "ext-json": "*"
+        "squizlabs/php_codesniffer": "^3.4",
+        "symfony/finder": "^4.2"
     },
     "require-dev": {
         "illuminate/console": "^5.8",

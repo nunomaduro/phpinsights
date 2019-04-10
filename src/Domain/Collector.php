@@ -210,6 +210,11 @@ final class Collector
     private $currentMethodLines = 0;
 
     /**
+     * @var array<string, string>
+     */
+    private $globalFunctions = [];
+
+    /**
      * @param  string  $filename
      *
      * @return void
@@ -219,7 +224,6 @@ final class Collector
         $this->files[] = $filename;
         $this->directories[] = \dirname($filename);
         $this->directories = array_unique($this->directories);
-
         $this->currentFilename = $filename;
     }
 
@@ -342,6 +346,17 @@ final class Collector
     public function addPossibleConstantAccesses(string $name): void
     {
         $this->possibleConstantAccesses[] = $name;
+    }
+
+    /**
+     * @param  int  $line
+     * @param  string  $name
+     *
+     * @return void
+     */
+    public function addGlobalFunctions(int $line, string $name): void
+    {
+        $this->globalFunctions[$this->currentFilename . ':' . $line] = $name;
     }
 
     /**
@@ -677,6 +692,14 @@ final class Collector
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getGlobalFunctions(): array
+    {
+        return $this->globalFunctions;
+    }
+
+    /**
      * @return mixed
      */
     public function getStaticAttributeAccesses()
@@ -948,25 +971,25 @@ final class Collector
     }
 
     /**
-     * @return int|mixed
+     * @return int
      */
-    public function getNotInClassesOrFunctions()
+    public function getNotInClassesOrFunctions(): int
     {
         return $this->getLogicalLines() - $this->getClassLines() - $this->getFunctionLines();
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getAverageComplexityPerLogicalLine()
+    public function getAverageComplexityPerLogicalLine(): float
     {
         return $this->divide($this->getComplexity(), $this->getLogicalLines());
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getAverageComplexityPerClass()
+    public function getAverageComplexityPerClass(): float
     {
         return $this->getAverage($this->classComplexity);
     }
