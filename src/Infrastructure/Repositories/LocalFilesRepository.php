@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 /**

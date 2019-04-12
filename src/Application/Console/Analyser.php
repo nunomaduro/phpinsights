@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
-use function count;
-
 use NunoMaduro\PhpInsights\Application\Console\Helpers\Row;
 use NunoMaduro\PhpInsights\Domain\Insights\FeedbackFactory;
 use NunoMaduro\PhpInsights\Application\Console\Style;
