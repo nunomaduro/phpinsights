@@ -54,6 +54,7 @@ final class TableStructure
             Structure\MethodsPublic::class,
             Structure\MethodsProtected::class,
             Structure\MethodsPrivate::class,
+            Structure\Attributes::class,
             Structure\Functions::class,
             Structure\FunctionsGlobalHelpers::class,
             Structure\FunctionsAnonymous::class,

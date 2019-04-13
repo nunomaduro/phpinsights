@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
+use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 
 /**
  * @internal
@@ -17,25 +17,18 @@ final class Quality
     public const NOT_GOOD = 'D';
 
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Collector
+     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
-    private $collector;
-
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\Feedback
-     */
-    private $feedback;
+    private $insightCollection;
 
     /**
      * Quality constructor.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\Feedback  $feedback
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
+     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      */
-    public function __construct(Feedback $feedback, Collector $collector)
+    public function __construct(InsightCollection $insightCollection)
     {
-        $this->collector = $collector;
-        $this->feedback = $feedback;
+        $this->insightCollection = $insightCollection;
     }
 
     /**
@@ -65,7 +58,7 @@ final class Quality
      */
     public function getPercentage(): float
     {
-        $total = count($insights = $this->feedback->all());
+        $total = count($insights = $this->insightCollection->all());
         $issuesNotFound = 0;
 
         foreach ($insights as $insight) {

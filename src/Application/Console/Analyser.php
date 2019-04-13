@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
-use function count;
 
 use NunoMaduro\PhpInsights\Application\Console\Helpers\Row;
-use NunoMaduro\PhpInsights\Domain\Insights\FeedbackFactory;
-use NunoMaduro\PhpInsights\Application\Console\Style;
+use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\Quality;
 
 /**
@@ -17,18 +15,18 @@ use NunoMaduro\PhpInsights\Domain\Quality;
 final class Analyser
 {
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\FeedbackFactory
+     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory
      */
-    private $feedbackFactory;
+    private $insightCollectionFactory;
 
     /**
      * Analyser constructor.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\FeedbackFactory  $feedbackFactory
+     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory  $insightCollectionFactory
      */
-    public function __construct(FeedbackFactory $feedbackFactory)
+    public function __construct(InsightCollectionFactory $insightCollectionFactory)
     {
-        $this->feedbackFactory = $feedbackFactory;
+        $this->insightCollectionFactory = $insightCollectionFactory;
     }
 
     /**
@@ -42,11 +40,11 @@ final class Analyser
      */
     public function analyse(Style $style, array $config, string $dir): void
     {
-        $feedback = $this->feedbackFactory->get($metrics = TableStructure::make(), $config, $dir);
+        $insightCollection = $this->insightCollectionFactory->get($metrics = TableStructure::make(), $config, $dir);
 
         $rows = [];
         foreach ($metrics as $line => $metricClass) {
-            $row = new Row($feedback, $metricClass);
+            $row = new Row($insightCollection, $metricClass);
             $rows[$line][0] = $row->getFirstCell();
 
             if (! class_exists($metricClass)) {
@@ -56,7 +54,7 @@ final class Analyser
             $rows[$line][1] = $row->getSecondCell($dir);
         }
 
-        $quality = $feedback->quality();
+        $quality = $insightCollection->quality();
 
         TableFactory::make($style, [
             [$style->letter($this->getLetterType($quality->getLetter()), $quality->getLetter()),
@@ -64,7 +62,7 @@ final class Analyser
                     "
 <fg=default>Code Quality at </><fg=white;options=bold>%0.2f%%</> with <fg=white;options=bold>%d</> issues
                     ",
-                    $quality->getPercentage(), $feedback->issuesCount()
+                    $quality->getPercentage(), $insightCollection->issuesCount()
                 )],
         ])->render();
 

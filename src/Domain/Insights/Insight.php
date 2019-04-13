@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
-use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 
 /**
  * @internal

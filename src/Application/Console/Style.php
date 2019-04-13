@@ -21,11 +21,6 @@ final class Style extends SymfonyStyle
     private $input;
 
     /**
-     * @var \Symfony\Component\Console\Output\OutputInterface
-     */
-    private $output;
-
-    /**
      * Creates a new instance of Style.
      *
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
@@ -33,7 +28,7 @@ final class Style extends SymfonyStyle
      */
     public function __construct(InputInterface $input, OutputInterface $output)
     {
-        parent::__construct($this->input = $input, $this->output = $output);
+        parent::__construct($this->input = $input, $output);
     }
 
     /**

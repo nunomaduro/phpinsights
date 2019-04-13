@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -41,7 +40,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function getFiles(): iterable
     {
-        return $this->finder->exclude(['vendor', 'tests'])->name(['*.php', '*.json'])->getIterator();
+        return $this->finder->exclude(['vendor'])->name(['*.php', '*.json'])->getIterator();
     }
 
     /**

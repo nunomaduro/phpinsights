@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
-use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
 use NunoMaduro\PhpInsights\Domain\Quality;
 
 /**
  * @internal
  */
-final class Feedback
+final class InsightCollection
 {
     /**
      * @var array<string, \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]>
@@ -25,7 +24,7 @@ final class Feedback
     private $collector;
 
     /**
-     * Creates a new instance of the feedback.
+     * Creates a new instance of the Insight Collection.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  array  $insightsPerMetric
@@ -53,7 +52,7 @@ final class Feedback
     {
         $all = [];
 
-        foreach ($this->insightsPerMetric as $metricClass => $insights) {
+        foreach ($this->insightsPerMetric as $insights) {
             foreach ($insights as $insight) {
                 $all[] = $insight;
             }
@@ -71,7 +70,7 @@ final class Feedback
     {
         $count = 0;
 
-        foreach ($this->insightsPerMetric as $metricClass => $insights) {
+        foreach ($this->insightsPerMetric as $insights) {
             foreach ($insights as $insight) {
                 if ($insight->hasIssue()) {
                     $count += 1;
@@ -101,6 +100,6 @@ final class Feedback
      */
     public function quality(): Quality
     {
-        return new Quality($this, $this->collector);
+        return new Quality($this);
     }
 }

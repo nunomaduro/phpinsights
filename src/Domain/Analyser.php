@@ -47,10 +47,8 @@ final class Analyser
     public function analyse(array $files): Collector
     {
         $collector = new Collector();
-        $sniffer = new Sniffer($collector);
 
         foreach ($files as $file) {
-            $sniffer->sniff($file);
             $this->analyseFile($collector, $file);
         }
 

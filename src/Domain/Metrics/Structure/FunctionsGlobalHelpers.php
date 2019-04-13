@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
+use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFunctions;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenRequestHelper;
 
 /**
  * @internal
@@ -46,7 +44,6 @@ final class FunctionsGlobalHelpers implements HasValue, HasPercentage, HasInsigh
     {
         return [
             ForbiddenDefineFunctions::class,
-            ForbiddenFunctions::class
         ];
     }
 }

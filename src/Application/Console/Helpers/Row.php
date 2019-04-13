@@ -10,7 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Contracts\SubCategory;
-use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
+use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 
 /**
  * @internal
@@ -18,9 +18,9 @@ use NunoMaduro\PhpInsights\Domain\Insights\Feedback;
 final class Row
 {
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\Feedback
+     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
-    private $feedback;
+    private $insightCollection;
 
     /**
      * @var string
@@ -35,12 +35,12 @@ final class Row
     /**
      * Row constructor.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\Feedback  $feedback
+     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  string  $metricClass
      */
-    public function __construct(Feedback $feedback, string $metricClass)
+    public function __construct(InsightCollection $insightCollection, string $metricClass)
     {
-        $this->feedback = $feedback;
+        $this->insightCollection = $insightCollection;
         $this->metricClass = $metricClass;
     }
 
@@ -69,8 +69,8 @@ final class Row
 
             $name = str_pad(trim($name), 21, ' ');
 
-            if ($metric instanceof HasPercentage && $percentage = $metric->getPercentage($this->feedback->getCollector()) !== 0.00) {
-                $name .= sprintf('%.2f%%', $metric->getPercentage($this->feedback->getCollector()));
+            if ($metric instanceof HasPercentage && ($percentage = $metric->getPercentage($this->insightCollection->getCollector())) !== 0.00) {
+                $name .= sprintf('%.2f%%', $percentage);
             }
         }
 
@@ -88,14 +88,14 @@ final class Row
     {
         $metric = new $this->metricClass();
 
-        $cell = $metric instanceof HasValue ? $metric->getValue($this->feedback->getCollector()) : '';
-        $cell .= $metric instanceof HasAvg ? sprintf(' <fg=magenta>avg %s</>', $metric->getAvg($this->feedback->getCollector())) : '';
-        $cell .= $metric instanceof HasMax ? sprintf(' <fg=yellow>max %s</>', $metric->getMax($this->feedback->getCollector())) : '';
-        foreach ($this->feedback->allFrom($metric) as $insight) {
-            $cell .= $insight->hasIssue() ?: ' <info>✔</info>';
+        $cell = $metric instanceof HasValue ? $metric->getValue($this->insightCollection->getCollector()) : '';
+        $cell .= $metric instanceof HasAvg ? sprintf(' <fg=magenta>avg %s</>', $metric->getAvg($this->insightCollection->getCollector())) : '';
+        $cell .= $metric instanceof HasMax ? sprintf(' <fg=yellow>max %s</>', $metric->getMax($this->insightCollection->getCollector())) : '';
+        foreach ($this->insightCollection->allFrom($metric) as $insight) {
+            $cell .= $insight->hasIssue() ? '' : ' <info>✔</info>';
         }
 
-        foreach ($this->feedback->allFrom($metric) as $insight) {
+        foreach ($this->insightCollection->allFrom($metric) as $insight) {
             if ($insight->hasIssue()) {
                 $cell .= "\n<fg=red>✘ --> </>{$insight->getTitle()}";
                 if ($insight instanceof HasDetails) {

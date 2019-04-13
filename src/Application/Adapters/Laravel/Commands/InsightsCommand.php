@@ -27,13 +27,6 @@ final class InsightsCommand extends Command
      */
     public function handle(AnalyseCommand $analyseCommand): void
     {
-        define('PHP_CODESNIFFER_VERBOSITY', 0);
-
-        /**
-         * Includes PHP Codesniffer's autoload.
-         */
-        include_once 'vendor/squizlabs/php_codesniffer/autoload.php';
-
         $analyseCommand->__invoke($this->input, $this->output);
     }
 }

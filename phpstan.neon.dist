@@ -11,5 +11,6 @@ parameters:
         - '#iterator_to_array expects Traversable, iterable#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addConstant\(\) has parameter \$name with no typehint specified#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addFile\(\) has parameter \$filename with no typehint specified#'
-
+    autoload_files:
+        - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

@@ -18,8 +18,6 @@ $router = require __DIR__ . '/config/routes/console.php';
  */
 $input = new Symfony\Component\Console\Input\ArgvInput();
 
-define('PHP_CODESNIFFER_VERBOSITY', 0);
-
 /**
  * Includes PHP Codesniffer's autoload.
  */

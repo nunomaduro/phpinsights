@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
 
+use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
-use NunoMaduro\PhpInsights\Domain\Collector;
 
 /**
  * @internal
