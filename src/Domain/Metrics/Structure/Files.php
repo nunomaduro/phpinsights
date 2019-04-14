@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
-use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionClosingBraceSniff;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\VersionControl\GitMergeConflictSniff;
 
 /**
  * @internal
  */
-final class Functions implements HasValue, HasInsights
+final class Files implements HasValue, HasInsights
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getFunctions());
+        return (string) count($collector->getFiles());
     }
 
     /**
@@ -29,8 +28,7 @@ final class Functions implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            ForbiddenFunctionsSniff::class,
-            FunctionClosingBraceSniff::class,
+            GitMergeConflictSniff::class,
         ];
     }
 }

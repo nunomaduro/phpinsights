@@ -6,11 +6,12 @@ namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\Finder;
+use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
 
 /**
  * @internal
  */
-final class LocalFilesRepository implements FilesRepository
+final class LocalFilesRepository implements FilesRepository, CustomSourceProviderInterface
 {
     /**
      * @var \Symfony\Component\Finder\Finder
@@ -46,10 +47,18 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * {@inheritdoc}
      */
-    public function in(string $dir): FilesRepository
+    public function in(string $directory, array $exclude): FilesRepository
     {
-        $this->finder->files()->in([$dir]);
+        $this->finder->files()->in([$directory])->exclude($exclude);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function find(array $source)
+    {
+        return $this->getFiles();
     }
 }

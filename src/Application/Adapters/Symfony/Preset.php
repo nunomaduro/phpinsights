@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
+namespace NunoMaduro\PhpInsights\Application\Adapters\Symfony;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
@@ -28,31 +28,7 @@ final class Preset implements PresetContract
     {
         return [
             'exclude' => [
-                'storage/framework',
-            ],
-            'add' => [
-                MethodsPrivate::class => [
-                    ForbiddenPrivateMethods::class,
-                ],
-                ClassesFinal::class => [
-                    ForbiddenFinalClasses::class,
-                ],
-                Composer::class => [
-                    ComposerCheckLaravelVersion::class,
-                ],
-            ],
-            'remove' => [
-                ForbiddenTraits::class,
-                ForbiddenDefineFunctions::class,
-                ForbiddenNormalClasses::class,
-            ],
-            'config' => [
-                ForbiddenPrivateMethods::class => [
-                    'title' => 'The usage of private methods is not idiomatic in Laravel.',
-                ],
-                ForbiddenDefineGlobalConstants::class => [
-                    'ignore' => ['LARAVEL_START'],
-                ],
+                'var',
             ],
         ];
     }

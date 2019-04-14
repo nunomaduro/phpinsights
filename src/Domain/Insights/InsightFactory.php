@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\Reflection;
+use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use RuntimeException;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
+use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
+use Symplify\EasyCodingStandard\Finder\SourceFinder;
 use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor;
 
 /**
@@ -16,6 +21,11 @@ use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor;
  */
 final class InsightFactory
 {
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository
+     */
+    private $filesRepository;
+
     /**
      * @var string
      */
@@ -34,11 +44,13 @@ final class InsightFactory
     /**
      * Creates a new instance of Insight Factory
      *
+     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository  $filesRepository
      * @param  string  $dir
      * @param  array  $insightsClasses
      */
-    public function __construct(string $dir, array $insightsClasses)
+    public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
+        $this->filesRepository = $filesRepository;
         $this->dir = $dir;
         $this->insightsClasses = $insightsClasses;
     }
@@ -116,27 +128,15 @@ final class InsightFactory
             return $this->sniffCollector;
         }
 
-        $configuration = new Configuration();
-        $reflection = new \ReflectionClass($configuration);
-        $property = $reflection->getProperty('shouldClearCache');
-        $property->setAccessible(true);
-        $property->setValue($configuration, true);
-
-        $property = $reflection->getProperty('sources');
-        $property->setAccessible(true);
-        $property->setValue($configuration, [$this->dir]);
-
-        $property = $reflection->getProperty('showProgressBar');
-        $property->setAccessible(true);
-        $property->setValue($configuration, false);
-
-        $property = $reflection->getProperty('configFilePath');
-        $property->setAccessible(true);
-        // $property->setValue($configuration, 'vendor/symplify/easy-coding-standard/config/clean-code.yml');
+        $reflection = new Reflection($configuration = new Configuration());
+        $reflection->set('shouldClearCache', true)
+            ->set('sources', [$this->dir])
+            ->set('showProgressBar', false);
 
         $container = require __DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php';
-        $container->set(Configuration::class, $configuration);
 
+        $container->set(Configuration::class, $configuration);
+        $container->get(SourceFinder::class)->setCustomSourceProvider($this->filesRepository);
         $sniffer = $container->get(SniffFileProcessor::class);
 
         foreach (InsightFactory::sniffsFrom($this->insightsClasses) as $sniff) {

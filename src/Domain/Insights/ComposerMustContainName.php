@@ -30,7 +30,7 @@ final class ComposerMustContainName extends Insight
             return true;
         }
 
-        return ! array_key_exists('name', $contents) || array_key_exists($contents['name'], array_flip($this->defaults));
+        return array_key_exists('name', $contents) && array_key_exists($contents['name'], array_flip($this->defaults));
     }
 
     /**

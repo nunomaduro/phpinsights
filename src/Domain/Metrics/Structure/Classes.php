@@ -8,6 +8,8 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff;
+use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 
 /**
  * @internal
@@ -30,6 +32,8 @@ final class Classes implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
+            ValidClassNameSniff::class,
+            ClassDeclarationSniff::class,
             DuplicateClassNameSniff::class,
         ];
     }

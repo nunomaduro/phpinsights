@@ -54,7 +54,7 @@ final class InsightCollectionFactory
         try {
             $files = array_map(function (SplFileInfo $file) {
                 return $file->getRealPath();
-            }, iterator_to_array($this->filesRepository->in($dir)->getFiles()));
+            }, iterator_to_array($this->filesRepository->in($dir, $config['exclude'] ?? [])->getFiles()));
         } catch (InvalidArgumentException $e) {
             throw new DirectoryNotFoundException($e->getMessage());
         }
@@ -67,7 +67,7 @@ final class InsightCollectionFactory
             $insightsClasses = array_merge($insightsClasses, $this->getInsights($metricClass, $config));
         }
 
-        $insightFactory = new InsightFactory($dir, $insightsClasses);
+        $insightFactory = new InsightFactory($this->filesRepository, $dir, $insightsClasses);
         $insightsForCollection = [];
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(function (string $insightClass) use ($insightFactory, $collector, $config) {

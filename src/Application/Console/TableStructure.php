@@ -41,6 +41,7 @@ final class TableStructure
             '',
             '<title>🧱  Structure</title>',
             '',
+            Structure\Files::class,
             Structure\Namespaces::class,
             Structure\Interfaces::class,
             Structure\Traits::class,

@@ -55,25 +55,28 @@ final class AnalyseCommand
     {
         $style = new Style($input, OutputDecorator::decorate($output));
 
-        $this->analyser->analyse($style, $this->getConfig($input), $this->getDirectory($input));
+        $directory = $this->getDirectory($input);
+
+        $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
     }
 
     /**
      * Gets the config from the given input.
      *
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     * @param  string  $directory
      *
      * @return array
      */
-    private function getConfig(InputInterface $input): array
+    private function getConfig(InputInterface $input, string $directory): array
     {
-        if (! (bool) $config = $input->getArgument('config-path')) {
+        if ($config = $input->getArgument('config-path')) {
             if (file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
                 $config = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
             }
         }
 
-        return is_string($config) ? ConfigResolver::resolve(include $config) : [];
+        return ConfigResolver::resolve($config ?? [], $directory);
     }
 
     /**
