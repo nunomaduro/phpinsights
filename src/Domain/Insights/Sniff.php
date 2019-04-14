@@ -63,7 +63,7 @@ final class Sniff implements Insight, HasDetails
             return sprintf(self::$messages[$sniffClass], count($this->errors));
         }
 
-        return $this->errors[0]->getSourceClass();
+        return '';
     }
 
     /**
