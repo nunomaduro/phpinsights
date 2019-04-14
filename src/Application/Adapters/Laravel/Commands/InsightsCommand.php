@@ -15,7 +15,7 @@ final class InsightsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $signature = 'insights {directory?} {config-path=config/insights.php}';
+    protected $signature = 'insights {directory?} {--config-path=config/insights.php} {--fail-under=100.0}';
 
     /**
      * {@inheritdoc}
@@ -27,6 +27,11 @@ final class InsightsCommand extends Command
      */
     public function handle(AnalyseCommand $analyseCommand): void
     {
+        /**
+         * Includes PHP Codesniffer's autoload.
+         */
+        include_once 'vendor/squizlabs/php_codesniffer/autoload.php';
+
         $analyseCommand->__invoke($this->input, $this->output);
     }
 }
