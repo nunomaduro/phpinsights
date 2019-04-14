@@ -53,15 +53,20 @@ final class Analyser
                 continue;
             }
 
-            $rows[ $line][1] = '';
+            $rows[$line][1] = '';
             foreach (explode("\n", $row->getSecondCell($dir)) as $key => $rowParts) {
                 if ($key === 0) {
+                    $rows[$line][1] .= $rowParts;
                     continue;
                 }
+
+                if ($key === 1) {
+                    $rows[$line][1] .= "\n";
+                }
+
                 $rows[$line][1] .= chunk_split($rowParts, $width - strlen($rows[$line][0]), "\n");
             }
-            $rows[$line][1] = substr_replace($rows[$line][1], "", -1);
-
+            $rows[$line][1] = $rows[$line][1][0] === "\n" ? substr_replace($rows[$line][1], "", -1) : $rows[$line][1];;
         }
 
 
