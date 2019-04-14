@@ -132,7 +132,13 @@ final class InsightFactory
             ->set('sources', [$this->dir])
             ->set('showProgressBar', true);
 
-        $container = require __DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php';
+        if (file_exists(__DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php')) {
+            $containerPath = __DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php';
+        } else {
+            $containerPath = __DIR__ . '/../../../../../symplify/easy-coding-standard/bin/container.php';
+        }
+
+        $container = require $containerPath;
 
         $container->set(Configuration::class, $configuration);
         $container->get(SourceFinder::class)->setCustomSourceProvider($this->filesRepository);
