@@ -44,17 +44,19 @@ final class ConfigResolver
      *
      * @return string
      */
-    public static function guess(string $directory): ?string
+    public static function guess(string $directory): string
     {
-        $preset = null;
+        $preset = 'default';
 
         if (! file_exists($composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json')) {
             return $preset;
         }
 
-        $composer = json_decode(file_get_contents($composerPath), true);
+        $composer = json_decode((string) file_get_contents($composerPath), true);
 
-        foreach ($composer['require'] as $requirement => $version) {
+        foreach (array_keys($composer['require']) as $requirement) {
+            $requirement = (string) $requirement;
+
             if (strpos($requirement, 'laravel/framework') !== false || strpos($requirement, 'illuminate/') !== false) {
                 $preset = 'laravel';
                 break;

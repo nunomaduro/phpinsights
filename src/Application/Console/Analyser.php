@@ -35,9 +35,9 @@ final class Analyser
      * @param  array  $config
      * @param  string  $dir
      *
-     * @return void
+     * @return float
      */
-    public function analyse(Style $style, array $config, string $dir): void
+    public function analyse(Style $style, array $config, string $dir): float
     {
         $insightCollection = $this->insightCollectionFactory->get($metrics = TableStructure::make(), $config, $dir);
 
@@ -67,6 +67,8 @@ final class Analyser
 
 
         TableFactory::make($style, $rows)->render();
+
+        return $quality->getPercentage();
     }
 
     /**

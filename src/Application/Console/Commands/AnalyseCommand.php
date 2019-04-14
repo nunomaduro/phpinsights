@@ -9,8 +9,10 @@ use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symplify\PackageBuilder\Console\ShellCode;
 
 /**
  * @internal
@@ -49,15 +51,20 @@ final class AnalyseCommand
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      *
-     * @return void
+     * @return int
      */
-    public function __invoke(InputInterface $input, OutputInterface $output): void
+    public function __invoke(InputInterface $input, OutputInterface $output): int
     {
         $style = new Style($input, OutputDecorator::decorate($output));
 
         $directory = $this->getDirectory($input);
 
-        $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+        $result = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+
+        /** @var string $failUnder */
+        $failUnder = $input->getArgument('fail-under');
+
+        return ($result > (float) $failUnder ?? 100.0) ? ShellCode::SUCCESS : ShellCode::ERROR;
     }
 
     /**
@@ -70,13 +77,16 @@ final class AnalyseCommand
      */
     private function getConfig(InputInterface $input, string $directory): array
     {
-        if ($config = $input->getArgument('config-path')) {
+        /** @var string|null $configPath */
+        $configPath = $input->getArgument('config-path');
+
+        if ($configPath === null) {
             if (file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
-                $config = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
+                $configPath = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
             }
         }
 
-        return ConfigResolver::resolve($config ?? [], $directory);
+        return ConfigResolver::resolve(is_string($configPath) ? require $configPath : [], $directory);
     }
 
     /**

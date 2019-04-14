@@ -11,7 +11,6 @@ use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use RuntimeException;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
-use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor;
@@ -22,7 +21,7 @@ use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor;
 final class InsightFactory
 {
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository
+     * @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
     private $filesRepository;
 
@@ -44,7 +43,7 @@ final class InsightFactory
     /**
      * Creates a new instance of Insight Factory
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\FilesRepository  $filesRepository
+     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  string  $dir
      * @param  array  $insightsClasses
      */
