@@ -40,10 +40,11 @@ final class InsightCollectionFactory
     }
 
     /**
-     * SniffFileProcessorf
+     * @param  string[]  $metrics
+     * @param  array<string, string|string[]>  $config
+     * @param  string  $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
-     *
      */
     public function get(array $metrics, array $config, string $dir): InsightCollection
     {
@@ -86,9 +87,9 @@ final class InsightCollectionFactory
      * Returns the `Insights` from the given metric class.
      *
      * @param  string  $metricClass
-     * @param  array  $config
+     * @param  array<string, array<string, string|int>>  $config
      *
-     * @return array
+     * @return string[]
      */
     private function getInsights(string $metricClass, array $config): array
     {

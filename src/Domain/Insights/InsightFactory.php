@@ -6,8 +6,8 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Reflection;
-use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
@@ -45,7 +45,7 @@ final class InsightFactory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  string  $dir
-     * @param  array  $insightsClasses
+     * @param  string[]  $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -130,7 +130,7 @@ final class InsightFactory
         $reflection = new Reflection($configuration = new Configuration());
         $reflection->set('shouldClearCache', true)
             ->set('sources', [$this->dir])
-            ->set('showProgressBar', false);
+            ->set('showProgressBar', true);
 
         $container = require __DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php';
 
@@ -138,7 +138,7 @@ final class InsightFactory
         $container->get(SourceFinder::class)->setCustomSourceProvider($this->filesRepository);
         $sniffer = $container->get(SniffFileProcessor::class);
 
-        foreach (InsightFactory::sniffsFrom($this->insightsClasses) as $sniff) {
+        foreach ($this->sniffsFrom($this->insightsClasses) as $sniff) {
             $sniffer->addSniff($sniff);
         }
 
@@ -146,6 +146,7 @@ final class InsightFactory
         $application->addFileProcessor($sniffer);
 
         $application->run();
+
 
         return $this->sniffCollector = $container->get(ErrorAndDiffCollector::class);
     }

@@ -17,7 +17,7 @@ final class TableStructure
     /**
      * Returns the table structure.
      *
-     * @return array
+     * @return string[]
      */
     public static function make(): array
     {
@@ -55,7 +55,6 @@ final class TableStructure
             Structure\MethodsPublic::class,
             Structure\MethodsProtected::class,
             Structure\MethodsPrivate::class,
-            Structure\Attributes::class,
             Structure\Functions::class,
             Structure\FunctionsGlobalHelpers::class,
             Structure\FunctionsAnonymous::class,
@@ -63,6 +62,8 @@ final class TableStructure
             Structure\ConstantsGlobal::class,
             Structure\ConstantsClass::class,
             Structure\Composer::class,
+            Structure\Attributes::class,
+            Structure\Variables::class,
             '',
             '<title>🔗  Dependencies</title>',
             '',

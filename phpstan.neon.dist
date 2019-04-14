@@ -7,6 +7,7 @@ parameters:
         - config
         - src
     ignoreErrors:
+        - '#Offset 1 does not exist on array.#'
         - '#iterator_to_array expects Traversable, iterable#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addConstant\(\) has parameter \$name with no typehint specified#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addFile\(\) has parameter \$filename with no typehint specified#'

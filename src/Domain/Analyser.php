@@ -40,7 +40,7 @@ final class Analyser
     /**
      * Processes a set of files.
      *
-     * @param  array  $files
+     * @param  string[]  $files
      *
      * @return \NunoMaduro\PhpInsights\Domain\Collector
      */

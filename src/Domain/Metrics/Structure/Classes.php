@@ -10,6 +10,10 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
+use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
+use Symplify\CodingStandard\Sniffs\Architecture\DuplicatedClassShortNameSniff;
+use Symplify\CodingStandard\Sniffs\CleanCode\ForbiddenParentClassSniff;
 
 /**
  * @internal
@@ -35,6 +39,8 @@ final class Classes implements HasValue, HasInsights
             ValidClassNameSniff::class,
             ClassDeclarationSniff::class,
             DuplicateClassNameSniff::class,
+            UnusedPrivateElementsSniff::class,
+            ModernClassNameReferenceSniff::class,
         ];
     }
 }

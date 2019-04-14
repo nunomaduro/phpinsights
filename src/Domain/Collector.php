@@ -894,7 +894,7 @@ final class Collector
     }
 
     /**
-     * @param  array  $array
+     * @param  array<string, float|int>  $array
      *
      * @return int
      */
@@ -906,7 +906,7 @@ final class Collector
     /**
      * Returns the sum value from the given array.
      *
-     * @param  array  $array
+     * @param  array<string, float|int>  $array
      *
      * @return int|float
      */
@@ -918,7 +918,7 @@ final class Collector
     /**
      * Returns the maximum value from the given array.
      *
-     * @param  array  $array
+     * @param  array<string, float|int>  $array
      *
      * @return int
      */

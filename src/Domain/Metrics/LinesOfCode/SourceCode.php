@@ -14,8 +14,15 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSni
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\ClosingTagSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\ControlStructureSpacingSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff;
+use SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff;
+use SlevomatCodingStandard\Sniffs\Operators\RequireCombinedAssignmentOperatorSniff;
+use SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff;
+use SlevomatCodingStandard\Sniffs\PHP\UselessSemicolonSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 
 /**
@@ -47,6 +54,13 @@ final class SourceCode implements HasValue, HasInsights
             EndFileNewlineSniff::class,
             // ControlStructureSpacingSniff::class,
             SwitchDeclarationSniff::class,
+            UselessSemicolonSniff::class,
+            UselessParenthesesSniff::class,
+            RequireShortTernaryOperatorSniff::class,
+            RequireCombinedAssignmentOperatorSniff::class,
+            LanguageConstructSpacingSniff::class,
+            SuperfluousWhitespaceSniff::class,
+            ReferenceThrowableOnlySniff::class,
         ];
     }
 }

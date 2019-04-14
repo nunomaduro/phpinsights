@@ -13,6 +13,14 @@ use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 final class ConfigResolver
 {
     /**
+     * @var string[]
+     */
+    private static $presets = [
+        LaravelPreset::class,
+        SymfonyPreset::class,
+    ];
+
+    /**
      * Merge the given config with the specified preset.
      *
      * @param  array<string, string|int|array>  $config
@@ -24,14 +32,10 @@ final class ConfigResolver
     {
         $preset = $config['preset'] ?? self::guess($directory);
 
-        switch ($preset) {
-            case 'laravel':
-                $config = array_merge_recursive(LaravelPreset::get(), $config);
-                break;
-
-            case 'symfony':
-                $config = array_merge_recursive(SymfonyPreset::get(), $config);
-                break;
+        foreach (self::$presets as $presetClass) {
+            if ($presetClass::getName() === $preset) {
+                $config = array_merge_recursive($presetClass::get(), $config);
+            }
         }
 
         return $config;
@@ -54,16 +58,9 @@ final class ConfigResolver
 
         $composer = json_decode((string) file_get_contents($composerPath), true);
 
-        foreach (array_keys($composer['require']) as $requirement) {
-            $requirement = (string) $requirement;
-
-            if (strpos($requirement, 'laravel/framework') !== false || strpos($requirement, 'illuminate/') !== false) {
-                $preset = 'laravel';
-                break;
-            }
-
-            if (strpos($requirement, 'symfony/framework-bundle') !== false || strpos($requirement, 'symfony/flex') !== false) {
-                $preset = 'symfony';
+        foreach (self::$presets as $presetClass) {
+            if ($presetClass::shouldBeApplied($composer)) {
+                $preset = $presetClass::getName();
                 break;
             }
         }

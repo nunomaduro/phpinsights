@@ -8,11 +8,15 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\NullTypeHintOnLastPositionSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 /**
  * @internal
  */
-final class Comments implements HasValue, HasPercentage
+final class Comments implements HasValue, HasPercentage, HasInsights
 {
     /**
      * {@inheritdoc}
@@ -28,5 +32,18 @@ final class Comments implements HasValue, HasPercentage
     public function getPercentage(Collector $collector): float
     {
         return $collector->getLines() > 0 ? ($collector->getCommentLines() / $collector->getLines()) * 100 : 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInsights(): array
+    {
+        return [
+            EmptyCommentSniff::class,
+            TypeHintDeclarationSniff::class,
+            NullTypeHintOnLastPositionSniff::class,
+            NullableTypeForNullDefaultValueSniff::class,
+        ];
     }
 }

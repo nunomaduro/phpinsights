@@ -24,6 +24,14 @@ final class Preset implements PresetContract
     /**
      * {@inheritDoc}
      */
+    public static function getName(): string
+    {
+        return 'laravel';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public static function get(): array
     {
         return [
@@ -55,5 +63,28 @@ final class Preset implements PresetContract
                 ],
             ],
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function shouldBeApplied(array $composer): bool
+    {
+        /** @var string[] $requirements */
+        $requirements = $composer['require'];
+
+        foreach (array_keys($requirements) as $requirement) {
+            $requirement = (string) $requirement;
+            if (strpos($requirement, 'laravel/framework') !== false
+                || strpos($requirement, 'illuminate/') !== false) {
+                return true;
+            }
+        }
+
+        if ($composer['name'] === 'laravel/framework') {
+            return true;
+        }
+
+        return false;
     }
 }

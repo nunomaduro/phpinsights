@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\NamespaceDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
 
 /**
  * @internal
@@ -33,6 +34,7 @@ final class Namespaces implements HasValue, HasInsights
         return [
             UseDeclarationSniff::class,
             NamespaceDeclarationSniff::class,
+            UselessAliasSniff::class,
         ];
     }
 }

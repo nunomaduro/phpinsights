@@ -27,7 +27,7 @@ final class InsightCollection
      * Creates a new instance of the Insight Collection.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array  $insightsPerMetric
+     * @param  array<string, string[]>  $insightsPerMetric
      */
     public function __construct(Collector $collector, array $insightsPerMetric)
     {

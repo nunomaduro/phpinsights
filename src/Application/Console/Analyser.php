@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 use NunoMaduro\PhpInsights\Application\Console\Helpers\Row;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\Quality;
+use Symfony\Component\Console\Terminal;
 
 /**
  * @internal
@@ -41,6 +42,8 @@ final class Analyser
     {
         $insightCollection = $this->insightCollectionFactory->get($metrics = TableStructure::make(), $config, $dir);
 
+        $width = (new Terminal())->getWidth();
+
         $rows = [];
         foreach ($metrics as $line => $metricClass) {
             $row = new Row($insightCollection, $metricClass);
@@ -50,10 +53,21 @@ final class Analyser
                 continue;
             }
 
-            $rows[$line][1] = $row->getSecondCell($dir);
+            $rows[ $line][1] = '';
+            foreach (explode("\n", $row->getSecondCell($dir)) as $key => $rowParts) {
+                if ($key === 0) {
+                    continue;
+                }
+                $rows[$line][1] .= chunk_split($rowParts, $width - strlen($rows[$line][0]), "\n");
+            }
+            $rows[$line][1] = substr_replace($rows[$line][1], "", -1);
+
         }
 
+
         $quality = $insightCollection->quality();
+
+        $style->newLine();
 
         TableFactory::make($style, [
             [$style->letter($this->getLetterType($quality->getLetter()), $quality->getLetter()),
