@@ -63,7 +63,14 @@ final class Sniff implements Insight, HasDetails
             return sprintf(self::$messages[$sniffClass], count($this->errors));
         }
 
-        return '';
+        $path = explode('\\', $sniffClass);
+        $name = array_pop($path);
+
+        $name = str_replace('Sniff', '', $name);
+
+        $name = ucfirst(trim(mb_strtolower(preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
+
+        return $name . ' issues detected';
     }
 
     /**
