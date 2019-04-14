@@ -15,6 +15,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\Laravel\ComposerCheckLaravelVersion;
 use NunoMaduro\PhpInsights\Domain\Metrics\Structure\ClassesFinal;
 use NunoMaduro\PhpInsights\Domain\Metrics\Structure\Composer;
 use NunoMaduro\PhpInsights\Domain\Metrics\Structure\MethodsPrivate;
+use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 /**
  * @internal
@@ -53,6 +54,7 @@ final class Preset implements PresetContract
                 ForbiddenTraits::class,
                 ForbiddenDefineFunctions::class,
                 ForbiddenNormalClasses::class,
+                TypeHintDeclarationSniff::class,
             ],
             'config' => [
                 ForbiddenPrivateMethods::class => [

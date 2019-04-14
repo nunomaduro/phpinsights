@@ -62,9 +62,9 @@ final class AnalyseCommand
         $result = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
 
         /** @var string $failUnder */
-        $failUnder = $input->getArgument('fail-under');
+        $failUnder = $input->getOption('fail-under');
 
-        return ($result > (float) $failUnder ?? 100.0) ? ShellCode::SUCCESS : ShellCode::ERROR;
+        return ($result > (float) ($failUnder ?: 100.0)) ? ShellCode::SUCCESS : ShellCode::ERROR;
     }
 
     /**
@@ -78,7 +78,7 @@ final class AnalyseCommand
     private function getConfig(InputInterface $input, string $directory): array
     {
         /** @var string|null $configPath */
-        $configPath = $input->getArgument('config-path');
+        $configPath = $input->getOption('config-path');
 
         if ($configPath === null) {
             if (file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {

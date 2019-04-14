@@ -101,11 +101,18 @@ final class Row
                 if ($insight instanceof HasDetails) {
                     $cell .= ':';
                     $details = $insight->getDetails();
+                    $totalDetails = count($details);
                     $details = array_slice($details, -3, 3, true);
 
                     foreach ($details as $detail) {
                         $detail = str_replace(realpath($dir) . '/', '', $detail);
                         $cell .= "\n<fg=red>•</> $detail";
+                    }
+
+                    if ($totalDetails > 3) {
+                        $totalRemainDetails = $totalDetails - 3;
+
+                        $cell .= " <fg=red>+{$totalRemainDetails} issues omitted</>";
                     }
                 }
             }
