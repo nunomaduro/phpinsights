@@ -64,11 +64,11 @@ final class Sniff implements Insight, HasDetails
         }
 
         $path = explode('\\', $sniffClass);
-        $name = array_pop($path);
+        $name = (string) array_pop($path);
 
         $name = str_replace('Sniff', '', $name);
 
-        $name = ucfirst(trim(mb_strtolower(preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
+        $name = ucfirst(trim(mb_strtolower((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
 
         return $name . ' issues detected';
     }

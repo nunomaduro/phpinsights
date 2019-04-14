@@ -920,7 +920,7 @@ final class Collector
      *
      * @param  array<string, float|int>  $array
      *
-     * @return int
+     * @return int|float
      */
     private function getMaximum(array $array)
     {
@@ -943,7 +943,7 @@ final class Collector
      */
     public function getMaximumClassLength()
     {
-        return $this->getMaximum($this->classLines);
+        return (int) $this->getMaximum($this->classLines);
     }
 
     /**
@@ -959,7 +959,7 @@ final class Collector
      */
     public function getMaximumMethodLength(): int
     {
-        return $this->getMaximum($this->methodLines);
+        return (int) $this->getMaximum($this->methodLines);
     }
 
     /**
@@ -999,7 +999,7 @@ final class Collector
      */
     public function getMaximumClassComplexity()
     {
-        return $this->getMaximum($this->getClassComplexity());
+        return (int) $this->getMaximum($this->getClassComplexity());
     }
 
     /**

@@ -41,7 +41,7 @@ final class InsightCollectionFactory
 
     /**
      * @param  string[]  $metrics
-     * @param  array<string, string|string[]>  $config
+     * @param  array<string, array<string, string>>  $config
      * @param  string  $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
@@ -87,7 +87,7 @@ final class InsightCollectionFactory
      * Returns the `Insights` from the given metric class.
      *
      * @param  string  $metricClass
-     * @param  array<string, array<string, string|int>>  $config
+     * @param  array<string, array<string, string>>  $config
      *
      * @return string[]
      */
