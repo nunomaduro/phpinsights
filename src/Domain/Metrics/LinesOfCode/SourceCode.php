@@ -7,13 +7,16 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use ObjectCalisthenics\Sniffs\CodeAnalysis\OneObjectOperatorPerLineSniff;
+use ObjectCalisthenics\Sniffs\ControlStructures\NoElseSniff;
+use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Files\IncludingFileSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff;
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Files\SideEffectsSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\ClosingTagSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff;
-use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
@@ -61,6 +64,9 @@ final class SourceCode implements HasValue, HasInsights
             LanguageConstructSpacingSniff::class,
             SuperfluousWhitespaceSniff::class,
             ReferenceThrowableOnlySniff::class,
+            NoElseSniff::class,
+            OneObjectOperatorPerLineSniff::class,
+            ElementNameMinimalLengthSniff::class,
         ];
     }
 }

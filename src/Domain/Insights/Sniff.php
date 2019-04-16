@@ -7,9 +7,9 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
+use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use Symplify\EasyCodingStandard\Error\Error;
-use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 
 /**
  * @internal

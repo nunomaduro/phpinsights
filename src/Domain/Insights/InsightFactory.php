@@ -7,7 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
-use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;

@@ -66,7 +66,7 @@ final class Analyser
 
                 $rows[$line][1] .= chunk_split($rowParts, $width - strlen($rows[$line][0]), "\n");
             }
-            $rows[$line][1] = $rows[$line][1][0] === "\n" ? substr_replace($rows[$line][1], "", -1) : $rows[$line][1];;
+            $rows[$line][1] = $rows[$line][1][0] === "\n" ? substr_replace($rows[$line][1], "", -1) : $rows[$line][1];
         }
 
 

@@ -7,13 +7,13 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
+use ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
-use Symplify\CodingStandard\Sniffs\Architecture\DuplicatedClassShortNameSniff;
-use Symplify\CodingStandard\Sniffs\CleanCode\ForbiddenParentClassSniff;
 
 /**
  * @internal
@@ -29,9 +29,7 @@ final class Classes implements HasValue, HasInsights
     }
 
     /**
-     * Returns the insights classes applied on the metric.
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getInsights(): array
     {
@@ -41,6 +39,8 @@ final class Classes implements HasValue, HasInsights
             DuplicateClassNameSniff::class,
             UnusedPrivateElementsSniff::class,
             ModernClassNameReferenceSniff::class,
+            ClassTraitAndInterfaceLengthSniff::class,
+            MethodPerClassLimitSniff::class,
         ];
     }
 }

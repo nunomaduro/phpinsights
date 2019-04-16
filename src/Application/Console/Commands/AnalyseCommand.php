@@ -9,7 +9,6 @@ use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\PackageBuilder\Console\ShellCode;
