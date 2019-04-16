@@ -97,9 +97,7 @@ final class InsightCollectionFactory
 
         $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
 
-        if (is_array($config['add'][$metricClass] ?? [])) {
-            $insights = array_merge($insights, $config['add'][$metricClass]);
-        }
+        $insights = array_merge($insights, $config['add'][$metricClass] ?? []);
 
         return array_diff($insights, $config['remove'] ?? []);
     }
