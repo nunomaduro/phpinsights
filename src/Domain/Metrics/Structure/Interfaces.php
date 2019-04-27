@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 
 /**
  * @internal
  */
-final class Interfaces implements HasValue
+final class Interfaces implements HasValue, HasPercentage
 {
     /**
      * {@inheritdoc}
@@ -18,5 +19,13 @@ final class Interfaces implements HasValue
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getInterfaces());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPercentage(Collector $collector): float
+    {
+        return count($collector->getFiles()) > 0 ? ($collector->getInterfaces() / count($collector->getFiles())) * 100 : 0;
     }
 }

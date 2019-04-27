@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionClosingBraceSniff;
@@ -33,6 +34,7 @@ final class Functions implements HasValue, HasInsights
             ForbiddenFunctionsSniff::class,
             FunctionClosingBraceSniff::class,
             FunctionLengthSniff::class,
+            ForbiddenDefineFunctions::class,
         ];
     }
 }

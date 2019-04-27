@@ -10,13 +10,13 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 /**
  * @internal
  */
-final class MethodCalls implements HasValue
+final class Explicit implements HasValue
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getMethodCalls());
+        return sprintf('%d', $collector->getNonStaticMethodCalls() + $collector->getNonStaticAttributeAccesses());
     }
 }

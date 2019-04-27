@@ -19,10 +19,8 @@ final class ComposerFinder
      */
     public static function contents(Collector $collector): string
     {
-        foreach ($collector->getFiles() as $file) {
-            if ($file->getFilename() === 'composer.json') {
-                return (string) file_get_contents((string) $file->getRealPath());
-            }
+        if (file_exists($collector->getDir() . '/composer.json')) {
+            return (string) file_get_contents($collector->getDir() . '/composer.json');
         }
 
         throw new RuntimeException('`composer.json` not found.');

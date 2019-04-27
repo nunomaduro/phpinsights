@@ -11,14 +11,14 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 /**
  * @internal
  */
-final class MethodCallsStatic implements HasValue, HasPercentage
+final class Globally implements HasValue, HasPercentage
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getStaticMethodCalls());
+        return sprintf('%d', $collector->getGlobalAccesses());
     }
 
     /**
@@ -26,6 +26,6 @@ final class MethodCallsStatic implements HasValue, HasPercentage
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getMethodCalls() > 0 ? ($collector->getStaticMethodCalls() / $collector->getMethodCalls()) * 100 : 0;
+        return $collector->getLines() > 0 ? ($collector->getClassLines() / $collector->getLines()) * 100 : 0;
     }
 }

@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff;
 
 /**
@@ -29,6 +30,7 @@ final class Constants implements HasValue, HasInsights
     {
         return [
             UpperCaseConstantNameSniff::class,
+            ForbiddenDefineGlobalConstants::class,
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Code;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
@@ -41,7 +41,7 @@ final class Comments implements HasValue, HasPercentage, HasInsights
     {
         return [
             EmptyCommentSniff::class,
-            TypeHintDeclarationSniff::class,
+            // TypeHintDeclarationSniff::class,
             NullTypeHintOnLastPositionSniff::class,
             NullableTypeForNullDefaultValueSniff::class,
         ];

@@ -12,9 +12,8 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Insights\Laravel\ComposerCheckLaravelVersion;
-use NunoMaduro\PhpInsights\Domain\Metrics\Structure\ClassesFinal;
+use NunoMaduro\PhpInsights\Domain\Metrics\Structure\Classes;
 use NunoMaduro\PhpInsights\Domain\Metrics\Structure\Composer;
-use NunoMaduro\PhpInsights\Domain\Metrics\Structure\MethodsPrivate;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 /**
@@ -40,10 +39,7 @@ final class Preset implements PresetContract
                 'storage/framework',
             ],
             'add' => [
-                MethodsPrivate::class => [
-                    ForbiddenPrivateMethods::class,
-                ],
-                ClassesFinal::class => [
+                Classes::class => [
                     ForbiddenFinalClasses::class,
                 ],
                 Composer::class => [

@@ -127,8 +127,7 @@ final class InsightFactory
         }
 
         $reflection = new Reflection($configuration = new Configuration());
-        $reflection->set('shouldClearCache', true)
-            ->set('sources', [$this->dir])
+        $reflection->set('sources', [$this->dir])
             ->set('showProgressBar', true);
 
         if (file_exists(__DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php')) {
@@ -151,7 +150,6 @@ final class InsightFactory
         $application->addFileProcessor($sniffer);
 
         $application->run();
-
 
         return $this->sniffCollector = $container->get(ErrorAndDiffCollector::class);
     }

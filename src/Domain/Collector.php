@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use function count;
 use function max;
-use SplFileInfo;
 
 /**
  * @internal
@@ -14,9 +13,9 @@ use SplFileInfo;
 final class Collector
 {
     /**
-     * @var int
+     * @var string
      */
-    private $lines = 0;
+    private $dir;
 
     /**
      * @var int
@@ -215,26 +214,28 @@ final class Collector
     private $globalFunctions = [];
 
     /**
+     * Creates a new instance of the Collector.
+     *
+     * @param  string  $dir
+     */
+    public function __construct(string $dir)
+    {
+        $this->dir = $dir;
+    }
+
+    /**
      * @param  string  $filename
      *
      * @return void
      */
     public function addFile(string $filename): void
     {
-        $this->files[] = $filename;
+        $filename = str_replace($this->dir . '/', '', $filename);
+
+        $this->files[$filename] = $filename;
         $this->directories[] = \dirname($filename);
         $this->directories = array_unique($this->directories);
         $this->currentFilename = $filename;
-    }
-
-    /**
-     * @param  int  $number
-     *
-     * @return void
-     */
-    public function incrementLines(int $number): void
-    {
-        $this->lines += $number;
     }
 
     /**
@@ -546,11 +547,24 @@ final class Collector
     }
 
     /**
+     * Returns the analysed dir.
+     *
+     * @return string
+     */
+    public function getDir(): string
+    {
+        return $this->dir;
+    }
+
+    /**
      * @return int
      */
     public function getLines(): int
     {
-        return $this->lines;
+        return $this->getCommentLines()
+            + $this->getFunctionLines()
+            + $this->getClassLines()
+            + $this->getNotInClassesOrFunctions();
     }
 
     /**
@@ -562,13 +576,11 @@ final class Collector
     }
 
     /**
-     * @return \SplFileInfo[]
+     * @return array<string, string>
      */
     public function getFiles(): array
     {
-        return array_map(function (string $file) {
-            return new SplFileInfo($file);
-        }, $this->files);
+        return $this->files;
     }
 
     /**
@@ -676,9 +688,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getFunctionLines()
+    public function getFunctionLines(): int
     {
         return $this->functionLines;
     }
@@ -812,14 +824,6 @@ final class Collector
     }
 
     /**
-     * @return array
-     */
-    public function getClassComplexity(): array
-    {
-        return $this->classComplexity;
-    }
-
-    /**
      * @return mixed
      */
     public function getProtectedMethods()
@@ -836,17 +840,17 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getStaticMethodCalls()
+    public function getStaticMethodCalls(): int
     {
         return $this->staticMethodCalls;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getInterfaces()
+    public function getInterfaces(): int
     {
         return $this->interfaces;
     }
@@ -992,6 +996,16 @@ final class Collector
     public function getAverageComplexityPerClass(): float
     {
         return $this->getAverage($this->classComplexity);
+    }
+
+    /**
+     * Return
+     *
+     * @return array<string, float>
+     */
+    public function getClassComplexity(): array
+    {
+        return $this->classComplexity;
     }
 
     /**

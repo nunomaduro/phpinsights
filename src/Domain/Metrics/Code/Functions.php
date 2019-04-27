@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\LinesOfCode;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Code;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
@@ -12,7 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 /**
  * @internal
  */
-final class SourceCodeFunctions implements HasValue, HasPercentage, HasAvg
+final class Functions implements HasValue, HasPercentage, HasAvg
 {
     /**
      * {@inheritdoc}
@@ -27,7 +27,7 @@ final class SourceCodeFunctions implements HasValue, HasPercentage, HasAvg
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getLogicalLines() > 0 ? ($collector->getFunctionLines() / $collector->getLogicalLines()) * 100 : 0;
+        return $collector->getLines() > 0 ? ($collector->getFunctionLines() / $collector->getLines()) * 100 : 0;
     }
 
     /**

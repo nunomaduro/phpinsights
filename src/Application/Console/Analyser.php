@@ -6,8 +6,8 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 
 use NunoMaduro\PhpInsights\Application\Console\Helpers\Row;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
-use NunoMaduro\PhpInsights\Domain\Quality;
-use Symfony\Component\Console\Terminal;
+use NunoMaduro\PhpInsights\Domain\MetricsFinder;
+use NunoMaduro\PhpInsights\Domain\Results;
 
 /**
  * @internal
@@ -40,71 +40,28 @@ final class Analyser
      */
     public function analyse(Style $style, array $config, string $dir): float
     {
-        $insightCollection = $this->insightCollectionFactory->get($metrics = TableStructure::make(), $config, $dir);
+        $metrics = MetricsFinder::find();
 
-        $width = (new Terminal())->getWidth();
+        $insightCollection = $this->insightCollectionFactory->get($metrics, $config, $dir);
 
-        $rows = [];
-        foreach ($metrics as $line => $metricClass) {
-            $row = new Row($insightCollection, $metricClass);
-            $rows[$line][0] = $row->getFirstCell();
+        $style->newLine(2);
 
-            if (! class_exists($metricClass)) {
-                continue;
-            }
+        $style->writeln(sprintf('<fg=yellow>[%s]</> `%s`', date('Y-m-d H:i:s'), $dir));
 
-            $rows[$line][1] = '';
-            foreach (explode("\n", $row->getSecondCell($dir)) as $key => $rowParts) {
-                if ($key === 0) {
-                    $rows[$line][1] .= $rowParts;
-                    continue;
-                }
+        $style->header($results = $insightCollection->results());
 
-                if ($key === 1) {
-                    $rows[$line][1] .= "\n";
-                }
+        $style->code($insightCollection, $results);
 
-                $rows[$line][1] .= chunk_split($rowParts, $width - strlen($rows[$line][0]), "\n");
-            }
-            $rows[$line][1] = $rows[$line][1][0] === "\n" ? substr_replace($rows[$line][1], "", -1) : $rows[$line][1];
+        $style->complexity($insightCollection, $results);
+
+        $style->structure($insightCollection, $results);
+
+        // $style->dependencies($insightCollection, $results, $dir);
+
+        foreach ($metrics as $metricClass) {
+            (new Row($insightCollection, $metricClass))->writeIssues($style, $dir);
         }
 
-
-        $quality = $insightCollection->quality();
-
-        $style->newLine();
-
-        TableFactory::make($style, [
-            [$style->letter($this->getLetterType($quality->getLetter()), $quality->getLetter()),
-                sprintf(
-                    "
-<fg=default>Code Quality at </><fg=white;options=bold>%0.2f%%</> with <fg=white;options=bold>%d</> issues
-                    ",
-                    $quality->getPercentage(), $insightCollection->issuesCount()
-                )],
-        ])->render();
-
-
-        TableFactory::make($style, $rows)->render();
-
-        return $quality->getPercentage();
-    }
-
-    /**
-     * Returns the type of message of the letter.
-     *
-     * @return string
-     */
-    private function getLetterType(string $letter): string
-    {
-        if ($letter === Quality::VERY_GOOD) {
-            return 'green';
-        } else if ($letter === Quality::OK) {
-            return 'yellow';
-        } else if ($letter === Quality::BAD) {
-            return 'red';
-        } else {
-            return 'black';
-        }
+        return $results->getCodeQuality();
     }
 }

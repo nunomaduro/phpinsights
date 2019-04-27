@@ -10,13 +10,16 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 /**
  * @internal
  */
-final class GlobalAccesses implements HasValue
+final class Dependencies implements HasValue
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getGlobalAccesses());
+        return sprintf('%d', $collector->getGlobalAccesses() +
+            $collector->getAttributeAccesses() +
+            $collector->getMethodCalls()
+        );
     }
 }

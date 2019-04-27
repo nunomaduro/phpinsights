@@ -48,10 +48,6 @@ final class InsightCollectionFactory
      */
     public function get(array $metrics, array $config, string $dir): InsightCollection
     {
-        $metrics = array_filter($metrics, function ($metricClass) {
-            return class_exists($metricClass);
-        });
-
         try {
             $files = array_map(function (SplFileInfo $file) {
                 return $file->getRealPath();
@@ -60,7 +56,7 @@ final class InsightCollectionFactory
             throw new DirectoryNotFoundException($e->getMessage());
         }
 
-        $collector = $this->analyser->analyse($files);
+        $collector = $this->analyser->analyse($dir, $files);
         /** @var Container $container */
 
         $insightsClasses = [];

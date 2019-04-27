@@ -25,7 +25,10 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
      */
     public function __construct(Finder $finder)
     {
-        $this->finder = $finder;
+        $this->finder = $finder->files()
+            ->name(['*.php'])
+            ->ignoreVCSIgnored(true)
+            ->ignoreUnreadableDirs();
     }
 
     /**
@@ -41,7 +44,7 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
      */
     public function getFiles(): iterable
     {
-        return $this->finder->exclude(['vendor'])->name(['*.php', '*.json'])->getIterator();
+        return $this->finder->getIterator();
     }
 
     /**
@@ -49,7 +52,7 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
      */
     public function in(string $directory, array $exclude): FilesRepository
     {
-        $this->finder->files()->in([$directory])->exclude($exclude);
+        $this->finder->in([$directory])->exclude($exclude);
 
         return $this;
     }

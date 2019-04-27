@@ -16,7 +16,7 @@
         "narration/container": "dev-master",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
-        "symfony/finder": "^4.2",
+        "symfony/finder": "^4.3",
         "symplify/easy-coding-standard": "^5.4"
     },
     "require-dev": {

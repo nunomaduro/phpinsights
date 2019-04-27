@@ -40,13 +40,16 @@ final class Analyser
     /**
      * Processes a set of files.
      *
+     * @param  string  $dir
      * @param  string[]  $files
      *
      * @return \NunoMaduro\PhpInsights\Domain\Collector
      */
-    public function analyse(array $files): Collector
+    public function analyse(string $dir, array $files): Collector
     {
-        $collector = new Collector();
+        $dir = (string) realpath($dir);
+
+        $collector = new Collector($dir);
 
         foreach ($files as $file) {
             $this->analyseFile($collector, $file);
@@ -66,7 +69,6 @@ final class Analyser
     private function analyseFile(Collector $collector, string $filename): void
     {
         $buffer = (string) \file_get_contents($filename);
-        $collector->incrementLines(\substr_count($buffer, "\n"));
         $tokens = \token_get_all($buffer);
         $numTokens = \count($tokens);
 

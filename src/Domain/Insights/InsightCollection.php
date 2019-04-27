@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
-use NunoMaduro\PhpInsights\Domain\Quality;
+use NunoMaduro\PhpInsights\Domain\Results;
 
 /**
  * @internal
@@ -94,12 +94,27 @@ final class InsightCollection
     }
 
     /**
-     * Returns the quality of the code taking in consideration the current insights.
+     * Returns the results of the code taking in consideration the current insights.
      *
-     * @return \NunoMaduro\PhpInsights\Domain\Quality
+     * @return \NunoMaduro\PhpInsights\Domain\Results
      */
-    public function quality(): Quality
+    public function results(): Results
     {
-        return new Quality($this);
+        $perCategory = [];
+
+        foreach ($this->insightsPerMetric as $metric => $insights) {
+            $category = explode('\\', $metric);
+            $category = $category[count($category) - 2];
+
+            if (! array_key_exists($category, $perCategory)) {
+                $perCategory[$category] = [];
+            }
+
+            $perCategory[$category] = array_merge(
+                $perCategory[$category], $insights
+            );
+        }
+
+        return new Results($perCategory);
     }
 }
