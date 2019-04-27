@@ -158,15 +158,15 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[DEPENDENCIES] %s within <title>%s</> files",
-            "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getDependencies()} pts</>",
+        $this->writeln(sprintf("[DEPENDENCIES] %s on <title>%s</> dependencies",
+            "<fg={$this->getColor($results->getDependencies())};options=bold>{$results->getDependencies()} pts</>",
             (new Dependencies\Dependencies())->getValue($insightCollection->getCollector())
         ));
 
         $this->newLine();
 
         $lines = [];
-        foreach ([Dependencies\Globally::class, Dependencies\Explicit::class, Dependencies\StaticAccesses::class] as $metric) {
+        foreach ([Dependencies\Globally::class] as $metric) {
             $name = explode('\\', $metric);
             $lines[end($name)] = (new $metric())
                 ->getPercentage($insightCollection->getCollector());

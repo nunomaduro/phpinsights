@@ -26,6 +26,6 @@ final class Globally implements HasValue, HasPercentage
      */
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getLines() > 0 ? ($collector->getClassLines() / $collector->getLines()) * 100 : 0;
+        return $collector->getGlobalAccesses() > 0 ? ($collector->getGlobalAccesses() / $collector->getGlobalAccesses()) * 100 : 0;
     }
 }

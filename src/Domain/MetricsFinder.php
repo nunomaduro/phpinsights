@@ -35,9 +35,7 @@ final class MetricsFinder
             Structure\Interfaces::class,
             Structure\Traits::class,
             Dependencies\Globally::class,
-            Dependencies\Explicit::class,
             Dependencies\Dependencies::class,
-            Dependencies\StaticAccesses::class,
         ];
     }
 }

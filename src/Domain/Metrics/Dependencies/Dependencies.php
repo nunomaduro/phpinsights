@@ -17,9 +17,6 @@ final class Dependencies implements HasValue
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getGlobalAccesses() +
-            $collector->getAttributeAccesses() +
-            $collector->getMethodCalls()
-        );
+        return sprintf('%d', $collector->getGlobalAccesses());
     }
 }

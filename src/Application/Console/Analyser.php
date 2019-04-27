@@ -56,7 +56,7 @@ final class Analyser
 
         $style->structure($insightCollection, $results);
 
-        // $style->dependencies($insightCollection, $results, $dir);
+        $style->dependencies($insightCollection, $results, $dir);
 
         foreach ($metrics as $metricClass) {
             (new Row($insightCollection, $metricClass))->writeIssues($style, $dir);
