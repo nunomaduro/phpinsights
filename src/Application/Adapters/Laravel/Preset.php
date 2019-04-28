@@ -12,8 +12,8 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Insights\Laravel\ComposerCheckLaravelVersion;
-use NunoMaduro\PhpInsights\Domain\Metrics\Structure\Classes;
-use NunoMaduro\PhpInsights\Domain\Metrics\Structure\Composer;
+use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 /**

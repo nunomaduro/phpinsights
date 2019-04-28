@@ -9,6 +9,11 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnusedFunctionParameterSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\CallTimePassByReferenceSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DeprecatedFunctionsSniff;
+use PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions\NullableTypeDeclarationSniff;
+use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionCallSignatureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 
 /**
@@ -47,6 +52,11 @@ final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
     {
         return [
             UnusedInheritedVariablePassedToClosureSniff::class,
+            UnusedFunctionParameterSniff::class,
+            CallTimePassByReferenceSniff::class,
+            DeprecatedFunctionsSniff::class,
+            NullableTypeDeclarationSniff::class,
+            FunctionCallSignatureSniff::class,
         ];
     }
 }

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
 use NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
-use NunoMaduro\PhpInsights\Domain\Metrics\Structure;
+use NunoMaduro\PhpInsights\Domain\Metrics\Style;
 
 /**
  * @internal
@@ -26,16 +27,18 @@ final class MetricsFinder
             Code\Functions::class,
             Code\Globally::class,
             Complexity\Complexity::class,
-            Structure\Composer::class,
-            Structure\Constants::class,
-            Structure\Functions::class,
-            Structure\Files::class,
-            Structure\Methods::class,
-            Structure\Classes::class,
-            Structure\Interfaces::class,
-            Structure\Traits::class,
+            Architecture\Classes::class,
+            Architecture\Composer::class,
+            Architecture\Constants::class,
+            Architecture\Functions::class,
+            Architecture\Files::class,
+            Architecture\Methods::class,
+            Architecture\Classes::class,
+            Architecture\Interfaces::class,
+            Architecture\Traits::class,
             Dependencies\Globally::class,
             Dependencies\Dependencies::class,
+            Style\Style::class,
         ];
     }
 }

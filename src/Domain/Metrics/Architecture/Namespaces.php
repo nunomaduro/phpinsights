@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use PHP_CodeSniffer\Standards\PSR12\Sniffs\Namespaces\CompoundNamespaceDepthSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\NamespaceDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
@@ -35,6 +36,7 @@ final class Namespaces implements HasValue, HasInsights
             UseDeclarationSniff::class,
             NamespaceDeclarationSniff::class,
             UselessAliasSniff::class,
+            CompoundNamespaceDepthSniff::class,
         ];
     }
 }

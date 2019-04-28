@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
-use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff;
 
 /**
  * @internal
@@ -38,7 +38,7 @@ final class Traits implements HasValue, HasInsights
     {
         return [
             ForbiddenTraits::class,
-            TraitUseSpacingSniff::class,
+            OneTraitPerFileSniff::class,
         ];
     }
 }

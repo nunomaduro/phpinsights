@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Code;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\GlobalKeywordSniff;
 
 /**
  * @internal
  */
-final class Globally implements HasValue, HasPercentage
+final class Globally implements HasValue, HasPercentage, HasInsights
 {
     /**
      * {@inheritdoc}
@@ -27,5 +29,12 @@ final class Globally implements HasValue, HasPercentage
     public function getPercentage(Collector $collector): float
     {
         return $collector->getLines() > 0 ? ($collector->getNotInClassesOrFunctions() / $collector->getLines()) * 100 : 0;
+    }
+
+    public function getInsights(): array
+    {
+        return [
+            GlobalKeywordSniff::class,
+        ];
     }
 }

@@ -29,7 +29,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
      */
     public function getTitle(): string
     {
-        return sprintf('Having `classes` with more than 5 cyclomatic complexityis prohibited - Consider refactoring');
+        return sprintf('Having `classes` with more than 5 cyclomatic complexity is prohibited - Consider refactoring');
     }
 
     /**

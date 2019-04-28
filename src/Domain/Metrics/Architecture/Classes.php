@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
@@ -14,6 +14,7 @@ use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff;
 use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
@@ -47,6 +48,7 @@ final class Classes implements HasValue, HasInsights
             ClassTooBig::class,
             MethodTooBig::class,
             PropertyPerClassLimitSniff::class,
+            OneClassPerFileSniff::class,
         ];
     }
 

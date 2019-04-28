@@ -47,7 +47,8 @@ final class Analyser
         $style->header($results, $dir)
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
-            ->structure($insightCollection, $results)
+            ->architecture($insightCollection, $results)
+            ->style($insightCollection, $results)
             ->dependencies($insightCollection, $results)
             ->issues($insightCollection, $metrics, $dir);
 

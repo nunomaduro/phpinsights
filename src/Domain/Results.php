@@ -65,7 +65,7 @@ final class Results
      */
     public function getStructure(): float
     {
-        return $this->getPercentage('Structure');
+        return $this->getPercentage('Architecture');
     }
 
     /**
@@ -76,6 +76,16 @@ final class Results
     public function getDependencies(): float
     {
         return $this->getPercentage('Dependencies');
+    }
+
+    /**
+     * Gets the style quality.
+     *
+     * @return float
+     */
+    public function getStyle(): float
+    {
+        return $this->getPercentage('Style');
     }
 
     /**

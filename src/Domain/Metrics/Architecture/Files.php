@@ -2,25 +2,24 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Metrics\Structure;
+namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneObjectStructurePerFileSniff;
 
 /**
  * @internal
  */
-final class Constants implements HasValue, HasInsights
+final class Files implements HasValue, HasInsights
 {
     /**
      * {@inheritdoc}
      */
     public function getValue(Collector $collector): string
     {
-        return sprintf('%d', $collector->getConstants());
+        return (string) count($collector->getFiles());
     }
 
     /**
@@ -29,8 +28,7 @@ final class Constants implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            UpperCaseConstantNameSniff::class,
-            ForbiddenDefineGlobalConstants::class,
+            OneObjectStructurePerFileSniff::class,
         ];
     }
 }
