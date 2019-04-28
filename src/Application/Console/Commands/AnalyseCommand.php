@@ -62,10 +62,6 @@ final class AnalyseCommand
             throw new RuntimeException('The file `.gitignore` must exist.');
         }
 
-        if (! file_exists($directory . DIRECTORY_SEPARATOR . 'composer.json')) {
-            throw new RuntimeException('The file `composer.json` must exist.');
-        }
-
         $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
     }
 
