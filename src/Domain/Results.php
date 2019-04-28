@@ -48,7 +48,7 @@ final class Results
      */
     public function getComplexity(): float
     {
-        $avg = ($this->collector->getAverageComplexityPerMethod() - 1.0);
+        $avg = $this->collector->getAverageComplexityPerMethod() - 1.0;
 
         return (float) number_format(
             100.0 - min(($avg * 100.0) / 3.0, 100.0),
