@@ -12,7 +12,6 @@ use ObjectCalisthenics\Sniffs\ControlStructures\NoElseSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff;
 use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
-use ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff;
@@ -62,8 +61,6 @@ final class Code implements HasValue, HasInsights
             OneObjectOperatorPerLineSniff::class,
             ElementNameMinimalLengthSniff::class,
             MaxNestingLevelSniff::class,
-            PropertyPerClassLimitSniff::class,
-            NoSetterSniff::class,
             UnusedVariableSniff::class,
             UselessVariableSniff::class,
         ];
