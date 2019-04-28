@@ -12,7 +12,6 @@ $router = new Router(require __DIR__ . '/../container.php');
 $router->command('analyse', AnalyseCommand::class, [
     new InputArgument('directory', InputArgument::OPTIONAL),
     new InputOption('config-path', 'c', InputOption::VALUE_OPTIONAL),
-    new InputOption('fail-under', 'f', InputOption::VALUE_OPTIONAL),
 ]);
 
 $router->setDefault('analyse');

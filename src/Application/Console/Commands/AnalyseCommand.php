@@ -51,9 +51,9 @@ final class AnalyseCommand
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      *
-     * @return int
+     * @return void
      */
-    public function __invoke(InputInterface $input, OutputInterface $output): int
+    public function __invoke(InputInterface $input, OutputInterface $output): void
     {
         $style = new Style($input, OutputDecorator::decorate($output));
 
@@ -67,12 +67,7 @@ final class AnalyseCommand
             throw new RuntimeException('The file `composer.json` must exist.');
         }
 
-        $result = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
-
-        /** @var string $failUnder */
-        $failUnder = $input->getOption('fail-under');
-
-        return ($result > (float) ($failUnder ?: 100.0)) ? ShellCode::SUCCESS : ShellCode::ERROR;
+        $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
     }
 
     /**

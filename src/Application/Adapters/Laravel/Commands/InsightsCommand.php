@@ -16,7 +16,7 @@ final class InsightsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected $signature = 'insights {directory?} {--config-path=config/insights.php} {--fail-under=100.0}';
+    protected $signature = 'insights {directory?} {--config-path=config/insights.php}';
 
     /**
      * {@inheritdoc}
