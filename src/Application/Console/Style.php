@@ -53,7 +53,7 @@ final class Style extends SymfonyStyle
 
         $output = <<<EOD
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$dependenciesColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$dependenciesColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$dependenciesColor>  {$this->getPercentageAsString($results->getDependencies())}  </>
+      <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$dependenciesColor>  {$this->getPercentageAsString($results->getDependencies())}  </>
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$dependenciesColor>         </>
 
         <$subtitle>Code</>              <$subtitle>Complexity</>            <$subtitle>Structure</>           <$subtitle>Dependencies</>

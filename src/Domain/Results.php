@@ -10,6 +10,11 @@ namespace NunoMaduro\PhpInsights\Domain;
 final class Results
 {
     /**
+     * @var \NunoMaduro\PhpInsights\Domain\Collector
+     */
+    private $collector;
+
+    /**
      * @var array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>
      */
     private $perCategoryInsights;
@@ -17,10 +22,12 @@ final class Results
     /**
      * Creates a new instance of results.
      *
+     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
      */
-    public function __construct(array $perCategoryInsights)
+    public function __construct(\NunoMaduro\PhpInsights\Domain\Collector $collector, array $perCategoryInsights)
     {
+        $this->collector = $collector;
         $this->perCategoryInsights = $perCategoryInsights;
     }
 
@@ -41,7 +48,14 @@ final class Results
      */
     public function getComplexity(): float
     {
-        return $this->getPercentage('Complexity');
+        $avg = ($this->collector->getAverageComplexityPerMethod() - 1.0);
+
+        return (float) number_format(
+            100.0 - min(($avg * 100.0) / 3.0, 100.0),
+            1,
+            '.',
+            ''
+        );
     }
 
     /**

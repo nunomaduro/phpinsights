@@ -61,7 +61,6 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
             ForbiddenPublicPropertySniff::class,
             UnusedPrivateElementsSniff::class,
             NoSetterSniff::class,
-            PropertyPerClassLimitSniff::class,
         ];
     }
 }

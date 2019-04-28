@@ -95,6 +95,6 @@ final class InsightCollection
             );
         }
 
-        return new Results($perCategory);
+        return new Results($this->collector, $perCategory);
     }
 }
