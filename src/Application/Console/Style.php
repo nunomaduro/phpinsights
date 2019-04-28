@@ -62,7 +62,7 @@ EOD;
         $this->write($output);
         $this->newLine(2);
 
-        $this->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-89 <fg=green>◼</> 90-100");
+        $this->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100");
 
         return $this;
     }

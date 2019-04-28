@@ -31,5 +31,5 @@ interface FilesRepository
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
-    public function in(string $dir, array $exclude): FilesRepository;
+    public function within(string $dir, array $exclude): FilesRepository;
 }

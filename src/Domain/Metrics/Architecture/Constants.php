@@ -29,7 +29,6 @@ final class Constants implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            UpperCaseConstantNameSniff::class,
             ForbiddenDefineGlobalConstants::class,
         ];
     }

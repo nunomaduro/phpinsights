@@ -17,6 +17,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceBeforeCastSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\FunctionCallArgumentSpacingSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceBsdAllmanSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceKernighanRitchieSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\UpperCaseConstantNameSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\BacktickOperatorSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\CharacterBeforePHPOpeningTagSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DisallowAlternativePHPTagsSniff;
@@ -100,6 +101,8 @@ final class Style implements HasInsights
             CamelCapsMethodNameSniff::class,
             ElseIfDeclarationSniff::class,
             SwitchDeclarationSniff::class,
+            UpperCaseConstantNameSniff::class,
+
         ];
     }
 }

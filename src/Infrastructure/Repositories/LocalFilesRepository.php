@@ -27,6 +27,7 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
     {
         $this->finder = $finder->files()
             ->name(['*.php'])
+            ->exclude(['vendor', 'tests'])
             ->ignoreVCSIgnored(true)
             ->ignoreUnreadableDirs();
     }
@@ -50,7 +51,7 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
     /**
      * {@inheritdoc}
      */
-    public function in(string $directory, array $exclude): FilesRepository
+    public function within(string $directory, array $exclude): FilesRepository
     {
         $this->finder->in([$directory])->exclude($exclude);
 

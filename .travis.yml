@@ -16,4 +16,4 @@ before_script:
 
 script:
     - vendor/bin/phpstan analyse
-    - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+    - vendor/bin/ecs check src --config vendor/symplify/easy-coding-standard/config/clean-code.yml
