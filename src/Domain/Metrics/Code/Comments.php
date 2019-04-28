@@ -10,7 +10,13 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\DisallowOneLinePropertyDocCommentSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\RequireOneLinePropertyDocCommentSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullTypeHintOnLastPositionSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
@@ -48,6 +54,12 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             NullableTypeForNullDefaultValueSniff::class,
             FixmeSniff::class,
             TodoSniff::class,
+            DisallowOneLinePropertyDocCommentSniff::class,
+            DocCommentSpacingSniff::class,
+            ForbiddenCommentsSniff::class,
+            InlineDocCommentDeclarationSniff::class,
+            RequireOneLinePropertyDocCommentSniff::class,
+            UselessInheritDocCommentSniff::class,
         ];
     }
 }

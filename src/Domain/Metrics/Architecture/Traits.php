@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff;
+use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 
 /**
  * @internal
@@ -39,6 +40,7 @@ final class Traits implements HasValue, HasInsights
         return [
             ForbiddenTraits::class,
             OneTraitPerFileSniff::class,
+            SuperfluousTraitNamingSniff::class,
         ];
     }
 }

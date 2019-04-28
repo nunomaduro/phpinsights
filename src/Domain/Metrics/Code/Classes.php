@@ -15,7 +15,11 @@ use ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnnecessaryFinalModifierSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\PropertyDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff;
+use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
+use SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff;
 
 /**
  * @internal
@@ -66,6 +70,10 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
             UnnecessaryFinalModifierSniff::class,
             ClassInstantiationSniff::class,
             PropertyDeclarationSniff::class,
+            ClassConstantVisibilitySniff::class,
+            DisallowLateStaticBindingForConstantsSniff::class,
+            ModernClassNameReferenceSniff::class,
+            UselessLateStaticBindingSniff::class
         ];
     }
 }

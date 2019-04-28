@@ -46,6 +46,8 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\ClosingTagSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionClosingBraceSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Classes\EmptyLinesAroundClassBracesSniff;
+use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
 
 /**
@@ -101,7 +103,9 @@ final class Style implements HasInsights
             ElseIfDeclarationSniff::class,
             SwitchDeclarationSniff::class,
             UpperCaseConstantNameSniff::class,
-
+            EmptyLinesAroundClassBracesSniff::class,
+            TraitUseDeclarationSniff::class,
+            TraitUseSpacingSniff::class
         ];
     }
 }

@@ -31,6 +31,8 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
+use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
+use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff;
 use SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\RequireCombinedAssignmentOperatorSniff;
@@ -90,6 +92,8 @@ final class Code implements HasValue, HasInsights
             NoSilencedErrorsSniff::class,
             UnnecessaryStringConcatSniff::class,
             ShortFormTypeKeywordsSniff::class,
+            DisallowImplicitArrayCreationSniff::class,
+            TrailingArrayCommaSniff::class,
         ];
     }
 }

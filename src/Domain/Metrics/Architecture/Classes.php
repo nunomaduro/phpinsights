@@ -16,6 +16,8 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
+use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
+use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 
 /**
  * @internal
@@ -45,6 +47,8 @@ final class Classes implements HasValue, HasInsights
             MethodPerClassLimitSniff::class,
             PropertyPerClassLimitSniff::class,
             OneClassPerFileSniff::class,
+            SuperfluousInterfaceNamingSniff::class,
+            SuperfluousAbstractClassNamingSniff::class,
         ];
     }
 
