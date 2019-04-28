@@ -41,7 +41,7 @@ final class Comments implements HasValue, HasPercentage, HasInsights
     {
         return [
             EmptyCommentSniff::class,
-            // TypeHintDeclarationSniff::class,
+            TypeHintDeclarationSniff::class,
             NullTypeHintOnLastPositionSniff::class,
             NullableTypeForNullDefaultValueSniff::class,
         ];
