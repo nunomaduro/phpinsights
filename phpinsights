@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-use;
-
 (function () {
     require file_exists(__DIR__ . '/vendor/autoload.php')
         ? __DIR__ . '/vendor/autoload.php'
@@ -23,7 +21,7 @@ use;
     /**
      * Dispatch the input using the router.
      */
-    \NunoMaduro\PhpInsights\Domain\Kernel::using($router)->dispatch($input);
+    \Narration\Console\Kernel::using($router)->dispatch($input);
 })();
 
 
