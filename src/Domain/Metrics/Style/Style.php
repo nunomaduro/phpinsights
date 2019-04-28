@@ -67,7 +67,6 @@ final class Style implements HasInsights
             IncludingFileSniff::class,
             ByteOrderMarkSniff::class,
             LineEndingsSniff::class,
-            LineLengthSniff::class,
             FunctionClosingBraceSniff::class,
             TraitUseSpacingSniff::class,
             OpeningBraceSameLineSniff::class,

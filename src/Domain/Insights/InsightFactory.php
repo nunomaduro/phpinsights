@@ -128,6 +128,7 @@ final class InsightFactory
 
         $reflection = new Reflection($configuration = new Configuration());
         $reflection->set('sources', [$this->dir])
+            ->set('shouldClearCache', true)
             ->set('showProgressBar', true);
 
         if (file_exists(__DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php')) {

@@ -25,7 +25,8 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
      */
     public function __construct(Finder $finder)
     {
-        $this->finder = $finder->files()
+        $this->finder = $finder
+            ->files()
             ->name(['*.php'])
             ->exclude(['vendor', 'tests'])
             ->ignoreVCSIgnored(true)

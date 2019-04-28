@@ -30,7 +30,6 @@ final class Complexity implements HasAvg, HasInsights
     {
         return [
             CyclomaticComplexityIsHigh::class,
-            CyclomaticComplexitySniff::class,
         ];
     }
 }

@@ -32,8 +32,6 @@ final class MetricsFinder
             Architecture\Constants::class,
             Architecture\Functions::class,
             Architecture\Files::class,
-            Architecture\Methods::class,
-            Architecture\Classes::class,
             Architecture\Interfaces::class,
             Architecture\Traits::class,
             Dependencies\Globally::class,

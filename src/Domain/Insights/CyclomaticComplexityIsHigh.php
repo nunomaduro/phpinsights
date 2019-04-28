@@ -21,6 +21,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
                 return true;
             }
         }
+
         return false;
     }
 
@@ -42,7 +43,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         });
 
         uasort($classesComplexity, function ($a, $b) {
-            return $a - $b;
+            return $b - $a;
         });
 
         $classesComplexity = array_reverse($classesComplexity);

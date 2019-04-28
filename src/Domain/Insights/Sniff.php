@@ -70,7 +70,7 @@ final class Sniff implements Insight, HasDetails
 
         $name = ucfirst(trim(mb_strtolower((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
 
-        return count($this->errors) . " $name issues detected";
+        return count($this->errors) . " $name issues";
     }
 
     /**

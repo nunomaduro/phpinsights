@@ -7,7 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use ObjectCalisthenics\Sniffs\CodeAnalysis\OneObjectOperatorPerLineSniff;
 use ObjectCalisthenics\Sniffs\ControlStructures\NoElseSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff;
 use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
@@ -70,7 +69,6 @@ final class Code implements HasValue, HasInsights
             SuperfluousWhitespaceSniff::class,
             ReferenceThrowableOnlySniff::class,
             NoElseSniff::class,
-            OneObjectOperatorPerLineSniff::class,
             ElementNameMinimalLengthSniff::class,
             MaxNestingLevelSniff::class,
             UnusedVariableSniff::class,

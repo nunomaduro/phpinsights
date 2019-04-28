@@ -7,9 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\ClassTooBig;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
-use NunoMaduro\PhpInsights\Domain\Insights\MethodTooBig;
 use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff;
 use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
@@ -45,8 +43,6 @@ final class Classes implements HasValue, HasInsights
             ModernClassNameReferenceSniff::class,
             ClassTraitAndInterfaceLengthSniff::class,
             MethodPerClassLimitSniff::class,
-            ClassTooBig::class,
-            MethodTooBig::class,
             PropertyPerClassLimitSniff::class,
             OneClassPerFileSniff::class,
         ];
