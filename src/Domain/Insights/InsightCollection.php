@@ -14,7 +14,7 @@ use NunoMaduro\PhpInsights\Domain\Results;
 final class InsightCollection
 {
     /**
-     * @var array<string, \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]>
+     * @var array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>
      */
     private $insightsPerMetric = [];
 
@@ -27,7 +27,7 @@ final class InsightCollection
      * Creates a new instance of the Insight Collection.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array<string, \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]>  $insightsPerMetric
+     * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $insightsPerMetric
      */
     public function __construct(Collector $collector, array $insightsPerMetric)
     {
@@ -59,26 +59,6 @@ final class InsightCollection
         }
 
         return $all;
-    }
-
-    /**
-     * Gets all insights.
-     *
-     * @return int
-     */
-    public function issuesCount(): int
-    {
-        $count = 0;
-
-        foreach ($this->insightsPerMetric as $insights) {
-            foreach ($insights as $insight) {
-                if ($insight->hasIssue()) {
-                    $count += 1;
-                }
-            }
-        }
-
-        return $count;
     }
 
     /**

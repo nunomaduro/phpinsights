@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
@@ -32,12 +33,16 @@ final class Style extends SymfonyStyle
 
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
+     * @param  string  $dir
      *
-     * @return void
-     * @throws \ReflectionException
+     * @return $this
      */
-    public function header(Results $results): void
+    public function header(Results $results, string $dir): Style
     {
+        $this->newLine(2);
+
+        $this->writeln(sprintf('<fg=yellow>[%s]</> `%s`', date('Y-m-d H:i:s'), $dir));
+
         $subtitle = 'fg=white;options=bold;fg=white';
         $this->newLine();
 
@@ -57,15 +62,17 @@ EOD;
         $this->newLine(2);
 
         $this->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-89 <fg=green>◼</> 90-100");
+
+        return $this;
     }
 
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return void
+     * @return $this
      */
-    public function code(InsightCollection $insightCollection, Results $results): void
+    public function code(InsightCollection $insightCollection, Results $results): Style
     {
         $this->newLine();
         $this->writeln(sprintf("[CODE] %s within <title>%s</> lines",
@@ -92,6 +99,8 @@ EOD;
                 $percentage
             ));
         }
+
+        return $this;
     }
 
 
@@ -99,25 +108,27 @@ EOD;
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return void
+     * @return $this
      */
-    public function complexity(InsightCollection $insightCollection, Results $results): void
+    public function complexity(InsightCollection $insightCollection, Results $results): Style
     {
         $this->newLine();
-        // @todo Add insights to complexity
+
         $this->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity",
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity\Complexity())->getAvg($insightCollection->getCollector())
         ));
+
+        return $this;
     }
 
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return void
+     * @return $this
      */
-    public function structure(InsightCollection $insightCollection, Results $results): void
+    public function structure(InsightCollection $insightCollection, Results $results): Style
     {
         $this->newLine();
 
@@ -146,15 +157,17 @@ EOD;
                 $percentage
             ));
         }
+
+        return $this;
     }
 
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return void
+     * @return $this
      */
-    public function dependencies(InsightCollection $insightCollection, Results $results): void
+    public function dependencies(InsightCollection $insightCollection, Results $results): Style
     {
         $this->newLine();
 
@@ -183,6 +196,52 @@ EOD;
                 $percentage
             ));
         }
+
+        return $this;
+    }
+
+    /**
+     * Describes the issues from the given metrics.
+     *
+     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
+     * @param  string[]  $metrics
+     * @param  string  $dir
+     *
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
+     */
+    public function issues(InsightCollection $insightCollection, array $metrics, string $dir): Style
+    {
+        foreach ($metrics as $metricClass) {
+            foreach ($insightCollection->allFrom(new $metricClass) as $insight) {
+                if (! $insight->hasIssue()) {
+                    continue;
+                }
+
+                $issue = "\n<fg=red>•</> {$insight->getTitle()}";
+                if (! $insight instanceof HasDetails) {
+                    continue;
+                }
+                $issue .= ':';
+                $details = $insight->getDetails();
+                $totalDetails = count($details);
+                $details = array_slice($details, -3, 3, true);
+
+                foreach ($details as $detail) {
+                    $detail = str_replace(realpath($dir) . '/', '', $detail);
+                    $issue .= "\n<fg=red>-- </> $detail";
+                }
+
+                if ($totalDetails > 3) {
+                    $totalRemainDetails = $totalDetails - 3;
+
+                    $issue .= " <fg=red>+{$totalRemainDetails} issues omitted</>";
+                }
+
+                $this->writeln($issue);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -210,7 +269,9 @@ EOD;
     {
         if ($percentage >= 90) {
             return 'green';
-        } else if ($percentage >= 50) {
+        }
+
+        if ($percentage >= 50) {
             return 'yellow';
         }
 

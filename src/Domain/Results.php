@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-
 /**
  * @internal
  */
 final class Results
 {
     /**
-     * @var array<string, \NunoMaduro\PhpInsights\Domain\Insights\Insight[]>
+     * @var array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>
      */
     private $perCategoryInsights;
 
     /**
      * Creates a new instance of results.
      *
-     * @param  array<string, \NunoMaduro\PhpInsights\Domain\Insights\Insight[]>  $perCategoryInsights
+     * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
      */
     public function __construct(array $perCategoryInsights)
     {

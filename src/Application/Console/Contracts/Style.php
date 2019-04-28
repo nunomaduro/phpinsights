@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nunomaduro
- * Date: 24/03/2019
- * Time: 19:50
- */
 
 namespace NunoMaduro\PhpInsights\Application\Console\Contracts;
 

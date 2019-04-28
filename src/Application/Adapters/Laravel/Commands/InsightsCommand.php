@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel\Commands;
 
 use Illuminate\Console\Command;
 use NunoMaduro\PhpInsights\Application\Console\Commands\AnalyseCommand;
+use NunoMaduro\PhpInsights\Domain\Kernel;
 
 /**
  * @internal
@@ -27,10 +28,7 @@ final class InsightsCommand extends Command
      */
     public function handle(AnalyseCommand $analyseCommand): void
     {
-        /**
-         * Includes PHP Codesniffer's autoload.
-         */
-        include_once 'vendor/squizlabs/php_codesniffer/autoload.php';
+        Kernel::bootstrap();
 
         $analyseCommand->__invoke($this->input, $this->output);
     }

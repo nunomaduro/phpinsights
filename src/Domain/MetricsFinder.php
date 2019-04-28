@@ -9,7 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
 use NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
 use NunoMaduro\PhpInsights\Domain\Metrics\Structure;
 
-
 /**
  * @internal
  */

@@ -38,7 +38,7 @@ final class Complexity implements HasAvg, HasInsights
     public function getInsights(): array
     {
         return [
-            CyclomaticComplexityIsHigh::class
+            CyclomaticComplexityIsHigh::class,
         ];
     }
 }

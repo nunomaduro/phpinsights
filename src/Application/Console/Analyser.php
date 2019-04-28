@@ -44,23 +44,14 @@ final class Analyser
 
         $insightCollection = $this->insightCollectionFactory->get($metrics, $config, $dir);
 
-        $style->newLine(2);
+        $results = $insightCollection->results();
 
-        $style->writeln(sprintf('<fg=yellow>[%s]</> `%s`', date('Y-m-d H:i:s'), $dir));
-
-        $style->header($results = $insightCollection->results());
-
-        $style->code($insightCollection, $results);
-
-        $style->complexity($insightCollection, $results);
-
-        $style->structure($insightCollection, $results);
-
-        $style->dependencies($insightCollection, $results, $dir);
-
-        foreach ($metrics as $metricClass) {
-            (new Row($insightCollection, $metricClass))->writeIssues($style, $dir);
-        }
+        $style->header($results, $dir)
+            ->code($insightCollection, $results)
+            ->complexity($insightCollection, $results)
+            ->structure($insightCollection, $results)
+            ->dependencies($insightCollection, $results)
+            ->issues($insightCollection, $metrics, $dir);
 
         return $results->getCodeQuality();
     }

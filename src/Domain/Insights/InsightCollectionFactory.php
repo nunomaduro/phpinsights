@@ -83,7 +83,7 @@ final class InsightCollectionFactory
      * Returns the `Insights` from the given metric class.
      *
      * @param  string  $metricClass
-     * @param  array<string, array<string, string>>  $config
+     * @param  array<string, array<string, string|array>>  $config
      *
      * @return string[]
      */
@@ -93,7 +93,9 @@ final class InsightCollectionFactory
 
         $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
 
-        $insights = array_merge($insights, $config['add'][$metricClass] ?? []);
+        $toAdd = array_key_exists('add', $config) && is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
+
+        $insights = array_merge($insights, $toAdd);
 
         return array_diff($insights, $config['remove'] ?? []);
     }

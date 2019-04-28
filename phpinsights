@@ -18,10 +18,7 @@ $router = require __DIR__ . '/config/routes/console.php';
  */
 $input = new Symfony\Component\Console\Input\ArgvInput();
 
-/**
- * Includes PHP Codesniffer's autoload.
- */
-include_once 'vendor/squizlabs/php_codesniffer/autoload.php';
+NunoMaduro\PhpInsights\Domain\Kernel::bootstrap();
 
 /**
  * Dispatch the input using the router.
