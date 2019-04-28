@@ -22,7 +22,6 @@ final class ForbiddenUsingGlobals extends Insight
      */
     public function getTitle(): string
     {
-        // @todo add details.
-        return $this->collector->getGlobalAccesses();
+        return 'The usage of globals is prohibited - Consider relying in abstractions';
     }
 }
