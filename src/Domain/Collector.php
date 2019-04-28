@@ -930,7 +930,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return count($array) ? max($array) : 0;
+        return (bool) count($array) ? max($array) : 0;
     }
 
     /**
