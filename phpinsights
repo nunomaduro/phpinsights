@@ -1,26 +1,29 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-require file_exists(__DIR__ . '/vendor/autoload.php')
-    ? __DIR__ . '/vendor/autoload.php'
-    : __DIR__ . '/../../../vendor/autoload.php';
+use;
+
+(function () {
+    require file_exists(__DIR__ . '/vendor/autoload.php')
+        ? __DIR__ . '/vendor/autoload.php'
+        : __DIR__ . '/../../../vendor/autoload.php';
+
+    /**
+     * Creates an new instance of the router.
+     */
+    $router = require __DIR__ . '/config/routes/console.php';
+
+    /**
+     * Capture the input from globals.
+     */
+    $input = new \Symfony\Component\Console\Input\ArgvInput();
+
+    \NunoMaduro\PhpInsights\Domain\Kernel::bootstrap();
+
+    /**
+     * Dispatch the input using the router.
+     */
+    \NunoMaduro\PhpInsights\Domain\Kernel::using($router)->dispatch($input);
+})();
 
 
-use Narration\Console\Kernel;
-
-/**
- * Creates an new instance of the router.
- */
-$router = require __DIR__ . '/config/routes/console.php';
-
-/**
- * Capture the input from globals.
- */
-$input = new Symfony\Component\Console\Input\ArgvInput();
-
-NunoMaduro\PhpInsights\Domain\Kernel::bootstrap();
-
-/**
- * Dispatch the input using the router.
- */
-Kernel::using($router)->dispatch($input);
