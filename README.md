@@ -14,9 +14,6 @@
 **PHP Insights** created and maintained by [Nuno Maduro](https://github.com/nunomaduro), is the perfect starting point to analyze the code quality of your PHP projects.
 Carefully crafted to simplify the analysis of your code directly on your terminal.
 
-**🚨 This project is under development. Don't use it!**.
-
-
 ## ✨ Features
 
 - Analysis of **lines of code** and cyclomatic complexity
