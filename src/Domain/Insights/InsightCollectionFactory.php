@@ -93,7 +93,9 @@ final class InsightCollectionFactory
 
         $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
 
-        $toAdd = array_key_exists('add', $config) && is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
+        $toAdd = array_key_exists('add', $config) &&
+            array_key_exists($metricClass, $config['add']) &&
+            is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
 
         $insights = array_merge($insights, $toAdd);
 

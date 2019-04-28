@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
-use NunoMaduro\PhpInsights\Application\Console\Helpers\Row;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
-use NunoMaduro\PhpInsights\Domain\Results;
 
 /**
  * @internal

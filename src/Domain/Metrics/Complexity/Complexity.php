@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 
 /**
  * @internal
@@ -15,21 +16,11 @@ use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 final class Complexity implements HasAvg, HasInsights
 {
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     *
-     * @return array
-     */
-    public function getClassComplexity(Collector $collector): array
-    {
-        return $collector->getClassComplexity();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getAvg(Collector $collector): string
     {
-        return sprintf('%.2f', $collector->getAverageComplexityPerLogicalLine());
+        return sprintf('%.2f', $collector->getAverageComplexityPerMethod());
     }
 
     /**
@@ -39,6 +30,7 @@ final class Complexity implements HasAvg, HasInsights
     {
         return [
             CyclomaticComplexityIsHigh::class,
+            CyclomaticComplexitySniff::class,
         ];
     }
 }

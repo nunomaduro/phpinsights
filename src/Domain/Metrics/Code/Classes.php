@@ -10,6 +10,8 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
+use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 
 /**
  * @internal
@@ -54,7 +56,8 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
     public function getInsights(): array
     {
         return [
-            // ..
+            ForbiddenPublicPropertySniff::class,
+            UnusedPrivateElementsSniff::class,
         ];
     }
 }

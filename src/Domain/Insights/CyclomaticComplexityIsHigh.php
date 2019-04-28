@@ -14,7 +14,7 @@ final class CyclomaticComplexityIsHigh extends Insight
      */
     public function hasIssue(): bool
     {
-        return $this->collector->getAverageComplexityPerLogicalLine() > 3.0;
+        return $this->collector->getAverageComplexityPerMethod() > 3.0;
     }
 
     /**

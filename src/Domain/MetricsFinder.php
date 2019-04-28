@@ -30,6 +30,7 @@ final class MetricsFinder
             Structure\Constants::class,
             Structure\Functions::class,
             Structure\Files::class,
+            Structure\Methods::class,
             Structure\Classes::class,
             Structure\Interfaces::class,
             Structure\Traits::class,

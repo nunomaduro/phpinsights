@@ -930,7 +930,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return max($array);
+        return count($array) ? max($array) : 0;
     }
 
     /**
@@ -989,7 +989,7 @@ final class Collector
      */
     public function getAverageComplexityPerLogicalLine(): float
     {
-        return $this->divide($this->getComplexity(), $this->getLogicalLines());
+        return $this->divide($this->getLogicalLines(), $this->getComplexity());
     }
 
     /**

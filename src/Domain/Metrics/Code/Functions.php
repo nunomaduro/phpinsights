@@ -6,13 +6,15 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Code;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 
 /**
  * @internal
  */
-final class Functions implements HasValue, HasPercentage, HasAvg
+final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
 {
     /**
      * {@inheritdoc}
@@ -36,5 +38,15 @@ final class Functions implements HasValue, HasPercentage, HasAvg
     public function getAvg(Collector $collector): string
     {
         return sprintf('%d', $collector->getAverageFunctionLength());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInsights(): array
+    {
+        return [
+            UnusedInheritedVariablePassedToClosureSniff::class,
+        ];
     }
 }

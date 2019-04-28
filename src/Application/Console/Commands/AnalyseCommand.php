@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\PackageBuilder\Console\ShellCode;
@@ -58,6 +59,14 @@ final class AnalyseCommand
 
         $directory = $this->getDirectory($input);
 
+        if (! file_exists($directory . DIRECTORY_SEPARATOR . '.gitignore')) {
+            throw new RuntimeException('The file `.gitignore` must exist.');
+        }
+
+        if (! file_exists($directory . DIRECTORY_SEPARATOR . 'composer.json')) {
+            throw new RuntimeException('The file `composer.json` must exist.');
+        }
+
         $result = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
 
         /** @var string $failUnder */
@@ -99,7 +108,7 @@ final class AnalyseCommand
         $directory = $input->getArgument('directory') ?? $this->filesRepository->getDefaultDirectory();
 
         if ($directory[0] !== DIRECTORY_SEPARATOR) {
-            $directory = ((string) getcwd()) . DIRECTORY_SEPARATOR . $directory;
+            $directory = (string) getcwd() . DIRECTORY_SEPARATOR . $directory;
         }
 
         return $directory;
