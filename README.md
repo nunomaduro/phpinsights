@@ -89,7 +89,7 @@ final class ForbiddenFinalClasses extends Insight
 2. Attach the `Insight` to a specific inside `Domain/Metrics/`:
 
 ```php
-final class ClassesFinal implements HasValue, HasPercentage, HasInsights
+final class Classes implements HasInsights
 {
     // ...
 
