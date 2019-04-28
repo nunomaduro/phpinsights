@@ -10,7 +10,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use ObjectCalisthenics\Sniffs\CodeAnalysis\OneObjectOperatorPerLineSniff;
 use ObjectCalisthenics\Sniffs\ControlStructures\NoElseSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff;
-use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
