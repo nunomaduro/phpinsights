@@ -507,8 +507,6 @@ final class Collector
             $this->namedFunctions[$this->currentFilename] = [];
         }
 
-        echo $name;
-
         $this->namedFunctions[$this->currentFilename][] = $name;
     }
 

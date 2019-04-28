@@ -59,7 +59,7 @@ final class AnalyseCommand
         $directory = $this->getDirectory($input);
 
         if (! file_exists($directory . DIRECTORY_SEPARATOR . '.gitignore')) {
-            throw new RuntimeException('The file `.gitignore` must exist.');
+            throw new RuntimeException('The file `.gitignore` must exist. You should run PHP Insights from the root of your project.');
         }
 
         $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
