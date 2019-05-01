@@ -5,13 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
-use NunoMaduro\PhpInsights\Domain\Insights\Laravel\ComposerCheckLaravelVersion;
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer;
-use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 /**
  * @internal
@@ -33,10 +27,11 @@ final class Preset implements PresetContract
     {
         return [
             'exclude' => [
-                'storage/framework',
-                'resources/views',
-                'bootstrap/cache',
-                'database'
+                'storage',
+                'resources',
+                'bootstrap',
+                'database',
+                'server.php',
             ],
             'add' => [
                 // ...

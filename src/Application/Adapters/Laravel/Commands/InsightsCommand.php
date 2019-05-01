@@ -30,7 +30,9 @@ final class InsightsCommand extends Command
     {
         Kernel::bootstrap();
 
-        if (! file_exists($this->input->getOption('config-path'))) {
+        $configPath = $this->input->getOption('config-path');
+
+        if (is_string($configPath) && ! file_exists($configPath)) {
             $this->output->note('Consider publish the configuration using the: "php artisan vendor:publish "NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"');
         }
 

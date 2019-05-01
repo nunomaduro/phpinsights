@@ -56,6 +56,12 @@ final class LocalFilesRepository implements FilesRepository, CustomSourceProvide
     {
         $this->finder->in([$directory])->exclude($exclude);
 
+        foreach ($exclude as $value) {
+            if (substr($value, -4) === '.php') {
+                $this->finder->notName($value);
+            }
+        }
+
         return $this;
     }
 
