@@ -31,8 +31,6 @@ First, install PHP Insights via the Composer package manager:
 composer require nunomaduro/phpinsights:dev-feat/first
 ```
 
-### Without frameworks
-
 Use the `phpinsights` binary:
 
 ```bash
@@ -47,17 +45,34 @@ You can publish the config-file with:
 php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"
 ```
 
-Open `config/insights.php`, and update the preset to `laravel`.
-
 Use the `insights` Artisan command:
 
 ```bash
 php artisan insights
 ```
 
+### Within Symfony
+
+You can create the config-file with:
+
+```bash
+cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
+```
+
+Use the `phpinsights` binary:
+
+```bash
+php ./vendor/bin/phpinsights
+```
+
 ## 💡 How to contribute
 
 The project is under development. As such, any help is welcome!
+
+1. [Create a new insight from scratch](#create-a-new-insight)
+2. [Add a new insight from PHP CS Sniff](#add-a-new-insight-from-php-cs)
+3. [Create or improve create a preset for your favorite framework](#create-or-improve-create-a-preset-for-your-favorite-framework)
+4. [Create the test suite](#create-the-test-suite)
 
 ### Create a new `Insight`
 
@@ -104,6 +119,84 @@ final class Classes implements HasInsights
     }
 }
 ```
+
+### Add a new insight from PHP CS Sniff
+
+Are you aware of a PHPCS sniff that you would like to add to PHP Insights? You can add it in the following way:
+
+1. Identify the impact metric, and it to the list of insights:
+
+```php
+final class Classes implements HasInsights
+{
+    // ...
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInsights(): array
+    {
+        return [
+            UnusedPropertySniff::class,
+        ];
+    }
+}
+```
+
+### Create or improve create a preset for your favorite framework
+
+Would you like to exclude a directory or remove a `Insight` for you favorite framework? You can add it in the following way:
+
+> In this example we are going to use the Laravel Framework.
+
+1. Open the file `src/Application/Adapters/Laravel/Preset.php` and update the config file:
+
+```php
+/**
+ * @internal
+ */
+final class Preset implements PresetContract
+{
+    /**
+     * {@inheritDoc}
+     */
+    public static function getName(): string
+    {
+        return 'laravel';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function get(): array
+    {
+        return [
+            'exclude' => [
+                'storage',
+                'resources',
+                'bootstrap',
+                'database',
+                'server.php',
+            ],
+            'add' => [
+                // ...
+            ],
+            'remove' => [
+                // ...
+            ],
+            'config' => [
+                ForbiddenDefineGlobalConstants::class => [
+                    'ignore' => ['LARAVEL_START'],
+                ],
+            ],
+        ];
+    }
+}
+```
+
+### Create the test suite
+
+At the moment, this package don't have any test. Would you like to contribute? This is the perfect task.
 
 ## 🆓 License
 PHP Insights is open-sourced software licensed under the [MIT license](LICENSE.md).
