@@ -19,9 +19,6 @@ use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 
-/**
- * @internal
- */
 final class Classes implements HasValue, HasInsights
 {
     /**

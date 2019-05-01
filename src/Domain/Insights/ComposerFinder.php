@@ -7,9 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use RuntimeException;
 
-/**
- * @internal
- */
 final class ComposerFinder
 {
     /**

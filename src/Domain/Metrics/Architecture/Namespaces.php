@@ -17,9 +17,6 @@ use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedGlobalFunctionsSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\NamespaceDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
 
-/**
- * @internal
- */
 final class Namespaces implements HasValue, HasInsights
 {
     /**

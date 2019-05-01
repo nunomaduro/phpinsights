@@ -8,10 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use RuntimeException;
 
-
-/**
- * @internal
- */
 final class ComposerCheckLaravelVersion extends Insight
 {
     /**

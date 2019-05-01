@@ -59,9 +59,6 @@ use SlevomatCodingStandard\Sniffs\Variables\DuplicateAssignmentToVariableSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UselessVariableSniff;
 
-/**
- * @internal
- */
 final class Code implements HasValue, HasInsights
 {
     /**

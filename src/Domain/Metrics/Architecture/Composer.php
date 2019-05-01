@@ -8,9 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Insights\ComposerMustContainName;
 use NunoMaduro\PhpInsights\Domain\Insights\ComposerMustExist;
 
-/**
- * @internal
- */
 final class Composer implements HasInsights
 {
     /**

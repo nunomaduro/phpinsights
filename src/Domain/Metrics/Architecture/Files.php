@@ -10,9 +10,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneObjectStructurePerFileSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
 
-/**
- * @internal
- */
 final class Files implements HasValue, HasInsights
 {
     /**

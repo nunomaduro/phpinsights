@@ -6,9 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use RuntimeException as RuntimeExceptionAlias;
 
-/**
- * @internal
- */
 final class ComposerMustContainName extends Insight
 {
     /**

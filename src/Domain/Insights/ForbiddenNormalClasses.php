@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-/**
- * @internal
- */
 final class ForbiddenNormalClasses extends Insight
 {
     /**

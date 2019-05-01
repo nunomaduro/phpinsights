@@ -63,9 +63,6 @@ use SlevomatCodingStandard\Sniffs\PHP\ShortListSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 
-/**
- * @internal
- */
 final class Style implements HasInsights
 {
     /**

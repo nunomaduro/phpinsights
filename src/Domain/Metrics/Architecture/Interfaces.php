@@ -10,9 +10,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff;
 
-/**
- * @internal
- */
 final class Interfaces implements HasValue, HasPercentage, HasInsights
 {
     /**

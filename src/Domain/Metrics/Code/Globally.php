@@ -11,9 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\GlobalKeywordSniff;
 
-/**
- * @internal
- */
 final class Globally implements HasValue, HasPercentage, HasInsights
 {
     /**

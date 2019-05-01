@@ -21,9 +21,6 @@ use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff;
 
-/**
- * @internal
- */
 final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsights
 {
     /**

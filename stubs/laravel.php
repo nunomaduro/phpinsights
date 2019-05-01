@@ -45,9 +45,10 @@ return [
     ],
 
     'remove' => [
-        ForbiddenTraits::class,
+        DisallowMixedTypeHintSniff::class,
         ForbiddenDefineFunctions::class,
         ForbiddenNormalClasses::class,
+        ForbiddenTraits::class,
         TypeHintDeclarationSniff::class,
     ],
 

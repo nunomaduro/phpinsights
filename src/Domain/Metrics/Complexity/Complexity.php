@@ -9,9 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 
-/**
- * @internal
- */
 final class Complexity implements HasAvg, HasInsights
 {
     /**

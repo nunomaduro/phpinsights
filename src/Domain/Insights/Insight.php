@@ -7,9 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 
-/**
- * @internal
- */
 abstract class Insight implements InsightContract
 {
     /**

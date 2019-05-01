@@ -16,9 +16,6 @@ use PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions\NullableTypeDeclarationSnif
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionCallSignatureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 
-/**
- * @internal
- */
 final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
 {
     /**

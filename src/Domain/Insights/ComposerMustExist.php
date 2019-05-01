@@ -6,9 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use RuntimeException;
 
-/**
- * @internal
- */
 final class ComposerMustExist extends Insight
 {
     /**

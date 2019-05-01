@@ -25,9 +25,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\NullTypeHintOnLastPositionSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff;
 
-/**
- * @internal
- */
 final class Comments implements HasValue, HasPercentage, HasInsights
 {
     /**

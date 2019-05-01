@@ -7,9 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 
-/**
- * @internal
- */
 final class Globally implements HasPercentage
 {
     /**

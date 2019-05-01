@@ -12,9 +12,6 @@ use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 
-/**
- * @internal
- */
 final class Functions implements HasValue, HasInsights
 {
     /**

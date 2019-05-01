@@ -6,9 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
-/**
- * @internal
- */
 final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 {
     /**
