@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-final class ForbiddenNormalClasses extends Insight
+use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+
+class ForbiddenNormalClasses extends Insight implements HasDetails
 {
     /**
      * {@inheritdoc}
@@ -19,6 +21,14 @@ final class ForbiddenNormalClasses extends Insight
      */
     public function getTitle(): string
     {
-        return (string) ($this->config['title'] ?? 'Normal classes are forbidden. Classes must be final or abstract.');
+        return (string) ($this->config['title'] ?? 'Normal classes are forbidden. Classes must be final or abstract');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDetails(): array
+    {
+        return $this->collector->getConcreteNonFinalClasses();
     }
 }
