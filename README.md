@@ -12,12 +12,12 @@
 
 
 **PHP Insights** created and maintained by [Nuno Maduro](https://github.com/nunomaduro), is the perfect starting point to analyze the code quality of your PHP projects.
-Carefully crafted to simplify the analysis of your code directly on your terminal.
+Carefully crafted to simplify the analysis of your code directly from your terminal.
 
 ## ✨ Features
 
-- Analysis of **lines of code** and cyclomatic complexity
-- Beautiful overview of your **code structure** and it's dependencies
+- Analysis of **code quality** and **coding style**
+- Beautiful overview of code **architecture** and it's **complexity**
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 
 ## 👉🏻 Installation & Usage
@@ -28,7 +28,7 @@ Carefully crafted to simplify the analysis of your code directly on your termina
 First, install PHP Insights via the Composer package manager:
 
 ```bash
-composer require nunomaduro/phpinsights:dev-feat/first
+composer require nunomaduro/phpinsights
 ```
 
 Use the `phpinsights` binary:
@@ -70,15 +70,15 @@ php ./vendor/bin/phpinsights
 The project is under development. As such, any help is welcome!
 
 1. [Create a new insight from scratch](#create-a-new-insight)
-2. [Add a new insight from PHP CS Sniff](#add-a-new-insight-from-php-cs)
+2. [Add a new insight from PHP CS Sniff](#add-a-new-insight-from-php-cs-sniff)
 3. [Create or improve create a preset for your favorite framework](#create-or-improve-create-a-preset-for-your-favorite-framework)
 4. [Create the test suite](#create-the-test-suite)
 
 ### Create a new `Insight`
 
-Imagine that you want to create a new `Insight` that don't allow the usage of final classes:
+Imagine that you want to create a new `Insight` that doesn't allow the usage of final classes:
 
-1. Create a new file under `Domain\Insights` with the content:
+1. Create a new file under `src/Domain/Insights` with the content:
 
 ```php
 final class ForbiddenFinalClasses extends Insight
@@ -101,7 +101,7 @@ final class ForbiddenFinalClasses extends Insight
 }
 ```
 
-2. Attach the `Insight` to a specific inside `Domain/Metrics/`:
+2. Attach the `Insight` to a specific inside `src/Domain/Metrics`:
 
 ```php
 final class Classes implements HasInsights
@@ -124,7 +124,7 @@ final class Classes implements HasInsights
 
 Are you aware of a PHPCS sniff that you would like to add to PHP Insights? You can add it in the following way:
 
-1. Identify the impact metric, and it to the list of insights:
+1. Identify the related metric, and it to the list of insights:
 
 ```php
 final class Classes implements HasInsights
@@ -145,7 +145,7 @@ final class Classes implements HasInsights
 
 ### Create or improve create a preset for your favorite framework
 
-Would you like to exclude a directory or remove a `Insight` for you favorite framework? You can add it in the following way:
+Would you like to exclude a directory or remove an `Insight` for your favorite framework? You can add it in the following way:
 
 > In this example we are going to use the Laravel Framework.
 
@@ -196,7 +196,7 @@ final class Preset implements PresetContract
 
 ### Create the test suite
 
-At the moment, this package don't have any test. Would you like to contribute? This is the perfect task.
+At the moment, this package doesn't have any test. Would you like to contribute? This is the perfect task.
 
 ## 🆓 License
 PHP Insights is open-sourced software licensed under the [MIT license](LICENSE.md).
