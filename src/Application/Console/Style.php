@@ -170,7 +170,7 @@ EOD;
         $this->newLine();
 
         $this->writeln(sprintf("[STYLE] %s",
-            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>",
+            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>"
         ));
 
         return $this;
