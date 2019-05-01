@@ -222,6 +222,9 @@ EOD;
             }
         }
 
+        $this->newLine();
+        $this->writeln('💡 See something that needs to be improved? Just send us a <bold>pull request</> on GitHub: <title>https://github.com/nunomaduro/phpinsights</title>');
+        
         return $this;
     }
 
