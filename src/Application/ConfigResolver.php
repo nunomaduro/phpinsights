@@ -26,7 +26,7 @@ final class ConfigResolver
      * @param  array<string, string|int|array>  $config
      * @param  string  $directory
      *
-     * @return array
+     * @return array<string, array>
      */
     public static function resolve(array $config, string $directory): array
     {

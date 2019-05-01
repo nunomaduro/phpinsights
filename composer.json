@@ -12,17 +12,20 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "narration/console": "dev-master",
-        "narration/container": "dev-master",
+        "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
+        "symfony/console": "4.3.x-dev",
         "symfony/finder": "4.3.x-dev",
         "symplify/easy-coding-standard": "^5.4"
     },
     "require-dev": {
         "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
-        "narration/testing": "dev-master"
+        "narration/phpstan-rules": "dev-master",
+        "phpstan/phpstan": "^0.11.5",
+        "symfony/var-dumper": "^4.2",
+        "thecodingmachine/phpstan-strict-rules": "^0.11.0"
     },
     "autoload-dev": {
         "psr-4": {

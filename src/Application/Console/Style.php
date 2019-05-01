@@ -34,7 +34,7 @@ final class Style extends SymfonyStyle
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      * @param  string  $dir
      *
-     * @return $this
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function header(Results $results, string $dir): Style
     {
@@ -69,7 +69,7 @@ EOD;
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return $this
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function code(InsightCollection $insightCollection, Results $results): Style
     {
@@ -107,7 +107,7 @@ EOD;
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return $this
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function complexity(InsightCollection $insightCollection, Results $results): Style
     {
@@ -125,7 +125,7 @@ EOD;
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return $this
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function architecture(InsightCollection $insightCollection, Results $results): Style
     {
@@ -163,7 +163,7 @@ EOD;
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
-     * @return $this
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function style(Results $results): Style
     {

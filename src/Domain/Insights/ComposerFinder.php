@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
-use RuntimeException;
+use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 
 final class ComposerFinder
 {
@@ -20,6 +20,6 @@ final class ComposerFinder
             return (string) file_get_contents($collector->getDir() . '/composer.json');
         }
 
-        throw new RuntimeException('`composer.json` not found.');
+        throw new ComposerNotFound('`composer.json` not found.');
     }
 }

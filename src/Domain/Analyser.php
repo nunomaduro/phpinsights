@@ -378,11 +378,11 @@ final class Analyser
 
     /**
      * @param  string  $method
-     * @param  array  $args
+     * @param  array<int|float|string[],int|float|string[]>  $args
      *
      * @return int|float|string[]
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         $method = new ReflectionMethod(BaseAnalyser::class, $method);
         $method->setAccessible(true);

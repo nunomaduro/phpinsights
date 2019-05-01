@@ -56,7 +56,7 @@ final class InsightCollectionFactory
                 return $file->getRealPath();
             }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
         } catch (InvalidArgumentException $exception) {
-            throw new DirectoryNotFound($exception->getMessage());
+            throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
 
         $collector = $this->analyser->analyse($dir, $files);

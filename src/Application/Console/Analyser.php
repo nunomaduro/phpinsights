@@ -31,7 +31,7 @@ final class Analyser
      * Analyse the given dirs.
      *
      * @param  \NunoMaduro\PhpInsights\Application\Console\Style  $style
-     * @param  array  $config
+     * @param  array<string, array>  $config
      * @param  string  $dir
      *
      * @return float

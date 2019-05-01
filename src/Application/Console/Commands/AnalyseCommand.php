@@ -71,7 +71,7 @@ final class AnalyseCommand
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  string  $directory
      *
-     * @return array
+     * @return array<string, array>
      */
     private function getConfig(InputInterface $input, string $directory): array
     {

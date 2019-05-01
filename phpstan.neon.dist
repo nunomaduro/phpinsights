@@ -1,11 +1,15 @@
 includes:
-    - vendor/narration/phpstan-rules/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/localheinz/phpstan-rules/rules.neon
+    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
 
 parameters:
     level: max
     paths:
         - config
         - src
+        - stubs
+
     ignoreErrors:
         - '#Offset 1 does not exist on array.#'
         - '#iterator_to_array expects Traversable, iterable#'

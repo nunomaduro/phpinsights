@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use RuntimeException as RuntimeExceptionAlias;
+use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 
 final class ComposerMustContainName extends Insight
 {
@@ -23,7 +23,7 @@ final class ComposerMustContainName extends Insight
     {
         try {
             $contents = json_decode(ComposerFinder::contents($this->collector), true);
-        } catch (RuntimeExceptionAlias $e) {
+        } catch (ComposerNotFound $e) {
             return true;
         }
 

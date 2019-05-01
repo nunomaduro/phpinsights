@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Laravel;
 
+use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 use NunoMaduro\PhpInsights\Domain\Insights\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
-use RuntimeException;
 
 final class ComposerCheckLaravelVersion extends Insight
 {
@@ -17,7 +17,7 @@ final class ComposerCheckLaravelVersion extends Insight
     {
         try {
             $composer = json_decode(ComposerFinder::contents($this->collector), true);
-        } catch (RuntimeException $exception) {
+        } catch (ComposerNotFound $exception) {
             return true;
         }
 

@@ -626,7 +626,7 @@ final class Collector
     /**
      * @return string
      */
-    public function getCurrentFilename()
+    public function getCurrentFilename(): string
     {
         return $this->currentFilename;
     }
@@ -874,7 +874,7 @@ final class Collector
     /**
      * @return int
      */
-    public function getNonCommentLines()
+    public function getNonCommentLines(): int
     {
         return $this->getLines() - $this->getCommentLines();
     }
@@ -892,7 +892,7 @@ final class Collector
      *
      * @return float
      */
-    private function getAverage($array): float
+    private function getAverage(array $array): float
     {
         return $this->divide($this->getSum($array), $this->getCount($array));
     }
@@ -945,7 +945,7 @@ final class Collector
     /**
      * @return int
      */
-    public function getMaximumClassLength()
+    public function getMaximumClassLength(): int
     {
         return (int) $this->getMaximum($this->classLines);
     }
@@ -1011,7 +1011,7 @@ final class Collector
     /**
      * @return int
      */
-    public function getMaximumClassComplexity()
+    public function getMaximumClassComplexity(): int
     {
         return (int) $this->getMaximum($this->getClassComplexity());
     }

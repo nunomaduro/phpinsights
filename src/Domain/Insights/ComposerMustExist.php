@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use RuntimeException;
+use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 
 final class ComposerMustExist extends Insight
 {
@@ -15,7 +15,7 @@ final class ComposerMustExist extends Insight
     {
         try {
             ComposerFinder::contents($this->collector);
-        } catch (RuntimeException $e) {
+        } catch (ComposerNotFound $e) {
             return true;
         }
 

@@ -38,7 +38,7 @@ final class Reflection
      * @param  string  $attribute
      * @param  string[]|bool  $value
      *
-     * @return $this
+     * @return \NunoMaduro\PhpInsights\Domain\Reflection
      */
     public function set(string $attribute, $value): Reflection
     {

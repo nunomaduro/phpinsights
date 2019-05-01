@@ -1,5 +1,11 @@
 #!/usr/bin/env php
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+use NunoMaduro\PhpInsights\Domain\Kernel;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
 
 (function () {
     require file_exists(__DIR__ . '/vendor/autoload.php')
@@ -7,21 +13,32 @@
         : __DIR__ . '/../../../vendor/autoload.php';
 
     /**
-     * Creates an new instance of the router.
+     * Bootstraps the domain kernel.
      */
-    $router = require __DIR__ . '/config/routes/console.php';
+    Kernel::bootstrap();
+
+    /**
+     * Gets the list of commands.
+     */
+    $commands = require __DIR__ . '/config/routes/console.php';
 
     /**
      * Capture the input from globals.
      */
-    $input = new \Symfony\Component\Console\Input\ArgvInput();
-
-    \NunoMaduro\PhpInsights\Domain\Kernel::bootstrap();
+    $input = new ArgvInput();
 
     /**
-     * Dispatch the input using the router.
+     * Creates a new console application, and runs it.
      */
-    \Narration\Console\Kernel::using($router)->dispatch($input);
+    $application = new Application('PHP Insights', 'v1.0.0');
+    foreach ($application->all() as $command) {
+        $command->setHidden(true);
+    }
+
+    $application->addCommands($commands);
+    $application->setDefaultCommand('analyse');
+
+    $application->run($input);
 })();
 
 
