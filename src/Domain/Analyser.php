@@ -174,6 +174,8 @@ final class Analyser
                                 $collector->addAbstractClass($filename);
                             } else if ($tokens[$i - 2][0] === \T_FINAL) {
                                 $collector->addConcreteFinalClass($filename);
+                            } else {
+                                $collector->addConcreteNonFinalClass($filename);
                             }
                         } else {
                             $collector->addConcreteNonFinalClass($filename);
