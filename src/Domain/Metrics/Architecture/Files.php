@@ -9,7 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneObjectStructurePerFileSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
-use SlevomatCodingStandard\Sniffs\Files\TypeNameMatchesFileNameSniff;
 
 /**
  * @internal
@@ -32,7 +31,6 @@ final class Files implements HasValue, HasInsights
         return [
             OneObjectStructurePerFileSniff::class,
             SuperfluousExceptionNamingSniff::class,
-            TypeNameMatchesFileNameSniff::class,
         ];
     }
 }

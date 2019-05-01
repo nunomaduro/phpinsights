@@ -22,6 +22,6 @@ final class ForbiddenGlobals extends Insight
      */
     public function getTitle(): string
     {
-        return "{$this->collector->getGlobalVariableAccesses()} globals accesses detected";
+        return "{$this->collector->getGlobalAccesses()} globals accesses detected";
     }
 }
