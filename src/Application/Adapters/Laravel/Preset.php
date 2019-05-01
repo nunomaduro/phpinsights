@@ -7,12 +7,9 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFinalClasses;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Insights\Laravel\ComposerCheckLaravelVersion;
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
@@ -37,11 +34,9 @@ final class Preset implements PresetContract
         return [
             'exclude' => [
                 'storage/framework',
+                'resources/views',
             ],
             'add' => [
-                Classes::class => [
-                    ForbiddenFinalClasses::class,
-                ],
                 Composer::class => [
                     ComposerCheckLaravelVersion::class,
                 ],
@@ -49,7 +44,6 @@ final class Preset implements PresetContract
             'remove' => [
                 ForbiddenTraits::class,
                 ForbiddenDefineFunctions::class,
-                ForbiddenNormalClasses::class,
                 TypeHintDeclarationSniff::class,
             ],
             'config' => [

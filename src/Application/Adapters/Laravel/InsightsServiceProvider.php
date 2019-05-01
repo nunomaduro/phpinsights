@@ -29,7 +29,7 @@ final class InsightsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../../../../stubs/config.php' => $this->app->configPath('insights.php'),
+            __DIR__ . '/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),
         ], 'config');
 
         $this->commands([

@@ -67,7 +67,7 @@ final class Sniff implements Insight, HasDetails
         $name = (string) array_pop($path);
 
         $name = str_replace('Sniff', '', $name);
-        
+
         return ucfirst(trim(mb_strtolower((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
     }
 
