@@ -11,7 +11,7 @@
 </p>
 
 
-**PHP Insights** created and maintained by [Nuno Maduro](https://github.com/nunomaduro), is the perfect starting point to analyze the code quality of your PHP projects.
+**PHP Insights** created and maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, is the perfect starting point to analyze the code quality of your PHP projects.
 Carefully crafted to simplify the analysis of your code directly from your terminal.
 
 ## ✨ Features
@@ -19,6 +19,7 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 - Analysis of **code quality** and **coding style**
 - Beautiful overview of code **architecture** and it's **complexity**
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
+- Friendly console interface build on top of [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer), [PHPLOC](https://github.com/sebastianbergmann/phploc), and [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard)
 
 ## 👉🏻 Installation & Usage
 
