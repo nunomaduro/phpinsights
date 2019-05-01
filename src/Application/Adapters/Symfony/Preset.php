@@ -27,6 +27,9 @@ final class Preset implements PresetContract
         return [
             'exclude' => [
                 'var',
+                'translations',
+                'config',
+                'public'
             ],
         ];
     }
