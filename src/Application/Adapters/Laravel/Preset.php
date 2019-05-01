@@ -35,6 +35,7 @@ final class Preset implements PresetContract
             'exclude' => [
                 'storage/framework',
                 'resources/views',
+                'bootstrap/cache',
             ],
             'add' => [
                 Composer::class => [
