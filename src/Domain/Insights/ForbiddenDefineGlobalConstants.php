@@ -27,7 +27,7 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
      */
     public function getTitle(): string
     {
-        return 'The use of `globals` is prohibited';
+        return 'Define `globals` is prohibited';
     }
 
 

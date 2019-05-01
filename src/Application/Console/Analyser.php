@@ -49,7 +49,6 @@ final class Analyser
             ->complexity($insightCollection, $results)
             ->architecture($insightCollection, $results)
             ->style($results)
-            ->dependencies($insightCollection, $results)
             ->issues($insightCollection, $metrics, $dir);
 
         return $results->getCodeQuality();

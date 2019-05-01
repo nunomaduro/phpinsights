@@ -36,8 +36,6 @@ final class MetricsFinder
             Architecture\Interfaces::class,
             Architecture\Namespaces::class,
             Architecture\Traits::class,
-            Dependencies\Globally::class,
-            Dependencies\Dependencies::class,
             Style\Style::class,
         ];
     }

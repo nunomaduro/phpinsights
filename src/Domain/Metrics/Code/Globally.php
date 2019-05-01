@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\GlobalKeywordSniff;
 
 /**
@@ -38,6 +39,7 @@ final class Globally implements HasValue, HasPercentage, HasInsights
     {
         return [
             GlobalKeywordSniff::class,
+            ForbiddenGlobals::class,
         ];
     }
 }

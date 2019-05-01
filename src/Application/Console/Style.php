@@ -9,7 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
-use NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
 use NunoMaduro\PhpInsights\Domain\Results;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -49,15 +48,14 @@ final class Style extends SymfonyStyle
         $codeQualityColor = "bg={$this->getColor($results->getCodeQuality())}";
         $complexityColor = "bg={$this->getColor($results->getComplexity())}";
         $structureColor = "bg={$this->getColor($results->getStructure())}";
-        $dependenciesColor = "bg={$this->getColor($results->getDependencies())}";
         $styleColor = "bg={$this->getColor($results->getStyle())}";
 
         $output = <<<EOD
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$dependenciesColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$dependenciesColor>  {$this->getPercentageAsString($results->getDependencies())}  </>            <fg=black;options=bold;$styleColor>  {$this->getPercentageAsString($results->getStyle())}  </>
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$dependenciesColor>         </>            <$styleColor>         </>
+      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
+      <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$styleColor>  {$this->getPercentageAsString($results->getStyle())}  </>
+      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
 
-        <$subtitle>Code</>              <$subtitle>Complexity</>          <$subtitle>Architecture</>          <$subtitle>Dependencies</>            <$subtitle>Style</>          
+        <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>          
 EOD;
         $this->write($output);
         $this->newLine(2);
@@ -173,24 +171,6 @@ EOD;
 
         $this->writeln(sprintf("[STYLE] %s",
             "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>",
-        ));
-
-        return $this;
-    }
-
-    /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
-     * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
-     *
-     * @return $this
-     */
-    public function dependencies(InsightCollection $insightCollection, Results $results): Style
-    {
-        $this->newLine();
-
-        $this->writeln(sprintf("[DEPENDENCIES] %s relying on <title>%s</> global dependencies",
-            "<fg={$this->getColor($results->getDependencies())};options=bold>{$results->getDependencies()} pts</>",
-            (new Dependencies\Dependencies())->getValue($insightCollection->getCollector())
         ));
 
         return $this;
