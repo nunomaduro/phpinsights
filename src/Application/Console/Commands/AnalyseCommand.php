@@ -82,7 +82,7 @@ final class AnalyseCommand
             $configPath = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
         }
 
-        return ConfigResolver::resolve(file_exists($configPath) ? require $configPath : [], $directory);
+        return ConfigResolver::resolve($configPath !== null && file_exists($configPath) ? require $configPath : [], $directory);
     }
 
     /**

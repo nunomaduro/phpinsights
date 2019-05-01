@@ -197,6 +197,11 @@ EOD;
                 $category = $category[count($category) - 2];
 
                 $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
+
+                if ($this->getVerbosity() > OutputInterface::VERBOSITY_VERBOSE) {
+                    $issue .= " ($metricClass)";
+                }
+
                 if (! $insight instanceof HasDetails) {
                     $this->writeln($issue);
                     continue;
