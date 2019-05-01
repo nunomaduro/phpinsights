@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFinalClasses as ForbiddenFinalClassesAlias;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
+use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
+
 return [
 
     /*
@@ -31,19 +38,21 @@ return [
     */
 
     'add' => [
-        //  ExampleMetric::class => [
-        //      ExampleInsight::class,
-        //  ]
+        Classes::class => [
+            ForbiddenFinalClassesAlias::class,
+        ],
     ],
 
     'remove' => [
-        //  ExampleInsight::class,
+        ForbiddenTraits::class,
+        ForbiddenDefineFunctions::class,
+        TypeHintDeclarationSniff::class,
     ],
 
     'config' => [
-        //  ExampleInsight::class => [
-        //      'ignore' => ['LARAVEL_START'],
-        //  ],
+        ForbiddenPrivateMethods::class => [
+            'title' => 'The usage of private methods is not idiomatic in Laravel.',
+        ],
     ],
 
 ];

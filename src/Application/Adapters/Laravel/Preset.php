@@ -38,19 +38,12 @@ final class Preset implements PresetContract
                 'bootstrap/cache',
             ],
             'add' => [
-                Composer::class => [
-                    ComposerCheckLaravelVersion::class,
-                ],
+                // ...
             ],
             'remove' => [
-                ForbiddenTraits::class,
-                ForbiddenDefineFunctions::class,
-                TypeHintDeclarationSniff::class,
+                // ...
             ],
             'config' => [
-                ForbiddenPrivateMethods::class => [
-                    'title' => 'The usage of private methods is not idiomatic in Laravel.',
-                ],
                 ForbiddenDefineGlobalConstants::class => [
                     'ignore' => ['LARAVEL_START'],
                 ],
