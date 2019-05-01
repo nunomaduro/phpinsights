@@ -36,6 +36,7 @@ final class Preset implements PresetContract
                 'storage/framework',
                 'resources/views',
                 'bootstrap/cache',
+                'database'
             ],
             'add' => [
                 // ...

@@ -42,7 +42,7 @@ return [
 
     'config' => [
         //  ExampleInsight::class => [
-        //      'ignore' => ['LARAVEL_START'],
+        //      'key' => 'value',
         //  ],
     ],
 
