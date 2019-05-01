@@ -2,9 +2,12 @@
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored
-.scrutinizer.yml export-ignore
+.editorconfig export-ignore
+phpstan.neon.dist
+phpunit.xml.dist
 .travis.yml export-ignore
 .styleci.yml export-ignore
 CHANGELOG.md export-ignore
 CONTRIBUTING.md export-ignore
+README.md export-ignore
 docs export-ignore
