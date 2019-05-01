@@ -26,41 +26,35 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 - **[PHP 7.2+](https://php.net/releases/)**
 
 First, install PHP Insights via the Composer package manager:
-
 ```bash
-composer require nunomaduro/phpinsights
+composer require nunomaduro/phpinsights --dev
 ```
 
-Use the `phpinsights` binary:
-
+Then, use the `phpinsights` binary:
 ```bash
 php ./vendor/bin/phpinsights
 ```
 
 ### Within Laravel
 
-You can publish the config-file with:
-
+First, you should publish the config-file with:
 ```bash
 php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"
 ```
 
-Use the `insights` Artisan command:
-
+Then, use the `insights` Artisan command:
 ```bash
 php artisan insights
 ```
 
 ### Within Symfony
 
-You can create the config-file with:
-
+First, you should create the config-file with:
 ```bash
 cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 ```
 
-Use the `phpinsights` binary:
-
+Then, use the `phpinsights` binary:
 ```bash
 php ./vendor/bin/phpinsights
 ```
