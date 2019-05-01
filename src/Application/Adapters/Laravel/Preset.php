@@ -63,10 +63,6 @@ final class Preset implements PresetContract
             }
         }
 
-        if ($composer['name'] === 'laravel/framework') {
-            return true;
-        }
-
-        return false;
+        return array_key_exists('name', $composer) && $composer['name'] === 'laravel/framework';
     }
 }

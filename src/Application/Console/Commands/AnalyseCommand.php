@@ -78,7 +78,7 @@ final class AnalyseCommand
         /** @var string|null $configPath */
         $configPath = $input->getOption('config-path');
 
-        if ($configPath !== null && file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
+        if ($configPath === null && file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
             $configPath = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
         }
 
