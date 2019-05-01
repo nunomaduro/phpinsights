@@ -31,7 +31,7 @@ final class InsightsCommand extends Command
         Kernel::bootstrap();
 
         if (! file_exists($this->input->getOption('config-path'))) {
-            $this->output->note('Consider publish the configuration using the: php artisan vendor:publish nunomaduro/phpinsights.');
+            $this->output->note('Consider publish the configuration using the: "php artisan vendor:publish "NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"');
         }
 
         $analyseCommand->__invoke($this->input, $this->output);
