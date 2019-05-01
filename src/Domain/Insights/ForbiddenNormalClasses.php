@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
-class ForbiddenNormalClasses extends Insight implements HasDetails
+final class ForbiddenNormalClasses extends Insight implements HasDetails
 {
     /**
      * {@inheritdoc}
