@@ -7,6 +7,6 @@ use RuntimeException;
 /**
  * @internal
  */
-final class DirectoryNotFoundException extends RuntimeException
+final class DirectoryNotFound extends RuntimeException
 {
 }

@@ -16,7 +16,7 @@ final class Repositories
     /**
      * Injects repositories into the container definitions.
      *
-     * @return mixed[]
+     * @return array<string, callable>
      */
     public function __invoke(): array
     {

@@ -7,8 +7,11 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
-use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFoundException;
+use NunoMaduro\PhpInsights\Domain\Contracts\{
+    HasInsights,
+    Insight
+};
+use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -52,8 +55,8 @@ final class InsightCollectionFactory
             $files = array_map(function (SplFileInfo $file) {
                 return $file->getRealPath();
             }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
-        } catch (InvalidArgumentException $e) {
-            throw new DirectoryNotFoundException($e->getMessage());
+        } catch (InvalidArgumentException $exception) {
+            throw new DirectoryNotFound($exception->getMessage());
         }
 
         $collector = $this->analyser->analyse($dir, $files);
@@ -94,8 +97,8 @@ final class InsightCollectionFactory
         $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
 
         $toAdd = array_key_exists('add', $config) &&
-            array_key_exists($metricClass, $config['add']) &&
-            is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
+        array_key_exists($metricClass, $config['add']) &&
+        is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
 
         $insights = array_merge($insights, $toAdd);
 

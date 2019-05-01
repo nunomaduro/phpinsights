@@ -20,7 +20,7 @@ final class TableFactory
      *
      * @return \Symfony\Component\Console\Helper\Table
      */
-    public static function make(OutputInterface $output, $rows): Table
+    public static function make(OutputInterface $output, array $rows): Table
     {
         $style = (clone Table::getStyleDefinition('symfony-style-guide'))
             ->setCellHeaderFormat('<info>%s</info>')

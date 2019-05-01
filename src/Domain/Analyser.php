@@ -5,6 +5,7 @@
 namespace NunoMaduro\PhpInsights\Domain;
 
 use ReflectionMethod;
+use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
 
 /**
  * Code originally taken from {SebastianBergmann\PHPLOC\Analyser}
@@ -379,13 +380,13 @@ final class Analyser
      * @param  string  $method
      * @param  array  $args
      *
-     * @return mixed
+     * @return int|float|string[]
      */
     public function __call($method, $args)
     {
-        $method = new ReflectionMethod(\SebastianBergmann\PHPLOC\Analyser::class, $method);
+        $method = new ReflectionMethod(BaseAnalyser::class, $method);
         $method->setAccessible(true);
 
-        return $method->invoke(new \SebastianBergmann\PHPLOC\Analyser(), ...$args);
+        return $method->invoke(new BaseAnalyser(), ...$args);
     }
 }

@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
+use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 
 /**
  * @internal
@@ -33,6 +34,8 @@ final class Functions implements HasValue, HasInsights
             ForbiddenFunctionsSniff::class,
             FunctionLengthSniff::class,
             ForbiddenDefineFunctions::class,
+            StaticClosureSniff::class,
+
         ];
     }
 }

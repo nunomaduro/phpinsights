@@ -52,7 +52,9 @@ final class ConfigResolver
     {
         $preset = 'default';
 
-        if (! file_exists($composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json')) {
+        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
+
+        if (! file_exists($composerPath)) {
             return $preset;
         }
 

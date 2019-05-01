@@ -17,9 +17,13 @@ use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\RequireOneLinePropertyDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\LongTypeHintsSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullTypeHintOnLastPositionSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff;
 
 /**
  * @internal
@@ -60,6 +64,13 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             InlineDocCommentDeclarationSniff::class,
             RequireOneLinePropertyDocCommentSniff::class,
             UselessInheritDocCommentSniff::class,
+            DisallowArrayTypeHintSyntaxSniff::class,
+            DisallowMixedTypeHintSniff::class,
+            LongTypeHintsSniff::class,
+            NullTypeHintOnLastPositionSniff::class,
+            NullableTypeForNullDefaultValueSniff::class,
+            TypeHintDeclarationSniff::class,
+            UselessConstantTypeHintSniff::class,
         ];
     }
 }

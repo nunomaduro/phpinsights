@@ -163,12 +163,11 @@ EOD;
     }
 
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      *
      * @return $this
      */
-    public function style(InsightCollection $insightCollection, Results $results): Style
+    public function style(Results $results): Style
     {
         $this->newLine();
 

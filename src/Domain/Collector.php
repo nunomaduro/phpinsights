@@ -712,17 +712,17 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getStaticAttributeAccesses()
+    public function getStaticAttributeAccesses(): int
     {
         return $this->staticAttributeAccesses;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getComplexity()
+    public function getComplexity(): int
     {
         return $this->complexity;
     }
@@ -824,9 +824,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getProtectedMethods()
+    public function getProtectedMethods(): int
     {
         return $this->protectedMethods;
     }
@@ -864,9 +864,9 @@ final class Collector
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getSuperGlobalVariableAccesses()
+    public function getSuperGlobalVariableAccesses(): int
     {
         return $this->superGlobalVariableAccesses;
     }

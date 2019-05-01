@@ -21,7 +21,7 @@ final class ComposerCheckLaravelVersion extends Insight
     {
         try {
             $composer = json_decode(ComposerFinder::contents($this->collector), true);
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException $exception) {
             return true;
         }
 

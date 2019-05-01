@@ -31,6 +31,9 @@ final class Globally implements HasValue, HasPercentage, HasInsights
         return $collector->getLines() > 0 ? ($collector->getNotInClassesOrFunctions() / $collector->getLines()) * 100 : 0;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInsights(): array
     {
         return [

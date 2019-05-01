@@ -36,7 +36,7 @@ final class Reflection
      * Sets an private attribute value on the given instance.
      *
      * @param  string  $attribute
-     * @param  mixed  $value
+     * @param  string[]|bool  $value
      *
      * @return $this
      */

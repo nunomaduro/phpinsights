@@ -49,6 +49,19 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSn
 use SlevomatCodingStandard\Sniffs\Classes\EmptyLinesAroundClassBracesSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Functions\TrailingCommaInCallSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\MultipleUsesPerLineSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\NamespaceSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\RequireOneNamespaceInFileSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\UseDoesNotStartWithBackslashSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Operators\SpreadOperatorSpacingSniff;
+use SlevomatCodingStandard\Sniffs\PHP\ShortListSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 
 /**
  * @internal
@@ -105,7 +118,20 @@ final class Style implements HasInsights
             UpperCaseConstantNameSniff::class,
             EmptyLinesAroundClassBracesSniff::class,
             TraitUseDeclarationSniff::class,
-            TraitUseSpacingSniff::class
+            TraitUseSpacingSniff::class,
+            TrailingCommaInCallSniff::class,
+            AlphabeticallySortedUsesSniff::class,
+            NamespaceSpacingSniff::class,
+            ReferenceUsedNamesOnlySniff::class,
+            RequireOneNamespaceInFileSniff::class,
+            UnusedUsesSniff::class,
+            UseDoesNotStartWithBackslashSniff::class,
+            UseSpacingSniff::class,
+            SpreadOperatorSpacingSniff::class,
+            ShortListSniff::class,
+            ParameterTypeHintSpacingSniff::class,
+            ReturnTypeHintSpacingSniff::class,
+            MultipleUsesPerLineSniff::class,
         ];
     }
 }

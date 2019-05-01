@@ -8,7 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 
 /**
  * @internal

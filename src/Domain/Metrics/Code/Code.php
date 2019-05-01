@@ -7,7 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use ObjectCalisthenics\Sniffs\ControlStructures\NoElseSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff;
 use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff;
@@ -33,11 +32,30 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\LanguageConstructWithParenthesesSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\NewWithParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff;
+use SlevomatCodingStandard\Sniffs\Exceptions\DeadCatchSniff;
 use SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff;
+use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
+use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
+use SlevomatCodingStandard\Sniffs\Functions\UselessParameterDefaultValueSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\UseFromSameNamespaceSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
+use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\Operators\RequireCombinedAssignmentOperatorSniff;
+use SlevomatCodingStandard\Sniffs\Operators\RequireOnlyStandaloneIncrementAndDecrementOperatorsSniff;
+use SlevomatCodingStandard\Sniffs\PHP\OptimizedFunctionsWithoutUnpackingSniff;
+use SlevomatCodingStandard\Sniffs\PHP\TypeCastSniff;
 use SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\PHP\UselessSemicolonSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
+use SlevomatCodingStandard\Sniffs\Variables\DuplicateAssignmentToVariableSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UselessVariableSniff;
 
@@ -70,7 +88,6 @@ final class Code implements HasValue, HasInsights
             LanguageConstructSpacingSniff::class,
             SuperfluousWhitespaceSniff::class,
             ReferenceThrowableOnlySniff::class,
-            NoElseSniff::class,
             ElementNameMinimalLengthSniff::class,
             MaxNestingLevelSniff::class,
             UnusedVariableSniff::class,
@@ -94,6 +111,30 @@ final class Code implements HasValue, HasInsights
             ShortFormTypeKeywordsSniff::class,
             DisallowImplicitArrayCreationSniff::class,
             TrailingArrayCommaSniff::class,
+            AssignmentInConditionSniff::class,
+            DisallowContinueWithoutIntegerOperandInSwitchSniff::class,
+            DisallowEmptySniff::class,
+            DisallowShortTernaryOperatorSniff::class,
+            DisallowYodaComparisonSniff::class,
+            LanguageConstructWithParenthesesSniff::class,
+            NewWithParenthesesSniff::class,
+            DeadCatchSniff::class,
+            ReferenceThrowableOnlySniff::class,
+            UnusedInheritedVariablePassedToClosureSniff::class,
+            UnusedParameterSniff::class,
+            UselessParameterDefaultValueSniff::class,
+            UseFromSameNamespaceSniff::class,
+            UselessAliasSniff::class,
+            DisallowEqualOperatorsSniff::class,
+            RequireCombinedAssignmentOperatorSniff::class,
+            RequireOnlyStandaloneIncrementAndDecrementOperatorsSniff::class,
+            OptimizedFunctionsWithoutUnpackingSniff::class,
+            TypeCastSniff::class,
+            UselessParenthesesSniff::class,
+            UselessSemicolonSniff::class,
+            DeclareStrictTypesSniff::class,
+            DuplicateAssignmentToVariableSniff::class,
+
         ];
     }
 }
