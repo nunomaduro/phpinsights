@@ -14,7 +14,6 @@ final class ForbiddenGlobals extends Insight
      */
     public function hasIssue(): bool
     {
-        dd($this->collector->getGlobalAccesses());
         return (bool) $this->collector->getGlobalAccesses();
     }
 
