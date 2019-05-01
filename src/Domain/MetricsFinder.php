@@ -7,7 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
-use NunoMaduro\PhpInsights\Domain\Metrics\Dependencies;
 use NunoMaduro\PhpInsights\Domain\Metrics\Style;
 
 /**
