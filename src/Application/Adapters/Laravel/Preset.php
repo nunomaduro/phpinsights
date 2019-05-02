@@ -32,6 +32,7 @@ final class Preset implements PresetContract
                 'bootstrap',
                 'database',
                 'server.php',
+                'public'
             ],
             'add' => [
                 // ...
