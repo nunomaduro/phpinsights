@@ -57,7 +57,6 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             FixmeSniff::class,
             TodoSniff::class,
             DisallowOneLinePropertyDocCommentSniff::class,
-            DocCommentSpacingSniff::class,
             ForbiddenCommentsSniff::class,
             InlineDocCommentDeclarationSniff::class,
             RequireOneLinePropertyDocCommentSniff::class,

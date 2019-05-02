@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * @internal
@@ -48,8 +49,16 @@ final class Analyser
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
             ->architecture($insightCollection, $results)
-            ->style($results)
-            ->issues($insightCollection, $metrics, $dir);
+            ->style($results);
+
+        $style->newLine(1);
+        $style->write('<title>Press any key to continue...</title>');
+
+        $stdin = fopen('php://stdin', 'r');
+        fgetc($stdin);
+
+
+        $style->issues($insightCollection, $metrics, $dir);
 
         return $results->getCodeQuality();
     }
