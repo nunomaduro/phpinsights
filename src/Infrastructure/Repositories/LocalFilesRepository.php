@@ -6,12 +6,11 @@ namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\Finder;
-use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
 
 /**
  * @internal
  */
-final class LocalFilesRepository implements FilesRepository, CustomSourceProviderInterface
+final class LocalFilesRepository implements FilesRepository
 {
     /**
      * @var \Symfony\Component\Finder\Finder

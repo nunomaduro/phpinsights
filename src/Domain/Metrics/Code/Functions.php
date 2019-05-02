@@ -9,12 +9,16 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasAvg;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnusedFunctionParameterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\CallTimePassByReferenceSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DeprecatedFunctionsSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions\NullableTypeDeclarationSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionCallSignatureSniff;
+use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedGlobalFunctionsSniff;
 
 final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
 {
@@ -54,6 +58,10 @@ final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
             DeprecatedFunctionsSniff::class,
             NullableTypeDeclarationSniff::class,
             FunctionCallSignatureSniff::class,
+            FullyQualifiedGlobalFunctionsSniff::class,
+            StaticClosureSniff::class,
+            ForbiddenDefineFunctions::class,
+            ForbiddenFunctionsSniff::class,
         ];
     }
 }

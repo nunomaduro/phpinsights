@@ -61,6 +61,7 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
     public function getInsights(): array
     {
         return [
+            //FullyQualifiedClassNameAfterKeywordSniff::class,
             ForbiddenPublicPropertySniff::class,
             UnusedPrivateElementsSniff::class,
             NoSetterSniff::class,

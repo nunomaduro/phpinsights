@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\EcsContainer;
+use NunoMaduro\PhpInsights\Domain\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use RuntimeException;
@@ -12,7 +15,6 @@ use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
-use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor;
 
 /**
  * @internal
@@ -131,27 +133,39 @@ final class InsightFactory
             ->set('shouldClearCache', true)
             ->set('showProgressBar', true);
 
-        if (file_exists(__DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php')) {
-            $containerPath = __DIR__ . '/../../../vendor/symplify/easy-coding-standard/bin/container.php';
-        } else {
-            $containerPath = __DIR__ . '/../../../../../symplify/easy-coding-standard/bin/container.php';
-        }
+        $ecsContainer = EcsContainer::make();
 
-        $container = require $containerPath;
+        $ecsContainer->set(Configuration::class, $configuration);
 
-        $container->set(Configuration::class, $configuration);
-        $container->get(SourceFinder::class)->setCustomSourceProvider($this->filesRepository);
-        $sniffer = $container->get(SniffFileProcessor::class);
+        /** @var \Symplify\EasyCodingStandard\Finder\SourceFinder $sourceFinder */
+        $sourceFinder = $ecsContainer->get(SourceFinder::class);
+        $sourceFinder->setCustomSourceProvider($this->filesRepository);
 
+        $sniffer = Container::make()->get(FileProcessor::class);
         foreach ($this->sniffsFrom($this->insightsClasses) as $sniff) {
             $sniffer->addSniff($sniff);
         }
 
-        $application = $container->get(EasyCodingStandardApplication::class);
+        /** @var \Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication $application */
+        $application = $ecsContainer->get(EasyCodingStandardApplication::class);
+        $reflection = new Reflection($application);
+
+        /** @var \Symplify\EasyCodingStandard\Contract\Application\FileProcessorCollectorInterface $fileProcessorCollector */
+        $fileProcessorCollector = $reflection->set('fileProcessors', [])
+            ->get('singleFileProcessor');
+
+        $fileProcessorCollector->addFileProcessor($sniffer);
         $application->addFileProcessor($sniffer);
+
+        eval('');
+
+        @json_encode([]);
 
         $application->run();
 
-        return $this->sniffCollector = $container->get(ErrorAndDiffCollector::class);
+        /** @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $errorAndDiffCollector */
+        $errorAndDiffCollector = $ecsContainer->get(ErrorAndDiffCollector::class);
+
+        return $this->sniffCollector = $errorAndDiffCollector;
     }
 }

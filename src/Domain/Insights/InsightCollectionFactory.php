@@ -52,7 +52,7 @@ final class InsightCollectionFactory
     public function get(array $metrics, array $config, string $dir): InsightCollection
     {
         try {
-            $files = array_map(function (SplFileInfo $file) {
+            $files = array_map(static function (SplFileInfo $file) {
                 return $file->getRealPath();
             }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
         } catch (InvalidArgumentException $exception) {

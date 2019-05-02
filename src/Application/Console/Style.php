@@ -10,8 +10,6 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
 use NunoMaduro\PhpInsights\Domain\Results;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -19,17 +17,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class Style extends SymfonyStyle
 {
-    /**
-     * Creates a new instance of Style.
-     *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     */
-    public function __construct(InputInterface $input, OutputInterface $output)
-    {
-        parent::__construct($input, $output);
-    }
-
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      * @param  string  $dir
@@ -189,12 +176,12 @@ EOD;
     {
         foreach ($metrics as $metricClass) {
             foreach ($insightCollection->allFrom(new $metricClass) as $insight) {
-                if (! $insight->hasIssue()) {
-                    continue;
-                }
-
                 $category = explode('\\', $metricClass);
                 $category = $category[count($category) - 2];
+
+                if (! $insight->hasIssue() || $category === 'Style') {
+                    continue;
+                }
 
                 $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
 
@@ -209,13 +196,13 @@ EOD;
 
                 foreach ($details as $detail) {
                     $detail = str_replace(realpath($dir) . '/', '', $detail);
-                    $issue .= "\n<fg=red>-- </> $detail";
+                    $issue .= "\n  $detail";
                 }
 
                 if ($totalDetails > 3) {
                     $totalRemainDetails = $totalDetails - 3;
 
-                    $issue .= " <fg=red>+{$totalRemainDetails} issues omitted</>";
+                    $issue .= " <fg=red>+{$totalRemainDetails}</>";
                 }
 
                 $this->writeln($issue);

@@ -51,6 +51,7 @@ final class Comments implements HasValue, HasPercentage, HasInsights
         return [
             EmptyCommentSniff::class,
             TypeHintDeclarationSniff::class,
+            // FullyQualifiedClassNameInAnnotationSniff::class,
             NullTypeHintOnLastPositionSniff::class,
             NullableTypeForNullDefaultValueSniff::class,
             FixmeSniff::class,
@@ -60,7 +61,6 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             ForbiddenCommentsSniff::class,
             InlineDocCommentDeclarationSniff::class,
             RequireOneLinePropertyDocCommentSniff::class,
-            UselessInheritDocCommentSniff::class,
             DisallowArrayTypeHintSyntaxSniff::class,
             DisallowMixedTypeHintSniff::class,
             LongTypeHintsSniff::class,
@@ -68,6 +68,7 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             NullableTypeForNullDefaultValueSniff::class,
             TypeHintDeclarationSniff::class,
             UselessConstantTypeHintSniff::class,
+            UselessInheritDocCommentSniff::class,
         ];
     }
 }

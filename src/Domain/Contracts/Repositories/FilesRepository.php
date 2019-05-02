@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Contracts\Repositories;
 
+use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
+
 /**
  * @internal
  */
-interface FilesRepository
+interface FilesRepository extends CustomSourceProviderInterface
 {
     /**
      * Get the default repository.

@@ -28,7 +28,6 @@ use PHP_CodeSniffer\Standards\PSR12\Sniffs\Keywords\ShortFormTypeKeywordsSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
-use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
@@ -45,6 +44,7 @@ use SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UselessParameterDefaultValueSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedExceptionsSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UseFromSameNamespaceSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
@@ -83,7 +83,6 @@ final class Code implements HasValue, HasInsights
             RequireShortTernaryOperatorSniff::class,
             RequireCombinedAssignmentOperatorSniff::class,
             LanguageConstructSpacingSniff::class,
-            SuperfluousWhitespaceSniff::class,
             ReferenceThrowableOnlySniff::class,
             ElementNameMinimalLengthSniff::class,
             MaxNestingLevelSniff::class,
@@ -131,7 +130,8 @@ final class Code implements HasValue, HasInsights
             UselessSemicolonSniff::class,
             DeclareStrictTypesSniff::class,
             DuplicateAssignmentToVariableSniff::class,
-
+            // FullyQualifiedExceptionsSniff::class,
+            // FullyQualifiedGlobalConstantsSniff::class,
         ];
     }
 }

@@ -7,10 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
-use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 
 final class Functions implements HasValue, HasInsights
 {
@@ -28,11 +25,7 @@ final class Functions implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            ForbiddenFunctionsSniff::class,
             FunctionLengthSniff::class,
-            ForbiddenDefineFunctions::class,
-            StaticClosureSniff::class,
-
         ];
     }
 }
