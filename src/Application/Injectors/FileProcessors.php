@@ -47,7 +47,7 @@ final class FileProcessors
                         $errorAndDiffCollector,
                         $skipper,
                         $appliedCheckersCollector,
-                        $easyCodingStandardStyle,
+                        $easyCodingStandardStyle
                     ),
                     $configuration,
                     $errorAndDiffCollector,
