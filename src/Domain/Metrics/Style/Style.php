@@ -39,6 +39,7 @@ use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Files\SideEffectsSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff;
+use PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Operators\OperatorSpacingSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\ElseIfDeclarationSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff;
@@ -51,7 +52,6 @@ use SlevomatCodingStandard\Sniffs\Classes\EmptyLinesAroundClassBracesSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
-use SlevomatCodingStandard\Sniffs\ControlStructures\NewWithParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\Functions\TrailingCommaInCallSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\MultipleUsesPerLineSniff;
@@ -132,8 +132,8 @@ final class Style implements HasInsights
             ReturnTypeHintSpacingSniff::class,
             MultipleUsesPerLineSniff::class,
             SuperfluousWhitespaceSniff::class,
-            NewWithParenthesesSniff::class,
             DocCommentSpacingSniff::class,
+            ClassInstantiationSniff::class,
         ];
     }
 }

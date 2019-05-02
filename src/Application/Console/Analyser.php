@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
-use Symfony\Component\Console\Question\Question;
 
 /**
  * @internal
@@ -51,11 +50,12 @@ final class Analyser
             ->architecture($insightCollection, $results)
             ->style($results);
 
-        $style->newLine(1);
-        $style->write('<title>Press any key to continue...</title>');
-
         $stdin = fopen('php://stdin', 'r');
-        fgetc($stdin);
+        if ($stdin !== false) {
+            $style->newLine(1);
+            $style->write('<title>Press any key to continue...</title>');
+            fgetc($stdin);
+        }
 
 
         $style->issues($insightCollection, $metrics, $dir);

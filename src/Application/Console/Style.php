@@ -201,7 +201,7 @@ EOD;
                 if ($totalDetails > 3) {
                     $totalRemainDetails = $totalDetails - 3;
 
-                    $issue .= " <fg=red>+{$totalRemainDetails}</>";
+                    $issue .= "\n  <fg=red>+{$totalRemainDetails} issues omitted</>";
                 }
 
                 $this->writeln($issue);

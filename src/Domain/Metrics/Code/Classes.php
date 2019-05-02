@@ -13,7 +13,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnnecessaryFinalModifierSniff;
-use PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\PropertyDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff;
 use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
@@ -66,7 +65,6 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
             UnusedPrivateElementsSniff::class,
             NoSetterSniff::class,
             UnnecessaryFinalModifierSniff::class,
-            ClassInstantiationSniff::class,
             PropertyDeclarationSniff::class,
             ClassConstantVisibilitySniff::class,
             DisallowLateStaticBindingForConstantsSniff::class,

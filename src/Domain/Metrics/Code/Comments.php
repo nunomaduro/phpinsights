@@ -11,7 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DisallowOneLinePropertyDocCommentSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
