@@ -87,6 +87,9 @@ final class FileProcessor implements FileProcessorInterface
         $this->appliedCheckersCollector = $appliedCheckersCollector;
     }
 
+    /**
+     * @param  Sniff  $sniff
+     */
     public function addSniff(Sniff $sniff): void
     {
         $this->sniffs[] = $sniff;

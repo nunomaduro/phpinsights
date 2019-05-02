@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
@@ -179,7 +178,7 @@ EOD;
                 $category = explode('\\', $metricClass);
                 $category = $category[count($category) - 2];
 
-                if (! $insight->hasIssue() || $category === 'Style') {
+                if (! $insight->hasIssue()) {
                     continue;
                 }
 

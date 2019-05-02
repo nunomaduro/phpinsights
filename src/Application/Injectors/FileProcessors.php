@@ -28,7 +28,6 @@ final class FileProcessors
             FileProcessor::class => function () {
                 $container = EcsContainer::make();
 
-
                 $reflection = new Reflection($container->get(SniffFileProcessor::class));
 
                 $fixer = $reflection->get('fixer');

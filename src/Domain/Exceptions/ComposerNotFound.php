@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace NunoMaduro\PhpInsights\Domain\Exceptions;
 
 use RuntimeException;

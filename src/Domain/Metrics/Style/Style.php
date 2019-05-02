@@ -28,7 +28,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\LowerCaseKeywordSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\LowerCaseTypeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\SAPIUsageSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\SyntaxSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\UpperCaseConstantSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\VersionControl\GitMergeConflictSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\ArbitraryParenthesesSpacingSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowTabIndentSniff;
@@ -50,6 +49,7 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff
 use SlevomatCodingStandard\Sniffs\Classes\EmptyLinesAroundClassBracesSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\NewWithParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\Functions\TrailingCommaInCallSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\MultipleUsesPerLineSniff;
@@ -103,7 +103,6 @@ final class Style implements HasInsights
             LowerCaseTypeSniff::class,
             SAPIUsageSniff::class,
             SyntaxSniff::class,
-            UpperCaseConstantSniff::class,
             ArbitraryParenthesesSpacingSniff::class,
             DisallowTabIndentSniff::class,
             IncrementDecrementSpacingSniff::class,
@@ -131,6 +130,7 @@ final class Style implements HasInsights
             ReturnTypeHintSpacingSniff::class,
             MultipleUsesPerLineSniff::class,
             SuperfluousWhitespaceSniff::class,
+            NewWithParenthesesSniff::class,
         ];
     }
 }

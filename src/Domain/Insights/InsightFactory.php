@@ -59,14 +59,15 @@ final class InsightFactory
      * Creates a Insight from the given error class.
      *
      * @param  string  $errorClass
+     * @param  array<string, array>  $config
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
-    public function makeFrom(string $errorClass): Sniff
+    public function makeFrom(string $errorClass, array $config): Sniff
     {
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                return new Sniff($this->getSniffErrors($this->getSniffCollector(), $errorClass));
+                return new Sniff($this->getSniffErrors($this->getSniffCollector($config), $errorClass));
                 break;
 
             default:
@@ -79,16 +80,24 @@ final class InsightFactory
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
      * @param  string[]  $insights
+     * @param  array<string, array>  $config
      *
-     * @return string[]
+     * @return \PHP_CodeSniffer\Sniffs\Sniff[]
      */
-    public function sniffsFrom(array $insights): array
+    public function sniffsFrom(array $insights, array $config): array
     {
         $sniffs = [];
 
         foreach ($insights as $insight) {
             if (array_key_exists(SniffContract::class, class_implements($insight))) {
-                $sniffs[] = new $insight();
+                /** @var \PHP_CodeSniffer\Sniffs\Sniff $sniff */
+                $sniff = new $insight();
+
+                foreach ($config['config'][$insight] ?? [] as $property => $value) {
+                    $sniff->{$property} = $value;
+                }
+
+                $sniffs[] = $sniff;
             }
         }
 
@@ -120,9 +129,11 @@ final class InsightFactory
     }
 
     /**
+     * @param  array<string, array>  $config
+     *
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
      */
-    private function getSniffCollector(): ErrorAndDiffCollector
+    private function getSniffCollector(array $config): ErrorAndDiffCollector
     {
         if ($this->sniffCollector !== null) {
             return $this->sniffCollector;
@@ -142,7 +153,7 @@ final class InsightFactory
         $sourceFinder->setCustomSourceProvider($this->filesRepository);
 
         $sniffer = Container::make()->get(FileProcessor::class);
-        foreach ($this->sniffsFrom($this->insightsClasses) as $sniff) {
+        foreach ($this->sniffsFrom($this->insightsClasses, $config) as $sniff) {
             $sniffer->addSniff($sniff);
         }
 
@@ -156,10 +167,6 @@ final class InsightFactory
 
         $fileProcessorCollector->addFileProcessor($sniffer);
         $application->addFileProcessor($sniffer);
-
-        eval('');
-
-        @json_encode([]);
 
         $application->run();
 

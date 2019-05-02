@@ -7,10 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\{
-    HasInsights,
-    Insight
-};
+use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Finder\SplFileInfo;
@@ -72,7 +69,11 @@ final class InsightCollectionFactory
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(function (string $insightClass) use ($insightFactory, $collector, $config) {
                 if (! array_key_exists(Insight::class, class_implements($insightClass))) {
-                    return $insightFactory->makeFrom($insightClass);
+
+                    return $insightFactory->makeFrom(
+                        $insightClass,
+                        $config
+                    );
                 }
 
                 return new $insightClass($collector, $config['config'][$insightClass] ?? []);

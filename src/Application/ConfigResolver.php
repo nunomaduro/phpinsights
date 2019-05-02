@@ -18,6 +18,7 @@ final class ConfigResolver
     private static $presets = [
         LaravelPreset::class,
         SymfonyPreset::class,
+        DefaultPreset::class,
     ];
 
     /**

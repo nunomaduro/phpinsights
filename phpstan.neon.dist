@@ -17,6 +17,7 @@ parameters:
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addFile\(\) has parameter \$filename with no typehint specified#'
         - '#NunoMaduro\\PhpInsights\\Domain\\File::__construct\(\) does not call parent constructor from PHP_CodeSniffer\\Files\\File#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\File::addMessage\(\) has parameter#'
+        - '#Variable property access on PHP_CodeSniffer\\Sniffs\\Sniff#'
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
