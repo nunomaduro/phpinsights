@@ -49,6 +49,7 @@ return [
     ],
 
     'remove' => [
+        FullyQualifiedGlobalFunctionsSniff::class,
         AlphabeticallySortedUsesSniff::class,
         DeclareStrictTypesSniff::class,
         DisallowMixedTypeHintSniff::class,

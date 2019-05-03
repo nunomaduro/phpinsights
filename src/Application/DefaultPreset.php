@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
+use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 
 /**
@@ -36,6 +37,9 @@ final class DefaultPreset implements PresetContract
                 // ...
             ],
             'config' => [
+                DocCommentSpacingSniff::class => [
+                    'linesCountBetweenDifferentAnnotationsTypes' => 1,
+                ],
                 DeclareStrictTypesSniff::class => [
                     'newlinesCountBetweenOpenTagAndDeclare' => 2,
                     'spacesCountAroundEqualsSign' => 0,

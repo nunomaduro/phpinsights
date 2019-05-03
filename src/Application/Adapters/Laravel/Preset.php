@@ -27,6 +27,7 @@ final class Preset implements PresetContract
     {
         return [
             'exclude' => [
+                'config',
                 'storage',
                 'resources',
                 'bootstrap',

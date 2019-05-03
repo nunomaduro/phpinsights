@@ -43,7 +43,6 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionClosingBraceSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
-use SlevomatCodingStandard\Sniffs\Classes\TraitUseSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\MultipleUsesPerLineSniff;
@@ -73,7 +72,6 @@ final class Style implements HasInsights
             ByteOrderMarkSniff::class,
             LineEndingsSniff::class,
             FunctionClosingBraceSniff::class,
-            TraitUseSpacingSniff::class,
             // OpeningBraceSameLineSniff::class,
             ObjectOperatorIndentSniff::class,
             ScopeClosingBraceSniff::class,
@@ -105,8 +103,6 @@ final class Style implements HasInsights
             ElseIfDeclarationSniff::class,
             SwitchDeclarationSniff::class,
             UpperCaseConstantNameSniff::class,
-            TraitUseDeclarationSniff::class,
-            TraitUseSpacingSniff::class,
             AlphabeticallySortedUsesSniff::class,
             NamespaceSpacingSniff::class,
             // ReferenceUsedNamesOnlySniff::class,
