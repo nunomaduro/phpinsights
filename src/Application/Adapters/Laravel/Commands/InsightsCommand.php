@@ -26,16 +26,19 @@ final class InsightsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function handle(AnalyseCommand $analyseCommand): void
+    public function handle(AnalyseCommand $analyseCommand): int
     {
         Kernel::bootstrap();
 
         $configPath = $this->input->getOption('config-path');
 
         if (is_string($configPath) && ! file_exists($configPath)) {
-            $this->output->note('Consider publish the configuration using the: "php artisan vendor:publish "NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"');
+            $this->output->error('First, publish the configuration using the: "php artisan vendor:publish "NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"');
+            return 1;
         }
 
         $analyseCommand->__invoke($this->input, $this->output);
+
+        return 0;
     }
 }
