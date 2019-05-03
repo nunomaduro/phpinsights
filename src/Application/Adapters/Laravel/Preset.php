@@ -31,9 +31,10 @@ final class Preset implements PresetContract
                 'storage',
                 'resources',
                 'bootstrap',
+                'nova',
                 'database',
                 'server.php',
-                'public'
+                'public',
             ],
             'add' => [
                 // ...
