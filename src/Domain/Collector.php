@@ -415,7 +415,6 @@ final class Collector
     {
         $this->namespaces[] = $namespace;
         $this->namespaces = array_flip(array_flip($this->namespaces));
-
     }
 
     /**

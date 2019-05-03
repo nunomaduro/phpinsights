@@ -185,7 +185,7 @@ final class File extends BaseFile
         $isFixable = false
     ): bool
     {
-        $message = count($data) === 0 ? vsprintf($message, $data) : $message;
+        $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
         $this->errorAndDiffCollector->addErrorMessage(
             $this->fileInfo,

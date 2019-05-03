@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console;
 
@@ -41,7 +42,7 @@ final class Style extends SymfonyStyle
       <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$styleColor>  {$this->getPercentageAsString($results->getStyle())}  </>
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
 
-        <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>          
+        <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
 EOD;
         $this->write($output);
         $this->newLine(2);
