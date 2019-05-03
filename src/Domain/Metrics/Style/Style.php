@@ -30,7 +30,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\ArbitraryParenthesesSpac
 use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\DisallowTabIndentSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\IncrementDecrementSpacingSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\ScopeIndentSniff;
-use PHP_CodeSniffer\Standards\PEAR\Sniffs\Files\IncludingFileSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Files\SideEffectsSniff;
@@ -71,7 +70,6 @@ final class Style implements HasInsights
             EndFileNewlineSniff::class,
             SideEffectsSniff::class,
             GitMergeConflictSniff::class,
-            IncludingFileSniff::class,
             ByteOrderMarkSniff::class,
             LineEndingsSniff::class,
             FunctionClosingBraceSniff::class,

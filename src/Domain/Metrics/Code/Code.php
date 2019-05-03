@@ -24,6 +24,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\BacktickOperatorSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DiscourageGotoSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Strings\UnnecessaryStringConcatSniff;
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Files\IncludingFileSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Keywords\ShortFormTypeKeywordsSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
@@ -128,6 +129,7 @@ final class Code implements HasValue, HasInsights
             UselessSemicolonSniff::class,
             DeclareStrictTypesSniff::class,
             DuplicateAssignmentToVariableSniff::class,
+            IncludingFileSniff::class,
             // FullyQualifiedExceptionsSniff::class,
             // FullyQualifiedGlobalConstantsSniff::class,
         ];
