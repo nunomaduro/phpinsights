@@ -42,7 +42,6 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\Files\EndFileNewlineSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionClosingBraceSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff;
-use SlevomatCodingStandard\Sniffs\Classes\TraitUseDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\MultipleUsesPerLineSniff;
@@ -114,7 +113,7 @@ final class Style implements HasInsights
             ShortListSniff::class,
             ParameterTypeHintSpacingSniff::class,
             ReturnTypeHintSpacingSniff::class,
-            MultipleUsesPerLineSniff::class,
+            // MultipleUsesPerLineSniff::class,
             SuperfluousWhitespaceSniff::class,
             DocCommentSpacingSniff::class,
             ClassInstantiationSniff::class,
