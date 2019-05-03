@@ -34,9 +34,9 @@ final class Analyser
      * @param  array<string, array>  $config
      * @param  string  $dir
      *
-     * @return float
+     * @return void
      */
-    public function analyse(Style $style, array $config, string $dir): float
+    public function analyse(Style $style, array $config, string $dir): void
     {
         $metrics = MetricsFinder::find();
 
@@ -57,9 +57,6 @@ final class Analyser
             fgetc($stdin);
         }
 
-
         $style->issues($insightCollection, $metrics, $dir);
-
-        return $results->getCodeQuality();
     }
 }
