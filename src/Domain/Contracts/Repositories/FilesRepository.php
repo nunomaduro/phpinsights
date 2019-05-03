@@ -28,8 +28,8 @@ interface FilesRepository extends CustomSourceProviderInterface
     /**
      * Sets the current files dirs.
      *
-     * @param  string  $dir
-     * @param  string[]  $exclude
+     * @param string   $dir
+     * @param string[] $exclude
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */

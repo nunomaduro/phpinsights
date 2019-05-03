@@ -11,7 +11,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ComposerMustExist;
 final class Composer implements HasInsights
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getInsights(): array
     {

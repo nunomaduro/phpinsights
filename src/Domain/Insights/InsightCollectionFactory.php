@@ -7,10 +7,8 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\{
-    HasInsights,
-    Insight
-};
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Finder\SplFileInfo;
@@ -33,8 +31,8 @@ final class InsightCollectionFactory
     /**
      * Creates a new instance of InsightCollection Factory.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  \NunoMaduro\PhpInsights\Domain\Analyser  $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param \NunoMaduro\PhpInsights\Domain\Analyser                               $analyser
      */
     public function __construct(FilesRepository $filesRepository, Analyser $analyser)
     {
@@ -43,9 +41,9 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param  string[]  $metrics
-     * @param  array<string, array<string, string>>  $config
-     * @param  string  $dir
+     * @param string[]                             $metrics
+     * @param array<string, array<string, string>> $config
+     * @param string                               $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
@@ -61,7 +59,6 @@ final class InsightCollectionFactory
 
         $collector = $this->analyser->analyse($dir, $files);
         /** @var Container $container */
-
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {
             $insightsClasses = array_merge($insightsClasses, $this->getInsights($metricClass, $config));
@@ -71,8 +68,7 @@ final class InsightCollectionFactory
         $insightsForCollection = [];
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(function (string $insightClass) use ($insightFactory, $collector, $config) {
-                if (! array_key_exists(Insight::class, class_implements($insightClass))) {
-
+                if (!array_key_exists(Insight::class, class_implements($insightClass))) {
                     return $insightFactory->makeFrom(
                         $insightClass,
                         $config
@@ -89,14 +85,14 @@ final class InsightCollectionFactory
     /**
      * Returns the `Insights` from the given metric class.
      *
-     * @param  string  $metricClass
-     * @param  array<string, array<string, string|array>>  $config
+     * @param string                                     $metricClass
+     * @param array<string, array<string, string|array>> $config
      *
      * @return string[]
      */
     private function getInsights(string $metricClass, array $config): array
     {
-        $metric = new $metricClass;
+        $metric = new $metricClass();
 
         $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
 

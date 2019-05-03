@@ -35,9 +35,9 @@ final class Sniff implements Insight, HasDetails
     private $errors;
 
     /**
-     * Creates a new instance of Sniff Insight
+     * Creates a new instance of Sniff Insight.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error[]  $errors
+     * @param \Symplify\EasyCodingStandard\Error\Error[] $errors
      */
     public function __construct(array $errors)
     {
@@ -45,7 +45,7 @@ final class Sniff implements Insight, HasDetails
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasIssue(): bool
     {
@@ -53,7 +53,7 @@ final class Sniff implements Insight, HasDetails
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTitle(): string
     {
@@ -72,12 +72,12 @@ final class Sniff implements Insight, HasDetails
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDetails(): array
     {
         return array_map(function (Error $error) {
-            return $error->getFileInfo()->getRealPath() . ':' . $error->getLine() . ': ' . $error->getMessage();
+            return $error->getFileInfo()->getRealPath().':'.$error->getLine().': '.$error->getMessage();
         }, $this->errors);
     }
 }

@@ -24,7 +24,7 @@ final class Reflection
     /**
      * Creates an new instance of Reflection.
      *
-     * @param  object  $instance
+     * @param object $instance
      */
     public function __construct(object $instance)
     {
@@ -35,8 +35,8 @@ final class Reflection
     /**
      * Sets an private attribute value on the given instance.
      *
-     * @param  string  $attribute
-     * @param  string[]|bool  $value
+     * @param string        $attribute
+     * @param string[]|bool $value
      *
      * @return \NunoMaduro\PhpInsights\Domain\Reflection
      */
@@ -52,7 +52,7 @@ final class Reflection
     /**
      * Gets an private attribute value on the given instance.
      *
-     * @param  string  $attribute
+     * @param string $attribute
      *
      * @return mixed
      */

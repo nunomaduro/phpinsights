@@ -24,8 +24,8 @@ final class ConfigResolver
     /**
      * Merge the given config with the specified preset.
      *
-     * @param  array<string, string|int|array>  $config
-     * @param  string  $directory
+     * @param array<string, string|int|array> $config
+     * @param string                          $directory
      *
      * @return array<string, array>
      */
@@ -45,7 +45,7 @@ final class ConfigResolver
     /**
      * Guesses the preset based in information from the directory.
      *
-     * @param  string  $directory
+     * @param string $directory
      *
      * @return string
      */
@@ -53,9 +53,9 @@ final class ConfigResolver
     {
         $preset = 'default';
 
-        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
+        $composerPath = $directory.DIRECTORY_SEPARATOR.'composer.json';
 
-        if (! file_exists($composerPath)) {
+        if (!file_exists($composerPath)) {
             return $preset;
         }
 
@@ -64,6 +64,7 @@ final class ConfigResolver
         foreach (self::$presets as $presetClass) {
             if ($presetClass::shouldBeApplied($composer)) {
                 $preset = $presetClass::getName();
+
                 break;
             }
         }

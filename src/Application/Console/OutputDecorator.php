@@ -24,17 +24,16 @@ final class OutputDecorator
     /**
      * Decorates the given output with styles.
      *
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Symfony\Component\Console\Output\OutputInterface
      */
     public static function decorate(OutputInterface $output): OutputInterface
     {
         foreach (self::$styles as $styleClass) {
+            $style = new $styleClass();
 
-            $style = new $styleClass;
-
-            /** @var \NunoMaduro\PhpInsights\Application\Console\Contracts\Style $style */
+            /* @var \NunoMaduro\PhpInsights\Application\Console\Contracts\Style $style */
             $style->addTo($output);
         }
 

@@ -18,8 +18,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class Style extends SymfonyStyle
 {
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
-     * @param  string  $dir
+     * @param \NunoMaduro\PhpInsights\Domain\Results $results
+     * @param string                                 $dir
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
@@ -47,21 +47,21 @@ EOD;
         $this->write($output);
         $this->newLine(2);
 
-        $this->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100");
+        $this->writeln('Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100');
 
         return $this;
     }
 
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
-     * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param \NunoMaduro\PhpInsights\Domain\Results                    $results
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function code(InsightCollection $insightCollection, Results $results): Style
     {
         $this->newLine();
-        $this->writeln(sprintf("[CODE] %s within <title>%s</> lines",
+        $this->writeln(sprintf('[CODE] %s within <title>%s</> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code\Code())->getValue($insightCollection->getCollector())
         ));
@@ -77,7 +77,7 @@ EOD;
         foreach ($lines as $name => $percentage) {
             $percentage = number_format((float) $percentage, 1, '.', '');
 
-            $takenSize = strlen($name . $percentage);
+            $takenSize = strlen($name.$percentage);
 
             $this->writeln(sprintf('%s %s %s %%',
                 $name,
@@ -89,10 +89,9 @@ EOD;
         return $this;
     }
 
-
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
-     * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param \NunoMaduro\PhpInsights\Domain\Results                    $results
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
@@ -100,7 +99,7 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity",
+        $this->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity\Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -109,8 +108,8 @@ EOD;
     }
 
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
-     * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param \NunoMaduro\PhpInsights\Domain\Results                    $results
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
@@ -118,7 +117,7 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[ARQUICTURE] %s within <title>%s</> files",
+        $this->writeln(sprintf('[ARQUICTURE] %s within <title>%s</> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Architecture\Files())->getValue($insightCollection->getCollector())
         ));
@@ -135,7 +134,7 @@ EOD;
         foreach ($lines as $name => $percentage) {
             $percentage = number_format((float) $percentage, 1, '.', '');
 
-            $takenSize = strlen($name . $percentage);
+            $takenSize = strlen($name.$percentage);
 
             $this->writeln(sprintf('%s %s %s %%',
                 $name,
@@ -148,7 +147,7 @@ EOD;
     }
 
     /**
-     * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
+     * @param \NunoMaduro\PhpInsights\Domain\Results $results
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
@@ -156,7 +155,7 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[STYLE] %s",
+        $this->writeln(sprintf('[STYLE] %s',
             "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>"
         ));
 
@@ -166,27 +165,28 @@ EOD;
     /**
      * Describes the issues from the given metrics.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
-     * @param  string[]  $metrics
-     * @param  string  $dir
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param string[]                                                  $metrics
+     * @param string                                                    $dir
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function issues(InsightCollection $insightCollection, array $metrics, string $dir): Style
     {
         foreach ($metrics as $metricClass) {
-            foreach ($insightCollection->allFrom(new $metricClass) as $insight) {
+            foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
                 $category = explode('\\', $metricClass);
                 $category = $category[count($category) - 2];
 
-                if (! $insight->hasIssue()) {
+                if (!$insight->hasIssue()) {
                     continue;
                 }
 
                 $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
 
-                if (! $insight instanceof HasDetails) {
+                if (!$insight instanceof HasDetails) {
                     $this->writeln($issue);
+
                     continue;
                 }
                 $issue .= ':';
@@ -195,7 +195,7 @@ EOD;
                 $details = array_slice($details, -3, 3, true);
 
                 foreach ($details as $detail) {
-                    $detail = str_replace(realpath($dir) . '/', '', $detail);
+                    $detail = str_replace(realpath($dir).'/', '', $detail);
                     $issue .= "\n  $detail";
                 }
 
@@ -218,13 +218,13 @@ EOD;
     /**
      * Returns the percentage as 4 chars string.
      *
-     * @param  float  $percentage
+     * @param float $percentage
      *
      * @return string
      */
     private function getPercentageAsString(float $percentage): string
     {
-        return sprintf('%s%%', $percentage === 100.0
+        return sprintf('%s%%', 100.0 === $percentage
             ? '100 '
             : number_format($percentage, 1, '.', ''));
     }
@@ -232,7 +232,7 @@ EOD;
     /**
      * Returns the color for the given percentage.
      *
-     * @param  float  $percentage
+     * @param float $percentage
      *
      * @return string
      */

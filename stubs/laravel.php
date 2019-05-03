@@ -15,7 +15,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Preset
@@ -65,5 +64,4 @@ return [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
     ],
-
 ];

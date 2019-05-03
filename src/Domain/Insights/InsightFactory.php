@@ -42,11 +42,11 @@ final class InsightFactory
     private $sniffCollector;
 
     /**
-     * Creates a new instance of Insight Factory
+     * Creates a new instance of Insight Factory.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  string  $dir
-     * @param  string[]  $insightsClasses
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param string                                                                $dir
+     * @param string[]                                                              $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -58,8 +58,8 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param  string  $errorClass
-     * @param  array<string, array>  $config
+     * @param string               $errorClass
+     * @param array<string, array> $config
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
@@ -68,6 +68,7 @@ final class InsightFactory
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
                 return new Sniff($this->getSniffErrors($this->getSniffCollector($config), $errorClass));
+
                 break;
 
             default:
@@ -79,8 +80,8 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param  string[]  $insights
-     * @param  array<string, array>  $config
+     * @param string[]             $insights
+     * @param array<string, array> $config
      *
      * @return \PHP_CodeSniffer\Sniffs\Sniff[]
      */
@@ -107,8 +108,8 @@ final class InsightFactory
     /**
      * Returns the Error with of the given $sniff, if any.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $collector
-     * @param  string  $sniff
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $collector
+     * @param string                                                   $sniff
      *
      * @return \Symplify\EasyCodingStandard\Error\Error[]
      */
@@ -117,9 +118,8 @@ final class InsightFactory
         $errors = [];
 
         foreach ($collector->getErrors() as $errorsPerFile) {
-
             foreach ($errorsPerFile as $error) {
-                if (strpos($error->getSourceClass(), $sniff) !== false) {
+                if (false !== strpos($error->getSourceClass(), $sniff)) {
                     $errors[] = $error;
                 }
             }
@@ -129,13 +129,13 @@ final class InsightFactory
     }
 
     /**
-     * @param  array<string, array>  $config
+     * @param array<string, array> $config
      *
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
      */
     private function getSniffCollector(array $config): ErrorAndDiffCollector
     {
-        if ($this->sniffCollector !== null) {
+        if (null !== $this->sniffCollector) {
             return $this->sniffCollector;
         }
 

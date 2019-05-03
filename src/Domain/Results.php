@@ -22,8 +22,8 @@ final class Results
     /**
      * Creates a new instance of results.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
+     * @param \NunoMaduro\PhpInsights\Domain\Collector                               $collector
+     * @param array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>> $perCategoryInsights
      */
     public function __construct(\NunoMaduro\PhpInsights\Domain\Collector $collector, array $perCategoryInsights)
     {
@@ -91,7 +91,7 @@ final class Results
     /**
      * Returns the percentage of the given category.
      *
-     * @param  string  $category
+     * @param string $category
      *
      * @return float
      */
@@ -101,8 +101,8 @@ final class Results
         $issuesNotFound = 0;
 
         foreach ($insights as $insight) {
-            if (! $insight->hasIssue()) {
-                $issuesNotFound++;
+            if (!$insight->hasIssue()) {
+                ++$issuesNotFound;
             }
         }
 

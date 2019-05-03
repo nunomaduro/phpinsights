@@ -13,7 +13,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 final class Preset implements PresetContract
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getName(): string
     {
@@ -21,7 +21,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function get(): array
     {
@@ -51,7 +51,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function shouldBeApplied(array $composer): bool
     {
@@ -60,12 +60,12 @@ final class Preset implements PresetContract
 
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
-            if (strpos($requirement, 'laravel/framework') !== false
-                || strpos($requirement, 'illuminate/') !== false) {
+            if (false !== strpos($requirement, 'laravel/framework')
+                || false !== strpos($requirement, 'illuminate/')) {
                 return true;
             }
         }
 
-        return array_key_exists('name', $composer) && $composer['name'] === 'laravel/framework';
+        return array_key_exists('name', $composer) && 'laravel/framework' === $composer['name'];
     }
 }

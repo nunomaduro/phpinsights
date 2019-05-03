@@ -12,7 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 final class Preset implements PresetContract
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getName(): string
     {
@@ -20,7 +20,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function get(): array
     {
@@ -29,13 +29,13 @@ final class Preset implements PresetContract
                 'var',
                 'translations',
                 'config',
-                'public'
+                'public',
             ],
         ];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function shouldBeApplied(array $composer): bool
     {
@@ -45,9 +45,9 @@ final class Preset implements PresetContract
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
 
-            if (strpos($requirement, 'symfony/framework-bundle') !== false
-                || strpos($requirement, 'symfony/flex') !== false
-                || strpos($requirement, 'symfony/symfony') !== false) {
+            if (false !== strpos($requirement, 'symfony/framework-bundle')
+                || false !== strpos($requirement, 'symfony/flex')
+                || false !== strpos($requirement, 'symfony/symfony')) {
                 return true;
             }
         }

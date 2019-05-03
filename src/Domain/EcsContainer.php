@@ -21,11 +21,11 @@ final class EcsContainer
      */
     public static function make(): Container
     {
-        if (self::$container === null) {
-            if (file_exists(__DIR__ . '/../../vendor/symplify/easy-coding-standard/bin/container.php')) {
-                $containerPath = __DIR__ . '/../../vendor/symplify/easy-coding-standard/bin/container.php';
+        if (null === self::$container) {
+            if (file_exists(__DIR__.'/../../vendor/symplify/easy-coding-standard/bin/container.php')) {
+                $containerPath = __DIR__.'/../../vendor/symplify/easy-coding-standard/bin/container.php';
             } else {
-                $containerPath = __DIR__ . '/../../../../symplify/easy-coding-standard/bin/container.php';
+                $containerPath = __DIR__.'/../../../../symplify/easy-coding-standard/bin/container.php';
             }
 
             self::$container = require $containerPath;

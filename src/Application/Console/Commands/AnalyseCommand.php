@@ -35,8 +35,8 @@ final class AnalyseCommand
     /**
      * Creates a new instance of the Analyse Command.
      *
-     * @param  \NunoMaduro\PhpInsights\Application\Console\Analyser  $analyser
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
+     * @param \NunoMaduro\PhpInsights\Application\Console\Analyser                  $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      */
     public function __construct(Analyser $analyser, FilesRepository $filesRepository)
     {
@@ -47,10 +47,8 @@ final class AnalyseCommand
     /**
      * Handle the given input.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     *
-     * @return void
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function __invoke(InputInterface $input, OutputInterface $output): void
     {
@@ -58,7 +56,7 @@ final class AnalyseCommand
 
         $directory = $this->getDirectory($input);
 
-        if (! file_exists($directory . DIRECTORY_SEPARATOR . '.gitignore')) {
+        if (!file_exists($directory.DIRECTORY_SEPARATOR.'.gitignore')) {
             throw new RuntimeException('The file `.gitignore` must exist. You should run PHP Insights from the root of your project.');
         }
 
@@ -68,8 +66,8 @@ final class AnalyseCommand
     /**
      * Gets the config from the given input.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  string  $directory
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string                                          $directory
      *
      * @return array<string, array>
      */
@@ -78,17 +76,17 @@ final class AnalyseCommand
         /** @var string|null $configPath */
         $configPath = $input->getOption('config-path');
 
-        if ($configPath === null && file_exists(getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php')) {
-            $configPath = getcwd() . DIRECTORY_SEPARATOR . 'phpinsights.php';
+        if (null === $configPath && file_exists(getcwd().DIRECTORY_SEPARATOR.'phpinsights.php')) {
+            $configPath = getcwd().DIRECTORY_SEPARATOR.'phpinsights.php';
         }
 
-        return ConfigResolver::resolve($configPath !== null && file_exists($configPath) ? require $configPath : [], $directory);
+        return ConfigResolver::resolve(null !== $configPath && file_exists($configPath) ? require $configPath : [], $directory);
     }
 
     /**
      * Gets the directory from the given input.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return string
      */
@@ -97,8 +95,8 @@ final class AnalyseCommand
         /** @var string $directory */
         $directory = $input->getArgument('directory') ?? $this->filesRepository->getDefaultDirectory();
 
-        if ($directory[0] !== DIRECTORY_SEPARATOR) {
-            $directory = (string) getcwd() . DIRECTORY_SEPARATOR . $directory;
+        if (DIRECTORY_SEPARATOR !== $directory[0]) {
+            $directory = (string) getcwd().DIRECTORY_SEPARATOR.$directory;
         }
 
         return $directory;

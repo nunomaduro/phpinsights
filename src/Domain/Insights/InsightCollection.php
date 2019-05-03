@@ -26,8 +26,8 @@ final class InsightCollection
     /**
      * Creates a new instance of the Insight Collection.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $insightsPerMetric
+     * @param \NunoMaduro\PhpInsights\Domain\Collector                               $collector
+     * @param array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>> $insightsPerMetric
      */
     public function __construct(Collector $collector, array $insightsPerMetric)
     {
@@ -64,7 +64,7 @@ final class InsightCollection
     /**
      * Gets all insights from given metric.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Metric  $metric
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Metric $metric
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
      */
@@ -86,7 +86,7 @@ final class InsightCollection
             $category = explode('\\', $metric);
             $category = $category[count($category) - 2];
 
-            if (! array_key_exists($category, $perCategory)) {
+            if (!array_key_exists($category, $perCategory)) {
                 $perCategory[$category] = [];
             }
 

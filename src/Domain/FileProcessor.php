@@ -63,12 +63,12 @@ final class FileProcessor implements FileProcessorInterface
     /**
      * FileProcessor constructor.
      *
-     * @param  \PHP_CodeSniffer\Fixer  $fixer
-     * @param  \NunoMaduro\PhpInsights\Domain\FileFactory  $fileFactory
-     * @param  \Symplify\EasyCodingStandard\Configuration\Configuration  $configuration
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $errorAndDiffCollector
-     * @param  \PhpCsFixer\Differ\DifferInterface  $differ
-     * @param  AppliedCheckersCollector  $appliedCheckersCollector
+     * @param \PHP_CodeSniffer\Fixer                                   $fixer
+     * @param \NunoMaduro\PhpInsights\Domain\FileFactory               $fileFactory
+     * @param \Symplify\EasyCodingStandard\Configuration\Configuration $configuration
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $errorAndDiffCollector
+     * @param \PhpCsFixer\Differ\DifferInterface                       $differ
+     * @param AppliedCheckersCollector                                 $appliedCheckersCollector
      */
     public function __construct(
         Fixer $fixer,
@@ -77,8 +77,7 @@ final class FileProcessor implements FileProcessorInterface
         ErrorAndDiffCollector $errorAndDiffCollector,
         DifferInterface $differ,
         AppliedCheckersCollector $appliedCheckersCollector
-    )
-    {
+    ) {
         $this->fixer = $fixer;
         $this->fileFactory = $fileFactory;
         $this->configuration = $configuration;
@@ -88,7 +87,7 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @param  Sniff  $sniff
+     * @param Sniff $sniff
      */
     public function addSniff(Sniff $sniff): void
     {
@@ -104,7 +103,6 @@ final class FileProcessor implements FileProcessorInterface
      */
     public function getCheckers(): array
     {
-
         return $this->sniffs;
     }
 
@@ -123,8 +121,8 @@ final class FileProcessor implements FileProcessorInterface
         $file = $this->fileFactory->createFromFileInfo($smartFileInfo);
 
         // mimic original behavior
-        /** mimics @see \PHP_CodeSniffer\Files\File::process() */
-        /** mimics @see \PHP_CodeSniffer\Fixer::fixFile() */
+        /* mimics @see \PHP_CodeSniffer\Files\File::process() */
+        /* mimics @see \PHP_CodeSniffer\Fixer::fixFile() */
         $this->fixFile($file, $this->fixer, $smartFileInfo, $this->tokenListeners);
 
         // add diff
@@ -146,7 +144,7 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @param  Sniff[][]  $tokenListeners
+     * @param Sniff[][] $tokenListeners
      */
     private function fixFile(File $file, Fixer $fixer, SmartFileInfo $smartFileInfo, array $tokenListeners): void
     {

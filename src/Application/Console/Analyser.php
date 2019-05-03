@@ -20,7 +20,7 @@ final class Analyser
     /**
      * Analyser constructor.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory  $insightCollectionFactory
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory $insightCollectionFactory
      */
     public function __construct(InsightCollectionFactory $insightCollectionFactory)
     {
@@ -30,11 +30,9 @@ final class Analyser
     /**
      * Analyse the given dirs.
      *
-     * @param  \NunoMaduro\PhpInsights\Application\Console\Style  $style
-     * @param  array<string, array>  $config
-     * @param  string  $dir
-     *
-     * @return void
+     * @param \NunoMaduro\PhpInsights\Application\Console\Style $style
+     * @param array<string, array>                              $config
+     * @param string                                            $dir
      */
     public function analyse(Style $style, array $config, string $dir): void
     {
@@ -51,7 +49,7 @@ final class Analyser
             ->style($results);
 
         $stdin = fopen('php://stdin', 'r');
-        if ($stdin !== false) {
+        if (false !== $stdin) {
             $style->newLine(1);
             $style->write('<title>Press any key to continue...</title>');
             fgetc($stdin);

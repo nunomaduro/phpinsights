@@ -23,7 +23,7 @@ final class ComposerCheckLaravelVersion extends Insight
 
         return array_key_exists('require', $composer)
             && array_key_exists('laravel/framework', $composer['require'])
-            && strpos($composer['require']['laravel/framework'], '5.8.*') === false;
+            && false === strpos($composer['require']['laravel/framework'], '5.8.*');
     }
 
     /**

@@ -8,8 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 return (function () {
-
-    $container = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'container.php';
+    $container = require dirname(__DIR__).DIRECTORY_SEPARATOR.'container.php';
 
     $analyseCommand = new InvokableCommand('analyse', $container->get(AnalyseCommand::class), [
         new InputArgument('directory', InputArgument::OPTIONAL),

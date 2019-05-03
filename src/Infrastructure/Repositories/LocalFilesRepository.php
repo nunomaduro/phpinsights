@@ -20,7 +20,7 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * LocalFilesRepository constructor.
      *
-     * @param  \Symfony\Component\Finder\Finder  $finder
+     * @param \Symfony\Component\Finder\Finder $finder
      */
     public function __construct(Finder $finder)
     {
@@ -56,7 +56,7 @@ final class LocalFilesRepository implements FilesRepository
         $this->finder->in([$directory])->exclude($exclude);
 
         foreach ($exclude as $value) {
-            if (substr($value, -4) === '.php') {
+            if ('.php' === substr($value, -4)) {
                 $this->finder->notName($value);
             }
         }
