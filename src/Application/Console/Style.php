@@ -10,6 +10,9 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
 use NunoMaduro\PhpInsights\Domain\Results;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -17,6 +20,22 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class Style extends SymfonyStyle
 {
+    /**
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
+    private $output;
+
+    /**
+     * Style constructor.
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
+     */
+    public function __construct(InputInterface $input, OutputInterface $output)
+    {
+        parent::__construct($input, $this->output = $output);
+    }
+
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
      * @param  string  $dir
@@ -234,10 +253,12 @@ EOD;
     {
         $stdin = fopen('php://stdin', 'r');
 
-        if ($stdin !== false) {
+        if ($stdin !== false && $this->output instanceof ConsoleOutput) {
             $this->newLine();
-            $this->write(sprintf('<title>Press any key to see %s issues...</title>', strtolower($category)));
+            $section = $this->output->section();
+            $section->writeln(sprintf('<title>Press any key to see %s issues...</title>', strtolower($category)));
             fgetc($stdin);
+            $section->clear(3);
         }
 
         return $this;
