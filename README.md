@@ -119,7 +119,7 @@ final class Classes implements HasInsights
 
 Are you aware of a PHPCS sniff that you would like to add to PHP Insights? You can add it in the following way:
 
-1. Identify the related metric, and it to the list of insights:
+1. Identify the related metric, and add it to the list of insights:
 
 ```php
 final class Classes implements HasInsights
