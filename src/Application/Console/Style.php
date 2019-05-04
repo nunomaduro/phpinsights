@@ -174,14 +174,22 @@ EOD;
      */
     public function issues(InsightCollection $insightCollection, array $metrics, string $dir): Style
     {
+        $previousCategory = null;
+
         foreach ($metrics as $metricClass) {
             foreach ($insightCollection->allFrom(new $metricClass) as $insight) {
-                $category = explode('\\', $metricClass);
-                $category = $category[count($category) - 2];
-
                 if (! $insight->hasIssue()) {
                     continue;
                 }
+
+                $category = explode('\\', $metricClass);
+                $category = $category[count($category) - 2];
+
+                if ($previousCategory !== $category) {
+                    $this->waitForKey();
+                }
+
+                $previousCategory = $category;
 
                 $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
 
@@ -211,6 +219,24 @@ EOD;
 
         $this->newLine();
         $this->writeln('💡 See something that needs to be improved? Just send us a <bold>pull request</> on GitHub: <title>https://github.com/nunomaduro/phpinsights</title>');
+
+        return $this;
+    }
+
+    /**
+     * Waits for a key press.
+     *
+     * @return \NunoMaduro\PhpInsights\Application\Console\Style
+     */
+    public function waitForKey(): Style
+    {
+        $stdin = fopen('php://stdin', 'r');
+
+        if ($stdin !== false) {
+            $this->newLine();
+            $this->write('<title>Press any key to continue...</title>');
+            fgetc($stdin);
+        }
 
         return $this;
     }

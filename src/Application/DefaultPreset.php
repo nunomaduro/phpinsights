@@ -18,7 +18,7 @@ final class DefaultPreset implements PresetContract
      */
     public static function getName(): string
     {
-        return 'laravel';
+        return 'default';
     }
 
     /**

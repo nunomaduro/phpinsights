@@ -50,13 +50,6 @@ final class Analyser
             ->architecture($insightCollection, $results)
             ->style($results);
 
-        $stdin = fopen('php://stdin', 'r');
-        if ($stdin !== false) {
-            $style->newLine(1);
-            $style->write('<title>Press any key to continue...</title>');
-            fgetc($stdin);
-        }
-
         $style->issues($insightCollection, $metrics, $dir);
     }
 }
