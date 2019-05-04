@@ -186,7 +186,7 @@ EOD;
                 $category = $category[count($category) - 2];
 
                 if ($previousCategory !== $category) {
-                    $this->waitForKey();
+                    $this->waitForKey($category);
                 }
 
                 $previousCategory = $category;
@@ -226,15 +226,17 @@ EOD;
     /**
      * Waits for a key press.
      *
+     * @param  string  $category
+     *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
-    public function waitForKey(): Style
+    public function waitForKey(string $category): Style
     {
         $stdin = fopen('php://stdin', 'r');
 
         if ($stdin !== false) {
             $this->newLine();
-            $this->write('<title>Press any key to continue...</title>');
+            $this->write(sprintf('<title>Press any key to see %s issues...</title>', strtolower($category)));
             fgetc($stdin);
         }
 
