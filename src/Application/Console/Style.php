@@ -171,12 +171,15 @@ EOD;
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
-    public function style(Results $results): Style
+    public function misc(Results $results): Style
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[STYLE] %s",
-            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>"
+        $totalSecurityIssuesColor = $results->getTotalSecurityIssues() === 0 ? 'green' : 'red';
+
+        $this->writeln(sprintf("[MISC] %s on coding style and %s encountered",
+            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>",
+            "<fg={$totalSecurityIssuesColor};options=bold>{$results->getTotalSecurityIssues()} security issues</>"
         ));
 
         return $this;

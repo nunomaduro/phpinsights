@@ -21,4 +21,18 @@ final class Kernel
          */
         include_once 'vendor/squizlabs/php_codesniffer/autoload.php';
     }
+
+    /**
+     * Returns the list of required files.
+     *
+     * @return string[]
+     */
+    public static function getRequiredFiles(): array
+    {
+        return [
+            'composer.json',
+            'composer.lock',
+            '.gitignore',
+        ];
+    }
 }

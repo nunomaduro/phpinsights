@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity;
+use NunoMaduro\PhpInsights\Domain\Metrics\Security;
 use NunoMaduro\PhpInsights\Domain\Metrics\Style;
 
 /**
@@ -36,6 +37,7 @@ final class MetricsFinder
             Architecture\Namespaces::class,
             Architecture\Traits::class,
             Style\Style::class,
+            Security\Security::class,
         ];
     }
 }

@@ -48,7 +48,7 @@ final class Analyser
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
             ->architecture($insightCollection, $results)
-            ->style($results);
+            ->misc($results);
 
         $style->issues($insightCollection, $metrics, $dir);
     }

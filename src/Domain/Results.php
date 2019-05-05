@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
+
 /**
  * @internal
  */
@@ -86,6 +88,22 @@ final class Results
     public function getStyle(): float
     {
         return $this->getPercentage('Style');
+    }
+
+    /**
+     * Gets number of security issues.
+     *
+     * @return int
+     */
+    public function getTotalSecurityIssues(): int
+    {
+        foreach ($this->perCategoryInsights['Security'] as $insight) {
+            if ($insight instanceof ForbiddenSecurityIssues) {
+                return count($insight->getDetails());
+            }
+        }
+
+        throw new \RuntimeException('This should not happen');
     }
 
     /**
