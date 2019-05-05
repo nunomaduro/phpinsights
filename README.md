@@ -11,7 +11,7 @@
 </p>
 
 
-**PHP Insights** created and maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, is the perfect starting point to analyze the code quality of your PHP projects.
+**PHP Insights** was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, is the perfect starting point to analyze the code quality of your PHP projects.
 Carefully crafted to simplify the analysis of your code directly from your terminal.
 
 ## ✨ Features
@@ -52,7 +52,7 @@ php artisan insights
 
 First, you should create the config-file with:
 ```bash
-cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
+cp vendor/nunomaduro/phpinsights/stubs/symfony.php phpinsights.php
 ```
 
 Then, use the `phpinsights` binary:
