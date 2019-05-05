@@ -52,7 +52,7 @@ php artisan insights
 
 First, you should create the config-file with:
 ```bash
-cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
+cp vendor/nunomaduro/phpinsights/stubs/symfony.php phpinsights.php
 ```
 
 Then, use the `phpinsights` binary:
