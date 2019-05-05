@@ -11,7 +11,7 @@
 </p>
 
 
-**PHP Insights** was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, is the perfect starting point to analyze the code quality of your PHP projects.
+**PHP Insights** was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, and is the perfect starting point to analyze the code quality of your PHP projects.
 Carefully crafted to simplify the analysis of your code directly from your terminal.
 
 ## ✨ Features
