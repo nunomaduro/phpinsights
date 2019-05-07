@@ -53,5 +53,14 @@
     },
     "bin": [
         "phpinsights"
-    ]
+    ],
+    "scripts": {
+        "test": [
+            "phpstan analyse --ansi",
+            "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/clean-code.yml"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests including phpstan and esc."
+    }
 }

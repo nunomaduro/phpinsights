@@ -15,5 +15,4 @@ before_script:
     - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
-    - vendor/bin/phpstan analyse
-    - vendor/bin/ecs check src --config vendor/symplify/easy-coding-standard/config/clean-code.yml
+    - composer run test
