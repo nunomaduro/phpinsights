@@ -15,31 +15,36 @@
       "name": "Nuno Maduro",
       "avatar_url": "https://avatars2.githubusercontent.com/u/5457236?v=4",
       "profile": "https://nunomaduro.com",
-      "contributions": [
-      ]
+      "contributions": []
     },
     {
       "login": "xuanquynh",
       "name": "Quynh Xuan Nguyen",
       "avatar_url": "https://avatars3.githubusercontent.com/u/16967350?v=4",
       "profile": "https://seriquynh.com",
-      "contributions": [
-      ]
+      "contributions": []
     },
     {
       "login": "mikeerickson",
       "name": "Mike Erickson",
       "avatar_url": "https://avatars1.githubusercontent.com/u/183153?v=4",
       "profile": "https://github.com/mikeerickson",
-      "contributions": [
-      ]
+      "contributions": []
     },
     {
       "login": "szepeviktor",
       "name": "Viktor Szépe",
       "avatar_url": "https://avatars3.githubusercontent.com/u/952007?v=4",
       "profile": "https://github.com/szepeviktor/debian-server-tools/blob/master/CV.md",
+      "contributions": []
+    },
+    {
+      "login": "caneco",
+      "name": "Caneco",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/502041?v=4",
+      "profile": "https://github.com/caneco",
       "contributions": [
+        "design"
       ]
     }
   ],
