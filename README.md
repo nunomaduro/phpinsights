@@ -193,5 +193,15 @@ final class Preset implements PresetContract
 
 At the moment, this package doesn't have any test. Would you like to contribute? This is the perfect task.
 
+# Contributors
+
+Thank you to all the people who have already contributed to PHP Insights!
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr><td align="center"><a href="https://nunomaduro.com"><img src="https://avatars2.githubusercontent.com/u/5457236?v=4" width="100px;" alt="Nuno Maduro"/><br /><sub><b>Nuno Maduro</b></sub></a><br /><a href="#question-nunomaduro" title="Answering Questions">💬</a> <a href="https://github.com/nunomaduro/phpinsights/issues?q=author%3Anunomaduro" title="Bug reports">🐛</a> <a href="https://github.com/nunomaduro/phpinsights/commits?author=nunomaduro" title="Code">💻</a> <a href="#content-nunomaduro" title="Content">🖋</a> <a href="#example-nunomaduro" title="Examples">💡</a> <a href="#ideas-nunomaduro" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-nunomaduro" title="Maintenance">🚧</a> <a href="#platform-nunomaduro" title="Packaging/porting to new platform">📦</a> <a href="https://github.com/nunomaduro/phpinsights/commits?author=nunomaduro" title="Tests">⚠️</a></td><td align="center"><a href="https://seriquynh.com"><img src="https://avatars3.githubusercontent.com/u/16967350?v=4" width="100px;" alt="Quynh Xuan Nguyen"/><br /><sub><b>Quynh Xuan Nguyen</b></sub></a><br /><a href="https://github.com/nunomaduro/phpinsights/commits?author=xuanquynh" title="Tests">⚠️</a></td></tr></table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## 🆓 License
 PHP Insights is open-sourced software licensed under the [MIT license](LICENSE.md).
