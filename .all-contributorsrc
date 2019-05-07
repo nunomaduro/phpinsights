@@ -5,9 +5,37 @@
   "files": [
     "README.md"
   ],
+  "commit": true,
   "imageSize": 100,
   "contributorsPerLine": 7,
   "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#contributors)",
-  "contributorTemplate": "<%= avatarBlock %><br /><%= contributions %>",
-  "contributors": [],
+  "contributors": [
+    {
+      "login": "xuanquynh",
+      "name": "Quynh Xuan Nguyen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16967350?v=4",
+      "profile": "https://seriquynh.com",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "nunomaduro",
+      "name": "Nuno Maduro",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5457236?v=4",
+      "profile": "https://nunomaduro.com",
+      "contributions": [
+        "question",
+        "bug",
+        "code",
+        "content",
+        "example",
+        "ideas",
+        "maintenance",
+        "platform",
+        "test"
+      ]
+    }
+  ],
+  "commitConvention": "none"
 }
