@@ -24,7 +24,7 @@
       "symbol": "🛡",
       "description": "Tests",
       "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
-    },
+    }
   },
   "contributors": []
 }
