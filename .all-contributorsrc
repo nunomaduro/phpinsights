@@ -11,15 +11,6 @@
   "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#contributors)",
   "contributors": [
     {
-      "login": "xuanquynh",
-      "name": "Quynh Xuan Nguyen",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/16967350?v=4",
-      "profile": "https://seriquynh.com",
-      "contributions": [
-        "test"
-      ]
-    },
-    {
       "login": "nunomaduro",
       "name": "Nuno Maduro",
       "avatar_url": "https://avatars2.githubusercontent.com/u/5457236?v=4",
@@ -33,6 +24,15 @@
         "ideas",
         "maintenance",
         "platform",
+        "test"
+      ]
+    },
+    {
+      "login": "xuanquynh",
+      "name": "Quynh Xuan Nguyen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16967350?v=4",
+      "profile": "https://seriquynh.com",
+      "contributions": [
         "test"
       ]
     }
