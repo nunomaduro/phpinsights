@@ -5,9 +5,19 @@
   "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#contributors)",
   "contributorTemplate": "<%= avatarBlock %><br /><%= contributions %>",
   "types": {
-    "custom": {
-      "symbol": "🔭",
-      "description": "A custom contribution type.",
+    "docs": {
+      "symbol": "📚",
+      "description": "Docs",
+      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
+    },
+    "features": {
+      "symbol": "🔥",
+      "description": "Features",
+      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
+    },
+    "art": {
+      "symbol": "📚",
+      "description": "Art & Design",
       "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
     }
   },
