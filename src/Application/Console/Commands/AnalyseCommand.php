@@ -65,7 +65,6 @@ final class AnalyseCommand
             }
         }
 
-
         $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
     }
 

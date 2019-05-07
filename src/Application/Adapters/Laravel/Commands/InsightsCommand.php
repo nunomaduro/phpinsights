@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel\Commands;
 use Illuminate\Console\Command;
 use NunoMaduro\PhpInsights\Application\Console\Commands\AnalyseCommand;
 use NunoMaduro\PhpInsights\Domain\Kernel;
+use NunoMaduro\PhpInsights\Domain\Reflection;
 
 /**
  * @internal
@@ -37,7 +38,9 @@ final class InsightsCommand extends Command
             return 1;
         }
 
-        $analyseCommand->__invoke($this->input, $this->output);
+        $output = (new Reflection($this->output))->get('output');
+
+        $analyseCommand->__invoke($this->input, $output);
 
         return 0;
     }
