@@ -11,7 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
 use ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff;
 use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Classes\DuplicateClassNameSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
@@ -38,7 +37,6 @@ final class Classes implements HasValue, HasInsights
             ForbiddenNormalClasses::class,
             ValidClassNameSniff::class,
             ClassDeclarationSniff::class,
-            DuplicateClassNameSniff::class,
             ModernClassNameReferenceSniff::class,
             ClassTraitAndInterfaceLengthSniff::class,
             MethodPerClassLimitSniff::class,

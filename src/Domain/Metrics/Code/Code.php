@@ -40,7 +40,6 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\LanguageConstructWithParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\RequireShortTernaryOperatorSniff;
 use SlevomatCodingStandard\Sniffs\Exceptions\DeadCatchSniff;
-use SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UselessParameterDefaultValueSniff;
@@ -83,7 +82,6 @@ final class Code implements HasValue, HasInsights
             RequireShortTernaryOperatorSniff::class,
             RequireCombinedAssignmentOperatorSniff::class,
             LanguageConstructSpacingSniff::class,
-            ReferenceThrowableOnlySniff::class,
             ElementNameMinimalLengthSniff::class,
             MaxNestingLevelSniff::class,
             UnusedVariableSniff::class,
