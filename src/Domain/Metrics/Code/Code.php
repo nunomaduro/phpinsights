@@ -114,7 +114,6 @@ final class Code implements HasValue, HasInsights
             DisallowYodaComparisonSniff::class,
             LanguageConstructWithParenthesesSniff::class,
             DeadCatchSniff::class,
-            ReferenceThrowableOnlySniff::class,
             UnusedInheritedVariablePassedToClosureSniff::class,
             UnusedParameterSniff::class,
             UselessParameterDefaultValueSniff::class,
