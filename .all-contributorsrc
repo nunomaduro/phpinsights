@@ -19,7 +19,12 @@
       "symbol": "📚",
       "description": "Art & Design",
       "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
-    }
+    },
+    "tests": {
+      "symbol": "🛡",
+      "description": "Tests",
+      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
+    },
   },
   "contributors": []
 }
