@@ -3,6 +3,7 @@
 *.scss linguist-vendored
 *.js linguist-vendored
 .editorconfig export-ignore
+.all-contributorsrc export-ignore
 phpstan.neon.dist
 phpunit.xml.dist
 .travis.yml export-ignore
