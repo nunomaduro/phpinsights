@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\ArgvInput;
 (function () {
     require file_exists(__DIR__ . '/vendor/autoload.php')
         ? __DIR__ . '/vendor/autoload.php'
-        : __DIR__ . '/../../../vendor/autoload.php';
+        : __DIR__ . '/../../vendor/autoload.php';
 
     /**
      * Bootstraps the domain kernel.
@@ -23,11 +23,6 @@ use Symfony\Component\Console\Input\ArgvInput;
     $commands = require __DIR__ . '/config/routes/console.php';
 
     /**
-     * Capture the input from globals.
-     */
-    $input = new ArgvInput();
-
-    /**
      * Creates a new console application, and runs it.
      */
     $application = new Application('PHP Insights', 'v1.0.0');
@@ -38,7 +33,5 @@ use Symfony\Component\Console\Input\ArgvInput;
     $application->addCommands($commands);
     $application->setDefaultCommand('analyse');
 
-    $application->run($input);
+    $application->run();
 })();
-
-
