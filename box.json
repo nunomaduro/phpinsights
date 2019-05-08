@@ -1,6 +1,6 @@
 {
+    "force-autodiscovery": true,
     "directories": [
-        "src",
         "config"
     ],
     "files": [
