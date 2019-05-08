@@ -259,7 +259,7 @@ EOD;
         if ($stdin !== false && $this->output instanceof ConsoleOutput) {
             $this->newLine();
             $section = $this->output->section();
-            $section->writeln(sprintf('<title>Press Enter to see %s issues...</title>', strtolower($category)));
+            $section->writeln(sprintf('<title>Press enter to see %s issues...</title>', strtolower($category)));
             fgetc($stdin);
             $section->clear(3);
         }
