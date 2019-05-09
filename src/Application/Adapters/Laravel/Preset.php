@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 
 /**
  * @internal
@@ -45,6 +46,12 @@ final class Preset implements PresetContract
             'config' => [
                 ForbiddenDefineGlobalConstants::class => [
                     'ignore' => ['LARAVEL_START'],
+                ],
+                ForbiddenFunctionsSniff::class => [
+                    'forbiddenFunctions' => [
+                        'dd' => null,
+                        'dump' => null,
+                    ],
                 ],
             ],
         ];
