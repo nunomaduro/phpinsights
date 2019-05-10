@@ -60,6 +60,13 @@ Then, use the `phpinsights` binary:
 php ./vendor/bin/phpinsights
 ```
 
+### Display issues omitted
+
+PHP Insights console command have different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
+```bash
+php ./vendor/bin/phpinsights -v
+```
+
 ## 💡 How to contribute
 
 The project is under development. As such, any help is welcome!

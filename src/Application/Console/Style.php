@@ -222,14 +222,17 @@ EOD;
                 $issue .= ':';
                 $details = $insight->getDetails();
                 $totalDetails = count($details);
-                $details = array_slice($details, -3, 3, true);
+
+                if ($this->output->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
+                    $details = array_slice($details, -3, 3, true);
+                }
 
                 foreach ($details as $detail) {
                     $detail = str_replace(realpath($dir) . '/', '', $detail);
                     $issue .= "\n  $detail";
                 }
 
-                if ($totalDetails > 3) {
+                if ($this->output->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL && $totalDetails > 3) {
                     $totalRemainDetails = $totalDetails - 3;
 
                     $issue .= "\n  <fg=red>+{$totalRemainDetails} issues omitted</>";
