@@ -16,8 +16,8 @@
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
         "sensiolabs/security-checker": "^5.0",
-        "symfony/console": "^4.3",
-        "symfony/finder": "^4.3",
+        "symfony/console": "^4.2",
+        "symfony/finder": "^4.2",
         "symplify/easy-coding-standard": "^5.4"
     },
     "require-dev": {

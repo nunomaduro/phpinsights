@@ -32,7 +32,7 @@ final class Kernel
         return [
             'composer.json',
             'composer.lock',
-            '.gitignore',
+            // '.gitignore',
         ];
     }
 }

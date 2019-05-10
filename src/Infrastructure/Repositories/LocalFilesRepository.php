@@ -28,7 +28,7 @@ final class LocalFilesRepository implements FilesRepository
             ->files()
             ->name(['*.php'])
             ->exclude(['vendor', 'tests'])
-            ->ignoreVCSIgnored(true)
+            // ->ignoreVCSIgnored(true)
             ->ignoreUnreadableDirs();
     }
 
