@@ -15,7 +15,6 @@
         "vendor/friendsofphp/php-cs-fixer/tests/TestCase.php"
     ],
     "compactors": [
-        "KevinGH\\Box\\Compactor\\Php",
-        "KevinGH\\Box\\Compactor\\PhpScoper"
+        "KevinGH\\Box\\Compactor\\Php"
     ]
 }
