@@ -21,6 +21,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class Style extends SymfonyStyle
 {
     /**
+     * @var \Symfony\Component\Console\Input\InputInterface
+     */
+    private $input;
+
+    /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
     private $output;
@@ -33,7 +38,7 @@ final class Style extends SymfonyStyle
      */
     public function __construct(InputInterface $input, OutputInterface $output)
     {
-        parent::__construct($input, $this->output = $output);
+        parent::__construct($this->input = $input, $this->output = $output);
     }
 
     /**
@@ -259,7 +264,7 @@ EOD;
     {
         $stdin = fopen('php://stdin', 'r');
 
-        if ($stdin !== false && $this->output instanceof ConsoleOutput) {
+        if ($stdin !== false && $this->output instanceof ConsoleOutput && $this->input->isInteractive() === true) {
             $this->newLine();
             $section = $this->output->section();
             $section->writeln(sprintf('<title>Press enter to see %s issues...</title>', strtolower($category)));
