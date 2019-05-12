@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application;
 
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 
 /**
  * @internal
@@ -18,6 +19,7 @@ final class ConfigResolver
     private static $presets = [
         LaravelPreset::class,
         SymfonyPreset::class,
+        YiiPreset::class,
         DefaultPreset::class,
     ];
 
