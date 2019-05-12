@@ -8,7 +8,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
 (function () {
-    require file_exists(__DIR__ . '/vendor/autoload.php')
+    require file_exists(__DIR__ . '/../vendor/autoload.php')
         ? __DIR__ . '/../vendor/autoload.php'
         : __DIR__ . '/../../../../vendor/autoload.php';
 
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\ArgvInput;
     /**
      * Gets the list of commands.
      */
-    $commands = require __DIR__ . '/config/routes/console.php';
+    $commands = require __DIR__ . '/../config/routes/console.php';
 
     /**
      * Creates a new console application, and runs it.
