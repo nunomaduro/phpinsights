@@ -204,7 +204,7 @@ EOD;
         $previousCategory = null;
 
         foreach ($metrics as $metricClass) {
-            foreach ($insightCollection->allFrom(new $metricClass) as $insight) {
+            foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
                 if (! $insight->hasIssue()) {
                     continue;
                 }

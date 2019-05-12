@@ -15,6 +15,7 @@ use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
  * @method int|bool  getPreviousNonWhitespaceTokenPos(array $tokens, $start)
  * @method int|bool  getNextNonWhitespaceTokenPos(array $tokens, $start)
  * @method string    getClassName(string $namespace, array $tokens, int $i)
+ *
  * @internal
  */
 final class Analyser

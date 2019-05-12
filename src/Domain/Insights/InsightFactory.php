@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use RuntimeException;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
+use Symplify\EasyCodingStandard\Error\Error;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
@@ -117,15 +118,34 @@ final class InsightFactory
         $errors = [];
 
         foreach ($collector->getErrors() as $errorsPerFile) {
-
             foreach ($errorsPerFile as $error) {
                 if (strpos($error->getSourceClass(), $sniff) !== false) {
-                    $errors[] = $error;
+                    $key = $this->getSniffKey($error);
+                    if (! array_key_exists($key, $errors)) {
+                        $errors[$key] = $error;
+                    }
                 }
             }
         }
 
-        return $errors;
+        return array_values($errors);
+    }
+
+    /**
+     * Gets a key from a Error.
+     *
+     * @param  \Symplify\EasyCodingStandard\Error\Error  $error
+     *
+     * @return string
+     */
+    private function getSniffKey(Error $error): string
+    {
+        return sprintf('%s||%s||%s||%s',
+            $error->getFileInfo()->getRealPath(),
+            $error->getSourceClass(),
+            $error->getLine(),
+            $error->getMessage()
+        );
     }
 
     /**

@@ -32,7 +32,7 @@ final class OutputDecorator
     {
         foreach (self::$styles as $styleClass) {
 
-            $style = new $styleClass;
+            $style = new $styleClass();
 
             /** @var \NunoMaduro\PhpInsights\Application\Console\Contracts\Style $style */
             $style->addTo($output);
