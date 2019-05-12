@@ -9,8 +9,8 @@ use Symfony\Component\Console\Input\ArgvInput;
 
 (function () {
     require file_exists(__DIR__ . '/vendor/autoload.php')
-        ? __DIR__ . '/vendor/autoload.php'
-        : __DIR__ . '/../../../vendor/autoload.php';
+        ? __DIR__ . '/../vendor/autoload.php'
+        : __DIR__ . '/../../../../vendor/autoload.php';
 
     /**
      * Bootstraps the domain kernel.

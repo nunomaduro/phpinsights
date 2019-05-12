@@ -52,7 +52,7 @@
         }
     },
     "bin": [
-        "phpinsights"
+        "bin/phpinsights"
     ],
     "scripts": {
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/clean-code.yml",
