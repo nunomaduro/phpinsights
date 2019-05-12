@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Application\Console\Contracts;
 
 use Symfony\Component\Console\Output\OutputInterface;

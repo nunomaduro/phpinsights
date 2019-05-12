@@ -7,7 +7,7 @@ use NunoMaduro\PhpInsights\Application\Console\Commands\InvokableCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-return (function () {
+return (static function () {
 
     $container = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'container.php';
 

@@ -64,8 +64,8 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
 
             try {
                 self::$result = $checker->check(sprintf(
-                        '%s/composer.lock', $this->collector->getDir())
-                );
+                    '%s/composer.lock', $this->collector->getDir()
+                ));
             } catch (\Throwable $e) {
                 throw new InternetConnectionNotFound(
                     'PHP Insights needs an internet connection to inspect security issues.',

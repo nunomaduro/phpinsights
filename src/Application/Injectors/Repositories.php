@@ -21,7 +21,7 @@ final class Repositories
     public function __invoke(): array
     {
         return [
-            FilesRepository::class => function () {
+            FilesRepository::class => static function () {
                 $finder = Finder::create();
 
                 return new LocalFilesRepository($finder);

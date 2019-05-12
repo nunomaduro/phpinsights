@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Application\Console\Styles;
 
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Style;

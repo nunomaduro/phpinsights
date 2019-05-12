@@ -10,11 +10,9 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\DisallowOneLinePropertyDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\RequireOneLinePropertyDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
@@ -54,10 +52,8 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             NullableTypeForNullDefaultValueSniff::class,
             FixmeSniff::class,
             TodoSniff::class,
-            DisallowOneLinePropertyDocCommentSniff::class,
             ForbiddenCommentsSniff::class,
             InlineDocCommentDeclarationSniff::class,
-            RequireOneLinePropertyDocCommentSniff::class,
             DisallowArrayTypeHintSyntaxSniff::class,
             DisallowMixedTypeHintSniff::class,
             LongTypeHintsSniff::class,

@@ -69,7 +69,7 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
             ClassConstantVisibilitySniff::class,
             DisallowLateStaticBindingForConstantsSniff::class,
             ModernClassNameReferenceSniff::class,
-            UselessLateStaticBindingSniff::class
+            UselessLateStaticBindingSniff::class,
         ];
     }
 }

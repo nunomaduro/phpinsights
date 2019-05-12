@@ -25,7 +25,7 @@ final class FileProcessors
     public function __invoke(): array
     {
         return [
-            FileProcessor::class => function () {
+            FileProcessor::class => static function () {
                 $container = EcsContainer::make();
 
                 $reflection = new Reflection($container->get(SniffFileProcessor::class));

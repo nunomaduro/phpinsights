@@ -108,16 +108,6 @@ final class FileProcessor implements FileProcessorInterface
         return $this->sniffs;
     }
 
-    /**
-     * @return DualRunInterface[]|Sniff[]
-     */
-    public function getDualRunCheckers(): array
-    {
-        return array_filter($this->sniffs, function (Sniff $sniff): bool {
-            return $sniff instanceof DualRunInterface;
-        });
-    }
-
     public function processFile(SmartFileInfo $smartFileInfo): string
     {
         $file = $this->fileFactory->createFromFileInfo($smartFileInfo);

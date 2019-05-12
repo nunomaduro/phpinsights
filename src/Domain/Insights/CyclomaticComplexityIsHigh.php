@@ -35,17 +35,17 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $classesComplexity = array_filter($this->collector->getClassComplexity(), function ($complexity) {
+        $classesComplexity = array_filter($this->collector->getClassComplexity(), static function ($complexity) {
             return $complexity > 5;
         });
 
-        uasort($classesComplexity, function ($a, $b) {
+        uasort($classesComplexity, static function ($a, $b) {
             return $b - $a;
         });
 
         $classesComplexity = array_reverse($classesComplexity);
 
-        return array_map(function ($class, $complexity) {
+        return array_map(static function ($class, $complexity) {
             return "$class: $complexity cyclomatic complexity";
         }, array_keys($classesComplexity), $classesComplexity);
     }

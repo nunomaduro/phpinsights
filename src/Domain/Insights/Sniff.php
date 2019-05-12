@@ -76,7 +76,7 @@ final class Sniff implements Insight, HasDetails
      */
     public function getDetails(): array
     {
-        return array_map(function (Error $error) {
+        return array_map(static function (Error $error) {
             return $error->getFileInfo()->getRealPath() . ':' . $error->getLine() . ': ' . $error->getMessage();
         }, $this->errors);
     }

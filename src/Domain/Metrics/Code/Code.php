@@ -19,19 +19,16 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnconditionalIfStateme
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMethodSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\ControlStructures\InlineControlStructureSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\DisallowMultipleStatementsSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\MultipleStatementAlignmentSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\BacktickOperatorSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DiscourageGotoSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Strings\UnnecessaryStringConcatSniff;
-use PHP_CodeSniffer\Standards\PEAR\Sniffs\Files\IncludingFileSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Keywords\ShortFormTypeKeywordsSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
-use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
@@ -97,14 +94,12 @@ final class Code implements HasValue, HasInsights
             UselessOverridingMethodSniff::class,
             InlineControlStructureSniff::class,
             DisallowMultipleStatementsSniff::class,
-            MultipleStatementAlignmentSniff::class,
             BacktickOperatorSniff::class,
             DiscourageGotoSniff::class,
             NoSilencedErrorsSniff::class,
             UnnecessaryStringConcatSniff::class,
             ShortFormTypeKeywordsSniff::class,
             DisallowImplicitArrayCreationSniff::class,
-            TrailingArrayCommaSniff::class,
             AssignmentInConditionSniff::class,
             DisallowContinueWithoutIntegerOperandInSwitchSniff::class,
             DisallowEmptySniff::class,
@@ -126,7 +121,6 @@ final class Code implements HasValue, HasInsights
             UselessSemicolonSniff::class,
             DeclareStrictTypesSniff::class,
             DuplicateAssignmentToVariableSniff::class,
-            IncludingFileSniff::class,
             // FullyQualifiedExceptionsSniff::class,
             // FullyQualifiedGlobalConstantsSniff::class,
         ];
