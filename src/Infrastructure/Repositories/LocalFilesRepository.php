@@ -27,7 +27,7 @@ final class LocalFilesRepository implements FilesRepository
         $this->finder = $finder
             ->files()
             ->name(['*.php'])
-            ->exclude(['vendor', 'tests', 'Tests'])
+            ->exclude(['vendor', 'tests', 'Tests', 'test', 'Test'])
             // ->ignoreVCSIgnored(true)
             ->ignoreUnreadableDirs();
     }
