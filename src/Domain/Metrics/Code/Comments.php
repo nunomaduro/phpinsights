@@ -48,7 +48,6 @@ final class Comments implements HasValue, HasPercentage, HasInsights
         return [
             EmptyCommentSniff::class,
             // FullyQualifiedClassNameInAnnotationSniff::class,
-            NullTypeHintOnLastPositionSniff::class,
             NullableTypeForNullDefaultValueSniff::class,
             FixmeSniff::class,
             TodoSniff::class,
@@ -58,7 +57,6 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             DisallowMixedTypeHintSniff::class,
             LongTypeHintsSniff::class,
             NullTypeHintOnLastPositionSniff::class,
-            NullableTypeForNullDefaultValueSniff::class,
             TypeHintDeclarationSniff::class,
             UselessConstantTypeHintSniff::class,
             UselessInheritDocCommentSniff::class,
