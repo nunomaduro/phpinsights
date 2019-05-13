@@ -23,7 +23,9 @@
     "require-dev": {
         "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
-        "narration/phpstan-rules": "dev-master",
+        "localheinz/phpstan-rules": "^0.6.0",
+        "phpstan/phpstan-strict-rules": "^0.11",
+        "roave/no-floaters": "^1.1",
         "phpstan/phpstan": "^0.11.5",
         "symfony/var-dumper": "^4.2",
         "thecodingmachine/phpstan-strict-rules": "^0.11.0"
@@ -33,8 +35,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "NunoMaduro\\PhpInsights\\": "src"
