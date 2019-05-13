@@ -1,6 +1,6 @@
 <p align="center">
 
-  <img alt="PHP Insights" src="https://raw.githubusercontent.com/nunomaduro/phpinsights/feat/first/docs/banner.png" >
+  <img alt="PHP Insights" src="https://raw.githubusercontent.com/nunomaduro/phpinsights/master/docs/banner.png" >
 
   <p align="center">
     <a href="https://travis-ci.org/nunomaduro/phpinsights"><img src="https://img.shields.io/travis/nunomaduro/phpinsights/master.svg" alt="Build Status"></a>
