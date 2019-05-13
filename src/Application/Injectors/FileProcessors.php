@@ -31,9 +31,7 @@ final class FileProcessors
                 $reflection = new Reflection($container->get(SniffFileProcessor::class));
 
                 $fixer = $reflection->get('fixer');
-                $configuration = $reflection->get('configuration');
                 $errorAndDiffCollector = $reflection->get('errorAndDiffCollector');
-                $differ = $reflection->get('differ');
                 $appliedCheckersCollector = $reflection->get('appliedCheckersCollector');
                 /** @var \Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle $easyCodingStandardStyle */
                 $easyCodingStandardStyle = $container->get(EasyCodingStandardStyle::class);
@@ -48,11 +46,7 @@ final class FileProcessors
                         $skipper,
                         $appliedCheckersCollector,
                         $easyCodingStandardStyle
-                    ),
-                    $configuration,
-                    $errorAndDiffCollector,
-                    $differ,
-                    $appliedCheckersCollector
+                    )
                 );
             },
         ];

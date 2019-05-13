@@ -6,11 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use PhpCsFixer\Differ\DifferInterface;
-use Symplify\EasyCodingStandard\Application\AppliedCheckersCollector;
-use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
-use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 
 /**
@@ -39,50 +35,15 @@ final class FileProcessor implements FileProcessorInterface
     private $fileFactory;
 
     /**
-     * @var \Symplify\EasyCodingStandard\Configuration\Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
-     */
-    private $errorAndDiffCollector;
-
-    /**
-     * @var \PhpCsFixer\Differ\DifferInterface
-     */
-    private $differ;
-
-    /**
-     * @var \Symplify\EasyCodingStandard\Application\AppliedCheckersCollector
-     */
-    private $appliedCheckersCollector;
-
-    /**
      * FileProcessor constructor.
      *
      * @param  \PHP_CodeSniffer\Fixer  $fixer
      * @param  \NunoMaduro\PhpInsights\Domain\FileFactory  $fileFactory
-     * @param  \Symplify\EasyCodingStandard\Configuration\Configuration  $configuration
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $errorAndDiffCollector
-     * @param  \PhpCsFixer\Differ\DifferInterface  $differ
-     * @param  AppliedCheckersCollector  $appliedCheckersCollector
      */
-    public function __construct(
-        Fixer $fixer,
-        FileFactory $fileFactory,
-        Configuration $configuration,
-        ErrorAndDiffCollector $errorAndDiffCollector,
-        DifferInterface $differ,
-        AppliedCheckersCollector $appliedCheckersCollector
-    )
+    public function __construct(Fixer $fixer, FileFactory $fileFactory)
     {
         $this->fixer = $fixer;
         $this->fileFactory = $fileFactory;
-        $this->configuration = $configuration;
-        $this->errorAndDiffCollector = $errorAndDiffCollector;
-        $this->differ = $differ;
-        $this->appliedCheckersCollector = $appliedCheckersCollector;
     }
 
     /**
