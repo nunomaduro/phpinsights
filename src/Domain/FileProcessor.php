@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use Nette\Utils\FileSystem;
 use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PhpCsFixer\Differ\DifferInterface;
 use Symplify\EasyCodingStandard\Application\AppliedCheckersCollector;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
-use Symplify\EasyCodingStandard\Contract\Application\DualRunInterface;
 use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
@@ -88,7 +86,9 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @param  Sniff  $sniff
+     * @param  \PHP_CodeSniffer\Sniffs\Sniff  $sniff
+     *
+     * @return void
      */
     public function addSniff(Sniff $sniff): void
     {
@@ -100,59 +100,23 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @return Sniff[]|DualRunInterface[]
+     * @return \PHP_CodeSniffer\Sniffs\Sniff[]
      */
     public function getCheckers(): array
     {
-
         return $this->sniffs;
     }
 
+    /**
+     * @param  \Symplify\PackageBuilder\FileSystem\SmartFileInfo  $smartFileInfo
+     *
+     * @return string
+     */
     public function processFile(SmartFileInfo $smartFileInfo): string
     {
         $file = $this->fileFactory->createFromFileInfo($smartFileInfo);
-
-        // mimic original behavior
-        /** mimics @see \PHP_CodeSniffer\Files\File::process() */
-        /** mimics @see \PHP_CodeSniffer\Fixer::fixFile() */
-        $this->fixFile($file, $this->fixer, $smartFileInfo, $this->tokenListeners);
-
-        // add diff
-        if ($smartFileInfo->getContents() !== $this->fixer->getContents()) {
-            $diff = $this->differ->diff($smartFileInfo->getContents(), $this->fixer->getContents());
-            $this->errorAndDiffCollector->addDiffForFileInfo(
-                $smartFileInfo,
-                $diff,
-                $this->appliedCheckersCollector->getAppliedCheckersPerFileInfo($smartFileInfo)
-            );
-        }
-
-        // 4. save file content (faster without changes check)
-        if ($this->configuration->isFixer()) {
-            FileSystem::write($file->getFilename(), $this->fixer->getContents());
-        }
+        $file->processWithTokenListenersAndFileInfo($this->tokenListeners, $smartFileInfo);
 
         return $this->fixer->getContents();
-    }
-
-    /**
-     * @param  Sniff[][]  $tokenListeners
-     */
-    private function fixFile(File $file, Fixer $fixer, SmartFileInfo $smartFileInfo, array $tokenListeners): void
-    {
-        $previousContent = $smartFileInfo->getContents();
-        $this->fixer->loops = 0;
-
-        do {
-            // Only needed once file content has changed.
-            $content = $previousContent;
-
-            $file->setContent($content);
-            $file->processWithTokenListenersAndFileInfo($tokenListeners, $smartFileInfo);
-
-            // fixed content
-            $previousContent = $fixer->getContents();
-            ++$this->fixer->loops;
-        } while ($previousContent !== $content);
     }
 }
