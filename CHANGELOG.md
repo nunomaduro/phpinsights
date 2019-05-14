@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.0.5]
+### Fixed
+- [Laravel Preset] Ignores `ide_helper_models` ([#51](https://github.com/nunomaduro/phpinsights/pull/51))
+
 ## [v1.0.4]
 ### Fixed
 - PHP warning while using `--no-interaction` option ([f68e13a](https://github.com/nunomaduro/phpinsights/commit/f68e13a26770aa1984415ed848947177ff9939cd))
@@ -18,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v1.0.1]
 ### Fixed
-- Ignores `_ide_helper.php` on the Laravel preset ([#46](https://github.com/nunomaduro/phpinsights/pull/46))
+- [Laravel Preset] Ignores `_ide_helper.php` ([#46](https://github.com/nunomaduro/phpinsights/pull/46))
 
 ## [v1.0.0]
 ### Added
