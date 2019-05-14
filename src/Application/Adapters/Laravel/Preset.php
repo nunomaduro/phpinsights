@@ -35,6 +35,7 @@ final class Preset implements PresetContract
                 'nova',
                 'database',
                 'server.php',
+                '_ide_helper.php',
                 'public',
             ],
             'add' => [
