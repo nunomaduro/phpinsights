@@ -16,4 +16,4 @@ before_script:
 
 script:
     - composer run test
-    - php bin/phpinsights --no-interaction src/ || true
+    - php bin/phpinsights analyse --no-interaction src/ || true
