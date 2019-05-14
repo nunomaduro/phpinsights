@@ -142,7 +142,7 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[ARQUICTURE] %s within <title>%s</> files",
+        $this->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</> files",
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Architecture\Files())->getValue($insightCollection->getCollector())
         ));
