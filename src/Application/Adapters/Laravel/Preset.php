@@ -36,6 +36,7 @@ final class Preset implements PresetContract
                 'database',
                 'server.php',
                 '_ide_helper.php',
+                '_ide_helper_models.php',
                 'public',
             ],
             'add' => [
