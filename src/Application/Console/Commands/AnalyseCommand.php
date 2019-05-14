@@ -100,7 +100,7 @@ final class AnalyseCommand
         /** @var string $directory */
         $directory = $input->getArgument('directory') ?? $this->filesRepository->getDefaultDirectory();
 
-        if ($directory[0] !== DIRECTORY_SEPARATOR) {
+        if ($directory[0] !== DIRECTORY_SEPARATOR && preg_match('~\A[A-Z]:(?![^/\\\\])~i', $directory) === 0) {
             $directory = (string) getcwd() . DIRECTORY_SEPARATOR . $directory;
         }
 
