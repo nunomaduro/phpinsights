@@ -162,9 +162,6 @@ Would you like to exclude a directory or remove an `Insight` for your favorite f
 1. Open the file `src/Application/Adapters/Laravel/Preset.php` and update the config file:
 
 ```php
-/**
- * @internal
- */
 final class Preset implements PresetContract
 {
     /**
@@ -182,21 +179,45 @@ final class Preset implements PresetContract
     {
         return [
             'exclude' => [
+                'config',
                 'storage',
                 'resources',
                 'bootstrap',
+                'nova',
                 'database',
                 'server.php',
+                '_ide_helper.php',
+                '_ide_helper_models.php',
+                'public',
             ],
             'add' => [
-                // ...
+                Classes::class => [
+                    ForbiddenFinalClasses::class,
+                ],
             ],
+
             'remove' => [
-                // ...
+                AlphabeticallySortedUsesSniff::class,
+                DeclareStrictTypesSniff::class,
+                DisallowMixedTypeHintSniff::class,
+                ForbiddenDefineFunctions::class,
+                ForbiddenNormalClasses::class,
+                ForbiddenTraits::class,
+                TypeHintDeclarationSniff::class,
             ],
+
             'config' => [
+                ForbiddenPrivateMethods::class => [
+                    'title' => 'The usage of private methods is not idiomatic in Laravel.',
+                ],
                 ForbiddenDefineGlobalConstants::class => [
                     'ignore' => ['LARAVEL_START'],
+                ],
+                ForbiddenFunctionsSniff::class => [
+                    'forbiddenFunctions' => [
+                        'dd' => null,
+                        'dump' => null,
+                    ],
                 ],
             ],
         ];
