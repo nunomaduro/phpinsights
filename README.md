@@ -18,6 +18,7 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 
 - Analysis of **code quality** and **coding style**
 - Beautiful overview of code **architecture** and it's **complexity**
+- Designed to work out-of-the-box with Laravel, Symfony, and others
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 - Friendly console interface build on top of [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer), [PHPLOC](https://github.com/sebastianbergmann/phploc), and [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard)
 
