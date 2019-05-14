@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.0.4]
+### Fixed
+- PHP warning while using `--no-interaction` option ([f68e13a](https://github.com/nunomaduro/phpinsights/commit/f68e13a26770aa1984415ed848947177ff9939cd))
+
 ## [v1.0.3]
 ### Fixed
 - Usage on composer global ([ccecff5](https://github.com/nunomaduro/phpinsights/commit/ccecff580949184b6e1bf9bba33c2c173c480c4b))
