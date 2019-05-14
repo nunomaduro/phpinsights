@@ -22,6 +22,13 @@ final class Kernel
         include_once file_exists(__DIR__ . '/../../vendor/squizlabs/php_codesniffer/autoload.php')
             ? __DIR__ . '/../../vendor/squizlabs/php_codesniffer/autoload.php'
             : __DIR__ . '/../../../../../vendor/squizlabs/php_codesniffer/autoload.php';
+
+        /**
+         * Defines PHP Codesniffer's needed constants
+         */
+        if (! defined('PHP_CODESNIFFER_CBF')) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
     }
 
     /**
