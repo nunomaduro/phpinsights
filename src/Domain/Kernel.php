@@ -19,7 +19,9 @@ final class Kernel
         /**
          * Includes PHP Codesniffer's autoload.
          */
-        include_once 'vendor/squizlabs/php_codesniffer/autoload.php';
+        include_once file_exists(__DIR__ . '/../../vendor/squizlabs/php_codesniffer/autoload.php')
+            ? __DIR__ . '/../../vendor/squizlabs/php_codesniffer/autoload.php'
+            : __DIR__ . '/../../../../../vendor/squizlabs/php_codesniffer/autoload.php';
     }
 
     /**
