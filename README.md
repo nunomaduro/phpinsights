@@ -18,7 +18,7 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 
 - Analysis of **code quality** and **coding style**
 - Beautiful overview of code **architecture** and it's **complexity**
-- Designed to work out-of-the-box with Laravel, Symfony, and others
+- Designed to work out-of-the-box with **Laravel**, **Symfony**, and more
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 - Friendly console interface build on top of [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer), [PHPLOC](https://github.com/sebastianbergmann/phploc), and [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard)
 
@@ -93,17 +93,11 @@ Imagine that you want to create a new `Insight` that doesn't allow the usage of 
 ```php
 final class ForbiddenFinalClasses extends Insight
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         return (bool) count($this->collector->getConcreteFinalClasses());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return 'The use of `final` classes is prohibited';
@@ -118,9 +112,6 @@ final class Classes implements HasInsights
 {
     // ...
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInsights(): array
     {
         return [
@@ -141,9 +132,6 @@ final class Classes implements HasInsights
 {
     // ...
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInsights(): array
     {
         return [
@@ -164,17 +152,11 @@ Would you like to exclude a directory or remove an `Insight` for your favorite f
 ```php
 final class Preset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'laravel';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function get(): array
     {
         return [
