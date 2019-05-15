@@ -289,7 +289,7 @@ EOD;
      *
      * @return string
      */
-    public static function getPercentageAsString(float $percentage): string
+    private static function getPercentageAsString(float $percentage): string
     {
         $percentageString = sprintf('%s%%', $percentage === 100.0
             ? '100 '
