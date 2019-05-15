@@ -60,7 +60,7 @@
     "scripts": {
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/clean-code.yml",
         "phpstan:test": "phpstan analyse --ansi",
-        "phpunit:test": "phpunit",
+        "phpunit:test": "phpunit --colors=always",
         "test": [
             "@phpstan:test",
             "@ecs:test",
