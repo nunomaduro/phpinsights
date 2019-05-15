@@ -34,8 +34,14 @@ composer require nunomaduro/phpinsights --dev
 
 Then, use the `phpinsights` binary:
 ```bash
-php ./vendor/bin/phpinsights
+./vendor/bin/phpinsights
 ```
+
+On Windows:
+```cmd
+.\vendor\bin\phpinsights.bat
+```
+
 
 ### Within Laravel
 
@@ -58,7 +64,12 @@ cp vendor/nunomaduro/phpinsights/stubs/symfony.php phpinsights.php
 
 Then, use the `phpinsights` binary:
 ```bash
-php ./vendor/bin/phpinsights
+./vendor/bin/phpinsights
+```
+
+On Windows:
+```cmd
+.\vendor\bin\phpinsights.bat
 ```
 
 ### No framework - customize `Insights` 
@@ -72,7 +83,12 @@ cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 
 PHP Insights console command have different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
 ```bash
-php ./vendor/bin/phpinsights -v
+./vendor/bin/phpinsights -v
+```
+
+On Windows:
+```cmd
+.\vendor\bin\phpinsights.bat -v
 ```
 
 ### Allowed memory size of X bytes exhausted
