@@ -61,9 +61,16 @@ final class Style extends SymfonyStyle
         $structureColor = "bg={$this->getColor($results->getStructure())}";
         $styleColor = "bg={$this->getColor($results->getStyle())}";
 
+        $codeQuality = Style::getPercentageAsString($results->getCodeQuality());
+        $complexity = Style::getPercentageAsString($results->getComplexity());
+        $structure = Style::getPercentageAsString($results->getStructure());
+        $style = Style::getPercentageAsString($results->getStyle());
+
         $output = <<<EOD
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$styleColor>  {$this->getPercentageAsString($results->getStyle())}  </>
+      <fg=black;options=bold;$codeQualityColor>  {$codeQuality}  </>            <fg=black;options=bold;$complexityColor>  
+      {$complexity}  </>            <fg=black;options=bold;
+      $structureColor>  {$structure}  </>            <fg=black;options=bold;$styleColor>  {$style}  </>
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
 
         <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
@@ -276,17 +283,19 @@ EOD;
     }
 
     /**
-     * Returns the percentage as 4 chars string.
+     * Returns the percentage as 5 chars string.
      *
      * @param  float  $percentage
      *
      * @return string
      */
-    private function getPercentageAsString(float $percentage): string
+    private static function getPercentageAsString(float $percentage): string
     {
-        return sprintf('%s%%', $percentage === 100.0
+        $percentageString = sprintf('%s%%', $percentage === 100.0
             ? '100 '
             : number_format($percentage, 1, '.', ''));
+
+        return str_pad($percentageString, 5);
     }
 
     /**
