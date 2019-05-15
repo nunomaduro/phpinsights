@@ -63,7 +63,7 @@ final class Style extends SymfonyStyle
 
         $output = <<<EOD
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$this->getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {$this->getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {$this->getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$styleColor>  {$this->getPercentageAsString($results->getStyle())}  </>
+      <fg=black;options=bold;$codeQualityColor>  {Style::getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {Style::getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {Style::getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$styleColor>  {Style::getPercentageAsString($results->getStyle())}  </>
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
 
         <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
@@ -282,11 +282,13 @@ EOD;
      *
      * @return string
      */
-    private function getPercentageAsString(float $percentage): string
+    public static function getPercentageAsString(float $percentage): string
     {
-        return sprintf('%s%%', $percentage === 100.0
+        $percentageString = sprintf('%s%%', $percentage === 100.0
             ? '100 '
             : number_format($percentage, 1, '.', ''));
+
+        return str_pad($percentageString, 5);
     }
 
     /**
