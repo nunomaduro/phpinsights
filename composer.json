@@ -60,14 +60,17 @@
     "scripts": {
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/clean-code.yml",
         "phpstan:test": "phpstan analyse --ansi",
+        "phpunit:test": "phpunit",
         "test": [
             "@phpstan:test",
-            "@ecs:test"
+            "@ecs:test",
+            "@phpunit:test"
         ]
     },
     "scripts-descriptions": {
         "ecs:test": "Run the ecs tests.",
         "phpstan:test": "Run the phpstan tests.",
-        "test": "Run all tests including phpstan and ecs."
+        "phpunit:test": "Run the phpunit tests.",
+        "test": "Run all tests including phpstan, phpunit and ecs."
     }
 }
