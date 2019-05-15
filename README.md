@@ -75,6 +75,13 @@ PHP Insights console command have different verbosity levels, which determine th
 php ./vendor/bin/phpinsights -v
 ```
 
+### Allowed memory size of X bytes exhausted
+
+If you encounter the error `Allowed memory size of XXXXX bytes exhausted`, the current workaround is to increase the memory limit:
+```
+php -d memory_limit=2000M ./vendor/bin/phpinsights
+```
+
 ## 💡 How to contribute
 
 The project is under development. As such, any help is welcome!
