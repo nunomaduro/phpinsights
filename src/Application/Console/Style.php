@@ -61,9 +61,16 @@ final class Style extends SymfonyStyle
         $structureColor = "bg={$this->getColor($results->getStructure())}";
         $styleColor = "bg={$this->getColor($results->getStyle())}";
 
+        $codeQuality = Style::getPercentageAsString($results->getCodeQuality());
+        $complexity = Style::getPercentageAsString($results->getComplexity());
+        $structure = Style::getPercentageAsString($results->getStructure());
+        $style = Style::getPercentageAsString($results->getStyle());
+
         $output = <<<EOD
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {Style::getPercentageAsString($results->getCodeQuality())}  </>            <fg=black;options=bold;$complexityColor>  {Style::getPercentageAsString($results->getComplexity())}  </>            <fg=black;options=bold;$structureColor>  {Style::getPercentageAsString($results->getStructure())}  </>            <fg=black;options=bold;$styleColor>  {Style::getPercentageAsString($results->getStyle())}  </>
+      <fg=black;options=bold;$codeQualityColor>  {$codeQuality}  </>            <fg=black;options=bold;$complexityColor>  
+      {$complexity}  </>            <fg=black;options=bold;
+      $structureColor>  {$structure}  </>            <fg=black;options=bold;$styleColor>  {$style}  </>
       <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
 
         <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
@@ -276,7 +283,7 @@ EOD;
     }
 
     /**
-     * Returns the percentage as 4 chars string.
+     * Returns the percentage as 5 chars string.
      *
      * @param  float  $percentage
      *
