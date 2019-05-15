@@ -7,7 +7,6 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneObjectStructurePerFileSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
 
 final class Files implements HasValue, HasInsights
@@ -26,7 +25,6 @@ final class Files implements HasValue, HasInsights
     public function getInsights(): array
     {
         return [
-            OneObjectStructurePerFileSniff::class,
             SuperfluousExceptionNamingSniff::class,
         ];
     }
