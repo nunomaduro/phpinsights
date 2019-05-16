@@ -54,5 +54,9 @@ final class InsightsCommand extends Command
         $this->setDefinition(
             AnalyseDefinition::get()
         );
+
+        $this->getDefinition()
+            ->getArgument('config-path')
+            ->setDefault('config/insights.php');
     }
 }
