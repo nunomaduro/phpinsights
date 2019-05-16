@@ -65,7 +65,7 @@ final class Preset implements PresetContract
     public static function shouldBeApplied(array $composer): bool
     {
         /** @var string[] $requirements */
-        $requirements = $composer['require'];
+        $requirements = $composer['require'] ?? [];
 
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
