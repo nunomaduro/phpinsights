@@ -78,6 +78,15 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "leocavalcante",
+      "name": "Leo Cavalcante",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/183722?v=4",
+      "profile": "https://leocavalcante.dev",
+      "contributions": [
+        "question"
+      ]
     }
   ],
   "commitConvention": "none",
