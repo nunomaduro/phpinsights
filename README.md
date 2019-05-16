@@ -32,11 +32,6 @@ First, install PHP Insights via the Composer package manager:
 composer require nunomaduro/phpinsights --dev
 ```
 
-If you have version conflicts, consider installing using `composer-bin-plugin`:
-```
-composer require --dev bamarni/composer-bin-plugin && composer bin phpinsights require nunomaduro/phpinsights
-```
-
 Then, use the `phpinsights` binary:
 ```bash
 ./vendor/bin/phpinsights
