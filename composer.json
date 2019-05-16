@@ -18,7 +18,9 @@
         "sensiolabs/security-checker": "^5.0",
         "symfony/console": "^4.2",
         "symfony/finder": "^4.2",
-        "symplify/easy-coding-standard": "^5.4"
+        "symplify/coding-standard": "5.4.16",
+        "symplify/easy-coding-standard": "5.4.16",
+        "symplify/package-builder": "5.4.16"
     },
     "require-dev": {
         "illuminate/console": "^5.8",
