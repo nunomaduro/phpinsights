@@ -79,6 +79,21 @@ You may customize `insights` creating and editing the configuration file:
 cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 ```
 
+### Within Continuous Integration (CI)
+
+You can launch `phpinsights` in your CI by defining level you want to reach with options `--min-quality`, `--min-complexity`, `--min-architecture`, `--min-style`. 
+If the level is not reached, an exit status code will be thrown.
+
+```bash
+# For laravel
+php artisan insights --no-interaction --min-quality=75 --min-complexity=75 --min-architecture=75 --min-style=75 
+# otherwise
+./vendor/bin/phpinsights --no-interaction --min-quality=75 --min-complexity=75 --min-architecture=75 --min-style=75
+```
+
+The `--no-interaction` option is mandatory when it's launch in CI to avoid prompts.
+All others are optionnal, so if you want focus only on style, add the `--min-style` and forget others.
+
 ### Display issues omitted
 
 PHP Insights console command have different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:

@@ -51,9 +51,9 @@ final class AnalyseCommand
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      *
-     * @return void
+     * @return int
      */
-    public function __invoke(InputInterface $input, OutputInterface $output): void
+    public function __invoke(InputInterface $input, OutputInterface $output): int
     {
         $style = new Style($input, OutputDecorator::decorate($output));
 
@@ -65,7 +65,30 @@ final class AnalyseCommand
             }
         }
 
-        $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+        $results = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+
+        $hasError = false;
+        if ($input->getOption('min-quality') > $results->getCodeQuality()) {
+            $style->error('The Code quality level is too low');
+            $hasError = true;
+        }
+
+        if ($input->getOption('min-complexity') > $results->getComplexity()) {
+            $style->error('The Complexity level is too low');
+            $hasError = true;
+        }
+
+        if ($input->getOption('min-architecture') > $results->getStructure()) {
+            $style->error('The Architecture level is too low');
+            $hasError = true;
+        }
+
+        if ($input->getOption('min-style') > $results->getStructure()) {
+            $style->error('The Architecture level is too low');
+            $hasError = true;
+        }
+
+        return (int) $hasError;
     }
 
     /**
