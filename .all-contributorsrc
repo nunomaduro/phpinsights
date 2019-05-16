@@ -87,6 +87,15 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "sarahdayan",
+      "name": "Sarah Dayan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5370675?v=4",
+      "profile": "http://frontstuff.io",
+      "contributions": [
+        "question"
+      ]
     }
   ],
   "commitConvention": "none",
