@@ -56,7 +56,7 @@ final class InsightsCommand extends Command
         );
 
         $this->getDefinition()
-            ->getArgument('config-path')
+            ->getOption('config-path')
             ->setDefault('config/insights.php');
     }
 }
