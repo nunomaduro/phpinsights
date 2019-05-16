@@ -42,7 +42,6 @@ On Windows:
 .\vendor\bin\phpinsights.bat
 ```
 
-
 ### Within Laravel
 
 First, you should publish the config-file with:
@@ -72,27 +71,29 @@ On Windows:
 .\vendor\bin\phpinsights.bat
 ```
 
-### No framework - customize `Insights` 
+### No framework - customize `Insights`
 
 You may customize `insights` creating and editing the configuration file:
 ```bash
 cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 ```
 
-### Within Continuous Integration (CI)
+### Continuous Integration
 
-You can launch `phpinsights` in your CI by defining level you want to reach with options `--min-quality`, `--min-complexity`, `--min-architecture`, `--min-style`. 
-If the level is not reached, an exit status code will be thrown.
+You can run PHP Insights in your CI by defining level you want to reach with the options `--min-quality`, `--min-complexity`, `--min-architecture`, `--min-style`.
+
+If the minimum level defined is not reached, the console will return an exit error code.
 
 ```bash
-# For laravel
-php artisan insights --no-interaction --min-quality=75 --min-complexity=75 --min-architecture=75 --min-style=75 
-# otherwise
-./vendor/bin/phpinsights --no-interaction --min-quality=75 --min-complexity=75 --min-architecture=75 --min-style=75
+./vendor/bin/phpinsights --no-interaction --min-quality=80 --min-complexity=90 --min-architecture=75 --min-style=95
+
+# Within Laravel
+php artisan insights --no-interaction --min-quality=80 --min-complexity=90 --min-architecture=75 --min-style=95
 ```
 
-The `--no-interaction` option is mandatory when it's launch in CI to avoid prompts.
-All others are optionnal, so if you want focus only on style, add the `--min-style` and forget others.
+**Note**: The `--no-interaction` option is mandatory when it's launch in CI to avoid prompts.
+
+All others are optional, so if you want to focus only on style, add the `--min-style` and forget others.
 
 ### Display issues omitted
 
