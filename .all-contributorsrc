@@ -60,6 +60,15 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "olivernybroe",
+      "name": "Oliver Nybroe",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5870441?v=4",
+      "profile": "http://linkedin.com/in/olivernybroe",
+      "contributions": [
+        "question"
+      ]
     }
   ],
   "commitConvention": "none",
