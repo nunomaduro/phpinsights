@@ -12,8 +12,8 @@ env:
     - COMPOSER_FLAGS=""
 
 before_script:
-    - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
-    - composer run test
-    - php bin/phpinsights analyse --no-interaction -v || true
+  - composer run test
+  - php bin/phpinsights analyse -v --no-interaction --min-quality=85.9 --min-complexity=73.7 --min-architecture=77.3 --min-style=89.1
