@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.1.0]
+### Adds
+- Options `--min-quality`, `--min-complexity`, `--min-architecture`, `--min-style` ([#67](https://github.com/nunomaduro/phpinsights/pull/67))
+
+### Fixed
+- Issue when composer `require` key is empty ([#76](https://github.com/nunomaduro/phpinsights/pull/76))
+- Issues displaying scores above 10 ([#57](https://github.com/nunomaduro/phpinsights/pull/57))
+
 ## [v1.0.5]
 ### Fixed
 - [Laravel Preset] Ignores `ide_helper_models` ([#51](https://github.com/nunomaduro/phpinsights/pull/51))
