@@ -69,6 +69,15 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "AndreasHerss",
+      "name": "Andreas Herss",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6894019?v=4",
+      "profile": "https://geekweb.dk",
+      "contributions": [
+        "question"
+      ]
     }
   ],
   "commitConvention": "none",
