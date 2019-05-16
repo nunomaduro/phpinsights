@@ -88,6 +88,9 @@ final class AnalyseCommand
             $hasError = true;
         }
 
+        $style->newLine();
+        $style->writeln('✨ See something that needs to be improved? <bold>Create an issue</> or send us a <bold>pull request</>: <title>https://github.com/nunomaduro/phpinsights</title>');
+
         return (int) $hasError;
     }
 
