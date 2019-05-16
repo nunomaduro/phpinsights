@@ -40,8 +40,6 @@ final class InsightsCommand extends Command
 
         $output = (new Reflection($this->output))->get('output');
 
-        $analyseCommand->__invoke($this->input, $output);
-
-        return 0;
+        return $analyseCommand->__invoke($this->input, $output);
     }
 }
