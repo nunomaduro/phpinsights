@@ -114,6 +114,16 @@ If you encounter the error `Allowed memory size of XXXXX bytes exhausted`, the c
 php -d memory_limit=2000M ./vendor/bin/phpinsights
 ```
 
+### Avoid Composer conflicts
+
+If you have trouble while requiring `phpinsights` with composer, try install it with [bamarni/composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin) to isolate it from others dependencies:
+
+```bash
+composer require --dev bamarni/composer-bin-plugin
+composer bin phpinsights require nunomaduro/phpinsights
+./vendor/bin/phpinsights
+```
+
 ## 💡 How to contribute
 
 The project is under development. As such, any help is welcome!
