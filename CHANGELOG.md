@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.2.0]
+### Adds
+- Forces getting `1.2` using `composer require`
+
 ## [v1.1.1]
 ### Fixed
 - Lock `symplify` dependencies ([167292c](https://github.com/nunomaduro/phpinsights/commit/167292c172da52c48f3e434884893cdeeeec4db6))
