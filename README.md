@@ -29,7 +29,7 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 
 First, install PHP Insights via the Composer package manager:
 ```bash
-composer require nunomaduro/phpinsights:"^1.2" --dev
+composer require nunomaduro/phpinsights --dev
 ```
 
 Then, use the `phpinsights` binary:
