@@ -9,6 +9,7 @@ parameters:
         - config
         - src
         - stubs
+        - tests
 
     ignoreErrors:
         - '#Offset 1 does not exist on array.#'
