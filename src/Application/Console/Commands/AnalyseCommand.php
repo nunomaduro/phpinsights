@@ -69,22 +69,22 @@ final class AnalyseCommand
 
         $hasError = false;
         if ($input->getOption('min-quality') > $results->getCodeQuality()) {
-            $style->error('The Code quality level is too low');
+            $style->error('The code quality score is too low');
             $hasError = true;
         }
 
         if ($input->getOption('min-complexity') > $results->getComplexity()) {
-            $style->error('The Complexity level is too low');
+            $style->error('The complexity score is too low');
             $hasError = true;
         }
 
         if ($input->getOption('min-architecture') > $results->getStructure()) {
-            $style->error('The Architecture level is too low');
+            $style->error('The architecture score is too low');
             $hasError = true;
         }
 
-        if ($input->getOption('min-style') > $results->getStructure()) {
-            $style->error('The Architecture level is too low');
+        if ($input->getOption('min-style') > $results->getStyle()) {
+            $style->error('The style score is too low');
             $hasError = true;
         }
 
