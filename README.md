@@ -83,7 +83,7 @@ cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 
 You can also use `phpinsights` via Docker:
 ```bash
-docker run -it --rm -v /path/to/app:/app <dockerhub namespace/imagename>
+docker run -it --rm -v /path/to/app:/app nunomaduro/phpinsights
 ```
 
 ### Display issues omitted
