@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\WordPress;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 
 /**
  * @internal
@@ -29,6 +30,10 @@ final class Preset implements PresetContract
             'exclude' => [
                 'wp-admin',
                 'wp-includes',
+            ],
+            'remove' => [
+                TypeHintDeclarationSniff::class,
+                \WooCommerce::class,
             ],
             'config' => [
                 ForbiddenFunctionsSniff::class => [
