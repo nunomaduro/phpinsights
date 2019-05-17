@@ -72,11 +72,18 @@ On Windows:
 .\vendor\bin\phpinsights.bat
 ```
 
-### No framework - customize `Insights` 
+### No framework - customize `Insights`
 
 You may customize `insights` creating and editing the configuration file:
 ```bash
 cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
+```
+
+### With Docker
+
+You can also use `phpinsights` via Docker:
+```bash
+docker run -it --rm -v /path/to/app:/app <dockerhub namespace/imagename>
 ```
 
 ### Display issues omitted
