@@ -21,7 +21,7 @@ final class ForbiddenNormalClasses extends Insight implements HasDetails
      */
     public function getTitle(): string
     {
-        return (string) ($this->config['title'] ?? 'Normal classes are forbidden. Classes must be final or abstract');
+        return (string) $this->getConfigByKey('title', 'Normal classes are forbidden. Classes must be final or abstract');
     }
 
     /**

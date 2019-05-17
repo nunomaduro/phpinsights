@@ -30,4 +30,9 @@ abstract class Insight implements InsightContract
         $this->collector = $collector;
         $this->config = $config;
     }
+
+    protected function getConfigByKey($key, $defaultMsg = "Prohibited...")
+    {
+        return $this->config[$key] ?? $defaultMsg;
+    }
 }

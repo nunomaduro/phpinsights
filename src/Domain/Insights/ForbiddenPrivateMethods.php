@@ -19,6 +19,6 @@ final class ForbiddenPrivateMethods extends Insight
      */
     public function getTitle(): string
     {
-        return (string) ($this->config['title'] ?? 'The use of `private` methods is prohibited');
+        return (string) $this->getConfigByKey('title', 'The use of `private` methods is prohibited');
     }
 }
