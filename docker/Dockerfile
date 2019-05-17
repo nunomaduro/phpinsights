@@ -18,10 +18,9 @@ RUN apk add --no-cache --update git \
     --prefer-dist \
     \
     && echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini \
+    \
     && ln -sfv /phpinsights/bin/phpinsights /usr/bin/phpinsights
-
-VOLUME ["/app"]
 
 WORKDIR /app
 
-CMD ["phpinsights"]
+ENTRYPOINT ["phpinsights"]
