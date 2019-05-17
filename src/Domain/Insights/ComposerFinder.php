@@ -17,7 +17,7 @@ final class ComposerFinder
     public static function contents(Collector $collector): string
     {
         $filePath = $collector->getDir() . '/composer.json';
-        
+
         if (file_exists($filePath)) {
             return (string) file_get_contents($filePath);
         }
