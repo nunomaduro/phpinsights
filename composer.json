@@ -12,6 +12,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "ext-iconv": "*",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
