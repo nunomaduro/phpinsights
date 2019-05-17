@@ -16,8 +16,10 @@ final class ComposerFinder
      */
     public static function contents(Collector $collector): string
     {
-        if (file_exists($collector->getDir() . '/composer.json')) {
-            return (string) file_get_contents($collector->getDir() . '/composer.json');
+        $filePath = $collector->getDir() . '/composer.json';
+        
+        if (file_exists($filePath)) {
+            return (string) file_get_contents($filePath);
         }
 
         throw new ComposerNotFound('`composer.json` not found.');
