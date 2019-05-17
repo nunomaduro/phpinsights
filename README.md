@@ -78,6 +78,13 @@ You may customize `insights` creating and editing the configuration file:
 cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 ```
 
+### With Docker
+
+You can also use `phpinsights` via Docker:
+```bash
+docker run -it --rm -v /path/to/app:/app nunomaduro/phpinsights
+```
+
 ### Continuous Integration
 
 You can run PHP Insights in your CI by defining level you want to reach with the options `--min-quality`, `--min-complexity`, `--min-architecture`, `--min-style`.
@@ -94,6 +101,7 @@ php artisan insights --no-interaction --min-quality=80 --min-complexity=90 --min
 **Note**: The `--no-interaction` option is mandatory when it's launch in CI to avoid prompts.
 
 All others are optional, so if you want to focus only on style, add the `--min-style` and forget others.
+
 
 ### Display issues omitted
 
