@@ -51,9 +51,9 @@ final class AnalyseCommand
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      *
-     * @return void
+     * @return int
      */
-    public function __invoke(InputInterface $input, OutputInterface $output): void
+    public function __invoke(InputInterface $input, OutputInterface $output): int
     {
         $style = new Style($input, OutputDecorator::decorate($output));
 
@@ -65,7 +65,33 @@ final class AnalyseCommand
             }
         }
 
-        $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+        $results = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+
+        $hasError = false;
+        if ($input->getOption('min-quality') > $results->getCodeQuality()) {
+            $style->error('The code quality score is too low');
+            $hasError = true;
+        }
+
+        if ($input->getOption('min-complexity') > $results->getComplexity()) {
+            $style->error('The complexity score is too low');
+            $hasError = true;
+        }
+
+        if ($input->getOption('min-architecture') > $results->getStructure()) {
+            $style->error('The architecture score is too low');
+            $hasError = true;
+        }
+
+        if ($input->getOption('min-style') > $results->getStyle()) {
+            $style->error('The style score is too low');
+            $hasError = true;
+        }
+
+        $style->newLine();
+        $style->writeln('✨ See something that needs to be improved? <bold>Create an issue</> or send us a <bold>pull request</>: <title>https://github.com/nunomaduro/phpinsights</title>');
+
+        return (int) $hasError;
     }
 
     /**

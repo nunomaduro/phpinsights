@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
+use NunoMaduro\PhpInsights\Domain\Results;
 
 /**
  * @internal
@@ -34,9 +35,9 @@ final class Analyser
      * @param  array<string, array>  $config
      * @param  string  $dir
      *
-     * @return void
+     * @return  \NunoMaduro\PhpInsights\Domain\Results
      */
-    public function analyse(Style $style, array $config, string $dir): void
+    public function analyse(Style $style, array $config, string $dir): Results
     {
         $metrics = MetricsFinder::find();
 
@@ -51,5 +52,7 @@ final class Analyser
             ->misc($results);
 
         $style->issues($insightCollection, $metrics, $dir);
+
+        return $results;
     }
 }

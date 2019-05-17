@@ -42,7 +42,6 @@ On Windows:
 .\vendor\bin\phpinsights.bat
 ```
 
-
 ### Within Laravel
 
 First, you should publish the config-file with:
@@ -86,6 +85,24 @@ You can also use `phpinsights` via Docker:
 docker run -it --rm -v /path/to/app:/app nunomaduro/phpinsights
 ```
 
+### Continuous Integration
+
+You can run PHP Insights in your CI by defining level you want to reach with the options `--min-quality`, `--min-complexity`, `--min-architecture`, `--min-style`.
+
+If the minimum level defined is not reached, the console will return an exit error code.
+
+```bash
+./vendor/bin/phpinsights --no-interaction --min-quality=80 --min-complexity=90 --min-architecture=75 --min-style=95
+
+# Within Laravel
+php artisan insights --no-interaction --min-quality=80 --min-complexity=90 --min-architecture=75 --min-style=95
+```
+
+**Note**: The `--no-interaction` option is mandatory when it's launch in CI to avoid prompts.
+
+All others are optional, so if you want to focus only on style, add the `--min-style` and forget others.
+
+
 ### Display issues omitted
 
 PHP Insights console command have different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
@@ -103,6 +120,16 @@ On Windows:
 If you encounter the error `Allowed memory size of XXXXX bytes exhausted`, the current workaround is to increase the memory limit:
 ```
 php -d memory_limit=2000M ./vendor/bin/phpinsights
+```
+
+### Avoid Composer conflicts
+
+If you have trouble while requiring `phpinsights` with composer, try install it with [bamarni/composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin) to isolate it from others dependencies:
+
+```bash
+composer require --dev bamarni/composer-bin-plugin
+composer bin phpinsights require nunomaduro/phpinsights
+./vendor/bin/phpinsights
 ```
 
 ## 💡 How to contribute
@@ -247,7 +274,7 @@ Thank you to all the people who have already contributed to PHP Insights!
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-<table><tr><td align="center"><a href="https://nunomaduro.com"><img src="https://avatars2.githubusercontent.com/u/5457236?v=4" width="100px;" alt="Nuno Maduro"/><br /><sub><b>Nuno Maduro</b></sub></a><br /></td><td align="center"><a href="https://github.com/caneco"><img src="https://avatars0.githubusercontent.com/u/502041?v=4" width="100px;" alt="Caneco"/><br /><sub><b>Caneco</b></sub></a><br /></td><td align="center"><a href="https://seriquynh.com"><img src="https://avatars3.githubusercontent.com/u/16967350?v=4" width="100px;" alt="Quynh Xuan Nguyen"/><br /><sub><b>Quynh Xuan Nguyen</b></sub></a><br /></td><td align="center"><a href="https://github.com/mikeerickson"><img src="https://avatars1.githubusercontent.com/u/183153?v=4" width="100px;" alt="Mike Erickson"/><br /><sub><b>Mike Erickson</b></sub></a><br /></td><td align="center"><a href="https://github.com/szepeviktor/debian-server-tools/blob/master/CV.md"><img src="https://avatars3.githubusercontent.com/u/952007?v=4" width="100px;" alt="Viktor Szépe"/><br /><sub><b>Viktor Szépe</b></sub></a><br /></td><td align="center"><a href="https://pxgamer.xyz"><img src="https://avatars0.githubusercontent.com/u/1899334?v=4" width="100px;" alt="Owen Voke"/><br /><sub><b>Owen Voke</b></sub></a><br /></td></tr></table>
+<table><tr><td align="center"><a href="https://nunomaduro.com"><img src="https://avatars2.githubusercontent.com/u/5457236?v=4" width="100px;" alt="Nuno Maduro"/><br /><sub><b>Nuno Maduro</b></sub></a><br /></td><td align="center"><a href="https://github.com/caneco"><img src="https://avatars0.githubusercontent.com/u/502041?v=4" width="100px;" alt="Caneco"/><br /><sub><b>Caneco</b></sub></a><br /></td><td align="center"><a href="https://seriquynh.com"><img src="https://avatars3.githubusercontent.com/u/16967350?v=4" width="100px;" alt="Quynh Xuan Nguyen"/><br /><sub><b>Quynh Xuan Nguyen</b></sub></a><br /></td><td align="center"><a href="https://github.com/mikeerickson"><img src="https://avatars1.githubusercontent.com/u/183153?v=4" width="100px;" alt="Mike Erickson"/><br /><sub><b>Mike Erickson</b></sub></a><br /></td><td align="center"><a href="https://github.com/szepeviktor/debian-server-tools/blob/master/CV.md"><img src="https://avatars3.githubusercontent.com/u/952007?v=4" width="100px;" alt="Viktor Szépe"/><br /><sub><b>Viktor Szépe</b></sub></a><br /></td><td align="center"><a href="https://pxgamer.xyz"><img src="https://avatars0.githubusercontent.com/u/1899334?v=4" width="100px;" alt="Owen Voke"/><br /><sub><b>Owen Voke</b></sub></a><br /></td><td align="center"><a href="https://xn--jibbarth-d1a.fr/#"><img src="https://avatars3.githubusercontent.com/u/3168281?v=4" width="100px;" alt="Jibé Barth"/><br /><sub><b>Jibé Barth</b></sub></a><br /><a href="#question-Jibbarth" title="Answering Questions">💬</a></td></tr><tr><td align="center"><a href="http://linkedin.com/in/olivernybroe"><img src="https://avatars1.githubusercontent.com/u/5870441?v=4" width="100px;" alt="Oliver Nybroe"/><br /><sub><b>Oliver Nybroe</b></sub></a><br /><a href="#question-olivernybroe" title="Answering Questions">💬</a></td><td align="center"><a href="https://geekweb.dk"><img src="https://avatars1.githubusercontent.com/u/6894019?v=4" width="100px;" alt="Andreas Herss"/><br /><sub><b>Andreas Herss</b></sub></a><br /><a href="#question-AndreasHerss" title="Answering Questions">💬</a></td><td align="center"><a href="https://leocavalcante.dev"><img src="https://avatars3.githubusercontent.com/u/183722?v=4" width="100px;" alt="Leo Cavalcante"/><br /><sub><b>Leo Cavalcante</b></sub></a><br /><a href="#question-leocavalcante" title="Answering Questions">💬</a></td><td align="center"><a href="http://frontstuff.io"><img src="https://avatars1.githubusercontent.com/u/5370675?v=4" width="100px;" alt="Sarah Dayan"/><br /><sub><b>Sarah Dayan</b></sub></a><br /><a href="#question-sarahdayan" title="Answering Questions">💬</a></td></tr></table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

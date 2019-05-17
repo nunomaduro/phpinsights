@@ -1,0 +1,6 @@
+{
+    "name": "vendor/name",
+    "description": "Test without require",
+    "type": "project",
+    "require-dev": {}
+}

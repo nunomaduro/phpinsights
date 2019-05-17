@@ -7,32 +7,26 @@ namespace Tests\Application\Console;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use Tests\TestCase;
 
-/**
- * @covers \NunoMaduro\PhpInsights\Application\Console\Style
- */
 final class StyleTest extends TestCase
 {
-    /** @test */
-    public function stringHasCorrectLengthWhenOneDigitValue() : void
+    public function testStringHasCorrectLengthWhenOneDigitValue(): void
     {
-        $percentageString = $this->invokeStaticMethod(Style::class, 'getPercentageAsString', 1);
+        $percentageString = self::invokeStaticMethod(Style::class, 'getPercentageAsString', [1]);
 
-        $this->assertEquals(5, strlen($percentageString));
+        self::assertEquals(5, strlen($percentageString));
     }
 
-    /** @test */
-    public function stringHasCorrectLengthWhenTWODigitValue() : void
+    public function testStringHasCorrectLengthWhenTwoDigitValue(): void
     {
-        $percentageString = $this->invokeStaticMethod(Style::class, 'getPercentageAsString', 10);
+        $percentageString = self::invokeStaticMethod(Style::class, 'getPercentageAsString', [10]);
 
-        $this->assertEquals(5, strlen($percentageString));
+        self::assertEquals(5, strlen($percentageString));
     }
 
-    /** @test */
-    public function stringHasCorrectLengthWhenThreeDigitValue() : void
+    public function testStringHasCorrectLengthWhenThreeDigitValue(): void
     {
-        $percentageString = $this->invokeStaticMethod(Style::class, 'getPercentageAsString', 100);
+        $percentageString = self::invokeStaticMethod(Style::class, 'getPercentageAsString', [100]);
 
-        $this->assertEquals(5, strlen($percentageString));
+        self::assertEquals(5, strlen($percentageString));
     }
 }
