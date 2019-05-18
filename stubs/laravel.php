@@ -41,6 +41,10 @@ return [
     |
     */
 
+    'exclude' => [
+        //  'path/to/directory-or-file'
+    ],
+
     'add' => [
         Classes::class => [
             ForbiddenFinalClasses::class,
