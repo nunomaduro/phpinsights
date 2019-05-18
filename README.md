@@ -268,7 +268,7 @@ final class Preset implements PresetContract
 
 At the moment, this package doesn't have any test. Would you like to contribute? This is the perfect task.
 
-# 👏 Contributors
+## 👏 Contributors
 
 Thank you to all the people who have already contributed to PHP Insights!
 
@@ -278,7 +278,7 @@ Thank you to all the people who have already contributed to PHP Insights!
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Support the development
+## 💖 Support the development
 **Do you like this project? Support it by donating**
 
 - PayPal: [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L)
