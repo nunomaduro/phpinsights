@@ -31,7 +31,7 @@ return [
     */
     
     'exclude' => [
-        //  'DirectoryOrFileToExclude'
+        //  'path/to/directory-or-file'
     ],
 
     'add' => [
