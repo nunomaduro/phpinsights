@@ -29,6 +29,10 @@ return [
     | mind, that all added `Insights` must belong to a specific `Metric`.
     |
     */
+    
+    'exclude' => [
+        //  'DirectoryOrFileToExclude'
+    ],
 
     'add' => [
         //  ExampleMetric::class => [
