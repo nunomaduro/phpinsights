@@ -29,7 +29,7 @@ return [
     | mind, that all added `Insights` must belong to a specific `Metric`.
     |
     */
-    
+
     'exclude' => [
         //  'path/to/directory-or-file'
     ],
