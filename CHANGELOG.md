@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.2.1]
+### Fixed
+- Wrong insight `RequireShortTernaryOperatorSniff` ([7e10c18](https://github.com/nunomaduro/phpinsights/commit/7e10c186ed0923423e4650151644f12daa9875ed))
+- Missing dependency `ext-iconv` ([#90](https://github.com/nunomaduro/phpinsights/pull/90))
+
 ## [v1.2.0]
 ### Adds
 - Forces getting `1.2` using `composer require`
