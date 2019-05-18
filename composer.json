@@ -64,16 +64,19 @@
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/clean-code.yml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
+        "insights": "bin/phpinsights analyse -v --no-interaction --min-quality=85.7 --min-complexity=73.7 --min-architecture=77.3 --min-style=89.1",
         "test": [
             "@phpstan:test",
             "@ecs:test",
-            "@phpunit:test"
+            "@phpunit:test",
+            "@insights"
         ]
     },
     "scripts-descriptions": {
         "ecs:test": "Run the ecs tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
+        "insights": "Run the phpinsights tests",
         "test": "Run all tests including phpstan, phpunit and ecs."
     }
 }
