@@ -71,6 +71,23 @@ On Windows:
 .\vendor\bin\phpinsights.bat
 ```
 
+### Within Magento2
+
+First, you should create the config-file with:
+```bash
+cp vendor/nunomaduro/phpinsights/stubs/magento2.php phpinsights.php
+```
+
+Then, use the `phpinsights` binary:
+```bash
+./vendor/bin/phpinsights
+```
+
+On Windows:
+```cmd
+.\vendor\bin\phpinsights.bat
+```
+
 ### No framework - customize `Insights`
 
 You may customize `insights` creating and editing the configuration file:
