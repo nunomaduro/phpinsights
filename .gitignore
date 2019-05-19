@@ -1,4 +1,5 @@
 /vendor
+/docs/.vuepress/dist
 .idea/*
 .env
 .phpunit.result.cache
