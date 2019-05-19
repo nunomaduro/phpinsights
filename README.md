@@ -8,6 +8,9 @@
     <a href="https://packagist.org/packages/nunomaduro/phpinsights"><img src="https://poser.pugx.org/nunomaduro/phpinsights/v/stable.svg" alt="Latest Version"></a>
     <a href="https://packagist.org/packages/nunomaduro/phpinsights"><img src="https://poser.pugx.org/nunomaduro/phpinsights/license.svg" alt="License"></a>
   </p>
+  <p align="center">
+    <strong>For full documentation, visit <a href="https://phpinsights.com">phpinsights.com</a></strong>.
+  </p>
 </p>
 
 
@@ -20,9 +23,6 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 - Beautiful overview of code **architecture** and it's **complexity**
 - Designed to work out-of-the-box with **Laravel**, **Symfony**, and more
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
-- Friendly console interface build on top of [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer), [PHPLOC](https://github.com/sebastianbergmann/phploc), and [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard)
-
-For full documentation, visit [phpinsights.com](https://phpinsights.com).
 
 ## 👏 Contributors
 
