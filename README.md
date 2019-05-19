@@ -97,9 +97,9 @@ cp vendor/nunomaduro/phpinsights/stubs/config.php phpinsights.php
 
 ### With Docker
 
-You can also use `phpinsights` via Docker:
+You can also use `phpinsights` via Docker. For example, if you wish to use in the root of your application:
 ```bash
-docker run -it --rm -v /path/to/app:/app nunomaduro/phpinsights
+docker run -it --rm -v $(pwd):/app nunomaduro/phpinsights
 ```
 
 ### Continuous Integration
