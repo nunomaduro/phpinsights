@@ -32,7 +32,7 @@ php artisan insights
 
 You can also use `phpinsights` via Docker:
 ```bash
-docker run -it --rm -v /path/to/app:/app nunomaduro/phpinsights
+docker run -it --rm -v $(pwd):/app nunomaduro/phpinsights
 ```
 
 ## Allowed memory size of X bytes exhausted
