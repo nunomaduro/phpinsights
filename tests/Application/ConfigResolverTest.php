@@ -50,4 +50,10 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerYii');
         self::assertSame('yii', $preset);
     }
+
+    public function testGuessMagento2(): void
+    {
+        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerMagento2');
+        self::assertSame('magento2', $preset);
+    }
 }
