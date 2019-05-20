@@ -27,7 +27,7 @@ interface Preset
      * Determinates if the preset should be applied.
      *
      * @param  array<string, string|int|array>  $composer
-     * @param string  $directory
+     * @param  string  $directory
      *
      * @return bool
      */
