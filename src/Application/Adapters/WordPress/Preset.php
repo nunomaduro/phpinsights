@@ -34,7 +34,6 @@ final class Preset implements PresetContract
             ],
             'remove'  => [
                 TypeHintDeclarationSniff::class,
-                \WooCommerce::class,
             ],
             'config'  => [
                 ForbiddenFunctionsSniff::class => [
@@ -54,7 +53,7 @@ final class Preset implements PresetContract
         /** @var string[] $requirements */
         $requirements = $composer['require'] ?? [];
 
-        if ($requirements) {
+        if (count($requirements) > 0) {
             return self::composerDiscovery($requirements);
         }
 
