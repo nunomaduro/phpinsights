@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.3.0]
+### Added
+- Magento2 preset ([#102](https://github.com/nunomaduro/phpinsights/pull/102))
+
+### Fixed
+- Exit error code on security issues ([#106](https://github.com/nunomaduro/phpinsights/pull/106))
+
 ## [v1.2.1]
 ### Fixed
 - Wrong insight `RequireShortTernaryOperatorSniff` ([7e10c18](https://github.com/nunomaduro/phpinsights/commit/7e10c186ed0923423e4650151644f12daa9875ed))
