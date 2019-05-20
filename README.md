@@ -20,7 +20,7 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 ## ✨ Features
 
 - Analysis of **code quality** and **coding style**
-- Beautiful overview of code **architecture** and it's **complexity**
+- Beautiful overview of code **architecture** and its **complexity**
 - Designed to work out-of-the-box with **Laravel**, **Symfony**, and more
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 
