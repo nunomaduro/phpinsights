@@ -79,7 +79,6 @@ final class Preset implements PresetContract
     private static function composerDiscovery(array $requirements): bool
     {
         foreach (array_keys($requirements) as $requirement) {
-            $requirement = (string) $requirement;
 
             if (strpos($requirement, 'johnpbloch/wordpress') !== false) {
                 return true;
@@ -99,10 +98,9 @@ final class Preset implements PresetContract
         $finder = new Finder();
 
         $finder
-            ->in(ABSPATH)
+            ->in(getcwd())
             ->files()
-            ->name(['wp-config.php', 'wp-settings.php'])
-            ->notPath(['vendor', 'wp-admin', 'wp-includes']);
+            ->name('wp-load.php');
 
         return $finder->count() > 0;
     }
