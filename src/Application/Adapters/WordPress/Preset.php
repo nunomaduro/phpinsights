@@ -63,7 +63,7 @@ final class Preset implements PresetContract
     /**
      * Defining ways to discover WordPress through composer.
      *
-     * @param  array  $requirements  Composer requirements list.
+     * @param  string[]  $requirements  Composer requirements list.
      *
      * @return bool
      */
