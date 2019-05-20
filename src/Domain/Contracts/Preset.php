@@ -27,8 +27,9 @@ interface Preset
      * Determinates if the preset should be applied.
      *
      * @param  array<string, string|int|array>  $composer
+     * @param string  $directory
      *
      * @return bool
      */
-    public static function shouldBeApplied(array $composer): bool;
+    public static function shouldBeApplied(array $composer, string $directory): bool;
 }

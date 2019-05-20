@@ -55,7 +55,7 @@ final class Preset implements PresetContract
     /**
      * {@inheritDoc}
      */
-    public static function shouldBeApplied(array $composer): bool
+    public static function shouldBeApplied(array $composer, string $directory): bool
     {
         /** @var string[] $requirements */
         $requirements = $composer['require'] ?? [];

@@ -65,7 +65,7 @@ final class AnalyseCommand
             }
         }
 
-        $results = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+        $results = $this->analyser->analyse($style, $this->getConfig($input, $directory), (string) $directory);
 
         $hasError = false;
         if ($input->getOption('min-quality') > $results->getCodeQuality()) {

@@ -57,7 +57,7 @@ final class Preset implements PresetContract
     /**
      * {@inheritDoc}
      */
-    public static function shouldBeApplied(array $composer): bool
+    public static function shouldBeApplied(array $composer, string $directory): bool
     {
         /** @var array<string, string> $requirements */
         $requirements = $composer['require'] ?? [];
@@ -66,7 +66,7 @@ final class Preset implements PresetContract
             return self::composerDiscovery($requirements);
         }
 
-        return self::manualInstallationDiscovery();
+        return self::manualInstallationDiscovery($directory);
     }
 
     /**
@@ -91,14 +91,16 @@ final class Preset implements PresetContract
     /**
      * When manual installation is been use.
      *
+     * @param string  $directory
+     *
      * @return bool
      */
-    private static function manualInstallationDiscovery(): bool
+    private static function manualInstallationDiscovery(string $directory): bool
     {
         $finder = new Finder();
 
         $finder
-            ->in((string) getcwd())
+            ->in($directory)
             ->files()
             ->name('wp-load.php');
 
