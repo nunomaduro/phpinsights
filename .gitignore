@@ -1,5 +1,5 @@
-/node_modules
 /vendor
+/docs/.vuepress/dist
 .idea/*
 .env
 .phpunit.result.cache

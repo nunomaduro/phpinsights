@@ -13,11 +13,11 @@ return [
     | to make your code reliable, simple, and clean. However, you can always
     | adjust the `Metrics` and `Insights` below in this configuration file.
     |
-    | Supported: "default", "laravel", "symfony"
+    | Supported: "default", "laravel", "symfony", "magento2"
     |
     */
 
-    'preset' => 'default',
+    'preset' => 'magento2',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,6 +29,10 @@ return [
     | mind, that all added `Insights` must belong to a specific `Metric`.
     |
     */
+
+    'exclude' => [
+        //  'path/to/directory-or-file'
+    ],
 
     'add' => [
         //  ExampleMetric::class => [
