@@ -46,10 +46,7 @@ return [
     ],
 
     'remove' => [
-        AlphabeticallySortedUsesSniff::class,
-        DeclareStrictTypesSniff::class,
-        ForbiddenDefineFunctions::class,
-        TypeHintDeclarationSniff::class,
+        //  ExampleInsight::class,
     ],
 
     'config' => [

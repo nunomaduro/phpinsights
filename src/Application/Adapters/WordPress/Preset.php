@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Adapters\WordPress;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
+use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff;
 use Symfony\Component\Finder\Finder;
 
@@ -33,6 +36,9 @@ final class Preset implements PresetContract
                 'wp-includes',
             ],
             'remove'  => [
+                AlphabeticallySortedUsesSniff::class,
+                DeclareStrictTypesSniff::class,
+                ForbiddenDefineFunctions::class,
                 TypeHintDeclarationSniff::class,
             ],
             'config'  => [
