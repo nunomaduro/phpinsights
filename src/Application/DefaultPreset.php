@@ -51,7 +51,7 @@ final class DefaultPreset implements PresetContract
     /**
      * {@inheritDoc}
      */
-    public static function shouldBeApplied(array $composer): bool
+    public static function shouldBeApplied(array $composer, string $directory): bool
     {
         return true;
     }
