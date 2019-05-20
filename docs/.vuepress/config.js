@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'PHP Insigths',
+  title: 'PHP insights',
   description: 'The perfect starting point to analyze the code quality of your PHP projects',
   sidebar: true,
   themeConfig: {
