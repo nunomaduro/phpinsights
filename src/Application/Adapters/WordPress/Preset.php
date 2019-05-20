@@ -67,7 +67,7 @@ final class Preset implements PresetContract
      *
      * @return bool
      */
-    protected static function composerDiscovery(array $requirements): bool
+    private static function composerDiscovery(array $requirements): bool
     {
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
@@ -85,11 +85,12 @@ final class Preset implements PresetContract
      *
      * @return bool
      */
-    protected static function manualInstallationDiscovery(): bool
+    private static function manualInstallationDiscovery(): bool
     {
         $finder = new Finder();
 
         $finder
+            ->in(__DIR__)
             ->files()
             ->name(['wp-config.php', 'wp-settings.php'])
             ->notPath(['vendor', 'wp-admin', 'wp-includes']);
