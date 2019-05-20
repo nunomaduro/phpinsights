@@ -99,7 +99,7 @@ final class Preset implements PresetContract
         $finder = new Finder();
 
         $finder
-            ->in(__DIR__)
+            ->in(ABSPATH)
             ->files()
             ->name(['wp-config.php', 'wp-settings.php'])
             ->notPath(['vendor', 'wp-admin', 'wp-includes']);
