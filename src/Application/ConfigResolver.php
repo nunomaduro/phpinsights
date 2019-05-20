@@ -38,12 +38,12 @@ final class ConfigResolver
         $preset = $config['preset'] ?? self::guess($directory);
 
         foreach (self::$presets as $presetClass) {
-            if ($presetClass::getName() === $preset) {
+            if ($presetClass::getName() === $preset && is_array($config)) {
                 $config = array_replace_recursive($presetClass::get(), $config);
             }
         }
 
-        return $config;
+        return is_array($config) ? $config : [];
     }
 
     /**
