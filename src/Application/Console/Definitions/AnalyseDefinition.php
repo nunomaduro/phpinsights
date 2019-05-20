@@ -57,6 +57,12 @@ final class AnalyseDefinition
                 'Minimal Style level to reach without throw error',
                 0
             ),
+            new InputOption(
+                'disable-security-check',
+                null,
+                InputOption::VALUE_NONE,
+                'Disable Security issues check to not throw error if vulnerability is found'
+            )
         ];
     }
 }

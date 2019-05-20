@@ -88,7 +88,7 @@ final class AnalyseCommand
             $hasError = true;
         }
 
-        if ($results->getTotalSecurityIssues() > 0) {
+        if (! (bool) $input->getOption('disable-security-check') && $results->getTotalSecurityIssues() > 0) {
             $hasError = true;
         }
 
