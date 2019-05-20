@@ -17,7 +17,7 @@ final class Preset implements PresetContract
     /**
      * {@inheritDoc}
      */
-    public static function getName() : string
+    public static function getName(): string
     {
         return 'wordpress';
     }
@@ -25,7 +25,7 @@ final class Preset implements PresetContract
     /**
      * {@inheritDoc}
      */
-    public static function get() : array
+    public static function get(): array
     {
         return [
             'exclude' => [
@@ -49,17 +49,16 @@ final class Preset implements PresetContract
     /**
      * {@inheritDoc}
      */
-    public static function shouldBeApplied(array $composer) : bool
+    public static function shouldBeApplied(array $composer): bool
     {
         /** @var string[] $requirements */
         $requirements = $composer['require'] ?? [];
 
         if ($requirements) {
-            return self::composerDiscovery($requirements):
+            return self::composerDiscovery($requirements);
         }
 
-        return self::manualInstallationDiscovery():
-
+        return self::manualInstallationDiscovery();
     }
 
     /**
@@ -69,7 +68,7 @@ final class Preset implements PresetContract
      *
      * @return bool
      */
-    protected static function composerDiscovery(array $requirements) : bool
+    protected static function composerDiscovery(array $requirements): bool
     {
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
@@ -82,7 +81,12 @@ final class Preset implements PresetContract
         return false;
     }
 
-    protected static function manualInstallationDiscovery() : bool
+    /**
+     * When manual installation is been use.
+     *
+     * @return bool
+     */
+    protected static function manualInstallationDiscovery(): bool
     {
         $finder = new Finder();
 
