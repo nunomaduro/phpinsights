@@ -9,5 +9,9 @@ module.exports = {
       '/contribute',
       '/support'
     ]
+  },
+  algolia: {
+    apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
+    indexName: 'phpinsights'
   }
 }
