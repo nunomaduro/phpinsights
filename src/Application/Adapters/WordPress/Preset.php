@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\WordPress;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenUsingGlobals;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
@@ -34,12 +35,14 @@ final class Preset implements PresetContract
             'exclude' => [
                 'wp-admin',
                 'wp-includes',
+                'index.php',
             ],
             'remove'  => [
                 AlphabeticallySortedUsesSniff::class,
                 DeclareStrictTypesSniff::class,
                 ForbiddenDefineFunctions::class,
                 TypeHintDeclarationSniff::class,
+                ForbiddenUsingGlobals::class
             ],
             'config'  => [
                 ForbiddenFunctionsSniff::class => [
