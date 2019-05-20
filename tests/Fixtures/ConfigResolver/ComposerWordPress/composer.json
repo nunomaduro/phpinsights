@@ -1,0 +1,25 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6.0",
+        "johnpbloch/wordpress": "^5.2"
+    },
+    "extra": {
+        "installer-paths": {
+            "public/wp-content/mu-plugins/{$name}/": [
+                "type:wordpress-muplugin"
+            ],
+            "public/wp-content/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ],
+            "public/wp-content/themes/{$name}/": [
+                "type:wordpress-theme"
+            ],
+            "vendor/{$name}/": [
+                "type:tool"
+            ]
+        }
+    }
+}
