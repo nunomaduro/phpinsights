@@ -36,8 +36,7 @@ return [
     */
 
     'exclude' => [
-        'wp-admin',
-        'wp-includes'
+        // 'path/to/directory-or-file'
     ],
 
     'add' => [
