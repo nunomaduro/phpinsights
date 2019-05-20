@@ -34,6 +34,14 @@ composer require nunomaduro/phpinsights --dev
 - Designed to work out-of-the-box with **Laravel**, **Symfony**, **Yii**, **Magento**, and more
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 
+## 🛠 Contribute
+
+Contributions are welcome, and are accepted via pull requests. Please review these [guidelines](CONTRIBUTING.md) before submitting any pull requests.
+
+A quick way to browse, modify and run the source code is to open it in Gitpod (an online IDE):
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/nunomaduro/phpinsights)
+
 ## 💖 Support the development
 **Do you like this project? Support it by donating**
 
