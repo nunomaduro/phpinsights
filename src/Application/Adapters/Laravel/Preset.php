@@ -37,6 +37,7 @@ final class Preset implements PresetContract
                 'server.php',
                 '_ide_helper.php',
                 '_ide_helper_models.php',
+                'app/Providers/TelescopeServiceProvider.php',
                 'public',
             ],
             'add' => [
