@@ -98,7 +98,7 @@ final class Preset implements PresetContract
         $finder = new Finder();
 
         $finder
-            ->in(getcwd())
+            ->in((string) getcwd())
             ->files()
             ->name('wp-load.php');
 
