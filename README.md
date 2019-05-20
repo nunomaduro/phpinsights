@@ -21,7 +21,7 @@ Carefully crafted to simplify the analysis of your code directly from your termi
 
 - Analysis of **code quality** and **coding style**
 - Beautiful overview of code **architecture** and its **complexity**
-- Designed to work out-of-the-box with **Laravel**, **Symfony**, and more
+- Designed to work out-of-the-box with **Laravel**, **Symfony**, **Yii**, **Magento**, and more
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 
 ## 💖 Support the development
