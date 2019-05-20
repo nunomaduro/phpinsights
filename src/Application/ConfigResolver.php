@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Application;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\WordPress\Preset as WordPress;
+use NunoMaduro\PhpInsights\Application\Adapters\WordPress\Preset as WordPressPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 
 /**
@@ -23,7 +23,7 @@ final class ConfigResolver
         SymfonyPreset::class,
         YiiPreset::class,
         Magento2Preset::class,
-        WordPress::class,
+        WordPressPreset::class,
         DefaultPreset::class,
     ];
 
