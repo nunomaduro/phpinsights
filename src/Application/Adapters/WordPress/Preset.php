@@ -59,7 +59,7 @@ final class Preset implements PresetContract
      */
     public static function shouldBeApplied(array $composer): bool
     {
-        /** @var string[] $requirements */
+        /** @var array<string, string> $requirements */
         $requirements = $composer['require'] ?? [];
 
         if (count($requirements) > 0) {
@@ -72,7 +72,7 @@ final class Preset implements PresetContract
     /**
      * Defining ways to discover WordPress through composer.
      *
-     * @param  string[]  $requirements  Composer requirements list.
+     * @param  array<string, string>  $requirements  Composer requirements list.
      *
      * @return bool
      */
