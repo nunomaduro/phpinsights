@@ -13,7 +13,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Call protected/private method of a class.
      *
-     * @param string            $class Instantiated object that we will run method on
+     * @param string            $class      Instantiated object that we will run method on
      * @param string            $methodName Method name to call
      * @param array<int, mixed> $parameters Array of parameters to pass into method
      *

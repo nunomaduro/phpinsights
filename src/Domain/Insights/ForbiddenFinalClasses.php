@@ -13,7 +13,7 @@ final class ForbiddenFinalClasses extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (bool)count($this->collector->getConcreteFinalClasses());
+        return (bool) count($this->collector->getConcreteFinalClasses());
     }
 
     /**
@@ -24,7 +24,7 @@ final class ForbiddenFinalClasses extends Insight implements HasDetails
         return array_key_exists(
             'title',
             $this->config
-        ) ? (string)$this->config['title'] : 'The use of `final` classes is prohibited';
+        ) ? (string) $this->config['title'] : 'The use of `final` classes is prohibited';
     }
 
     /**

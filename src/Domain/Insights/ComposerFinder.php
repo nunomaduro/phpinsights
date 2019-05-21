@@ -19,7 +19,7 @@ final class ComposerFinder
         $filePath = $collector->getDir().'/composer.json';
 
         if (file_exists($filePath)) {
-            return (string)file_get_contents($filePath);
+            return (string) file_get_contents($filePath);
         }
 
         throw new ComposerNotFound('`composer.json` not found.');

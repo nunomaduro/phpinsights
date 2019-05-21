@@ -37,7 +37,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function getDefaultDirectory(): string
     {
-        return (string)getcwd();
+        return (string) getcwd();
     }
 
     /**

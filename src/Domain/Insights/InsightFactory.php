@@ -80,12 +80,14 @@ final class InsightFactory
                         $errorClass
                     )
                 );
+
                 break;
 
             default:
                 throw new RuntimeException(
                     sprintf('Insight `%s` is not instantiable.', $errorClass)
                 );
+                
                 break;
         }
     }

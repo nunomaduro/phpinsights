@@ -11,7 +11,7 @@ final class ForbiddenPrivateMethods extends Insight
      */
     public function hasIssue(): bool
     {
-        return (bool)$this->collector->getPrivateMethods() > 0;
+        return (bool) $this->collector->getPrivateMethods() > 0;
     }
 
     /**
@@ -19,6 +19,6 @@ final class ForbiddenPrivateMethods extends Insight
      */
     public function getTitle(): string
     {
-        return (string)($this->config['title'] ?? 'The use of `private` methods is prohibited');
+        return (string) ($this->config['title'] ?? 'The use of `private` methods is prohibited');
     }
 }

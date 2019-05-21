@@ -13,7 +13,7 @@ final class ForbiddenDefineFunctions extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (bool)count($this->collector->getNamedFunctions());
+        return (bool) count($this->collector->getNamedFunctions());
     }
 
     /**

@@ -11,7 +11,7 @@ final class ForbiddenUsingGlobals extends Insight
      */
     public function hasIssue(): bool
     {
-        return (bool)$this->collector->getGlobalAccesses();
+        return (bool) $this->collector->getGlobalAccesses();
     }
 
     /**

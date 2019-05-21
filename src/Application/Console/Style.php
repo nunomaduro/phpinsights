@@ -33,7 +33,7 @@ final class Style extends SymfonyStyle
     /**
      * Style constructor.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function __construct(InputInterface $input, OutputInterface $output)
@@ -79,7 +79,7 @@ EOD;
         $this->newLine(2);
 
         $this->writeln(
-            "Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100"
+            'Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100'
         );
 
         return $this;
@@ -98,7 +98,7 @@ EOD;
         $this->newLine();
         $this->writeln(
             sprintf(
-                "[CODE] %s within <title>%s</> lines",
+                '[CODE] %s within <title>%s</> lines',
                 "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
                 (new Code\Code())->getValue($insightCollection->getCollector())
             )
@@ -118,7 +118,7 @@ EOD;
         }
 
         foreach ($lines as $name => $percentage) {
-            $percentage = number_format((float)$percentage, 1, '.', '');
+            $percentage = number_format((float) $percentage, 1, '.', '');
 
             $takenSize = strlen($name.$percentage);
 
@@ -150,7 +150,7 @@ EOD;
 
         $this->writeln(
             sprintf(
-                "[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity",
+                '[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity',
                 "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
                 (new Complexity\Complexity())->getAvg(
                     $insightCollection->getCollector()
@@ -175,7 +175,7 @@ EOD;
 
         $this->writeln(
             sprintf(
-                "[ARCHITECTURE] %s within <title>%s</> files",
+                '[ARCHITECTURE] %s within <title>%s</> files',
                 "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
                 (new Architecture\Files())->getValue(
                     $insightCollection->getCollector()
@@ -198,7 +198,7 @@ EOD;
         }
 
         foreach ($lines as $name => $percentage) {
-            $percentage = number_format((float)$percentage, 1, '.', '');
+            $percentage = number_format((float) $percentage, 1, '.', '');
 
             $takenSize = strlen($name.$percentage);
 
@@ -229,7 +229,7 @@ EOD;
 
         $this->writeln(
             sprintf(
-                "[MISC] %s on coding style and %s encountered",
+                '[MISC] %s on coding style and %s encountered',
                 "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>",
                 "<fg={$totalSecurityIssuesColor};options=bold>{$results->getTotalSecurityIssues()} security issues</>"
             )

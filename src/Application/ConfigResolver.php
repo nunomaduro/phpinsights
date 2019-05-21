@@ -63,11 +63,12 @@ final class ConfigResolver
             return $preset;
         }
 
-        $composer = json_decode((string)file_get_contents($composerPath), true);
+        $composer = json_decode((string) file_get_contents($composerPath), true);
 
         foreach (self::$presets as $presetClass) {
             if ($presetClass::shouldBeApplied($composer)) {
                 $preset = $presetClass::getName();
+
                 break;
             }
         }

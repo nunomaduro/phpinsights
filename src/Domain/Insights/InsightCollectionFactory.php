@@ -73,7 +73,6 @@ final class InsightCollectionFactory
 
         $collector = $this->analyser->analyse($dir, $files);
         /** @var \Symfony\Component\DependencyInjection\Container $container */
-
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {
             $insightsClasses = array_merge(
@@ -99,7 +98,6 @@ final class InsightCollectionFactory
                         Insight::class,
                         class_implements($insightClass)
                     )) {
-
                         return $insightFactory->makeFrom(
                             $insightClass,
                             $config

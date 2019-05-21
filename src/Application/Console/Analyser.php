@@ -36,7 +36,7 @@ final class Analyser
      * @param array<string, array>                              $config
      * @param string                                            $dir
      *
-     * @return  \NunoMaduro\PhpInsights\Domain\Results
+     * @return \NunoMaduro\PhpInsights\Domain\Results
      */
     public function analyse(Style $style, array $config, string $dir): Results
     {

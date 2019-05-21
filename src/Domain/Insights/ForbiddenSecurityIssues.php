@@ -21,7 +21,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (bool)count($this->getDetails());
+        return (bool) count($this->getDetails());
     }
 
     /**
@@ -37,7 +37,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $issues = json_decode((string)$this->getResult(), true);
+        $issues = json_decode((string) $this->getResult(), true);
 
         if ($issues === null) {
             return [];

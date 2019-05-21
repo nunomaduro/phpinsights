@@ -182,7 +182,6 @@ final class Collector
      */
     private $staticMethodCalls = 0;
 
-
     /**
      * @var string
      */
@@ -350,7 +349,7 @@ final class Collector
     }
 
     /**
-     * @param int $line
+     * @param int    $line
      * @param string $name
      *
      * @return void
@@ -536,7 +535,7 @@ final class Collector
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function incrementTraits(): void
     {
@@ -611,7 +610,7 @@ final class Collector
      */
     public function getClassLines(): int
     {
-        return (int)$this->getSum($this->classLines);
+        return (int) $this->getSum($this->classLines);
     }
 
     /**
@@ -927,7 +926,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return (bool)count($array) ? max($array) : 0;
+        return (bool) count($array) ? max($array) : 0;
     }
 
     /**
@@ -946,7 +945,7 @@ final class Collector
      */
     public function getMaximumClassLength(): int
     {
-        return (int)$this->getMaximum($this->classLines);
+        return (int) $this->getMaximum($this->classLines);
     }
 
     /**
@@ -954,7 +953,7 @@ final class Collector
      */
     public function getAverageMethodLength(): int
     {
-        return (int)$this->getAverage($this->methodLines);
+        return (int) $this->getAverage($this->methodLines);
     }
 
     /**
@@ -962,7 +961,7 @@ final class Collector
      */
     public function getMaximumMethodLength(): int
     {
-        return (int)$this->getMaximum($this->methodLines);
+        return (int) $this->getMaximum($this->methodLines);
     }
 
     /**
@@ -970,7 +969,7 @@ final class Collector
      */
     public function getAverageFunctionLength(): int
     {
-        return (int)$this->divide(
+        return (int) $this->divide(
             $this->getFunctionLines(),
             $this->getFunctions()
         );
@@ -1002,7 +1001,7 @@ final class Collector
     }
 
     /**
-     * Return
+     * Return.
      *
      * @return array<string, float>
      */
@@ -1016,7 +1015,7 @@ final class Collector
      */
     public function getMaximumClassComplexity(): int
     {
-        return (int)$this->getMaximum($this->getClassComplexity());
+        return (int) $this->getMaximum($this->getClassComplexity());
     }
 
     /**

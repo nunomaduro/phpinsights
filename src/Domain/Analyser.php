@@ -47,7 +47,7 @@ final class Analyser
      */
     public function analyse(string $dir, array $files): Collector
     {
-        $dir = (string)realpath($dir);
+        $dir = (string) realpath($dir);
 
         $collector = new Collector($dir);
 
@@ -68,7 +68,7 @@ final class Analyser
      */
     private function analyseFile(Collector $collector, string $filename): void
     {
-        $buffer = (string)\file_get_contents($filename);
+        $buffer = (string) \file_get_contents($filename);
         $tokens = \token_get_all($buffer);
         $numTokens = \count($tokens);
 
@@ -174,7 +174,7 @@ final class Analyser
                     $collector->currentClassReset();
                     $collector->currentClassIncrementComplexity();
                     $className = $this->getClassName(
-                        (string)$namespace,
+                        (string) $namespace,
                         $tokens,
                         $i
                     );
@@ -377,7 +377,7 @@ final class Analyser
                     $n = $this->getNextNonWhitespaceTokenPos($tokens, $i);
                     $nn = $this->getNextNonWhitespaceTokenPos($tokens, $n);
 
-                    if ((bool)$n && (bool)$nn &&
+                    if ((bool) $n && (bool) $nn &&
                         isset($tokens[$n][0]) &&
                         ($tokens[$n][0] === \T_STRING ||
                             $tokens[$n][0] === \T_VARIABLE) &&

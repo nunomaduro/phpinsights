@@ -98,7 +98,7 @@ final class AnalyseCommand
             $hasError = true;
         }
 
-        if (!(bool)$input->getOption(
+        if (!(bool) $input->getOption(
                 'disable-security-check'
             ) && $results->getTotalSecurityIssues() > 0) {
             $hasError = true;
@@ -109,7 +109,7 @@ final class AnalyseCommand
             '✨ See something that needs to be improved? <bold>Create an issue</> or send us a <bold>pull request</>: <title>https://github.com/nunomaduro/phpinsights</title>'
         );
 
-        return (int)$hasError;
+        return (int) $hasError;
     }
 
     /**

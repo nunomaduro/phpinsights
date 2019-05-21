@@ -35,7 +35,7 @@ final class Sniff implements Insight, HasDetails
     private $errors;
 
     /**
-     * Creates a new instance of Sniff Insight
+     * Creates a new instance of Sniff Insight.
      *
      * @param \Symplify\EasyCodingStandard\Error\Error[] $errors
      */
@@ -64,14 +64,14 @@ final class Sniff implements Insight, HasDetails
         }
 
         $path = explode('\\', $sniffClass);
-        $name = (string)array_pop($path);
+        $name = (string) array_pop($path);
 
         $name = str_replace('Sniff', '', $name);
 
         return ucfirst(
             trim(
                 mb_strtolower(
-                    (string)preg_replace('/(?<!\ )[A-Z]/', ' $0', $name)
+                    (string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name)
                 )
             )
         );
