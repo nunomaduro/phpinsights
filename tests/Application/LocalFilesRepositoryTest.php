@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use Symfony\Component\Finder\Finder;
 use Tests\TestCase;
 
-class LocalFilesRepositoryTest extends TestCase
+/**
+ * @covers \NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository
+ */
+final class LocalFilesRepositoryTest extends TestCase
 {
     protected $base = __DIR__ . '/../Fixtures/Tree';
 
@@ -16,7 +21,7 @@ class LocalFilesRepositoryTest extends TestCase
      * @param int $expected
      * @param array $exclude
      */
-    public function it_excludes_files_with_a_path($expected, $exclude)
+    public function itExcludesFilesGivenAPath(int $expected, array $exclude): void
     {
         $repository = new LocalFilesRepository(Finder::create());
 
