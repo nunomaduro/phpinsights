@@ -30,7 +30,7 @@ final class Preset implements PresetContract
                 'core',
                 'modules/contrib',
                 'sites',
-                'profiles',
+                'profiles/contrib',
                 'themes/contrib',
             ],
             'config' => [
