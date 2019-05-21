@@ -14,7 +14,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 final class Preset implements PresetContract
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getName(): string
     {
@@ -22,7 +22,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function get(): array
     {
@@ -61,7 +61,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function shouldBeApplied(array $composer): bool
     {

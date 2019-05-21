@@ -37,8 +37,8 @@ final class FileProcessor implements FileProcessorInterface
     /**
      * FileProcessor constructor.
      *
-     * @param  \PHP_CodeSniffer\Fixer  $fixer
-     * @param  \NunoMaduro\PhpInsights\Domain\FileFactory  $fileFactory
+     * @param \PHP_CodeSniffer\Fixer                     $fixer
+     * @param \NunoMaduro\PhpInsights\Domain\FileFactory $fileFactory
      */
     public function __construct(Fixer $fixer, FileFactory $fileFactory)
     {
@@ -47,7 +47,7 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @param  \PHP_CodeSniffer\Sniffs\Sniff  $sniff
+     * @param \PHP_CodeSniffer\Sniffs\Sniff $sniff
      *
      * @return void
      */
@@ -69,14 +69,17 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @param  \Symplify\PackageBuilder\FileSystem\SmartFileInfo  $smartFileInfo
+     * @param \Symplify\PackageBuilder\FileSystem\SmartFileInfo $smartFileInfo
      *
      * @return string
      */
     public function processFile(SmartFileInfo $smartFileInfo): string
     {
         $file = $this->fileFactory->createFromFileInfo($smartFileInfo);
-        $file->processWithTokenListenersAndFileInfo($this->tokenListeners, $smartFileInfo);
+        $file->processWithTokenListenersAndFileInfo(
+            $this->tokenListeners,
+            $smartFileInfo
+        );
 
         return $this->fixer->getContents();
     }

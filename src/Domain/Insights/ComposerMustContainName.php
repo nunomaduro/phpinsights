@@ -22,12 +22,18 @@ final class ComposerMustContainName extends Insight
     public function hasIssue(): bool
     {
         try {
-            $contents = json_decode(ComposerFinder::contents($this->collector), true);
+            $contents = json_decode(
+                ComposerFinder::contents($this->collector),
+                true
+            );
         } catch (ComposerNotFound $e) {
             return true;
         }
 
-        return array_key_exists('name', $contents) && array_key_exists($contents['name'], array_flip($this->defaults));
+        return array_key_exists('name', $contents) && array_key_exists(
+                $contents['name'],
+                array_flip($this->defaults)
+            );
     }
 
     /**

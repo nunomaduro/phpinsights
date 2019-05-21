@@ -37,7 +37,7 @@ final class Sniff implements Insight, HasDetails
     /**
      * Creates a new instance of Sniff Insight
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error[]  $errors
+     * @param \Symplify\EasyCodingStandard\Error\Error[] $errors
      */
     public function __construct(array $errors)
     {
@@ -45,7 +45,7 @@ final class Sniff implements Insight, HasDetails
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasIssue(): bool
     {
@@ -53,7 +53,7 @@ final class Sniff implements Insight, HasDetails
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTitle(): string
     {
@@ -64,20 +64,30 @@ final class Sniff implements Insight, HasDetails
         }
 
         $path = explode('\\', $sniffClass);
-        $name = (string) array_pop($path);
+        $name = (string)array_pop($path);
 
         $name = str_replace('Sniff', '', $name);
 
-        return ucfirst(trim(mb_strtolower((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
+        return ucfirst(
+            trim(
+                mb_strtolower(
+                    (string)preg_replace('/(?<!\ )[A-Z]/', ' $0', $name)
+                )
+            )
+        );
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDetails(): array
     {
-        return array_map(static function (Error $error) {
-            return $error->getFileInfo()->getRealPath() . ':' . $error->getLine() . ': ' . $error->getMessage();
-        }, $this->errors);
+        return array_map(
+            static function (Error $error) {
+                return $error->getFileInfo()->getRealPath().':'.$error->getLine(
+                    ).': '.$error->getMessage();
+            },
+            $this->errors
+        );
     }
 }

@@ -47,8 +47,7 @@ final class FileFactory
         Skipper $skipper,
         AppliedCheckersCollector $appliedCheckersCollector,
         EasyCodingStandardStyle $easyCodingStandardStyle
-    )
-    {
+    ) {
         $this->fixer = $fixer;
         $this->errorAndDiffCollector = $errorAndDiffCollector;
         $this->skipper = $skipper;
@@ -57,7 +56,7 @@ final class FileFactory
     }
 
     /**
-     * @param  \Symplify\PackageBuilder\FileSystem\SmartFileInfo  $smartFileInfo
+     * @param \Symplify\PackageBuilder\FileSystem\SmartFileInfo $smartFileInfo
      *
      * @return \NunoMaduro\PhpInsights\Domain\File
      */

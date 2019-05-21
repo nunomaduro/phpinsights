@@ -18,7 +18,9 @@ final class ConfigResolverTest extends TestCase
     {
         parent::setUp();
 
-        $this->baseFixturePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'ConfigResolver' . DIRECTORY_SEPARATOR;
+        $this->baseFixturePath = dirname(
+                __DIR__
+            ).DIRECTORY_SEPARATOR.'Fixtures'.DIRECTORY_SEPARATOR.'ConfigResolver'.DIRECTORY_SEPARATOR;
     }
 
     public function testGuessDirectoryWithoutComposer(): void
@@ -29,31 +31,39 @@ final class ConfigResolverTest extends TestCase
 
     public function testGuessComposerWithoutRequire(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerWithoutRequire');
+        $preset = ConfigResolver::guess(
+            $this->baseFixturePath.'ComposerWithoutRequire'
+        );
         self::assertSame('default', $preset);
     }
 
     public function testGuessSymfony(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerSymfony');
+        $preset = ConfigResolver::guess(
+            $this->baseFixturePath.'ComposerSymfony'
+        );
         self::assertSame('symfony', $preset);
     }
 
     public function testGuessLaravel(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerLaravel');
+        $preset = ConfigResolver::guess(
+            $this->baseFixturePath.'ComposerLaravel'
+        );
         self::assertSame('laravel', $preset);
     }
 
     public function testGuessYii(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerYii');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerYii');
         self::assertSame('yii', $preset);
     }
 
     public function testGuessMagento2(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerMagento2');
+        $preset = ConfigResolver::guess(
+            $this->baseFixturePath.'ComposerMagento2'
+        );
         self::assertSame('magento2', $preset);
     }
 }

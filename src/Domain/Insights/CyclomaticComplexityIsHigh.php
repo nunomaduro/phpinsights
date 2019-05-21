@@ -27,7 +27,9 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
      */
     public function getTitle(): string
     {
-        return sprintf('Having `classes` with more than 5 cyclomatic complexity is prohibited - Consider refactoring');
+        return sprintf(
+            'Having `classes` with more than 5 cyclomatic complexity is prohibited - Consider refactoring'
+        );
     }
 
     /**
@@ -35,18 +37,28 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $classesComplexity = array_filter($this->collector->getClassComplexity(), static function ($complexity) {
-            return $complexity > 5;
-        });
+        $classesComplexity = array_filter(
+            $this->collector->getClassComplexity(),
+            static function ($complexity) {
+                return $complexity > 5;
+            }
+        );
 
-        uasort($classesComplexity, static function ($a, $b) {
-            return $b - $a;
-        });
+        uasort(
+            $classesComplexity,
+            static function ($a, $b) {
+                return $b - $a;
+            }
+        );
 
         $classesComplexity = array_reverse($classesComplexity);
 
-        return array_map(static function ($class, $complexity) {
-            return "$class: $complexity cyclomatic complexity";
-        }, array_keys($classesComplexity), $classesComplexity);
+        return array_map(
+            static function ($class, $complexity) {
+                return "$class: $complexity cyclomatic complexity";
+            },
+            array_keys($classesComplexity),
+            $classesComplexity
+        );
     }
 }

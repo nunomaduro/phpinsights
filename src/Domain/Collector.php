@@ -216,7 +216,7 @@ final class Collector
     /**
      * Creates a new instance of the Collector.
      *
-     * @param  string  $dir
+     * @param string $dir
      */
     public function __construct(string $dir)
     {
@@ -224,13 +224,13 @@ final class Collector
     }
 
     /**
-     * @param  string  $filename
+     * @param string $filename
      *
      * @return void
      */
     public function addFile(string $filename): void
     {
-        $filename = str_replace($this->dir . '/', '', $filename);
+        $filename = str_replace($this->dir.'/', '', $filename);
 
         $this->files[$filename] = $filename;
         $this->directories[] = \dirname($filename);
@@ -239,7 +239,7 @@ final class Collector
     }
 
     /**
-     * @param  int  $number
+     * @param int $number
      *
      * @return void
      */
@@ -313,14 +313,14 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
     public function currentMethodStop(string $name): void
     {
         $this->methodComplexity[] = $this->currentMethodComplexity;
-        $this->methodLines[$this->currentFilename . ':' . $name] = $this->currentMethodLines;
+        $this->methodLines[$this->currentFilename.':'.$name] = $this->currentMethodLines;
     }
 
     /**
@@ -340,7 +340,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -350,14 +350,14 @@ final class Collector
     }
 
     /**
-     * @param  int  $line
-     * @param  string  $name
+     * @param int $line
+     * @param string $name
      *
      * @return void
      */
     public function addGlobalFunctions(int $line, string $name): void
     {
-        $this->globalFunctions[$this->currentFilename . ':' . $line] = $name;
+        $this->globalFunctions[$this->currentFilename.':'.$line] = $name;
     }
 
     /**
@@ -409,7 +409,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $namespace
+     * @param string $namespace
      */
     public function addNamespace(string $namespace): void
     {
@@ -426,7 +426,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -436,7 +436,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -446,7 +446,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -496,13 +496,13 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
     public function addNamedFunctions(string $name): void
     {
-        if (! array_key_exists($this->currentFilename, $this->namedFunctions)) {
+        if (!array_key_exists($this->currentFilename, $this->namedFunctions)) {
             $this->namedFunctions[$this->currentFilename] = [];
         }
 
@@ -526,7 +526,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -611,7 +611,7 @@ final class Collector
      */
     public function getClassLines(): int
     {
-        return (int) $this->getSum($this->classLines);
+        return (int)$this->getSum($this->classLines);
     }
 
     /**
@@ -887,7 +887,7 @@ final class Collector
     }
 
     /**
-     * @param  array<float>  $array
+     * @param array<float> $array
      *
      * @return float
      */
@@ -897,7 +897,7 @@ final class Collector
     }
 
     /**
-     * @param  array<string, float|int>  $array
+     * @param array<string, float|int> $array
      *
      * @return int
      */
@@ -909,7 +909,7 @@ final class Collector
     /**
      * Returns the sum value from the given array.
      *
-     * @param  array<string, float|int>  $array
+     * @param array<string, float|int> $array
      *
      * @return int|float
      */
@@ -921,18 +921,18 @@ final class Collector
     /**
      * Returns the maximum value from the given array.
      *
-     * @param  array<string, float|int>  $array
+     * @param array<string, float|int> $array
      *
      * @return int|float
      */
     private function getMaximum(array $array)
     {
-        return (bool) count($array) ? max($array) : 0;
+        return (bool)count($array) ? max($array) : 0;
     }
 
     /**
-     * @param  float  $x
-     * @param  float  $y
+     * @param float $x
+     * @param float $y
      *
      * @return float
      */
@@ -946,7 +946,7 @@ final class Collector
      */
     public function getMaximumClassLength(): int
     {
-        return (int) $this->getMaximum($this->classLines);
+        return (int)$this->getMaximum($this->classLines);
     }
 
     /**
@@ -954,7 +954,7 @@ final class Collector
      */
     public function getAverageMethodLength(): int
     {
-        return (int) $this->getAverage($this->methodLines);
+        return (int)$this->getAverage($this->methodLines);
     }
 
     /**
@@ -962,7 +962,7 @@ final class Collector
      */
     public function getMaximumMethodLength(): int
     {
-        return (int) $this->getMaximum($this->methodLines);
+        return (int)$this->getMaximum($this->methodLines);
     }
 
     /**
@@ -970,7 +970,10 @@ final class Collector
      */
     public function getAverageFunctionLength(): int
     {
-        return (int) $this->divide($this->getFunctionLines(), $this->getFunctions());
+        return (int)$this->divide(
+            $this->getFunctionLines(),
+            $this->getFunctions()
+        );
     }
 
     /**
@@ -978,7 +981,8 @@ final class Collector
      */
     public function getNotInClassesOrFunctions(): int
     {
-        return $this->getLogicalLines() - $this->getClassLines() - $this->getFunctionLines();
+        return $this->getLogicalLines() - $this->getClassLines(
+            ) - $this->getFunctionLines();
     }
 
     /**
@@ -1012,7 +1016,7 @@ final class Collector
      */
     public function getMaximumClassComplexity(): int
     {
-        return (int) $this->getMaximum($this->getClassComplexity());
+        return (int)$this->getMaximum($this->getClassComplexity());
     }
 
     /**
@@ -1036,7 +1040,9 @@ final class Collector
      */
     public function getGlobalAccesses(): int
     {
-        return $this->getGlobalConstantAccesses() + $this->getGlobalVariableAccesses() + $this->getSuperGlobalVariableAccesses();
+        return $this->getGlobalConstantAccesses(
+            ) + $this->getGlobalVariableAccesses(
+            ) + $this->getSuperGlobalVariableAccesses();
     }
 
     /**
@@ -1044,7 +1050,12 @@ final class Collector
      */
     public function getGlobalConstantAccesses(): int
     {
-        return count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
+        return count(
+            \array_intersect(
+                $this->possibleConstantAccesses,
+                $this->globalConstants
+            )
+        );
     }
 
     /**
@@ -1052,7 +1063,8 @@ final class Collector
      */
     public function getAttributeAccesses(): int
     {
-        return $this->getNonStaticAttributeAccesses() + $this->getStaticAttributeAccesses();
+        return $this->getNonStaticAttributeAccesses(
+            ) + $this->getStaticAttributeAccesses();
     }
 
     /**
@@ -1068,7 +1080,9 @@ final class Collector
      */
     public function getClasses(): int
     {
-        return count($this->getAbstractClasses()) + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
+        return count($this->getAbstractClasses()) + count(
+                $this->getConcreteNonFinalClasses()
+            ) + count($this->getConcreteFinalClasses());
     }
 
     /**
@@ -1084,7 +1098,8 @@ final class Collector
      */
     public function getFunctions(): int
     {
-        return count($this->getNamedFunctions()) + $this->getAnonymousFunctions();
+        return count($this->getNamedFunctions()) + $this->getAnonymousFunctions(
+            );
     }
 
     /**

@@ -16,7 +16,7 @@ final class Files implements HasValue, HasInsights
      */
     public function getValue(Collector $collector): string
     {
-        return (string) count($collector->getFiles());
+        return (string)count($collector->getFiles());
     }
 
     /**

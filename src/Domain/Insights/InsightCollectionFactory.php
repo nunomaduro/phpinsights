@@ -7,7 +7,8 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -29,30 +30,45 @@ final class InsightCollectionFactory
     /**
      * Creates a new instance of InsightCollection Factory.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  \NunoMaduro\PhpInsights\Domain\Analyser  $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param \NunoMaduro\PhpInsights\Domain\Analyser                               $analyser
      */
-    public function __construct(FilesRepository $filesRepository, Analyser $analyser)
-    {
+    public function __construct(
+        FilesRepository $filesRepository,
+        Analyser $analyser
+    ) {
         $this->filesRepository = $filesRepository;
         $this->analyser = $analyser;
     }
 
     /**
-     * @param  string[]  $metrics
-     * @param  array<string, array<string, string>>  $config
-     * @param  string  $dir
+     * @param string[]                             $metrics
+     * @param array<string, array<string, string>> $config
+     * @param string                               $dir
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
-    public function get(array $metrics, array $config, string $dir): InsightCollection
-    {
+    public function get(
+        array $metrics,
+        array $config,
+        string $dir
+    ): InsightCollection {
         try {
-            $files = array_map(static function (SplFileInfo $file) {
-                return $file->getRealPath();
-            }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
+            $files = array_map(
+                static function (SplFileInfo $file) {
+                    return $file->getRealPath();
+                },
+                iterator_to_array(
+                    $this->filesRepository->within(
+                        $dir,
+                        $config['exclude'] ?? []
+                    )->getFiles()
+                )
+            );
         } catch (InvalidArgumentException $exception) {
-            throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
+            throw new DirectoryNotFound(
+                $exception->getMessage(), 0, $exception
+            );
         }
 
         $collector = $this->analyser->analyse($dir, $files);
@@ -60,23 +76,43 @@ final class InsightCollectionFactory
 
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {
-            $insightsClasses = array_merge($insightsClasses, $this->getInsights($metricClass, $config));
+            $insightsClasses = array_merge(
+                $insightsClasses,
+                $this->getInsights($metricClass, $config)
+            );
         }
 
-        $insightFactory = new InsightFactory($this->filesRepository, $dir, $insightsClasses);
+        $insightFactory = new InsightFactory(
+            $this->filesRepository,
+            $dir,
+            $insightsClasses
+        );
         $insightsForCollection = [];
         foreach ($metrics as $metricClass) {
-            $insightsForCollection[$metricClass] = array_map(static function (string $insightClass) use ($insightFactory, $collector, $config) {
-                if (! array_key_exists(Insight::class, class_implements($insightClass))) {
+            $insightsForCollection[$metricClass] = array_map(
+                static function (string $insightClass) use (
+                    $insightFactory,
+                    $collector,
+                    $config
+                ) {
+                    if (!array_key_exists(
+                        Insight::class,
+                        class_implements($insightClass)
+                    )) {
 
-                    return $insightFactory->makeFrom(
-                        $insightClass,
-                        $config
+                        return $insightFactory->makeFrom(
+                            $insightClass,
+                            $config
+                        );
+                    }
+
+                    return new $insightClass(
+                        $collector,
+                        $config['config'][$insightClass] ?? []
                     );
-                }
-
-                return new $insightClass($collector, $config['config'][$insightClass] ?? []);
-            }, $this->getInsights($metricClass, $config));
+                },
+                $this->getInsights($metricClass, $config)
+            );
         }
 
         return new InsightCollection($collector, $insightsForCollection);
@@ -85,8 +121,8 @@ final class InsightCollectionFactory
     /**
      * Returns the `Insights` from the given metric class.
      *
-     * @param  string  $metricClass
-     * @param  array<string, array<string, string|array>>  $config
+     * @param string                                     $metricClass
+     * @param array<string, array<string, string|array>> $config
      *
      * @return string[]
      */
@@ -94,11 +130,16 @@ final class InsightCollectionFactory
     {
         $metric = new $metricClass();
 
-        $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
+        $insights = array_key_exists(
+            HasInsights::class,
+            class_implements($metricClass)
+        ) ? $metric->getInsights() : [];
 
         $toAdd = array_key_exists('add', $config) &&
         array_key_exists($metricClass, $config['add']) &&
-        is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
+        is_array(
+            $config['add'][$metricClass]
+        ) ? $config['add'][$metricClass] : [];
 
         $insights = array_merge($insights, $toAdd);
 

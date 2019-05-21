@@ -43,14 +43,17 @@ final class InsightFactory
     private $sniffCollector;
 
     /**
-     * Creates a new instance of Insight Factory
+     * Creates a new instance of Insight Factory.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  string  $dir
-     * @param  string[]  $insightsClasses
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param string                                                                $dir
+     * @param string[]                                                              $insightsClasses
      */
-    public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
-    {
+    public function __construct(
+        FilesRepository $filesRepository,
+        string $dir,
+        array $insightsClasses
+    ) {
         $this->filesRepository = $filesRepository;
         $this->dir = $dir;
         $this->insightsClasses = $insightsClasses;
@@ -59,20 +62,30 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param  string  $errorClass
-     * @param  array<string, array>  $config
+     * @param string               $errorClass
+     * @param array<string, array> $config
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
     public function makeFrom(string $errorClass, array $config): Sniff
     {
         switch (true) {
-            case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                return new Sniff($this->getSniffErrors($this->getSniffCollector($config), $errorClass));
+            case array_key_exists(
+                SniffContract::class,
+                class_implements($errorClass)
+            ):
+                return new Sniff(
+                    $this->getSniffErrors(
+                        $this->getSniffCollector($config),
+                        $errorClass
+                    )
+                );
                 break;
 
             default:
-                throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
+                throw new RuntimeException(
+                    sprintf('Insight `%s` is not instantiable.', $errorClass)
+                );
                 break;
         }
     }
@@ -80,8 +93,8 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param  string[]  $insights
-     * @param  array<string, array>  $config
+     * @param string[]             $insights
+     * @param array<string, array> $config
      *
      * @return \PHP_CodeSniffer\Sniffs\Sniff[]
      */
@@ -90,7 +103,10 @@ final class InsightFactory
         $sniffs = [];
 
         foreach ($insights as $insight) {
-            if (array_key_exists(SniffContract::class, class_implements($insight))) {
+            if (array_key_exists(
+                SniffContract::class,
+                class_implements($insight)
+            )) {
                 /** @var \PHP_CodeSniffer\Sniffs\Sniff $sniff */
                 $sniff = new $insight();
 
@@ -108,20 +124,22 @@ final class InsightFactory
     /**
      * Returns the Error with of the given $sniff, if any.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $collector
-     * @param  string  $sniff
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $collector
+     * @param string                                                   $sniff
      *
      * @return \Symplify\EasyCodingStandard\Error\Error[]
      */
-    private function getSniffErrors(ErrorAndDiffCollector $collector, string $sniff): array
-    {
+    private function getSniffErrors(
+        ErrorAndDiffCollector $collector,
+        string $sniff
+    ): array {
         $errors = [];
 
         foreach ($collector->getErrors() as $errorsPerFile) {
             foreach ($errorsPerFile as $error) {
                 if (strpos($error->getSourceClass(), $sniff) !== false) {
                     $key = $this->getSniffKey($error);
-                    if (! array_key_exists($key, $errors)) {
+                    if (!array_key_exists($key, $errors)) {
                         $errors[$key] = $error;
                     }
                 }
@@ -134,13 +152,14 @@ final class InsightFactory
     /**
      * Gets a key from a Error.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error  $error
+     * @param \Symplify\EasyCodingStandard\Error\Error $error
      *
      * @return string
      */
     private function getSniffKey(Error $error): string
     {
-        return sprintf('%s||%s||%s||%s',
+        return sprintf(
+            '%s||%s||%s||%s',
             $error->getFileInfo()->getRealPath(),
             $error->getSourceClass(),
             $error->getLine(),
@@ -149,7 +168,7 @@ final class InsightFactory
     }
 
     /**
-     * @param  array<string, array>  $config
+     * @param array<string, array> $config
      *
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
      */
@@ -191,7 +210,9 @@ final class InsightFactory
         $application->run();
 
         /** @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $errorAndDiffCollector */
-        $errorAndDiffCollector = $ecsContainer->get(ErrorAndDiffCollector::class);
+        $errorAndDiffCollector = $ecsContainer->get(
+            ErrorAndDiffCollector::class
+        );
 
         return $this->sniffCollector = $errorAndDiffCollector;
     }

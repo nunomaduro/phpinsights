@@ -14,7 +14,7 @@ interface HasPercentage extends Metric
     /**
      * Returns the percentage of the metric.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
+     * @param \NunoMaduro\PhpInsights\Domain\Collector $collector
      *
      * @return float
      */

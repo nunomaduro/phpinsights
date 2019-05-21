@@ -21,19 +21,20 @@ final class Analyser
     /**
      * Analyser constructor.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory  $insightCollectionFactory
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory $insightCollectionFactory
      */
-    public function __construct(InsightCollectionFactory $insightCollectionFactory)
-    {
+    public function __construct(
+        InsightCollectionFactory $insightCollectionFactory
+    ) {
         $this->insightCollectionFactory = $insightCollectionFactory;
     }
 
     /**
      * Analyse the given dirs.
      *
-     * @param  \NunoMaduro\PhpInsights\Application\Console\Style  $style
-     * @param  array<string, array>  $config
-     * @param  string  $dir
+     * @param \NunoMaduro\PhpInsights\Application\Console\Style $style
+     * @param array<string, array>                              $config
+     * @param string                                            $dir
      *
      * @return  \NunoMaduro\PhpInsights\Domain\Results
      */
@@ -41,7 +42,11 @@ final class Analyser
     {
         $metrics = MetricsFinder::find();
 
-        $insightCollection = $this->insightCollectionFactory->get($metrics, $config, $dir);
+        $insightCollection = $this->insightCollectionFactory->get(
+            $metrics,
+            $config,
+            $dir
+        );
 
         $results = $insightCollection->results();
 

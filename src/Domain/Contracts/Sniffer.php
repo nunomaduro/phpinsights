@@ -22,8 +22,8 @@ interface Sniffer
     /**
      * Collects the given error.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array<string, string>  $error
+     * @param \NunoMaduro\PhpInsights\Domain\Collector $collector
+     * @param array<string, string>                    $error
      */
     public function collect(Collector $collector, array $error): void;
 }

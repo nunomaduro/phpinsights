@@ -71,13 +71,13 @@ final class File extends BaseFile
     /**
      * File constructor.
      *
-     * @param  string  $path
-     * @param  string  $content
-     * @param  \PHP_CodeSniffer\Fixer  $fixer
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $errorAndDiffCollector
-     * @param  \Symplify\EasyCodingStandard\Skipper  $skipper
-     * @param  \Symplify\EasyCodingStandard\Application\AppliedCheckersCollector  $appliedCheckersCollector
-     * @param  \Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle  $easyCodingStandardStyle
+     * @param string                                                             $path
+     * @param string                                                             $content
+     * @param \PHP_CodeSniffer\Fixer                                             $fixer
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector           $errorAndDiffCollector
+     * @param \Symplify\EasyCodingStandard\Skipper                               $skipper
+     * @param \Symplify\EasyCodingStandard\Application\AppliedCheckersCollector  $appliedCheckersCollector
+     * @param \Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle $easyCodingStandardStyle
      */
     public function __construct(
         string $path,
@@ -87,8 +87,7 @@ final class File extends BaseFile
         Skipper $skipper,
         AppliedCheckersCollector $appliedCheckersCollector,
         EasyCodingStandardStyle $easyCodingStandardStyle
-    )
-    {
+    ) {
         $this->path = $path;
         $this->content = $content;
         $this->fixer = $fixer;
@@ -119,7 +118,10 @@ final class File extends BaseFile
             }
 
             foreach ($this->tokenListeners[$token['code']] as $sniff) {
-                if ($this->skipper->shouldSkipCheckerAndFile($sniff, $this->fileInfo)) {
+                if ($this->skipper->shouldSkipCheckerAndFile(
+                    $sniff,
+                    $this->fileInfo
+                )) {
                     continue;
                 }
 
@@ -151,8 +153,13 @@ final class File extends BaseFile
     /**
      * {@inheritdoc}
      */
-    public function addFixableError($error, $stackPtr, $code, $data = [], $severity = 0): bool
-    {
+    public function addFixableError(
+        $error,
+        $stackPtr,
+        $code,
+        $data = [],
+        $severity = 0
+    ): bool {
         $this->appliedCheckersCollector->addFileInfoAndChecker(
             $this->fileInfo,
             $this->resolveFullyQualifiedCode($code)
@@ -162,10 +169,12 @@ final class File extends BaseFile
     }
 
     /**
-     * @param  Sniff[][]  $tokenListeners
+     * @param Sniff[][] $tokenListeners
      */
-    public function processWithTokenListenersAndFileInfo(array $tokenListeners, SmartFileInfo $fileInfo): void
-    {
+    public function processWithTokenListenersAndFileInfo(
+        array $tokenListeners,
+        SmartFileInfo $fileInfo
+    ): void {
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
         $this->process();
@@ -183,8 +192,7 @@ final class File extends BaseFile
         $data,
         $severity,
         $isFixable = false
-    ): bool
-    {
+    ): bool {
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
         $this->errorAndDiffCollector->addErrorMessage(
@@ -198,14 +206,14 @@ final class File extends BaseFile
     }
 
     /**
-     * @param  Sniff  $sniff
+     * @param Sniff $sniff
      */
     private function reportActiveSniffClass(Sniff $sniff): void
     {
         // used in other places later
         $this->activeSniffClass = get_class($sniff);
 
-        if (! $this->easyCodingStandardStyle->isDebug()) {
+        if (!$this->easyCodingStandardStyle->isDebug()) {
             return;
         }
 
@@ -218,7 +226,7 @@ final class File extends BaseFile
     }
 
     /**
-     * @param  string  $sniffClassOrCode
+     * @param string $sniffClassOrCode
      *
      * @return string
      */
@@ -228,6 +236,6 @@ final class File extends BaseFile
             return $sniffClassOrCode;
         }
 
-        return $this->activeSniffClass . '.' . $sniffClassOrCode;
+        return $this->activeSniffClass.'.'.$sniffClassOrCode;
     }
 }

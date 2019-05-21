@@ -16,14 +16,20 @@ final class ComposerCheckLaravelVersion extends Insight
     public function hasIssue(): bool
     {
         try {
-            $composer = json_decode(ComposerFinder::contents($this->collector), true);
+            $composer = json_decode(
+                ComposerFinder::contents($this->collector),
+                true
+            );
         } catch (ComposerNotFound $exception) {
             return true;
         }
 
         return array_key_exists('require', $composer)
             && array_key_exists('laravel/framework', $composer['require'])
-            && strpos($composer['require']['laravel/framework'], '5.8.*') === false;
+            && strpos(
+                $composer['require']['laravel/framework'],
+                '5.8.*'
+            ) === false;
     }
 
     /**

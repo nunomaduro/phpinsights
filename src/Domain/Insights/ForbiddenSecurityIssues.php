@@ -21,7 +21,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     public function hasIssue(): bool
     {
-        return (bool) count($this->getDetails());
+        return (bool)count($this->getDetails());
     }
 
     /**
@@ -37,7 +37,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $issues = json_decode((string) $this->getResult(), true);
+        $issues = json_decode((string)$this->getResult(), true);
 
         if ($issues === null) {
             return [];
@@ -63,9 +63,12 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
             $checker = new SecurityChecker();
 
             try {
-                self::$result = $checker->check(sprintf(
-                    '%s/composer.lock', $this->collector->getDir()
-                ));
+                self::$result = $checker->check(
+                    sprintf(
+                        '%s/composer.lock',
+                        $this->collector->getDir()
+                    )
+                );
             } catch (\Throwable $e) {
                 throw new InternetConnectionNotFound(
                     'PHP Insights needs an internet connection to inspect security issues.',

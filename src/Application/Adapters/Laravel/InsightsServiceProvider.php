@@ -14,26 +14,34 @@ use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
 final class InsightsServiceProvider extends ServiceProvider
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function register(): void
     {
-        foreach ($this->app->make(Repositories::class)->__invoke() as $abstract => $concrete) {
+        foreach ($this->app->make(Repositories::class)->__invoke(
+        ) as $abstract => $concrete) {
             $this->app->bind($abstract, $concrete);
         }
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function boot(): void
     {
-        $this->publishes([
-            __DIR__ . '/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),
-        ], 'config');
+        $this->publishes(
+            [
+                __DIR__.'/../../../../stubs/laravel.php' => $this->app->configPath(
+                    'insights.php'
+                ),
+            ],
+            'config'
+        );
 
-        $this->commands([
-            InsightsCommand::class,
-        ]);
+        $this->commands(
+            [
+                InsightsCommand::class,
+            ]
+        );
     }
 }

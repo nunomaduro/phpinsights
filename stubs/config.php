@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Preset
@@ -34,7 +33,6 @@ return [
         //  'path/to/directory-or-file'
     ],
 
-
     'add' => [
         //  ExampleMetric::class => [
         //      ExampleInsight::class,
@@ -50,5 +48,4 @@ return [
         //      'key' => 'value',
         //  ],
     ],
-
 ];
