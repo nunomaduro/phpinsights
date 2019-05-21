@@ -157,7 +157,7 @@ final class AnalyseCommand
                 '~\A[A-Z]:(?![^/\\\\])~i',
                 $directory
             ) === 0) {
-            $directory = (string)getcwd().DIRECTORY_SEPARATOR.$directory;
+            $directory = (string) getcwd().DIRECTORY_SEPARATOR.$directory;
         }
 
         return $directory;

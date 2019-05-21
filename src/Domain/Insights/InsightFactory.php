@@ -87,7 +87,7 @@ final class InsightFactory
                 throw new RuntimeException(
                     sprintf('Insight `%s` is not instantiable.', $errorClass)
                 );
-                
+
                 break;
         }
     }
