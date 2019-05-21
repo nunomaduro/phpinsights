@@ -27,10 +27,11 @@ final class Preset implements PresetContract
     {
         return [
             'exclude' => [
-                'var',
-                'translations',
-                'config',
-                'public',
+                'core',
+                'modules/contrib',
+                'sites',
+                'profiles',
+                'themes/contrib',
             ],
             'config' => [
                 ForbiddenFunctionsSniff::class => [
