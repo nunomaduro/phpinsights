@@ -938,6 +938,8 @@ final class Collector
      */
     private function divide(float $x, float $y): float
     {
+        if($x==$y==0)
+            return 100;
         return $y != 0 ? $x / $y : 0;
     }
 
