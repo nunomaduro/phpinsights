@@ -32,7 +32,6 @@ final class Namespaces implements HasValue, HasInsights
             NamespaceDeclarationSniff::class,
             UselessAliasSniff::class,
             CompoundNamespaceDepthSniff::class,
-            NamespaceDeclarationSniff::class,
         ];
     }
 }
