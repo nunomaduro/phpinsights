@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use Symfony\Component\DependencyInjection\Container;
+use Symplify\EasyCodingStandard\HttpKernel\EasyCodingStandardKernel;
+use Symplify\PackageBuilder\Console\Input\InputDetector;
 
 /**
  * @internal
@@ -22,13 +24,10 @@ final class EcsContainer
     public static function make(): Container
     {
         if (self::$container === null) {
-            if (file_exists(__DIR__ . '/../../vendor/symplify/easy-coding-standard/bin/container.php')) {
-                $containerPath = __DIR__ . '/../../vendor/symplify/easy-coding-standard/bin/container.php';
-            } else {
-                $containerPath = __DIR__ . '/../../../../symplify/easy-coding-standard/bin/container.php';
-            }
+            $easyCodingStandardKernel = new EasyCodingStandardKernel('phpinsights', InputDetector::isDebug());
+            $easyCodingStandardKernel->boot();
 
-            self::$container = require $containerPath;
+            self::$container = $easyCodingStandardKernel->getContainer();
         }
 
         return self::$container;
