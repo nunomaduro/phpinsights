@@ -43,7 +43,7 @@ final class ConfigResolver
             }
         }
 
-        return is_array($config) ? $config : [];
+        return $config;
     }
 
     /**
