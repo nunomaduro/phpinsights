@@ -57,9 +57,9 @@ final class ConfigResolverTest extends TestCase
         self::assertSame('magento2', $preset);
     }
 
-    public function testGuessDrupal8(): void
+    public function testGuessDrupal(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerDrupal8');
-        self::assertSame('drupal8', $preset);
+        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerDrupal');
+        self::assertSame('drupal', $preset);
     }
 }

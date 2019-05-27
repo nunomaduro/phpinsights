@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application;
 
-use NunoMaduro\PhpInsights\Application\Adapters\Drupal8\Preset as Drupal8Preset;
+use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
@@ -19,7 +19,7 @@ final class ConfigResolver
      * @var string[]
      */
     private static $presets = [
-        Drupal8Preset::class,
+        DrupalPreset::class,
         LaravelPreset::class,
         SymfonyPreset::class,
         YiiPreset::class,

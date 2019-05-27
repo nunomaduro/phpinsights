@@ -13,11 +13,11 @@ return [
     | to make your code reliable, simple, and clean. However, you can always
     | adjust the `Metrics` and `Insights` below in this configuration file.
     |
-    | Supported: "default", "laravel", "symfony", "magento2", "drupal8"
+    | Supported: "default", "laravel", "symfony", "magento2", "drupal"
     |
     */
 
-    'preset' => 'drupal8',
+    'preset' => 'drupal',
 
     /*
     |--------------------------------------------------------------------------

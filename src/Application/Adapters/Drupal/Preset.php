@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Application\Adapters\Drupal8;
+namespace NunoMaduro\PhpInsights\Application\Adapters\Drupal;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
@@ -17,7 +17,7 @@ final class Preset implements PresetContract
      */
     public static function getName(): string
     {
-        return 'drupal8';
+        return 'drupal';
     }
 
     /**
