@@ -2,5 +2,7 @@
 /docs/.vuepress/dist
 .idea/*
 .env
+.php_cs.cache
+.php_cs.dist
 .phpunit.result.cache
 composer.lock
