@@ -274,6 +274,7 @@ EOD;
 
                 if (!$insight instanceof HasDetails) {
                     $this->writeln($issue);
+
                     continue;
                 }
                 $issue .= ':';
