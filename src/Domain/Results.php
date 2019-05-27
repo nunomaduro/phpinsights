@@ -122,7 +122,7 @@ final class Results
 
         foreach ($insights as $insight) {
             if (!$insight->hasIssue()) {
-                $issuesNotFound++;
+                ++$issuesNotFound;
             }
         }
 

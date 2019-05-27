@@ -224,8 +224,6 @@ final class Collector
 
     /**
      * @param string $filename
-     *
-     * @return void
      */
     public function addFile(string $filename): void
     {
@@ -239,25 +237,17 @@ final class Collector
 
     /**
      * @param int $number
-     *
-     * @return void
      */
     public function incrementCommentLines(int $number): void
     {
         $this->commentLines += $number;
     }
 
-    /**
-     * @return void
-     */
     public function incrementLogicalLines(): void
     {
-        $this->logicalLines++;
+        ++$this->logicalLines;
     }
 
-    /**
-     * @return void
-     */
     public function currentClassReset(): void
     {
         if ($this->currentClassComplexity > 0) {
@@ -269,52 +259,35 @@ final class Collector
         $this->currentClassLines = 0;
     }
 
-    /**
-     * @return void
-     */
     public function currentClassIncrementComplexity(): void
     {
-        $this->currentClassComplexity++;
+        ++$this->currentClassComplexity;
     }
 
-    /**
-     * @return void
-     */
     public function currentClassIncrementLines(): void
     {
-        $this->currentClassLines++;
+        ++$this->currentClassLines;
     }
 
-    /**
-     * @return void
-     */
     public function currentMethodStart(): void
     {
         $this->currentMethodComplexity = 1;
         $this->currentMethodLines = 0;
     }
 
-    /**
-     * @return void
-     */
     public function currentMethodIncrementComplexity(): void
     {
-        $this->currentMethodComplexity++;
-        $this->totalMethodComplexity++;
+        ++$this->currentMethodComplexity;
+        ++$this->totalMethodComplexity;
     }
 
-    /**
-     * @return void
-     */
     public function currentMethodIncrementLines(): void
     {
-        $this->currentMethodLines++;
+        ++$this->currentMethodLines;
     }
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function currentMethodStop(string $name): void
     {
@@ -322,26 +295,18 @@ final class Collector
         $this->methodLines[$this->currentFilename.':'.$name] = $this->currentMethodLines;
     }
 
-    /**
-     * @return void
-     */
     public function incrementFunctionLines(): void
     {
-        $this->functionLines++;
+        ++$this->functionLines;
     }
 
-    /**
-     * @return void
-     */
     public function incrementComplexity(): void
     {
-        $this->complexity++;
+        ++$this->complexity;
     }
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function addPossibleConstantAccesses(string $name): void
     {
@@ -351,60 +316,40 @@ final class Collector
     /**
      * @param int    $line
      * @param string $name
-     *
-     * @return void
      */
     public function addGlobalFunctions(int $line, string $name): void
     {
         $this->globalFunctions[$this->currentFilename.':'.$line] = $name;
     }
 
-    /**
-     * @return void
-     */
     public function incrementGlobalVariableAccesses(): void
     {
-        $this->globalVariableAccesses++;
+        ++$this->globalVariableAccesses;
     }
 
-    /**
-     * @return void
-     */
     public function incrementSuperGlobalVariableAccesses(): void
     {
-        $this->superGlobalVariableAccesses++;
+        ++$this->superGlobalVariableAccesses;
     }
 
-    /**
-     * @return void
-     */
     public function incrementNonStaticAttributeAccesses(): void
     {
-        $this->nonStaticAttributeAccesses++;
+        ++$this->nonStaticAttributeAccesses;
     }
 
-    /**
-     * @return void
-     */
     public function incrementStaticAttributeAccesses(): void
     {
-        $this->staticAttributeAccesses++;
+        ++$this->staticAttributeAccesses;
     }
 
-    /**
-     * @return void
-     */
     public function incrementNonStaticMethodCalls(): void
     {
-        $this->nonStaticMethodCalls++;
+        ++$this->nonStaticMethodCalls;
     }
 
-    /**
-     * @return void
-     */
     public function incrementStaticMethodCalls(): void
     {
-        $this->staticMethodCalls++;
+        ++$this->staticMethodCalls;
     }
 
     /**
@@ -416,18 +361,13 @@ final class Collector
         $this->namespaces = array_flip(array_flip($this->namespaces));
     }
 
-    /**
-     * @return void
-     */
     public function incrementInterfaces(): void
     {
-        $this->interfaces++;
+        ++$this->interfaces;
     }
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function addAbstractClass(string $name): void
     {
@@ -436,8 +376,6 @@ final class Collector
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function addConcreteFinalClass(string $name): void
     {
@@ -446,58 +384,39 @@ final class Collector
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function addConcreteNonFinalClass(string $name): void
     {
         $this->concreteNonFinalClasses[] = $name;
     }
 
-    /**
-     * @return void
-     */
     public function incrementNonStaticMethods(): void
     {
-        $this->nonStaticMethods++;
+        ++$this->nonStaticMethods;
     }
 
-    /**
-     * @return void
-     */
     public function incrementStaticMethods(): void
     {
-        $this->staticMethods++;
+        ++$this->staticMethods;
     }
 
-    /**
-     * @return void
-     */
     public function incrementPublicMethods(): void
     {
-        $this->publicMethods++;
+        ++$this->publicMethods;
     }
 
-    /**
-     * @return void
-     */
     public function incrementProtectedMethods(): void
     {
-        $this->protectedMethods++;
+        ++$this->protectedMethods;
     }
 
-    /**
-     * @return void
-     */
     public function incrementPrivateMethods(): void
     {
-        $this->privateMethods++;
+        ++$this->privateMethods;
     }
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function addNamedFunctions(string $name): void
     {
@@ -508,38 +427,27 @@ final class Collector
         $this->namedFunctions[$this->currentFilename][] = $name;
     }
 
-    /**
-     * @return void
-     */
     public function incrementAnonymousFunctions(): void
     {
-        $this->anonymousFunctions++;
+        ++$this->anonymousFunctions;
     }
 
-    /**
-     * @return void
-     */
     public function incrementClassConstants(): void
     {
-        $this->classConstants++;
+        ++$this->classConstants;
     }
 
     /**
      * @param string $name
-     *
-     * @return void
      */
     public function addGlobalConstant(string $name): void
     {
         $this->globalConstants[$this->currentFilename] = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function incrementTraits(): void
     {
-        if ($this->currentFilename !== null) {
+        if (null !== $this->currentFilename) {
             $this->traits[] = $this->currentFilename;
         }
     }
@@ -937,7 +845,7 @@ final class Collector
      */
     private function divide(float $x, float $y): float
     {
-        return $y != 0 ? $x / $y : 0;
+        return 0 != $y ? $x / $y : 0;
     }
 
     /**

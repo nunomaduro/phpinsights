@@ -125,14 +125,14 @@ final class AnalyseCommand
         /** @var string|null $configPath */
         $configPath = $input->getOption('config-path');
 
-        if ($configPath === null && file_exists(
+        if (null === $configPath && file_exists(
                 getcwd().DIRECTORY_SEPARATOR.'phpinsights.php'
             )) {
             $configPath = getcwd().DIRECTORY_SEPARATOR.'phpinsights.php';
         }
 
         return ConfigResolver::resolve(
-            $configPath !== null && file_exists(
+            null !== $configPath && file_exists(
                 $configPath
             ) ? require $configPath : [],
             $directory
@@ -153,10 +153,10 @@ final class AnalyseCommand
                 'directory'
             ) ?? $this->filesRepository->getDefaultDirectory();
 
-        if ($directory[0] !== DIRECTORY_SEPARATOR && preg_match(
+        if (DIRECTORY_SEPARATOR !== $directory[0] && 0 === preg_match(
                 '~\A[A-Z]:(?![^/\\\\])~i',
                 $directory
-            ) === 0) {
+            )) {
             $directory = (string) getcwd().DIRECTORY_SEPARATOR.$directory;
         }
 

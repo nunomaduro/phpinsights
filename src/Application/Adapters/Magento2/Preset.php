@@ -63,9 +63,9 @@ final class Preset implements PresetContract
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
 
-            if (strpos($requirement, 'magento/magento-cloud-metapackage') !== false
-                || strpos($requirement, 'magento/product-community-edition') !== false
-                || strpos($requirement, 'magento/product-enterprise-edition') !== false) {
+            if (false !== strpos($requirement, 'magento/magento-cloud-metapackage')
+                || false !== strpos($requirement, 'magento/product-community-edition')
+                || false !== strpos($requirement, 'magento/product-enterprise-edition')) {
                 return true;
             }
         }

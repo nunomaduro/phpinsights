@@ -70,12 +70,12 @@ final class Preset implements PresetContract
 
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
-            if (strpos($requirement, 'laravel/framework') !== false
-                || strpos($requirement, 'illuminate/') !== false) {
+            if (false !== strpos($requirement, 'laravel/framework')
+                || false !== strpos($requirement, 'illuminate/')) {
                 return true;
             }
         }
 
-        return array_key_exists('name', $composer) && $composer['name'] === 'laravel/framework';
+        return array_key_exists('name', $composer) && 'laravel/framework' === $composer['name'];
     }
 }

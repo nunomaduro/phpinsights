@@ -113,7 +113,7 @@ final class File extends BaseFile
         $this->fixer->startFile($this);
 
         foreach ($this->tokens as $stackPtr => $token) {
-            if (isset($this->tokenListeners[$token['code']]) === false) {
+            if (false === isset($this->tokenListeners[$token['code']])) {
                 continue;
             }
 

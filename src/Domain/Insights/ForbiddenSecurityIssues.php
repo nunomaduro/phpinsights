@@ -39,7 +39,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
     {
         $issues = json_decode((string) $this->getResult(), true);
 
-        if ($issues === null) {
+        if (null === $issues) {
             return [];
         }
 
@@ -59,7 +59,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     private function getResult(): Result
     {
-        if (self::$result === null) {
+        if (null === self::$result) {
             $checker = new SecurityChecker();
 
             try {

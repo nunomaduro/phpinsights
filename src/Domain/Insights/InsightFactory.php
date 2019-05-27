@@ -139,7 +139,7 @@ final class InsightFactory
 
         foreach ($collector->getErrors() as $errorsPerFile) {
             foreach ($errorsPerFile as $error) {
-                if (strpos($error->getSourceClass(), $sniff) !== false) {
+                if (false !== strpos($error->getSourceClass(), $sniff)) {
                     $key = $this->getSniffKey($error);
                     if (!array_key_exists($key, $errors)) {
                         $errors[$key] = $error;
@@ -176,7 +176,7 @@ final class InsightFactory
      */
     private function getSniffCollector(array $config): ErrorAndDiffCollector
     {
-        if ($this->sniffCollector !== null) {
+        if (null !== $this->sniffCollector) {
             return $this->sniffCollector;
         }
 

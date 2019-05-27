@@ -135,7 +135,6 @@ EOD;
         return $this;
     }
 
-
     /**
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param \NunoMaduro\PhpInsights\Domain\Results                    $results
@@ -224,8 +223,8 @@ EOD;
     {
         $this->newLine();
 
-        $totalSecurityIssuesColor = $results->getTotalSecurityIssues(
-        ) === 0 ? 'green' : 'red';
+        $totalSecurityIssuesColor = 0 === $results->getTotalSecurityIssues(
+        ) ? 'green' : 'red';
 
         $this->writeln(
             sprintf(
@@ -316,8 +315,8 @@ EOD;
     {
         $stdin = fopen('php://stdin', 'r');
 
-        if ($stdin !== false && $this->output instanceof ConsoleOutput && $this->input->isInteractive(
-            ) === true) {
+        if (false !== $stdin && $this->output instanceof ConsoleOutput && true === $this->input->isInteractive(
+            )) {
             $this->newLine();
             $section = $this->output->section();
             $section->writeln(
@@ -344,7 +343,7 @@ EOD;
     {
         $percentageString = sprintf(
             '%s%%',
-            $percentage === 100.0
+            100.0 === $percentage
                 ? '100 '
                 : number_format($percentage, 1, '.', '')
         );

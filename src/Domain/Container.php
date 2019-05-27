@@ -21,7 +21,7 @@ final class Container
      */
     public static function make(): ContainerInterface
     {
-        if (self::$container === null) {
+        if (null === self::$container) {
             self::$container = require __DIR__.'/../../config/container.php';
         }
 

@@ -48,8 +48,6 @@ final class FileProcessor implements FileProcessorInterface
 
     /**
      * @param \PHP_CodeSniffer\Sniffs\Sniff $sniff
-     *
-     * @return void
      */
     public function addSniff(Sniff $sniff): void
     {

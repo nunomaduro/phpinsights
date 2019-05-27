@@ -21,7 +21,7 @@ final class EcsContainer
      */
     public static function make(): Container
     {
-        if (self::$container === null) {
+        if (null === self::$container) {
             if (file_exists(
                 __DIR__.'/../../vendor/symplify/easy-coding-standard/bin/container.php'
             )) {

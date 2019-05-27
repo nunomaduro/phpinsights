@@ -53,7 +53,7 @@ final class Preset implements PresetContract
 
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
-            if (strpos($requirement, 'yiisoft/yii2') !== false) {
+            if (false !== strpos($requirement, 'yiisoft/yii2')) {
                 return true;
             }
         }

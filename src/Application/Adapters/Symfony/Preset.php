@@ -54,9 +54,9 @@ final class Preset implements PresetContract
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
 
-            if (strpos($requirement, 'symfony/framework-bundle') !== false
-                || strpos($requirement, 'symfony/flex') !== false
-                || strpos($requirement, 'symfony/symfony') !== false) {
+            if (false !== strpos($requirement, 'symfony/framework-bundle')
+                || false !== strpos($requirement, 'symfony/flex')
+                || false !== strpos($requirement, 'symfony/symfony')) {
                 return true;
             }
         }
