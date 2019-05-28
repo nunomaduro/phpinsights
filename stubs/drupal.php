@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'preset' => 'default',
+    'preset' => 'drupal',
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,6 @@ return [
     'exclude' => [
         //  'path/to/directory-or-file'
     ],
-
 
     'add' => [
         //  ExampleMetric::class => [
