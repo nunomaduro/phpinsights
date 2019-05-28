@@ -24,7 +24,7 @@ interface Insight
     public function getTitle(): string;
 
     /**
-     * Get the Full Qualified Class Name of Insight used
+     * Get the class name of Insight used.
      *
      * @return string
      */
