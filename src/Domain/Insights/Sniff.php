@@ -57,7 +57,7 @@ final class Sniff implements Insight, HasDetails
      */
     public function getTitle(): string
     {
-        $sniffClass = explode('.', $this->errors[0]->getSourceClass())[0];
+        $sniffClass = $this->getSniffClass($this->errors[0]);
 
         if (array_key_exists($sniffClass, self::$messages)) {
             return sprintf(self::$messages[$sniffClass], count($this->errors));
@@ -79,5 +79,18 @@ final class Sniff implements Insight, HasDetails
         return array_map(static function (Error $error) {
             return $error->getFileInfo()->getRealPath() . ':' . $error->getLine() . ': ' . $error->getMessage();
         }, $this->errors);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInsightClass(): string
+    {
+       return $this->getSniffClass($this->errors[0]);
+    }
+
+    private function getSniffClass(Error $error): string
+    {
+        return explode('.', $error->getSourceClass())[0];
     }
 }

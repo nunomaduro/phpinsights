@@ -22,4 +22,11 @@ interface Insight
      * @return string
      */
     public function getTitle(): string;
+
+    /**
+     * Get the Full Qualified Class Name of Insight used
+     *
+     * @return string
+     */
+    public function getInsightClass(): string;
 }
