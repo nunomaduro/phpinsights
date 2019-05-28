@@ -18,15 +18,21 @@ final class EcsContainer
      */
     private static $container;
 
-
+    /**
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
     public static function make(): ContainerInterface
     {
         if (self::$container === null) {
-            $easyCodingStandardKernel = new EasyCodingStandardKernel('phpinsights', InputDetector::isDebug());
+            $environment = str_replace('.', '_', sprintf(
+                    'phpinsights_%s', Kernel::VERSION)
+            );
+
+            $easyCodingStandardKernel = new EasyCodingStandardKernel($environment, InputDetector::isDebug());
             $easyCodingStandardKernel->boot();
 
             if ($easyCodingStandardKernel->getContainer() === null) {
-                throw new \RuntimeException('Unable to get EcsContainer');
+                throw new \RuntimeException('Unable to get EcsContainer.');
             }
 
             self::$container = $easyCodingStandardKernel->getContainer();

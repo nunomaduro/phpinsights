@@ -10,6 +10,11 @@ namespace NunoMaduro\PhpInsights\Domain;
 final class Kernel
 {
     /**
+     * The app version.
+     */
+    public const VERSION = 'v1.5.0';
+
+    /**
      * Bootstraps the usage of the package.
      *
      * return void
