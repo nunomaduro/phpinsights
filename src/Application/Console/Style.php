@@ -230,10 +230,13 @@ EOD;
                     continue;
                 }
                 $issue .= ':';
+                if ($this->output->isVerbose()) {
+                    $issue .= " ({$insight->getInsightClass()})";
+                }
                 $details = $insight->getDetails();
                 $totalDetails = count($details);
 
-                if ($this->output->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
+                if (! $this->output->isVerbose()) {
                     $details = array_slice($details, -3, 3, true);
                 }
 
@@ -242,7 +245,7 @@ EOD;
                     $issue .= "\n  $detail";
                 }
 
-                if ($this->output->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL && $totalDetails > 3) {
+                if (! $this->output->isVerbose() && $totalDetails > 3) {
                     $totalRemainDetails = $totalDetails - 3;
 
                     $issue .= "\n  <fg=red>+{$totalRemainDetails} issues omitted</>";
