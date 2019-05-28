@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Exceptions\SniffClassNotFound;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
@@ -57,7 +58,7 @@ final class Sniff implements Insight, HasDetails
      */
     public function getTitle(): string
     {
-        $sniffClass = $this->getSniffClass($this->errors[0]);
+        $sniffClass = $this->getInsightClass();
 
         if (array_key_exists($sniffClass, self::$messages)) {
             return sprintf(self::$messages[$sniffClass], count($this->errors));
@@ -86,11 +87,10 @@ final class Sniff implements Insight, HasDetails
      */
     public function getInsightClass(): string
     {
-       return $this->getSniffClass($this->errors[0]);
-    }
+        if (\count($this->errors) === 0) {
+            throw new SniffClassNotFound('Unable to found Sniff used');
+        }
 
-    private function getSniffClass(Error $error): string
-    {
-        return explode('.', $error->getSourceClass())[0];
+        return explode('.', $this->errors[0]->getSourceClass())[0];
     }
 }
