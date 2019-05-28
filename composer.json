@@ -19,9 +19,9 @@
         "sensiolabs/security-checker": "^5.0",
         "symfony/console": "^4.2",
         "symfony/finder": "^4.2",
-        "symplify/coding-standard": "5.4.16",
-        "symplify/easy-coding-standard": "5.4.16",
-        "symplify/package-builder": "5.4.16"
+        "symplify/coding-standard": "^6.0",
+        "symplify/easy-coding-standard": "^6.0",
+        "symplify/package-builder": "^6.0"
     },
     "require-dev": {
         "illuminate/console": "^5.8",
@@ -61,10 +61,10 @@
         "bin/phpinsights"
     ],
     "scripts": {
-        "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/clean-code.yml",
+        "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
-        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=85.7 --min-architecture=77.3 --min-style=89.1",
+        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=85.7 --min-architecture=76.2 --min-style=89.0",
         "test": [
             "@phpstan:test",
             "@ecs:test",

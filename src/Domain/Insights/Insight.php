@@ -30,4 +30,12 @@ abstract class Insight implements InsightContract
         $this->collector = $collector;
         $this->config = $config;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInsightClass(): string
+    {
+        return static::class;
+    }
 }

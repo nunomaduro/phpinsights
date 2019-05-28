@@ -17,11 +17,24 @@
 **PHP Insights** was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, and is the perfect starting point to analyze the code quality of your PHP projects.
 Carefully crafted to simplify the analysis of your code directly from your terminal.
 
+## 🚀 Quick start
+
+```
+# First, install:
+composer require nunomaduro/phpinsights --dev
+
+# Then, use it:
+./vendor/bin/phpinsights
+
+# Docker Users
+docker run -it --rm -v $(pwd):/app nunomaduro/phpinsights
+```
+
 ## ✨ Features
 
 - Analysis of **code quality** and **coding style**
-- Beautiful overview of code **architecture** and it's **complexity**
-- Designed to work out-of-the-box with **Laravel**, **Symfony**, and more
+- Beautiful overview of code **architecture** and its **complexity**
+- Designed to work out-of-the-box with **Laravel**, **Symfony**, **Yii**, **Magento**, and more
 - Contains built-in checks for making code reliable, loosely coupled, **simple**, and **clean**
 
 ## 💖 Support the development

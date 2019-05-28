@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.5.0]
+### Added
+- Better support with nette dependencies
+
+### Fixed
+- Complexity over `100.0`
+
+## [v1.4.0]
+### Added
+- Drupal preset ([#120](https://github.com/nunomaduro/phpinsights/pull/120))
+- Display insight class name on verbose mode ([#139](https://github.com/nunomaduro/phpinsights/pull/139))
+
+## [v1.3.1]
+### Fixed
+- Missing option `--disable-security-check` ([#106](https://github.com/nunomaduro/phpinsights/pull/106))
+- Overwrite of existing preset config options ([#111](https://github.com/nunomaduro/phpinsights/pull/111))
+- [Laravel Preset] Ignores `TelescopeServiceProvider::class` ([#113](https://github.com/nunomaduro/phpinsights/pull/113))
+
 ## [v1.3.0]
 ### Added
 - Magento2 preset ([#102](https://github.com/nunomaduro/phpinsights/pull/102))

@@ -14,3 +14,16 @@ php artisan insights --no-interaction --min-quality=80 --min-complexity=90 --min
 **Note**: The `--no-interaction` option is mandatory when it's launch in CI to avoid prompts.
 
 All others are optional, so if you want to focus only on style, add the `--min-style` and forget others.
+
+## Disable Security Check
+
+In case you develop a library or a plugin, it could be compatible with a large panel of dependencies versions.
+So you can launch your `composer update` with `--prefer-lower` flag to tests theses minimum version.
+
+As `phpinsights` return an exit error code if security issues are found, you can disable this check by adding the `--disable-security-check` option :
+
+```bash
+./vendor/bin/phpinsights --no-interaction --disable-security-check
+```
+
+**Note** : For a project inspection, you **should** never use this option to keep your project safe.

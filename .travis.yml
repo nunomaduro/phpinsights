@@ -15,4 +15,12 @@ before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
-  - composer run test
+  - |
+    if [[ -z $COMPOSER_FLAGS ]]; then
+      composer run test
+    else
+      composer run phpstan:test
+      composer run ecs:test
+      composer run phpunit:test
+      composer run insights -- --disable-security-check
+    fi
