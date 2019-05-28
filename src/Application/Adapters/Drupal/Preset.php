@@ -52,7 +52,10 @@ final class Preset implements PresetContract
         /** @var array<string, string> $requirements */
         $requirements = $composer['require'] ?? [];
 
-        foreach (array_keys($requirements) as $requirement) {
+        /** @var array<string, string> $replace */
+        $replace = $composer['replace'] ?? [];
+
+        foreach (array_keys(array_merge($requirements, $replace)) as $requirement) {
             if (strpos($requirement, 'drupal/core') !== false) {
                 return true;
             }
