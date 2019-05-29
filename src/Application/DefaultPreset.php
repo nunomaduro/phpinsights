@@ -28,7 +28,10 @@ final class DefaultPreset implements PresetContract
     {
         return [
             'exclude' => [
-                // ...
+                'bower_components',
+                'node_modules',
+                'vendor',
+                '.phpstorm.meta.php',
             ],
             'add' => [
                 // ...
