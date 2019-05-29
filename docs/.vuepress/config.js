@@ -3,6 +3,7 @@ module.exports = {
   description: 'The perfect starting point to analyze the code quality of your PHP projects',
   sidebar: true,
   themeConfig: {
+    repo: 'nunomaduro/phpinsights',
     sidebar: [
       '/get-started',
       '/configuration',
