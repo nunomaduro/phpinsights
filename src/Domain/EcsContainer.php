@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symplify\EasyCodingStandard\HttpKernel\EasyCodingStandardKernel;
+use Symplify\PackageBuilder\Console\Input\InputDetector;
 
 /**
  * @internal
@@ -12,25 +14,29 @@ use Symfony\Component\DependencyInjection\Container;
 final class EcsContainer
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     private static $container;
 
     /**
-     * @return \Symfony\Component\DependencyInjection\Container
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    public static function make(): Container
+    public static function make(): ContainerInterface
     {
         if (null === self::$container) {
-            if (file_exists(
-                __DIR__.'/../../vendor/symplify/easy-coding-standard/bin/container.php'
-            )) {
-                $containerPath = __DIR__.'/../../vendor/symplify/easy-coding-standard/bin/container.php';
-            } else {
-                $containerPath = __DIR__.'/../../../../symplify/easy-coding-standard/bin/container.php';
+            $environment = str_replace('.', '_', sprintf(
+                    'phpinsights_%s', Kernel::VERSION)
+            );
+
+            $easyCodingStandardKernel = new EasyCodingStandardKernel($environment,
+                InputDetector::isDebug());
+            $easyCodingStandardKernel->boot();
+
+            if (null === $easyCodingStandardKernel->getContainer()) {
+                throw new \RuntimeException('Unable to get EcsContainer.');
             }
 
-            self::$container = require $containerPath;
+            self::$container = $easyCodingStandardKernel->getContainer();
         }
 
         return self::$container;
