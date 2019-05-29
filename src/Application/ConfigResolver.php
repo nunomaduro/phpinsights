@@ -41,7 +41,7 @@ final class ConfigResolver
 
         foreach (self::$presets as $presetClass) {
             if ($presetClass::getName() === $preset && is_array($config)) {
-                $config = array_merge_recursive($config, $presetClass::get());
+                $config = array_replace_recursive($config, $presetClass::get());
             }
         }
 
