@@ -102,6 +102,10 @@ final class Analyser
 
                     $collector->incrementLogicalLines();
                 } else if ($token === '?') {
+                    if($currentBlock === \T_FUNCTION) {
+                        continue;
+                    }
+                    
                     if ($className !== null) {
                         $collector->currentClassIncrementComplexity();
                         $collector->currentMethodIncrementComplexity();
