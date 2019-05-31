@@ -26,8 +26,8 @@ composer require nunomaduro/phpinsights --dev
 # Then, use it:
 ./vendor/bin/phpinsights
 
-# Docker Users
-docker run -it --rm -v $(pwd):/app nunomaduro/phpinsights
+# For Laravel:
+php artisan insights
 ```
 
 ## ✨ Features
