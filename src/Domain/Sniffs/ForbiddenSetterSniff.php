@@ -8,23 +8,26 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\ClassHelper;
 
+/**
+ * This sniff disallows setter methods
+ */
 final class ForbiddenSetterSniff implements Sniff
 {
-    /**
-     * @var string
-     */
     private const ERROR_MESSAGE = 'Setters are not allowed. Use constructor injection and behavior naming instead.';
 
-    /**
-     * @var string
-     */
     private const SETTER_REGEX = '#^set[A-Z0-9]#';
 
+    /**
+     * @inheritDoc
+     */
     public function register() : array
     {
         return [T_FUNCTION];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function process(File $file, $position): void
     {
         $methodName = $file->getDeclarationName($position);
@@ -32,7 +35,7 @@ final class ForbiddenSetterSniff implements Sniff
             return;
         }
 
-        $className = $this->getClassName($file);
+        $className = self::getClassName($file);
 
         // Check if method should be skipped.
         if ($this->shouldSkip($methodName, $className)) {
@@ -47,7 +50,13 @@ final class ForbiddenSetterSniff implements Sniff
         $file->addError(self::ERROR_MESSAGE, $position, self::class);
     }
 
-    private function getClassName(File $file): string
+    /**
+     * Returns the class name from the file.
+     *
+     * @param File $file
+     * @return string
+     */
+    private static function getClassName(File $file): string
     {
         $classTokenPosition = $file->findNext(T_CLASS, 0);
 
@@ -61,6 +70,14 @@ final class ForbiddenSetterSniff implements Sniff
         return ltrim($className, '\\');
     }
 
+    /**
+     * Checks if we should skip this method based on either the
+     * method name or the class name.
+     *
+     * @param string $methodName
+     * @param string $className
+     * @return bool
+     */
     private function shouldSkip(string $methodName, string $className): bool
     {
         // Skip setUp method as often used in test classes
@@ -73,7 +90,6 @@ final class ForbiddenSetterSniff implements Sniff
                 return true;
             }
         }
-
 
         return false;
     }

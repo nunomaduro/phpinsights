@@ -33,7 +33,7 @@ final class InsightFactory
     private $dir;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $insightsClasses;
 
@@ -47,7 +47,7 @@ final class InsightFactory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  string  $dir
-     * @param  string[]  $insightsClasses
+     * @param  array<string>  $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -80,10 +80,10 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param  string[]  $insights
-     * @param  array<string, array>  $config
+     * @param array<string>        $insights
+     * @param array<string, array> $config
      *
-     * @return \PHP_CodeSniffer\Sniffs\Sniff[]
+     * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
      */
     public function sniffsFrom(array $insights, array $config): array
     {
@@ -111,7 +111,7 @@ final class InsightFactory
      * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $collector
      * @param  string  $sniff
      *
-     * @return \Symplify\EasyCodingStandard\Error\Error[]
+     * @return array<\Symplify\EasyCodingStandard\Error\Error>
      */
     private function getSniffErrors(ErrorAndDiffCollector $collector, string $sniff): array
     {

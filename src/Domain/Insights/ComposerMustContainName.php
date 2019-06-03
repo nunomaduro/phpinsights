@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 final class ComposerMustContainName extends Insight
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $defaults = [
         'laravel/laravel',

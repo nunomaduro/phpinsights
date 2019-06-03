@@ -6,8 +6,8 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
-use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
+use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -39,7 +39,7 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param  string[]  $metrics
+     * @param  array<string>  $metrics
      * @param  array<string, array<string, string>>  $config
      * @param  string  $dir
      *
@@ -88,7 +88,7 @@ final class InsightCollectionFactory
      * @param  string  $metricClass
      * @param  array<string, array<string, string|array>>  $config
      *
-     * @return string[]
+     * @return array<string>
      */
     private function getInsights(string $metricClass, array $config): array
     {

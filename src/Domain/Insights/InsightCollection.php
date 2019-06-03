@@ -46,7 +46,7 @@ final class InsightCollection
     /**
      * Gets all insights.
      *
-     * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
+     * @return array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
      */
     public function all(): array
     {
@@ -66,7 +66,7 @@ final class InsightCollection
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Metric  $metric
      *
-     * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
+     * @return array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
      */
     public function allFrom(Metric $metric): array
     {

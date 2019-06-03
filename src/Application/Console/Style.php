@@ -199,7 +199,7 @@ EOD;
      * Describes the issues from the given metrics.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
-     * @param  string[]  $metrics
+     * @param  array<string>  $metrics
      * @param  string  $dir
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style

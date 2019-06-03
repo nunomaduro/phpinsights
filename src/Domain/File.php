@@ -19,16 +19,6 @@ use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 final class File extends BaseFile
 {
     /**
-     * @var string
-     */
-    public $tokenizerType = 'PHP';
-
-    /**
-     * @var \PHP_CodeSniffer\Fixer
-     */
-    public $fixer;
-
-    /**
      * @var string|null
      */
     private $activeSniffClass;
