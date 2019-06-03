@@ -6,8 +6,8 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
-use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\Finder\SplFileInfo;
 
