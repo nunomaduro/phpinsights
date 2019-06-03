@@ -10,6 +10,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 final class FakeFileRepository implements FilesRepository
 {
+    /**
+     * @var array<SplFileInfo>
+     */
     protected $files = [];
 
     /**

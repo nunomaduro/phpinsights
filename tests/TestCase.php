@@ -40,7 +40,7 @@ abstract class TestCase extends BaseTestCase
      * Runs the whole analyser on the specified files only.
      *
      * @param string $preset
-     * @param array  $filePaths
+     * @param array<string>  $filePaths
      * @param string $dir
      * @return InsightCollection
      */

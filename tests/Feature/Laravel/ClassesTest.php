@@ -14,7 +14,7 @@ use Tests\TestCase;
  */
 final class ClassesTest extends TestCase
 {
-    public function testCanAllowAttributeSetters()
+    public function testCanAllowAttributeSetters() : void
     {
         $collection = $this->runAnalyserOnPreset(
             "laravel",
@@ -25,7 +25,7 @@ final class ClassesTest extends TestCase
         );
 
         foreach ($collection->allFrom(new Classes) as $insight) {
-            $this->assertFalse($insight->hasIssue());
+            self::assertFalse($insight->hasIssue());
         };
     }
 }

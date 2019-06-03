@@ -18,6 +18,11 @@ final class ForbiddenSetterSniff implements Sniff
     private const SETTER_REGEX = '#^set[A-Z0-9]#';
 
     /**
+     * @var array<string>
+     */
+    public $allowedMethodRegex;
+
+    /**
      * @inheritDoc
      */
     public function register() : array
@@ -27,6 +32,7 @@ final class ForbiddenSetterSniff implements Sniff
 
     /**
      * @inheritDoc
+     * @param int $position
      */
     public function process(File $file, $position): void
     {

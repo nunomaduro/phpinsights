@@ -15,7 +15,15 @@ use Tests\TestCase;
 
 final class ForbiddenSetterMethodsTests extends TestCase
 {
-    public function prepareFixtureWithSniff($sniffClassName, string $fixtureFile, array $properties = []): LocalFile
+    /**
+     * Prepares a supplied fixture for a supplied sniffer class with the supplied properties.
+     *
+     * @param string $sniffClassName
+     * @param string $fixtureFile
+     * @param array<string, string|array<string>>  $properties
+     * @return LocalFile
+     */
+    public function prepareFixtureWithSniff(string $sniffClassName, string $fixtureFile, array $properties = []): LocalFile
     {
         $sniffs = [self::getFilePathFromClass($sniffClassName)];
 
@@ -34,14 +42,17 @@ final class ForbiddenSetterMethodsTests extends TestCase
         return new LocalFile($fixtureFile, $ruleset, $config);
     }
 
-    public static function getFilePathFromClass(string $className)
+    public static function getFilePathFromClass(string $className) : string
     {
         $reflector = new ReflectionClass($className);
-        return $reflector->getFileName();
+
+        $filename = $reflector->getFileName();
+
+        return $filename === false ? "" : $filename;
     }
 
 
-    public function testOneErrorIfOneSetter()
+    public function testOneErrorIfOneSetter() : void
     {
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
@@ -52,10 +63,10 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Run the sniff
         $file->process();
 
-        $this->assertEquals(1, $file->getErrorCount());
+        self::assertEquals(1, $file->getErrorCount());
     }
 
-    public function testNoErrorIfNoSetter()
+    public function testNoErrorIfNoSetter() : void
     {
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
@@ -66,10 +77,10 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Run the sniff
         $file->process();
 
-        $this->assertEquals(0, $file->getErrorCount());
+        self::assertEquals(0, $file->getErrorCount());
     }
 
-    public function testErrorOnLaravelAttributeSetter()
+    public function testErrorOnLaravelAttributeSetter() : void
     {
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
@@ -85,10 +96,10 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Run the sniff
         $file->process();
 
-        $this->assertEquals(1, $file->getErrorCount());
+        self::assertEquals(1, $file->getErrorCount());
     }
 
-    public function testNoErrorOnLaravelAttributeSetterWithRegex()
+    public function testNoErrorOnLaravelAttributeSetterWithRegex() : void
     {
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
@@ -104,10 +115,10 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Run the sniff
         $file->process();
 
-        $this->assertEquals(0, $file->getErrorCount());
+        self::assertEquals(0, $file->getErrorCount());
     }
 
-    public function testOneErrorIfOneSetterOnAnonymousClass()
+    public function testOneErrorIfOneSetterOnAnonymousClass() : void
     {
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
@@ -118,6 +129,6 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Run the sniff
         $file->process();
 
-        $this->assertEquals(1, $file->getErrorCount());
+        self::assertEquals(1, $file->getErrorCount());
     }
 }
