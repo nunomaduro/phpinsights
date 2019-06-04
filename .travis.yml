@@ -2,14 +2,16 @@ language: php
 
 sudo: false
 
+services:
+  - docker
+
 php:
   - 7.2
   - 7.3
 
 env:
-  matrix:
-    - COMPOSER_FLAGS="--prefer-lowest"
-    - COMPOSER_FLAGS=""
+  - COMPOSER_FLAGS="--prefer-lowest"
+  - COMPOSER_FLAGS=""
 
 before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
@@ -24,3 +26,16 @@ script:
       composer run phpunit:test
       composer run insights -- --disable-security-check
     fi
+
+jobs:
+  include:
+    - stage: build docker image
+      if: tag IS present
+      php: 7.3
+      env: COMPOSER_FLAGS=""
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - export REPO=$DOCKER_USERNAME/phpinsights
+        - docker build -f docker/Dockerfile -t $REPO:$TRAVIS_TAG .
+        - docker tag $REPO:$TRAVIS_TAG $REPO:latest
+        - docker push $REPO
