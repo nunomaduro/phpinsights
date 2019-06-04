@@ -39,7 +39,7 @@ final class Kernel
     /**
      * Returns the list of required files.
      *
-     * @return string[]
+     * @return array<string>
      */
     public static function getRequiredFiles(): array
     {

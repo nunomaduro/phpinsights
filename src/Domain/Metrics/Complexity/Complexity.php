@@ -11,9 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 
 final class Complexity implements HasAvg, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getAvg(Collector $collector): string
     {
         return sprintf('%.2f', $collector->getAverageComplexityPerMethod());

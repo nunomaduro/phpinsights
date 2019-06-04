@@ -31,9 +31,6 @@ final class InvokableCommand extends BaseCommand
         $this->callable = $callable;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         return call_user_func($this->callable, $input, $output);

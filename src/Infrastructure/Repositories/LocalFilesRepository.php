@@ -33,9 +33,6 @@ final class LocalFilesRepository implements FilesRepository
             ->ignoreUnreadableDirs();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultDirectory(): string
     {
         return (string) getcwd();

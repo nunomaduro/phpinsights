@@ -13,9 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Title implements Style
 {
-    /**
-     * {@inheritdoc}
-     */
     public function addTo(OutputInterface $output): void
     {
         $outputStyle = new OutputFormatterStyle('cyan', 'default', ['bold']);

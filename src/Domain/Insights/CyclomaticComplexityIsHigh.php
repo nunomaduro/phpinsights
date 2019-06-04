@@ -8,9 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
 final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         foreach ($this->collector->getClassComplexity() as $complexity) {
@@ -22,9 +19,6 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return sprintf('Having `classes` with more than 5 cyclomatic complexity is prohibited - Consider refactoring');

@@ -11,9 +11,6 @@ use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 
 final class Functions implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getFunctions());

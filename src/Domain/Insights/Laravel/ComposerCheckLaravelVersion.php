@@ -10,9 +10,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerCheckLaravelVersion extends Insight
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         try {
@@ -26,9 +23,6 @@ final class ComposerCheckLaravelVersion extends Insight
             && strpos($composer['require']['laravel/framework'], '5.8.*') === false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return 'Your laravel version is outdated: Consider update your project to Laravel 5.8';

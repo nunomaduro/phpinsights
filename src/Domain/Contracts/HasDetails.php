@@ -12,7 +12,7 @@ interface HasDetails extends Insight
     /**
      * Returns the details of the insight.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDetails(): array;
 }

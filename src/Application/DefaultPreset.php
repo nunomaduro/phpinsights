@@ -13,9 +13,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
  */
 final class DefaultPreset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'default';
