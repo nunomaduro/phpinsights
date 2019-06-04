@@ -77,6 +77,6 @@
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
         "insights": "Run the phpinsights tests",
-        "test": "Run all tests including phpstan, phpunit and ecs."
+        "test": "Run all tests including phpstan, ecs, phpunit, and insights."
     }
 }
