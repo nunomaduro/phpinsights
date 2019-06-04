@@ -12,17 +12,11 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff;
 
 final class Interfaces implements HasValue, HasPercentage, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getInterfaces());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         return count($collector->getFiles()) > 0 ? ($collector->getInterfaces() / count($collector->getFiles())) * 100 : 0;

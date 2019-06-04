@@ -16,7 +16,7 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Style;
 final class MetricsFinder
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public static function find(): array
     {

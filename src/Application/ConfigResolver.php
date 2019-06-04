@@ -16,7 +16,7 @@ use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 final class ConfigResolver
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     private static $presets = [
         DrupalPreset::class,

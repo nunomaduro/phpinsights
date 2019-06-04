@@ -20,25 +20,16 @@ use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosu
 
 final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getFunctionLines());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         return $collector->getLines() > 0 ? ($collector->getFunctionLines() / $collector->getLines()) * 100 : 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAvg(Collector $collector): string
     {
         return sprintf('%d', $collector->getAverageFunctionLength());

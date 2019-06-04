@@ -33,37 +33,37 @@ final class Collector
     private $functionLines = 0;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $files = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $directories = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $concreteNonFinalClasses = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $concreteFinalClasses = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $abstractClasses = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $traits = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $globalConstants = [];
 
@@ -73,7 +73,7 @@ final class Collector
     private $interfaces = 0;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $namespaces = [];
 
@@ -88,7 +88,7 @@ final class Collector
     private $totalMethodComplexity = 0;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     private $methodComplexity = [];
 
@@ -123,7 +123,7 @@ final class Collector
     private $superGlobalVariableAccesses = 0;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $possibleConstantAccesses = [];
 
@@ -148,7 +148,7 @@ final class Collector
     private $anonymousFunctions = 0;
 
     /**
-     * @var array<string, string[]>
+     * @var array<string, array<string>>
      */
     private $namedFunctions = [];
 
@@ -535,9 +535,6 @@ final class Collector
         $this->globalConstants[$this->currentFilename] = $name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function incrementTraits(): void
     {
         if ($this->currentFilename !== null) {
@@ -583,7 +580,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getDirectories(): array
     {
@@ -591,7 +588,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGlobalConstants(): array
     {
@@ -599,7 +596,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getTraits(): array
     {
@@ -727,7 +724,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPossibleConstantAccesses(): array
     {
@@ -767,7 +764,7 @@ final class Collector
     }
 
     /**
-     * @return array<string, string[]>
+     * @return array<string, array<string>>
      */
     public function getNamedFunctions(): array
     {
@@ -799,7 +796,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getConcreteNonFinalClasses(): array
     {
@@ -807,7 +804,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getConcreteFinalClasses(): array
     {
@@ -815,7 +812,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getNamespaces(): array
     {
@@ -855,7 +852,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAbstractClasses(): array
     {
@@ -938,7 +935,7 @@ final class Collector
      */
     private function divide(float $x, float $y): float
     {
-        return $y != 0 ? $x / $y : 0;
+        return $y !== 0.0 ? $x / $y : 0;
     }
 
     /**

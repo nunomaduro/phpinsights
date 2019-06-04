@@ -13,9 +13,6 @@ use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
  */
 final class InsightsServiceProvider extends ServiceProvider
 {
-    /**
-     * {@inheritDoc}
-     */
     public function register(): void
     {
         foreach ($this->app->make(Repositories::class)->__invoke() as $abstract => $concrete) {
@@ -23,9 +20,6 @@ final class InsightsServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function boot(): void
     {
         $this->publishes([
