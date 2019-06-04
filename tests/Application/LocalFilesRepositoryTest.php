@@ -30,7 +30,7 @@ final class LocalFilesRepositoryTest extends TestCase
         $this->assertCount($expected, $files);
     }
 
-    public function provider()
+    public function provider(): array
     {
         return [
             [3, ['FolderA/ClassA.php']],
@@ -40,7 +40,8 @@ final class LocalFilesRepositoryTest extends TestCase
             [1, ['FolderA', 'FolderB/ClassB.php']],
             [3, ['FolderA/SubFolderA']],
             [3, ['FolderA/SubFolderA/ClassC.php']],
+            [2, ['/(\w).*(A.php)$/']],
+            [2, ['/((\w).*)?(FolderA\/)(\w).*/']]
         ];
     }
-
 }
