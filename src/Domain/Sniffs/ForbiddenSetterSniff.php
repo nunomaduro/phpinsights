@@ -13,7 +13,10 @@ use SlevomatCodingStandard\Helpers\ClassHelper;
  */
 final class ForbiddenSetterSniff implements Sniff
 {
-    private const ERROR_MESSAGE = 'Setters are not allowed. Use constructor injection and behavior naming instead.';
+    private const ERROR_MESSAGE = <<<'EOD'
+Setters are not allowed. Use constructor injection and behavior naming instead.
+EOD;
+
 
     private const SETTER_REGEX = '#^set[A-Z0-9]#';
 
@@ -22,17 +25,16 @@ final class ForbiddenSetterSniff implements Sniff
      */
     public $allowedMethodRegex;
 
-    /**
-     * @inheritDoc
-     */
-    public function register() : array
+    public function register(): array
     {
         return [T_FUNCTION];
     }
 
     /**
-     * @inheritDoc
-     * @param int $position
+     * Runs the sniff on a file.
+     *
+     * @param File $file
+     * @param int  $position
      */
     public function process(File $file, $position): void
     {
@@ -60,6 +62,7 @@ final class ForbiddenSetterSniff implements Sniff
      * Returns the class name from the file.
      *
      * @param File $file
+     *
      * @return string
      */
     private static function getClassName(File $file): string
@@ -71,7 +74,10 @@ final class ForbiddenSetterSniff implements Sniff
             return 'anonymous';
         }
 
-        $className = ClassHelper::getFullyQualifiedName($file, $classTokenPosition);
+        $className = ClassHelper::getFullyQualifiedName(
+            $file,
+            $classTokenPosition
+        );
 
         return ltrim($className, '\\');
     }
@@ -82,6 +88,7 @@ final class ForbiddenSetterSniff implements Sniff
      *
      * @param string $methodName
      * @param string $className
+     *
      * @return bool
      */
     private function shouldSkip(string $methodName, string $className): bool

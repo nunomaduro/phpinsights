@@ -434,8 +434,7 @@ final class Collector
     }
 
     /**
-     *
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
