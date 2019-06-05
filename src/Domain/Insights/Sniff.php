@@ -38,24 +38,18 @@ final class Sniff implements Insight, HasDetails
     /**
      * Creates a new instance of Sniff Insight
      *
-     * @param array<\Symplify\EasyCodingStandard\Error\Error>  $errors
+     * @param array<\Symplify\EasyCodingStandard\Error\Error> $errors
      */
     public function __construct(array $errors)
     {
         $this->errors = $errors;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function hasIssue(): bool
     {
         return count($this->errors) > 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTitle(): string
     {
         $sniffClass = $this->getInsightClass();
@@ -82,9 +76,6 @@ final class Sniff implements Insight, HasDetails
         }, $this->errors);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInsightClass(): string
     {
         if (\count($this->errors) === 0) {

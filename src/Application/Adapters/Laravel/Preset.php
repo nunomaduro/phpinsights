@@ -14,9 +14,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
  */
 final class Preset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'laravel';

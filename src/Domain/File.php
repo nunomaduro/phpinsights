@@ -13,7 +13,6 @@ use Symplify\EasyCodingStandard\Application\AppliedCheckersCollector;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Skipper;
-use Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 
 final class File extends BaseFile
@@ -29,7 +28,7 @@ final class File extends BaseFile
     private $previousActiveSniffClass;
 
     /**
-     * @var \PHP_CodeSniffer\Sniffs\Sniff[][]
+     * @var array<array<\PHP_CodeSniffer\Sniffs\Sniff>>
      */
     private $tokenListeners = [];
 
@@ -95,9 +94,6 @@ final class File extends BaseFile
         $this->easyCodingStandardStyle = $easyCodingStandardStyle;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(): void
     {
         $this->parse();
@@ -122,12 +118,9 @@ final class File extends BaseFile
         $this->fixedCount += $this->fixer->getFixCount();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getErrorCount(): int
     {
-        throw new NotImplementedException();
+        throw new \Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException();
     }
 
     /**
@@ -135,7 +128,7 @@ final class File extends BaseFile
      */
     public function getErrors(): array
     {
-        throw new NotImplementedException();
+        throw new \Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException();
     }
 
     /**
@@ -152,7 +145,7 @@ final class File extends BaseFile
     }
 
     /**
-     * @param  Sniff[][]  $tokenListeners
+     * @param array<array<Sniff>> $tokenListeners
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners, SmartFileInfo $fileInfo): void
     {

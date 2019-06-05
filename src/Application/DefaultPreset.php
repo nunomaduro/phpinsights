@@ -13,9 +13,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
  */
 final class DefaultPreset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'default';
@@ -28,7 +25,10 @@ final class DefaultPreset implements PresetContract
     {
         return [
             'exclude' => [
-                // ...
+                'bower_components',
+                'node_modules',
+                'vendor',
+                '.phpstorm.meta.php',
             ],
             'add' => [
                 // ...

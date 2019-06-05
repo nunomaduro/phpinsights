@@ -13,17 +13,11 @@ use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 
 final class Traits implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', count($collector->getTraits()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         return count($collector->getFiles()) > 0 ? (count($collector->getTraits()) / count($collector->getFiles())) * 100 : 0;

@@ -19,9 +19,6 @@ use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 
 final class Classes implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getClasses());
@@ -45,9 +42,6 @@ final class Classes implements HasValue, HasInsights
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         return count($collector->getFiles()) > 0 ? ($collector->getClasses() / count($collector->getFiles())) * 100 : 0;

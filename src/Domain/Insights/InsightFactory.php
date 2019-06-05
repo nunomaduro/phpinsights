@@ -10,7 +10,6 @@ use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
-use RuntimeException;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Error\Error;
@@ -47,7 +46,7 @@ final class InsightFactory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  string  $dir
-     * @param  array<string>  $insightsClasses
+     * @param array<string> $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -72,7 +71,7 @@ final class InsightFactory
                 break;
 
             default:
-                throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
+                throw new \RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
                 break;
         }
     }
@@ -80,8 +79,8 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param array<string>        $insights
-     * @param array<string, array> $config
+     * @param array<string> $insights
+     * @param  array<string, array>  $config
      *
      * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
      */

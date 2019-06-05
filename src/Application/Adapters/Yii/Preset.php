@@ -11,9 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
  */
 final class Preset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'yii';

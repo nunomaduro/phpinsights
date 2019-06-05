@@ -8,17 +8,11 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
 final class ForbiddenFinalClasses extends Insight implements HasDetails
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         return (bool) count($this->collector->getConcreteFinalClasses());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return array_key_exists('title', $this->config) ? (string) $this->config['title'] : 'The use of `final` classes is prohibited';

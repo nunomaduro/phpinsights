@@ -24,17 +24,11 @@ use SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff;
 
 final class Comments implements HasValue, HasPercentage, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getCommentLines());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         return $collector->getLines() > 0 ? ($collector->getCommentLines() / $collector->getLines()) * 100 : 0;

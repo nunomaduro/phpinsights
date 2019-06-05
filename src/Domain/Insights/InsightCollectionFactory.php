@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -39,7 +39,7 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param  array<string>  $metrics
+     * @param array<string> $metrics
      * @param  array<string, array<string, string>>  $config
      * @param  string  $dir
      *
@@ -51,7 +51,7 @@ final class InsightCollectionFactory
             $files = array_map(static function (SplFileInfo $file) {
                 return $file->getRealPath();
             }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
-        } catch (InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
 

@@ -13,9 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Bold implements Style
 {
-    /**
-     * {@inheritdoc}
-     */
     public function addTo(OutputInterface $output): void
     {
         $outputStyle = new OutputFormatterStyle('default', 'default', ['bold']);

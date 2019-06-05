@@ -13,9 +13,6 @@ use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
 
 final class Namespaces implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', count($collector->getNamespaces()));

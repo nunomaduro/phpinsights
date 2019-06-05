@@ -8,9 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
 final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         /** @var array<string> $ignore */
@@ -19,9 +16,6 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
         return count(array_diff($this->collector->getGlobalConstants(), $ignore)) > 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return 'Define `globals` is prohibited';

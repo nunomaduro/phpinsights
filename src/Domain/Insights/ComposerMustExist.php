@@ -8,9 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 
 final class ComposerMustExist extends Insight
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         try {
@@ -22,9 +19,6 @@ final class ComposerMustExist extends Insight
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return 'The `composer.json` file was not found';

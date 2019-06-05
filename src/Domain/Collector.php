@@ -556,9 +556,6 @@ final class Collector
         $this->globalConstants[$this->currentFilename] = $name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function incrementTraits(): void
     {
         if ($this->currentFilename !== null) {
@@ -961,7 +958,7 @@ final class Collector
      */
     private function divide(float $x, float $y): float
     {
-        return $y != 0 ? $x / $y : 0;
+        return $y !== 0.0 ? $x / $y : 0;
     }
 
     /**

@@ -55,9 +55,6 @@ use SlevomatCodingStandard\Sniffs\Variables\UselessVariableSniff;
 
 final class Code implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getLines());

@@ -10,7 +10,6 @@ use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Kernel;
-use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -61,7 +60,7 @@ final class AnalyseCommand
 
         foreach (Kernel::getRequiredFiles() as $file) {
             if (! file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
-                throw new RuntimeException("The file `$file` must exist. You should run PHP Insights from the root of your project.");
+                throw new \RuntimeException("The file `$file` must exist. You should run PHP Insights from the root of your project.");
             }
         }
 

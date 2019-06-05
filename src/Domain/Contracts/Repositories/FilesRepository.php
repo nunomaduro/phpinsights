@@ -21,7 +21,7 @@ interface FilesRepository extends CustomSourceProviderInterface
     /**
      * Get the files.
      *
-     * @return array<\Symfony\Component\Finder\SplFileInfo>
+     * @return iterable<\Symfony\Component\Finder\SplFileInfo>
      */
     public function getFiles(): iterable;
 
@@ -29,7 +29,7 @@ interface FilesRepository extends CustomSourceProviderInterface
      * Sets the current files dirs.
      *
      * @param  string  $dir
-     * @param  array<string>  $exclude
+     * @param array<string> $exclude
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
