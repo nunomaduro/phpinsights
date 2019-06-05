@@ -332,6 +332,8 @@ final class Collector
     }
 
     /**
+     * Increase the complexity of the analysis
+     *
      * @return void
      */
     public function incrementComplexity(): void
@@ -393,6 +395,8 @@ final class Collector
     }
 
     /**
+     * Increment if calling non static method.
+     *
      * @return void
      */
     public function incrementNonStaticMethodCalls(): void
@@ -401,6 +405,8 @@ final class Collector
     }
 
     /**
+     * Increment if a calling a static method
+     *
      * @return void
      */
     public function incrementStaticMethodCalls(): void
@@ -418,6 +424,8 @@ final class Collector
     }
 
     /**
+     * Increment if class is a interface.
+     *
      * @return void
      */
     public function incrementInterfaces(): void
@@ -426,7 +434,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -456,6 +464,8 @@ final class Collector
     }
 
     /**
+     * Increment if method.
+     *
      * @return void
      */
     public function incrementNonStaticMethods(): void
@@ -464,6 +474,8 @@ final class Collector
     }
 
     /**
+     * Increment if static method.
+     *
      * @return void
      */
     public function incrementStaticMethods(): void
@@ -472,6 +484,8 @@ final class Collector
     }
 
     /**
+     * Increment if public method.
+     *
      * @return void
      */
     public function incrementPublicMethods(): void
@@ -480,6 +494,8 @@ final class Collector
     }
 
     /**
+     * Increment if protected method.
+     *
      * @return void
      */
     public function incrementProtectedMethods(): void
@@ -488,6 +504,8 @@ final class Collector
     }
 
     /**
+     * Increment if private method.
+     *
      * @return void
      */
     public function incrementPrivateMethods(): void
@@ -510,6 +528,8 @@ final class Collector
     }
 
     /**
+     * Increment if anonymous function.
+     *
      * @return void
      */
     public function incrementAnonymousFunctions(): void
@@ -716,6 +736,8 @@ final class Collector
     }
 
     /**
+     * Returns the complexity of the analysed data.
+     *
      * @return int
      */
     public function getComplexity(): int
@@ -1053,6 +1075,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of calls to methods analysed.
+     *
      * @return int
      */
     public function getMethodCalls(): int
@@ -1061,6 +1085,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of classes analysed.
+     *
      * @return int
      */
     public function getClasses(): int
@@ -1069,6 +1095,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of methods analysed.
+     *
      * @return int
      */
     public function getMethods(): int
@@ -1077,6 +1105,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of functions analysed.
+     *
      * @return int
      */
     public function getFunctions(): int
@@ -1085,6 +1115,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of constants analysed.
+     *
      * @return int
      */
     public function getConstants(): int

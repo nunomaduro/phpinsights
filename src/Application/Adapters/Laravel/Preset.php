@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
+use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 
 /**
@@ -51,6 +52,11 @@ final class Preset implements PresetContract
                     'forbiddenFunctions' => [
                         'dd' => null,
                         'dump' => null,
+                    ],
+                ],
+                ForbiddenSetterSniff::class => [
+                    'allowedMethodRegex' => [
+                        '/^set.*?Attribute$/',
                     ],
                 ],
             ],
