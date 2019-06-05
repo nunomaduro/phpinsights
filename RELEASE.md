@@ -11,3 +11,4 @@ Upon releasing a new version there's some checks and updates to be made:
 - `git push`
 - `git tag {new_version}`
 - `git push --tags`
+- Make a tweet about the release attributing credits to the external collaborators
