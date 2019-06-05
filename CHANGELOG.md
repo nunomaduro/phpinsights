@@ -4,13 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.6.0]
+### Added
+- Laravel preset now ignores model attribute setters ([#154](https://github.com/nunomaduro/phpinsights/pull/154))
+- Ignores package managers folders by default ([#144](https://github.com/nunomaduro/phpinsights/pull/144))
+- Ignores `blade.php` files ([#155](https://github.com/nunomaduro/phpinsights/pull/155))
+- You can now exclude files and directories ([#75](https://github.com/nunomaduro/phpinsights/pull/75))
+- Automatic docker image build on new release ([#160](https://github.com/nunomaduro/phpinsights/pull/160))
+
+### Changed
+- Upgraded `sensiolabs/security-checker` dependency to `^6.0` ([#158](https://github.com/nunomaduro/phpinsights/pull/158))
+
+### Fixed
+- Fixed a bug with optional type hints increasing cyclomatic complexity ([#150](https://github.com/nunomaduro/phpinsights/pull/150))
+
 ## [v1.5.0]
 ### Added
 - Better support with nette dependencies
 
 ### Fixed
 - Complexity over `100.0`
-
 ## [v1.4.0]
 ### Added
 - Drupal preset ([#120](https://github.com/nunomaduro/phpinsights/pull/120))
