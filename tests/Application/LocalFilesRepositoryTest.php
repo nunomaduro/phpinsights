@@ -13,13 +13,16 @@ use Tests\TestCase;
  */
 final class LocalFilesRepositoryTest extends TestCase
 {
-    protected $base = __DIR__ . '/../Fixtures/Tree';
+    /**
+     * @var string
+     */
+    private $base = __DIR__ . '/../Fixtures/Tree';
 
     /**
      * @test
      * @dataProvider provider
      * @param int $expected
-     * @param array $exclude
+     * @param array<string> $exclude
      */
     public function itExcludesFilesGivenAPath(int $expected, array $exclude): void
     {
@@ -27,9 +30,12 @@ final class LocalFilesRepositoryTest extends TestCase
 
         $files = $repository->within($this->base, $exclude)->getFiles();
 
-        $this->assertCount($expected, $files);
+        self::assertCount($expected, $files);
     }
 
+    /**
+     * @return array<int, array<int, array<int, string>|int>>
+     */
     public function provider(): array
     {
         return [
