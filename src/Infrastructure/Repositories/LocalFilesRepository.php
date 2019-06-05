@@ -51,7 +51,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function within(string $directory, array $exclude = []): FilesRepository
     {
-        $this->finder->in([$directory])->exclude($exclude);
+        $this->finder->in([$directory])->notPath($exclude);
 
         foreach ($exclude as $value) {
             if (substr($value, -4) === '.php') {
