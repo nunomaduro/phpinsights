@@ -6,6 +6,7 @@ module.exports = {
     repo: 'nunomaduro/phpinsights',
     sidebar: [
       '/get-started',
+      '/testimonial',
       '/configuration',
       '/contribute',
       '/support'
