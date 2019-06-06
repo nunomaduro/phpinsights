@@ -14,7 +14,7 @@
             (function () {
                 var d = window.document, s = d.createElement('script');
                 s.src = 'https://platform.twitter.com/widgets.js';
-                s.setAttribute('data-timestamp', +new Date());
+                s.setAttribute('data-timestamp', + new Date());
                 s.setAttribute('async', true);
                 s.setAttribute('charset', 'utf-8');
                 (d.head || d.body).appendChild(s);
