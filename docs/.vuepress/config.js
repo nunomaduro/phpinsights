@@ -10,10 +10,10 @@ module.exports = {
       '/configuration',
       '/contribute',
       '/support'
-    ]
+    ],
+    algolia: {
+      apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
+      indexName: 'phpinsights'
+    }
   },
-  algolia: {
-    apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
-    indexName: 'phpinsights'
-  }
 }
