@@ -225,7 +225,7 @@ EOD;
 
                 $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
 
-                if (! $insight instanceof HasDetails) {
+                if (! $insight instanceof HasDetails && ! $this->output->isVerbose()) {
                     $this->writeln($issue);
                     continue;
                 }
@@ -233,6 +233,12 @@ EOD;
                 if ($this->output->isVerbose()) {
                     $issue .= " ({$insight->getInsightClass()})";
                 }
+
+                if (! $insight instanceof HasDetails) {
+                    $this->writeln($issue);
+                    continue;
+                }
+
                 $details = $insight->getDetails();
                 $totalDetails = count($details);
 
