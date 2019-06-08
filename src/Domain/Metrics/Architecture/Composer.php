@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
-use NunoMaduro\PhpInsights\Domain\Insights\ComposerMustContainName;
-use NunoMaduro\PhpInsights\Domain\Insights\ComposerMustExist;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerLockMustBeFresh;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustExist;
 
 final class Composer implements HasInsights
 {
@@ -18,6 +20,8 @@ final class Composer implements HasInsights
         return [
             ComposerMustExist::class,
             ComposerMustContainName::class,
+            ComposerMustBeValid::class,
+            ComposerLockMustBeFresh::class,
         ];
     }
 }
