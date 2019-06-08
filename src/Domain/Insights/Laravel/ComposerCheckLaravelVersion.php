@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Laravel;
 
+use NunoMaduro\PhpInsights\Domain\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
-use NunoMaduro\PhpInsights\Domain\Insights\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerCheckLaravelVersion extends Insight

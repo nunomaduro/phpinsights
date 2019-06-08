@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights;
+namespace NunoMaduro\PhpInsights\Domain\Insights\Composer;
 
+use NunoMaduro\PhpInsights\Domain\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
+use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerMustContainName extends Insight
 {
