@@ -299,7 +299,7 @@ try {
 ```
 </details>
 
-## Unused Inherited variable passed to closure <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
+## Unused Inherited variable passed to closure <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="Code\Functions" type="warn"/>
 
 This sniff looks for unused inherited variables passed to closure via `use`.
 
@@ -492,9 +492,65 @@ This sniff reports documentation comments containing only `{@inheritDoc}` annota
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff`
 
+## Unused function parameter <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This sniff checks that all function parameters are used in the function body.
+One exception is made for empty function bodies or function bodies that only contain comments.
+This could be useful for the classes that implement an interface that defines multiple methods but the implementation only needs some of them.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\UnusedFunctionParameterSniff`
+
+## Call time pass by reference <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This sniff ensures that variables are not passed by reference when calling a function.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\CallTimePassByReferenceSniff`
+
+## Deperacted functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This sniff discourages the use of deprecated PHP functions.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DeprecatedFunctionsSniff`
+
+## Nullable type declaration <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This sniff verifies that nullable typehints are lacking superfluous whitespace (e.g. `?int`).
+
+**Insight Class**: `PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions\NullableTypeDeclarationSniff`
+
+## Static closure <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This sniff reports closures not using $this that are not declared static.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff`
+
+## Forbidden define functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This insight disallow define functions.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions`
+
+## Forbidden functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+
+This sniff discourages the use of alias functions.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff`
+
+## Global Keyword <Badge text="^1.0"/> <Badge text="Code\Globally" type="warn"/>
+
+This sniff disallow usage of `global`.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\GlobalKeywordSniff`
+
+## Forbiden Globals <Badge text="^1.0"/> <Badge text="Code\Globally" type="warn"/>
+
+This sniff detects globals accesses.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals`
+
 <!--
 Insight template
-##  <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+##  <Badge text="^1.0"/> <Badge text="Code\Globally" type="warn"/>
 
 This sniff
 
