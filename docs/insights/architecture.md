@@ -39,9 +39,9 @@ This sniff checks the size of your classes/traits/interface
     <summary>Configuration</summary>
 
 ```php
-    ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff::class => [
-        'maxLength' => 200,
-    ]
+\ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff::class => [
+    'maxLength' => 200,
+]
 ```
 </details>
 
@@ -55,9 +55,9 @@ This sniff checks if the number of method per class is under a limit.
     <summary>Configuration</summary>
 
 ```php
-    ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class => [
-        'maxCount' => 10,
-    ]
+\ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class => [
+    'maxCount' => 10,
+]
 ```
 </details>
 
@@ -72,9 +72,9 @@ This sniff checks if the number of property per class is under a limit.
     <summary>Configuration</summary>
 
 ```php
-    ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class => [
-        'maxCount' => 10,
-    ]
+\ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class => [
+    'maxCount' => 10,
+]
 ```
 </details>
 
@@ -142,9 +142,9 @@ This sniff checks size of functions
     <summary>Configuration</summary>
 
 ```php
-    ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class => [
-        'maxLength' => 20,
-    ]
+\ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class => [
+    'maxLength' => 20,
+]
 ```
 </details>
 

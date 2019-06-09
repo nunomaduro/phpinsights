@@ -95,10 +95,10 @@ This sniff ensures all language constructs contain a single space between themse
     <summary>Configuration</summary>
 
 ```php
-        \ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff::class => [
-            'minLength' => 3,
-            'allowedShortNames' => ['i', 'id', 'to', 'up'],
-        ]
+\ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff::class => [
+    'minLength' => 3,
+    'allowedShortNames' => ['i', 'id', 'to', 'up'],
+]
 ```
 </details>
 
@@ -110,9 +110,9 @@ This sniff ensures all language constructs contain a single space between themse
     <summary>Configuration</summary>
 
 ```php
-        \ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff::class => [
-            'maxNestingLevel' => 2,
-        ]
+\ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff::class => [
+    'maxNestingLevel' => 2,
+]
 ```
 </details>
 
@@ -136,9 +136,9 @@ This sniff ensure array are correctly indented
     <summary>Configuration</summary>
 
 ```php
-        \PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff::class => [
-            'indent' => 4,
-        ]
+\PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff::class => [
+    'indent' => 4,
+]
 ```
 </details>
 
@@ -437,9 +437,9 @@ It's recommended to forbid generated or inappropriate messages like:
     <summary>Configuration</summary>
 
 ```php
-    SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff::class => [
-        'forbiddenCommentPatterns' => []
-    ]
+SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff::class => [
+    'forbiddenCommentPatterns' => []
+]
 ```
 </details>
 

@@ -44,9 +44,9 @@ This sniff checks that end of line characters are correct.
     <summary>Configuration</summary>
 
 ```php
-    \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineEndingsSniff::class => [
-        'eolChar' => '\n',
-    ]
+\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineEndingsSniff::class => [
+    'eolChar' => '\n',
+]
 ```
 </details>
 
@@ -66,9 +66,9 @@ This sniff checks that object operators are indented correctly.
     <summary>Configuration</summary>
 
 ```php
-    \PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff::class => [
-        'indent' => 4,
-    ]
+\PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff::class => [
+    'indent' => 4,
+]
 ```
 </details>
 
@@ -82,9 +82,9 @@ This sniff checks that the closing braces of scopes are aligned correctly.
     <summary>Configuration</summary>
 
 ```php
-    \PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff::class => [
-        'indent' => 4,
-    ]
+\PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ScopeClosingBraceSniff::class => [
+    'indent' => 4,
+]
 ```
 </details>
 
@@ -105,11 +105,11 @@ This sniff checks the length of all lines in a file.
     <summary>Configuration</summary>
 
 ```php
-    \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
-        'lineLimit' => 80,
-        'absoluteLineLimit' => 100,
-        'ignoreComments' => false,
-    ]
+\PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
+    'lineLimit' => 80,
+    'absoluteLineLimit' => 100,
+    'ignoreComments' => false,
+]
 ```
 </details>
 
@@ -247,9 +247,9 @@ This sniff ensures all switch statements are defined correctly.
     <summary>Configuration</summary>
 
 ```php
-    \PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class => [
-        'indent' => 4,
-    ]
+\PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSniff::class => [
+    'indent' => 4,
+]
 ```
 </details>
 
@@ -276,10 +276,10 @@ This sniff enforces configurable number of lines before and after `namespace`.
     <summary>Configuration</summary>
 
 ```php
-    \SlevomatCodingStandard\Sniffs\Namespaces\NamespaceSpacingSniff::class => [
-        'linesCountBeforeNamespace' => 1,
-        'linesCountAfterNamespace' => 1,
-    ]
+\SlevomatCodingStandard\Sniffs\Namespaces\NamespaceSpacingSniff::class => [
+    'linesCountBeforeNamespace' => 1,
+    'linesCountAfterNamespace' => 1,
+]
 ```
 </details>
 
@@ -299,11 +299,11 @@ This sniff detects unused `use` in a file.
     <summary>Configuration</summary>
 
 ```php
-    \SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class => [
-        'searchAnnotations' => false,
-        'ignoredAnnotationNames' => [], // case sensitive list of annotation names that the sniff should ignore (only the name is ignored, annotation content is still searched). Useful for name collisions like @testCase annotation and TestCase class.
-        'ignoredAnnotations' => [], // case sensitive list of annotation names that the sniff ignore completely (both name and content are ignored). Useful for name collisions like @group Cache annotation and Cache class
-    ]
+\SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class => [
+    'searchAnnotations' => false,
+    'ignoredAnnotationNames' => [], // case sensitive list of annotation names that the sniff should ignore (only the name is ignored, annotation content is still searched). Useful for name collisions like @testCase annotation and TestCase class.
+    'ignoredAnnotations' => [], // case sensitive list of annotation names that the sniff ignore completely (both name and content are ignored). Useful for name collisions like @group Cache annotation and Cache class
+]
 ```
 </details>
 
@@ -323,11 +323,11 @@ This sniff enforces configurable number of lines before first use, after last us
     <summary>Configuration</summary>
 
 ```php
-    \SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff::class => [
-        'linesCountBeforeFirstUse' => 1,
-        'linesCountBetweenUseTypes' => 0,
-        'linesCountAfterLastUse' => 1,
-    ]
+\SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff::class => [
+    'linesCountBeforeFirstUse' => 1,
+    'linesCountBetweenUseTypes' => 0,
+    'linesCountAfterLastUse' => 1,
+]
 ```
 </details>
 
@@ -341,9 +341,9 @@ This sniff enforces configurable number of spaces after the `...` operator.
     <summary>Configuration</summary>
 
 ```php
-    \SlevomatCodingStandard\Sniffs\Operators\SpreadOperatorSpacingSniff::class => [
-        'spacesCountAfterOperator' => 0,
-    ]
+\SlevomatCodingStandard\Sniffs\Operators\SpreadOperatorSpacingSniff::class => [
+    'spacesCountAfterOperator' => 0,
+]
 ```
 </details>
 
@@ -371,9 +371,9 @@ This sniff enforces consistent formatting of return typehints.
     <summary>Configuration</summary>
 
 ```php
-    \SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff::class => [
-        'spacesCountBeforeColon' => 0,
-    ]
+\SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff::class => [
+    'spacesCountBeforeColon' => 0,
+]
 ```
 </details>
 
@@ -387,9 +387,9 @@ This sniff checks for unneeded whitespace.
     <summary>Configuration</summary>
 
 ```php
-    \PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff::class => [
-        'ignoreBlankLines' => false,
-    ]
+\PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\SuperfluousWhitespaceSniff::class => [
+    'ignoreBlankLines' => false,
+]
 ```
 </details>
 
@@ -403,14 +403,14 @@ This sniff enforces configurable number of lines before first content (descripti
     <summary>Configuration</summary>
 
 ```php
-    \vomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class => [
-        'linesCountBeforeFirstContent' => 0,
-        'linesCountBetweenDescriptionAndAnnotations' => 1,
-        'linesCountBetweenDifferentAnnotationsTypes' => 0,
-        'linesCountBetweenAnnotationsGroups' => 1,
-        'linesCountAfterLastContent' => 0,
-        'annotationsGroups' => [],
-    ]
+\SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class => [
+    'linesCountBeforeFirstContent' => 0,
+    'linesCountBetweenDescriptionAndAnnotations' => 1,
+    'linesCountBetweenDifferentAnnotationsTypes' => 0,
+    'linesCountBetweenAnnotationsGroups' => 1,
+    'linesCountAfterLastContent' => 0,
+    'annotationsGroups' => [],
+]
 ```
 </details>
 
