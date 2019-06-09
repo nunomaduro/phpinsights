@@ -77,7 +77,7 @@ You could also simplify the namespace with `use My\Insight\Namespace;`
 
 ## Remove Insights
 
-If there is an insight that go against your standards, you can adding it in the `remove` section.
+If there is an insight that go against your standards, you can add it in the `remove` section.
 
 For example, if you don't like adding a space after not (`! $myVariable`):
 ```php
