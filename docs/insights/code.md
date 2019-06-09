@@ -1,4 +1,4 @@
-# Code Insights
+# Code
 
 The following insights are in organised in differents metrics :
 

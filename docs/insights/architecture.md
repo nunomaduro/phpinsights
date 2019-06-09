@@ -7,7 +7,6 @@ The following insights are in organised in differents metrics :
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Constants` <Badge text="Architecture\Constants" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Files` <Badge text="Architecture\Files" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Functions` <Badge text="Architecture\Functions" type="warn" vertical="middle"/>
-* `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Globally` <Badge text="Architecture\Globally" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Interfaces` <Badge text="Architecture\Interfaces" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Namespaces` <Badge text="Architecture\Namespaces" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Traits` <Badge text="Architecture\Traits" type="warn" vertical="middle"/>
@@ -97,9 +96,103 @@ This sniff reports use of superfluous prefix or suffix "Abstract" for abstract c
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff`
 
+## `composer.json` must exist <Badge text="^1.0"/> <Badge text="Architecture\Composer" type="warn"/>
+
+This insight verifies there is `composer.json`.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustExist`
+
+## The name property in the `composer.json` <Badge text="^1.0"/> <Badge text="Architecture\Composer" type="warn"/>
+
+This insight checks if the name section in `composer.json` don't contains default values (e.g. `laravel/laravel` or `symfony/symfony`).
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName`
+
+## Composer.json must be valid <Badge text="^1.7"/> <Badge text="Architecture\Composer" type="warn"/>
+
+This insight checks if the `composer.json` is valid.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid`
+
+## Composer.lock must be fresh <Badge text="^1.7"/> <Badge text="Architecture\Composer" type="warn"/>
+
+This insight verifies that the `composer.lock` is not outdated.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerLockMustBeFresh`
+
+## Define `globals` is prohibited <Badge text="^1.0"/> <Badge text="Architecture\Constants" type="warn"/>
+
+This insight disallow defining `globals`.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants`
+
+##  <Badge text="^1.0"/> <Badge text="Architecture\Files" type="warn"/>
+
+This sniff reports use of superfluous prefix or suffix "Exception" for exceptions.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff`
+
+## Function length <Badge text="^1.0"/> <Badge text="Architecture\Functions" type="warn"/>
+
+This sniff checks size of functions
+
+**Insight Class**: `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+    ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class => [
+        'maxLength' => 20,
+    ]
+```
+</details>
+
+## One interface per file <Badge text="^1.0"/> <Badge text="Architecture\Interfaces" type="warn"/>
+
+This sniff checks that only one interface is declared per file.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneInterfacePerFileSniff`
+
+## Namespace declaration <Badge text="^1.0"/> <Badge text="Architecture\Namespaces" type="warn"/>
+
+This sniff enforces one space after namespace, disallows content between namespace name and semicolon and disallows use of bracketed syntax.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\NamespaceDeclarationSniff`
+
+## Useless Alias <Badge text="^1.0"/> <Badge text="Architecture\Namespaces" type="warn"/>
+
+This sniff looks for use alias that is same as unqualified name.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff`
+
+## Compound namespace depth <Badge text="^1.0"/> <Badge text="Architecture\Namespaces" type="warn"/>
+
+This sniff verifies that compound namespaces are not defined too deep.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\PSR12\Sniffs\Namespaces\CompoundNamespaceDepthSniff`
+
+## Forbidden traits <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>
+
+This insight disallow traits usage.
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits`
+
+## One trait per file <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>
+
+This sniff checks that only one trait is declared per file
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneTraitPerFileSniff`
+
+## Superfluous trait naming <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>
+
+This sniff reports use of superfluous prefix or suffix "Trait" for traits.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff`
+
 <!--
 Insight template
-##  <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
+##  <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>
 
 This sniff
 
