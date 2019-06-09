@@ -15,6 +15,7 @@ module.exports = {
           '/insights/',
           '/insights/code',
           '/insights/architecture',
+          '/insights/complexity',
         ]
       },
       '/contribute',
