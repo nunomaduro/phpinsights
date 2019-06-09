@@ -8,6 +8,7 @@ module.exports = {
       '/get-started',
       '/testimonial',
       '/configuration',
+      '/continuous-integration',
       {
         title: 'Insights',
         collapsable: false,
