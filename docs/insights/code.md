@@ -386,9 +386,115 @@ This sniff looks for duplicate assignments to a variable.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Variables\DuplicateAssignmentToVariableSniff`
 
+## Empty comment <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff reports empty comment
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff`
+
+## Nullable type for null default value <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff checks whether the nullablity `?` symbol is present before each nullable and optional parameter (which are marked as `= null`)
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff`
+
+<details>
+    <summary>Example </summary>
+
+```php
+function foo(
+    int $foo = null, // ? missing
+    ?int $bar = null // correct
+) {
+    // ...
+}
+```
+</details>
+
+## Fixme <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff warns about FIXME comments.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff`
+
+## Todo <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff warns about TODO comments.
+
+**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff`
+
+## Forbidden comments <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff reports forbidden comments in descriptions.
+Nothing is forbidden by default, the configuration is completely up to the user.
+It's recommended to forbid generated or inappropriate messages like:
+- `Constructor.`
+- `Created by PhpStorm.`
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+    SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff::class => [
+        'forbiddenCommentPatterns' => []
+    ]
+```
+</details>
+
+## Inline doc comment declaration <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff reports invalid inline phpDocs with `@var`.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff`
+
+## Disallow Array type hint syntax <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff disallows usage of array type hint syntax (eg. `int[]`, `bool[][]`) in phpDocs in favour of generic type hint syntax (eg. `array<int>`, `array<array<bool>>`).
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff`
+
+## Disallow mixed type hint <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff disallow usage of "mixed" type hint in phpDocs.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff`
+
+## Long type hints <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff enforces using shorthand scalar typehint variants in phpDocs: `int` instead of `integer` and `bool` instead of `boolean`.
+This is for consistency with native scalar typehints which also allow shorthand variants only.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\LongTypeHintsSniff`
+
+## Null type hint on last position <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff enforces `null` type hint on last position in annotations.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\NullTypeHintOnLastPositionSniff`
+
+## Type hint declaration <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+See the [official explanation](https://github.com/slevomat/coding-standard/#slevomatcodingstandardtypehintstypehintdeclaration-)
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff`
+
+## Useless constant type hint <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff reports useless `@var` annotation (or whole documentation comment) for constants because the type of constant is always clear.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff`
+
+## Useless Inherit doc comment <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff reports documentation comments containing only `{@inheritDoc}` annotation because inheritance is automatic and it's not needed to use a special annotation for it.
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff`
+
 <!--
 Insight template
-##  <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
+##  <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
 This sniff
 
