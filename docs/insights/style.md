@@ -28,13 +28,13 @@ This sniff checks for merge conflict artifacts.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\VersionControl\GitMergeConflictSniff`
 
-##  <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Byte order mark <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff detects BOMs that may corrupt application work.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Files\ByteOrderMarkSniff`
 
-## Line endings <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Line endings <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks that end of line characters are correct.
 
@@ -56,7 +56,7 @@ This sniff checks that the closing brace of a function goes directly after the b
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionClosingBraceSniff`
 
-## Object operator indent <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Object operator indent <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks that object operators are indented correctly.
 
@@ -72,7 +72,7 @@ This sniff checks that object operators are indented correctly.
 ```
 </details>
 
-## Scope closing brace <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Scope closing brace <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks that the closing braces of scopes are aligned correctly.
 
@@ -95,7 +95,7 @@ Use `[]` instead.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\DisallowLongArraySyntaxSniff`
 
-## Line length <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Line length <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks the length of all lines in a file.
 
@@ -237,7 +237,7 @@ This sniff verifies that there are no else if statements (elseif should be used 
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\ElseIfDeclarationSniff`
 
-## Switch declaration <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Switch declaration <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff ensures all switch statements are defined correctly.
 
@@ -266,7 +266,7 @@ Follows natural sorting and takes edge cases with special symbols into considera
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff`
 
-## Namespace Spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Namespace Spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff enforces configurable number of lines before and after `namespace`.
 
@@ -289,7 +289,7 @@ This sniff checks there is only one namespace in a file.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\RequireOneNamespaceInFileSniff`
 
-## Unused uses <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Unused uses <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff detects unused `use` in a file.
 
@@ -313,7 +313,7 @@ This sniff disallows leading backslash in use statement.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\UseDoesNotStartWithBackslashSniff`
 
-## Use spacing sniff <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Use spacing sniff <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff enforces configurable number of lines before first use, after last use and between two use statements.
 
@@ -331,7 +331,7 @@ This sniff enforces configurable number of lines before first use, after last us
 ```
 </details>
 
-## Spread operator spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Spread operator spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff enforces configurable number of spaces after the `...` operator.
 
@@ -361,7 +361,7 @@ This sniff
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff`
 
-## Return type hint spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Return type hint spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff enforces consistent formatting of return typehints.
 
@@ -377,7 +377,7 @@ This sniff enforces consistent formatting of return typehints.
 ```
 </details>
 
-## Superfluous Whitespace <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Superfluous Whitespace <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks for unneeded whitespace.
 
@@ -393,7 +393,7 @@ This sniff checks for unneeded whitespace.
 ```
 </details>
 
-## Doc comment spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Doc comment spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
 This sniff enforces configurable number of lines before first content (description or annotation), after last content (description or annotation), between description and annotations, between two different annotations types (eg. between `@param` and `@return`).
 

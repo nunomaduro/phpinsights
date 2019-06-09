@@ -87,7 +87,7 @@ This sniff ensures all language constructs contain a single space between themse
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff`
 
-## Element name minimal length <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
+## Element name minimal length <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
 **Insight Class**: `ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff`
 
@@ -102,7 +102,7 @@ This sniff ensures all language constructs contain a single space between themse
 ```
 </details>
 
-## Max nesting level <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
+## Max nesting level <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
 **Insight Class**: `ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff`
 
@@ -126,7 +126,7 @@ This sniff detects usage of `eval()` function.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff`
 
-## Array indent <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
+## Array indent <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
 This sniff ensure array are correctly indented
 
@@ -423,7 +423,7 @@ This sniff warns about TODO comments.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff`
 
-## Forbidden comments <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+## Forbidden comments <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
 
 This sniff reports forbidden comments in descriptions.
 Nothing is forbidden by default, the configuration is completely up to the user.

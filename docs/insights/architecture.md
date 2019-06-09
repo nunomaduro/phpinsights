@@ -29,7 +29,7 @@ This sniff checks if the declaration of the class is correct
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff`
 
-## Class trait and interface length <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
+## Class trait and interface length <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks the size of your classes/traits/interface
 
@@ -45,7 +45,7 @@ This sniff checks the size of your classes/traits/interface
 ```
 </details>
 
-## Method per class limit <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
+## Method per class limit <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks if the number of method per class is under a limit.
 
@@ -62,7 +62,7 @@ This sniff checks if the number of method per class is under a limit.
 </details>
 
 
-## Property per class limit <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
+## Property per class limit <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks if the number of property per class is under a limit.
 
@@ -132,7 +132,7 @@ This sniff reports use of superfluous prefix or suffix "Exception" for exception
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff`
 
-## Function length <Badge text="^1.0"/> <Badge text="Architecture\Functions" type="warn"/>
+## Function length <Badge text="^1.0"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
 
 This sniff checks size of functions
 
