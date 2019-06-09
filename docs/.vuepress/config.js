@@ -13,6 +13,7 @@ module.exports = {
         collapsable: false,
         children: [
           '/insights/',
+          '/insights/code'
         ]
       },
       '/contribute',
