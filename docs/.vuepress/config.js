@@ -8,8 +8,15 @@ module.exports = {
       '/get-started',
       '/testimonial',
       '/configuration',
+      {
+        title: 'Insights',
+        collapsable: false,
+        children: [
+          '/insights/',
+        ]
+      },
       '/contribute',
-      '/support'
+      '/support',
     ],
     algolia: {
       apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
