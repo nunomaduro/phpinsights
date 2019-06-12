@@ -102,8 +102,8 @@ final class Results
                 return count($insight->getDetails());
             }
         }
-
-        throw new \RuntimeException('This should not happen');
+        // ForbiddenSecurityInsight is not included
+        return 0;
     }
 
     /**
