@@ -92,16 +92,25 @@ final class InsightCollectionFactory
      */
     private function getInsights(string $metricClass, array $config): array
     {
+        /** @var HasInsights $metric */
         $metric = new $metricClass();
 
-        $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
+        $insights = array_key_exists(
+            HasInsights::class,
+            class_implements($metricClass)
+        ) ? $metric->getInsights() : [];
 
         $toAdd = array_key_exists('add', $config) &&
         array_key_exists($metricClass, $config['add']) &&
-        is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
+        is_array($config['add'][$metricClass])
+            ? $config['add'][$metricClass]
+            : [];
 
         $insights = array_merge($insights, $toAdd);
 
-        return array_diff($insights, $config['remove'] ?? []);
+        // Remove insights based on config.
+        $insights = array_diff($insights, $config['remove'] ?? []);
+
+        return $insights;
     }
 }
