@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Sniffs;
 
-use Illuminate\Support\Arr;
+use NunoMaduro\PhpInsights\Domain\File as InsightFile;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -21,13 +21,6 @@ final class SniffWrapper implements Sniff
     private $sniff;
 
     /**
-     * Defines a array of files which the sniff should ignore.
-     *
-     * @var array<string>
-     */
-    public $ignoreFiles = [];
-
-    /**
      * SniffWrapper constructor.
      *
      * @param Sniff $sniff
@@ -42,9 +35,9 @@ final class SniffWrapper implements Sniff
      *
      * @return mixed[]
      *
-     * @see    Tokens.php
+     * @see Tokens.php
      */
-    public function register()
+    public function register(): array
     {
         return $this->sniff->register();
     }
@@ -53,7 +46,7 @@ final class SniffWrapper implements Sniff
      * Called when one of the token types that this sniff is listening for
      * is found.
      *
-     * @param File $file        The PHP_CodeSniffer file
+     * @param File|InsightFile $file        The PHP_CodeSniffer file
      * @param int $stackPtr The position in the PHP_CodeSniffer file's
      *                      token stack
      *
@@ -64,7 +57,6 @@ final class SniffWrapper implements Sniff
      */
     public function process(File $file, $stackPtr)
     {
-        dd("herer");
         // skip files if they are part of ignore files array.
         if ($this->skipFilesFromIgnoreFiles($file)) {
             return;
@@ -73,18 +65,41 @@ final class SniffWrapper implements Sniff
        return $this->sniff->process($file, $stackPtr);
     }
 
-    private function skipFilesFromIgnoreFiles(File $file): bool
+    private function skipFilesFromIgnoreFiles(InsightFile $file): bool
     {
-        foreach ($this->ignoreFiles as $ignoreFile) {
-            if (self::pathsAreEqual($ignoreFile, $file->getFilename())) {
-                return  true;
+        foreach ($this->getIgnoreFilesSetting() as $ignoreFile) {
+            if (self::pathsAreEqual(
+                $ignoreFile,
+                $file->getFileInfo()->getRealPath()
+            )) {
+                return true;
             }
-        }
+        };
         return false;
+    }
+
+    /**
+     * Contains the setting for all files which the sniff should ignore.
+     *
+     * @return array<string>
+     */
+    private function getIgnoreFilesSetting(): array
+    {
+        return $this->sniff->ignoreFiles ?? [];
     }
 
     private static function pathsAreEqual(string $pathA, string $pathB): bool
     {
         return realpath($pathA) === realpath($pathB);
+    }
+
+    /**
+     * Returns the sniff which we have wrapped.
+     *
+     * @return Sniff
+     */
+    public function getWrappedSniff(): Sniff
+    {
+        return $this->sniff;
     }
 }
