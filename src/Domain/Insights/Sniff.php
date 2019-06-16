@@ -79,7 +79,7 @@ final class Sniff implements Insight, HasDetails
     public function getInsightClass(): string
     {
         if (\count($this->errors) === 0) {
-            throw new SniffClassNotFound('Unable to found Sniff used.');
+            throw new SniffClassNotFound('Unable to find Sniff used.');
         }
 
         return explode('.', $this->errors[0]->getSourceClass())[0];

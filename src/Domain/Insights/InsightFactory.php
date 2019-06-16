@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
+use NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
@@ -173,7 +174,7 @@ final class InsightFactory
 
         $sniffer = Container::make()->get(FileProcessor::class);
         foreach ($this->sniffsFrom($this->insightsClasses, $config) as $sniff) {
-            $sniffer->addSniff($sniff);
+            $sniffer->addSniff(new SniffWrapper($sniff));
         }
 
         /** @var \Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication $application */
@@ -191,6 +192,10 @@ final class InsightFactory
 
         /** @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $errorAndDiffCollector */
         $errorAndDiffCollector = $ecsContainer->get(ErrorAndDiffCollector::class);
+
+        // Destroy the container, so we insights doesn't fail on consecutive
+        // runs. This is needed for tests also.
+        $ecsContainer->reset();
 
         return $this->sniffCollector = $errorAndDiffCollector;
     }

@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Fixer;
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Common;
 use Symplify\EasyCodingStandard\Application\AppliedCheckersCollector;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Skipper;
+use Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 
 final class File extends BaseFile
@@ -28,7 +29,7 @@ final class File extends BaseFile
     private $previousActiveSniffClass;
 
     /**
-     * @var array<array<\PHP_CodeSniffer\Sniffs\Sniff>>
+     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>>
      */
     private $tokenListeners = [];
 
@@ -120,7 +121,7 @@ final class File extends BaseFile
 
     public function getErrorCount(): int
     {
-        throw new \Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException();
+        throw new NotImplementedException();
     }
 
     /**
@@ -128,7 +129,7 @@ final class File extends BaseFile
      */
     public function getErrors(): array
     {
-        throw new \Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException();
+        throw new NotImplementedException();
     }
 
     /**
@@ -145,13 +146,23 @@ final class File extends BaseFile
     }
 
     /**
-     * @param array<array<Sniff>> $tokenListeners
+     * @param array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>> $tokenListeners
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners, SmartFileInfo $fileInfo): void
     {
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
         $this->process();
+    }
+
+    /**
+     * Get's the file info from the file.
+     *
+     * @return SmartFileInfo
+     */
+    public function getFileInfo(): SmartFileInfo
+    {
+        return $this->fileInfo;
     }
 
     /**
@@ -181,12 +192,12 @@ final class File extends BaseFile
     }
 
     /**
-     * @param  Sniff  $sniff
+     * @param SniffWrapper $sniff
      */
-    private function reportActiveSniffClass(Sniff $sniff): void
+    private function reportActiveSniffClass(SniffWrapper $sniff): void
     {
         // used in other places later
-        $this->activeSniffClass = get_class($sniff);
+        $this->activeSniffClass = get_class($sniff->getWrappedSniff());
 
         if (! $this->easyCodingStandardStyle->isDebug()) {
             return;
