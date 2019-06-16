@@ -21,6 +21,7 @@ parameters:
         - '#Variable property access on PHP_CodeSniffer\\Sniffs\\Sniff#'
         - '#is not allowed to extend#'
         - '#Language construct isset\(\) should not be used#'
+        - '#Access to an undefined property PHP_CodeSniffer\\Config::\$standards.#'
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

@@ -3,9 +3,8 @@
 declare(strict_types=1);
 
 
-namespace Tests\Domain\Insights\ForbiddenSetterMethods;
+namespace Tests\Domain\Sniffs\ForbiddenSetterMethods;
 
-use NunoMaduro\PhpInsights\Domain\Reflection;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
@@ -13,7 +12,7 @@ use PHP_CodeSniffer\Ruleset;
 use ReflectionClass;
 use Tests\TestCase;
 
-final class ForbiddenSetterMethodsTests extends TestCase
+final class ForbiddenSetterMethodsTest extends TestCase
 {
     /**
      * Prepares a supplied fixture for a supplied sniffer class with the supplied properties.
@@ -28,9 +27,13 @@ final class ForbiddenSetterMethodsTests extends TestCase
         $sniffs = [self::getFilePathFromClass($sniffClassName)];
 
         $config = new Config();
+        $config->standards = [];
 
         $ruleName = str_replace('Sniff', '', class_basename($sniffClassName));
-        $ruleset = new Ruleset($config);
+
+        /** @var Ruleset $ruleset */
+        $ruleset = (new ReflectionClass(Ruleset::class))
+            ->newInstanceWithoutConstructor();
         $ruleset->ruleset = [
             "PhpInsights.Sniffs.{$ruleName}" => [
                 'properties' => $properties,
@@ -57,7 +60,7 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__."/Fixtures/ClassWithSetter.php"
+            __DIR__ . "/Fixtures/ClassWithSetter.php"
         );
 
         // Run the sniff
@@ -71,7 +74,7 @@ final class ForbiddenSetterMethodsTests extends TestCase
         // Prepare the sniff
         $file = $this->prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__."/Fixtures/ClassWithNoSetter.php"
+            __DIR__ . "/Fixtures/ClassWithNoSetter.php"
         );
 
         // Run the sniff
