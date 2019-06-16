@@ -109,8 +109,6 @@ final class InsightCollectionFactory
         $insights = array_merge($insights, $toAdd);
 
         // Remove insights based on config.
-        $insights = array_diff($insights, $config['remove'] ?? []);
-
-        return $insights;
+        return array_diff($insights, $config['remove'] ?? []);
     }
 }

@@ -29,7 +29,7 @@ final class File extends BaseFile
     private $previousActiveSniffClass;
 
     /**
-     * @var array<array<\PHP_CodeSniffer\Sniffs\Sniff>>
+     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>>
      */
     private $tokenListeners = [];
 
@@ -146,7 +146,7 @@ final class File extends BaseFile
     }
 
     /**
-     * @param array<array<Sniff>> $tokenListeners
+     * @param array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>> $tokenListeners
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners, SmartFileInfo $fileInfo): void
     {

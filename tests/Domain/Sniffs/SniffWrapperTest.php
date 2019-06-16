@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 final class SniffWrapperTest extends TestCase
 {
-    public function testCanIgnoreFileInSniffWithRelativePath()
+    public function testCanIgnoreFileInSniffWithRelativePath(): void
     {
        $collection = $this->runAnalyserOnConfig(
            [
@@ -38,10 +38,10 @@ final class SniffWrapperTest extends TestCase
        }
 
        // No errors of this type as we are ignoring the file.
-       $this->assertEquals(0, $oneClassPerFileSniffErrors);
+       self::assertEquals(0, $oneClassPerFileSniffErrors);
     }
 
-    public function testFindMoreThanOneClassInFile()
+    public function testFindMoreThanOneClassInFile(): void
     {
         $collection = $this->runAnalyserOnConfig(
             [
@@ -62,6 +62,6 @@ final class SniffWrapperTest extends TestCase
         }
 
         // No errors of this type as we are ignoring the file.
-        $this->assertEquals(1, $oneClassPerFileSniffErrors);
+        self::assertEquals(1, $oneClassPerFileSniffErrors);
     }
 }

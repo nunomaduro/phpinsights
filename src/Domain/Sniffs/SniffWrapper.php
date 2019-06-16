@@ -46,9 +46,9 @@ final class SniffWrapper implements Sniff
      * Called when one of the token types that this sniff is listening for
      * is found.
      *
-     * @param File|InsightFile $file        The PHP_CodeSniffer file
-     * @param int $stackPtr The position in the PHP_CodeSniffer file's
-     *                      token stack
+     * @param File|InsightFile $file     The PHP_CodeSniffer file
+     * @param int  $stackPtr The position in the PHP_CodeSniffer file's
+     *                       token stack
      *
      * @return void|int Optionally returns a stack pointer. The sniff will not be
      *                  called again on the current file until the returned stack
@@ -57,9 +57,11 @@ final class SniffWrapper implements Sniff
      */
     public function process(File $file, $stackPtr)
     {
-        // skip files if they are part of ignore files array.
-        if ($this->skipFilesFromIgnoreFiles($file)) {
-            return;
+        if ($file instanceof InsightFile) {
+            // skip files if they are part of ignore files array.
+            if ($this->skipFilesFromIgnoreFiles($file)) {
+                return;
+            }
         }
 
        return $this->sniff->process($file, $stackPtr);
@@ -67,14 +69,20 @@ final class SniffWrapper implements Sniff
 
     private function skipFilesFromIgnoreFiles(InsightFile $file): bool
     {
+        $path = $file->getFileInfo()->getRealPath();
+
+        if ($path === false) {
+            return false;
+        }
+
         foreach ($this->getIgnoreFilesSetting() as $ignoreFile) {
             if (self::pathsAreEqual(
                 $ignoreFile,
-                $file->getFileInfo()->getRealPath()
+                $path
             )) {
                 return true;
             }
-        };
+        }
         return false;
     }
 

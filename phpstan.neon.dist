@@ -22,9 +22,11 @@ parameters:
         - '#is not allowed to extend#'
         - '#Language construct isset\(\) should not be used#'
         - '#Access to an undefined property PHP_CodeSniffer\\Config::\$standards.#'
+        - '#Access to an undefined property PHP_CodeSniffer\\Sniffs\\Sniff::\$#'
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
 
     excludes_analyse:
         - %rootDir%/../../../tests/*/Fixtures/*
+        - %rootDir%/../../../tests/Fixtures/*

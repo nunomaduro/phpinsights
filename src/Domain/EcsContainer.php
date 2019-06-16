@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use Symplify\EasyCodingStandard\HttpKernel\EasyCodingStandardKernel;
 use Symplify\PackageBuilder\Console\Input\InputDetector;
 
@@ -14,14 +14,14 @@ use Symplify\PackageBuilder\Console\Input\InputDetector;
 final class EcsContainer
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Symfony\Component\DependencyInjection\Container
      */
     private static $container;
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return \Symfony\Component\DependencyInjection\Container
      */
-    public static function make(): ContainerInterface
+    public static function make(): Container
     {
         if (self::$container === null) {
             $environment = str_replace('.', '_', sprintf(
@@ -31,11 +31,13 @@ final class EcsContainer
             $easyCodingStandardKernel = new EasyCodingStandardKernel($environment, InputDetector::isDebug());
             $easyCodingStandardKernel->boot();
 
-            if ($easyCodingStandardKernel->getContainer() === null) {
+            $container = $easyCodingStandardKernel->getContainer();
+
+            if ($container === null || ! ($container instanceof Container)) {
                 throw new \RuntimeException('Unable to get EcsContainer.');
             }
 
-            self::$container = $easyCodingStandardKernel->getContainer();
+            self::$container = $container;
         }
 
         return self::$container;
