@@ -13,7 +13,6 @@ use Symplify\EasyCodingStandard\Application\AppliedCheckersCollector;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Skipper;
-use Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 
 final class File extends BaseFile
@@ -121,7 +120,7 @@ final class File extends BaseFile
 
     public function getErrorCount(): int
     {
-        throw new NotImplementedException();
+        throw new \Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException();
     }
 
     /**
@@ -129,7 +128,7 @@ final class File extends BaseFile
      */
     public function getErrors(): array
     {
-        throw new NotImplementedException();
+        throw new \Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException();
     }
 
     /**
