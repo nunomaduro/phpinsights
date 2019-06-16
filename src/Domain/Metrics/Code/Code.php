@@ -37,7 +37,6 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\LanguageConstructWithParenthesesSniff;
 use SlevomatCodingStandard\Sniffs\Exceptions\DeadCatchSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
-use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UselessParameterDefaultValueSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UseFromSameNamespaceSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
@@ -98,7 +97,6 @@ final class Code implements HasValue, HasInsights
             LanguageConstructWithParenthesesSniff::class,
             DeadCatchSniff::class,
             UnusedInheritedVariablePassedToClosureSniff::class,
-            UnusedParameterSniff::class,
             UselessParameterDefaultValueSniff::class,
             UseFromSameNamespaceSniff::class,
             UselessAliasSniff::class,

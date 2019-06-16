@@ -305,12 +305,6 @@ This sniff looks for unused inherited variables passed to closure via `use`.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff`
 
-## Unused parameter <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
-
-This sniff looks for unused parameters.
-
-**Insight Class**: `SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff`
-
 ## Useless Parameter default value <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
 This sniff looks for useless parameter default value.
@@ -492,13 +486,11 @@ This sniff reports documentation comments containing only `{@inheritDoc}` annota
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff`
 
-## Unused function parameter <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+## Unused parameter <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
 
-This sniff checks that all function parameters are used in the function body.
-One exception is made for empty function bodies or function bodies that only contain comments.
-This could be useful for the classes that implement an interface that defines multiple methods but the implementation only needs some of them.
+This sniff looks for unused parameters.
 
-**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\UnusedFunctionParameterSniff`
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff`
 
 ## Call time pass by reference <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
 
