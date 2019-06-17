@@ -8,15 +8,15 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff;
 use Tests\TestCase;
 
-final class SniffWrapperTest extends TestCase
+final class SniffDecoratorTest extends TestCase
 {
-    public function testCanIgnoreFileInSniffWithRelativePath(): void
+    public function testCanIgnoreFileInSniffWithFullPath(): void
     {
        $collection = $this->runAnalyserOnConfig(
            [
                'config' => [
                    OneClassPerFileSniff::class => [
-                       'ignoreFiles' => [
+                       'exclude' => [
                            __DIR__ . '/../../Fixtures/Domain/Sniffs/SniffWrapper/FileWithTwoClasses.php'
                        ]
                    ]
@@ -39,6 +39,38 @@ final class SniffWrapperTest extends TestCase
 
        // No errors of this type as we are ignoring the file.
        self::assertEquals(0, $oneClassPerFileSniffErrors);
+    }
+
+    public function testCanIgnoreFileInSniffWithRelativePath(): void
+    {
+        $collection = $this->runAnalyserOnConfig(
+            [
+                'config' => [
+                    OneClassPerFileSniff::class => [
+                        'exclude' => [
+                            'Domain/Sniffs/SniffWrapper/FileWithTwoClasses.php'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                __DIR__ . '/../../Fixtures/Domain/Sniffs/SniffWrapper/FileWithTwoClasses.php'
+            ],
+            __DIR__ . '/../../Fixtures/'
+        );
+        $oneClassPerFileSniffErrors = 0;
+
+        foreach ($collection->allFrom(new Classes) as $insight) {
+            if (
+                $insight->hasIssue()
+                && $insight->getInsightClass() === OneClassPerFileSniff::class
+            ) {
+                $oneClassPerFileSniffErrors++;
+            }
+        }
+
+        // No errors of this type as we are ignoring the file.
+        self::assertEquals(0, $oneClassPerFileSniffErrors);
     }
 
     public function testFindMoreThanOneClassInFile(): void

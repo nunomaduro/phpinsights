@@ -20,7 +20,7 @@ final class FileProcessor implements FileProcessorInterface
     private $sniffs = [];
 
     /**
-     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>>
+     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator>>
      */
     private $tokenListeners = [];
 

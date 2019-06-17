@@ -9,19 +9,24 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
- * This class allows us to wrap original
- * phpcs sniffs adding custom logic into it.
+ * Decorates original php-cs sniffs with additional behavior.
  */
-final class SniffWrapper implements Sniff
+final class SniffDecorator implements Sniff
 {
     /**
      * @var \PHP_CodeSniffer\Sniffs\Sniff
      */
     private $sniff;
 
-    public function __construct(Sniff $sniff)
+    /**
+     * @var string
+     */
+    private $dir;
+
+    public function __construct(Sniff $sniff, string $dir)
     {
         $this->sniff = $sniff;
+        $this->dir = $dir;
     }
 
     public function register(): array
@@ -47,7 +52,7 @@ final class SniffWrapper implements Sniff
         }
 
         foreach ($this->getIgnoredFilesPath() as $ignoredFilePath) {
-            if (self::pathsAreEqual($ignoredFilePath, $path)) {
+            if (self::pathsAreEqual($this->dir . DIRECTORY_SEPARATOR . $ignoredFilePath, $path)) {
                 return true;
             }
         }
@@ -62,7 +67,7 @@ final class SniffWrapper implements Sniff
      */
     private function getIgnoredFilesPath(): array
     {
-        return $this->sniff->ignoreFiles ?? [];
+        return $this->sniff->exclude ?? [];
     }
 
     private static function pathsAreEqual(string $pathA, string $pathB): bool
@@ -70,10 +75,7 @@ final class SniffWrapper implements Sniff
         return realpath($pathA) === realpath($pathB);
     }
 
-    /**
-     * Returns the sniff which we have wrapped.
-     */
-    public function getWrappedSniff(): Sniff
+    public function getSniff(): Sniff
     {
         return $this->sniff;
     }

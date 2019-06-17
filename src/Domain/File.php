@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper;
+use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Fixer;
@@ -28,7 +28,7 @@ final class File extends BaseFile
     private $previousActiveSniffClass;
 
     /**
-     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>>
+     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator>>
      */
     private $tokenListeners = [];
 
@@ -145,7 +145,7 @@ final class File extends BaseFile
     }
 
     /**
-     * @param array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper>> $tokenListeners
+     * @param array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator>> $tokenListeners
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners, SmartFileInfo $fileInfo): void
     {
@@ -191,12 +191,12 @@ final class File extends BaseFile
     }
 
     /**
-     * @param SniffWrapper $sniff
+     * @param SniffDecorator $sniff
      */
-    private function reportActiveSniffClass(SniffWrapper $sniff): void
+    private function reportActiveSniffClass(SniffDecorator $sniff): void
     {
         // used in other places later
-        $this->activeSniffClass = get_class($sniff->getWrappedSniff());
+        $this->activeSniffClass = get_class($sniff->getSniff());
 
         if (! $this->easyCodingStandardStyle->isDebug()) {
             return;

@@ -94,7 +94,7 @@ To know the className of an Insights, launch `phpinsights` with `-v` option (ver
 
 The `config` section allows you to refine default insight configuration.
 
-For example, to increase the line lenght limits:
+For example, to increase the line length limits:
 ```php
     'config' => [
         \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
@@ -103,3 +103,6 @@ For example, to increase the line lenght limits:
         ]
     ]
 ```
+
+You can also configure the `exclude` parameter on each insight, to disallow a
+insight on a specific file.

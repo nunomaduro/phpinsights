@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
-use NunoMaduro\PhpInsights\Domain\Sniffs\SniffWrapper;
+use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
@@ -47,7 +47,7 @@ final class InsightFactory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  string  $dir
-     * @param array<string> $insightsClasses
+     * @param  array<string>  $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -80,7 +80,7 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param array<string> $insights
+     * @param  array<string>  $insights
      * @param  array<string, array>  $config
      *
      * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
@@ -174,7 +174,7 @@ final class InsightFactory
 
         $sniffer = Container::make()->get(FileProcessor::class);
         foreach ($this->sniffsFrom($this->insightsClasses, $config) as $sniff) {
-            $sniffer->addSniff(new SniffWrapper($sniff));
+            $sniffer->addSniff(new SniffDecorator($sniff, $this->dir));
         }
 
         /** @var \Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication $application */
