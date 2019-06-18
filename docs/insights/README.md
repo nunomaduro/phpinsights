@@ -104,5 +104,18 @@ For example, to increase the line length limits:
     ]
 ```
 
-You can also configure the `exclude` parameter on each insight, to disallow a
+You can also configure the `exclude` parameter on each insight, to disallow an
 insight on a specific file.
+
+For example, to remove "Unused Parameters" Insight only for some file:
+```php
+    'config' => [
+        \SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class => [
+            'exclude' => [
+                'src/Path/To/My/File.php',
+                'src/Path/To/Other/File.php,
+            ],
+        ]
+    ]
+```
+
