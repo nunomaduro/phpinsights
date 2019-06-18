@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Console;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code;
@@ -185,12 +186,19 @@ EOD;
     {
         $this->newLine();
 
-        $totalSecurityIssuesColor = $results->getTotalSecurityIssues() === 0 ? 'green' : 'red';
+        $message = sprintf(
+            '[MISC] %s on coding style',
+            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>");
 
-        $this->writeln(sprintf("[MISC] %s on coding style and %s encountered",
-            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>",
-            "<fg={$totalSecurityIssuesColor};options=bold>{$results->getTotalSecurityIssues()} security issues</>"
-        ));
+        if ($results->hasInsightInCategory(ForbiddenSecurityIssues::class, 'Security')) {
+            $totalSecurityIssuesColor = $results->getTotalSecurityIssues() === 0 ? 'green' : 'red';
+            $message .= sprintf(
+                ' and %s encountered',
+                "<fg={$totalSecurityIssuesColor};options=bold>{$results->getTotalSecurityIssues()} security issues</>"
+            );
+        }
+
+        $this->writeln($message);
 
         return $this;
     }
