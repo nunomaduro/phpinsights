@@ -126,7 +126,7 @@ This insight disallow defining `globals`.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants`
 
-##  <Badge text="^1.0"/> <Badge text="Architecture\Files" type="warn"/>
+## Superfluous Exception Naming <Badge text="^1.0"/> <Badge text="Architecture\Files" type="warn"/>
 
 This sniff reports use of superfluous prefix or suffix "Exception" for exceptions.
 
