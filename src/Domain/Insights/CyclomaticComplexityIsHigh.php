@@ -11,7 +11,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
     public function hasIssue(): bool
     {
         foreach ($this->collector->getClassComplexity() as $complexity) {
-            if ($complexity > $this->getLimit()) {
+            if ($complexity > $this->getMaxComplexity()) {
                 return true;
             }
         }
@@ -21,7 +21,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 
     public function getTitle(): string
     {
-        return sprintf('Having `classes` with more than ' . $this->getLimit() . ' cyclomatic complexity is prohibited - Consider refactoring');
+        return sprintf('Having `classes` with more than ' . $this->getMaxComplexity() . ' cyclomatic complexity is prohibited - Consider refactoring');
     }
 
     /**
@@ -29,7 +29,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $complexityLimit = $this->getLimit();
+        $complexityLimit = $this->getMaxComplexity();
         $classesComplexity = array_filter($this->collector->getClassComplexity(), static function ($complexity) use ($complexityLimit) {
             return $complexity > $complexityLimit;
         });
@@ -45,8 +45,8 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         }, array_keys($classesComplexity), $classesComplexity);
     }
 
-    private function getLimit(): int
+    private function getMaxComplexity(): int
     {
-        return $this->config['limit'] ?? 5;
+        return $this->config['maxComplexity'] ?? 5;
     }
 }
