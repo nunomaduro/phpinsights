@@ -22,7 +22,9 @@ This sniff
     <summary>Configuration</summary>
 
 ```php
-
+\NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
+     'maxComplexity' => 5,
+]
 ```
 </details>
 -->
