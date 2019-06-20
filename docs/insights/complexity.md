@@ -10,6 +10,16 @@ This insight checks complexity cyclomatic on your classes. It raises an issue if
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh`
 
+<details>
+    <summary>Configuration</summary>
+
+```php
+\NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
+     'maxComplexity' => 5,
+]
+```
+</details>
+
 <!--
 Insight template
 ##  <Badge text="^1.0"/> <Badge text="Complexity" type="warn"/>
