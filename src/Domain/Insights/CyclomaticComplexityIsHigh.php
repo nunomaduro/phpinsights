@@ -22,9 +22,10 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 
     public function getTitle(): string
     {
-        return sprintf('Having `classes` with more than ' .
-            $this->getMaxComplexity() .
-            ' cyclomatic complexity is prohibited - Consider refactoring');
+        return sprintf(
+            'Having `classes` with more than %s cyclomatic complexity is prohibited - Consider refactoring',
+            $this->getMaxComplexity()
+        );
     }
 
     /**
