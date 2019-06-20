@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.7.0]
+### Added
+- ComposerMustBeValid and ComposerLockMustBeFresh insights ([#169](https://github.com/nunomaduro/phpinsights/pull/169))
+- CyclomaticComplexityIsHigh max complexity is now configurable ([#190](https://github.com/nunomaduro/phpinsights/pull/190))
+- Possibility of ignoring files on specific insight ([#182](https://github.com/nunomaduro/phpinsights/pull/182))
+- Possibility of disable ForbiddenSecurityInsight ([#175](https://github.com/nunomaduro/phpinsights/pull/175)) ([#187](https://github.com/nunomaduro/phpinsights/pull/187))
+
+### Fixed
+- Non used files are no included anymore while requiring php insights ([#189](https://github.com/nunomaduro/phpinsights/pull/189))
+
 ## [v1.6.0]
 ### Added
 - Laravel preset now ignores model attribute setters ([#154](https://github.com/nunomaduro/phpinsights/pull/154))
