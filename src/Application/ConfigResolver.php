@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Prese
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
+use NunoMaduro\PhpInsights\Domain\Exceptions\PresetNotFound;
 
 /**
  * @internal
@@ -38,17 +39,17 @@ final class ConfigResolver
      */
     public static function resolve(array $config, string $directory): array
     {
+        /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($directory);
 
         /** @var Preset $presetClass */
         foreach (self::$presets as $presetClass) {
             if ($presetClass::getName() === $preset) {
-                $config = self::mergeConfig($presetClass::get(), $config);
-                break;
+                return self::mergeConfig($presetClass::get(), $config);
             }
         }
 
-        return $config ?? [];
+        throw new PresetNotFound(sprintf('%s not found', $preset));
     }
 
     /**
@@ -81,12 +82,12 @@ final class ConfigResolver
     }
 
     /**
-     * See https://www.php.net/manual/en/function.array-merge-recursive.php#96201
+     * @see https://www.php.net/manual/en/function.array-merge-recursive.php#96201
      *
      * @param mixed[] $base
      * @param mixed[] $replacement
      *
-     * @return mixed[]
+     * @return array<string, array>
      */
     public static function mergeConfig(array $base, array $replacement): array
     {

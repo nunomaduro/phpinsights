@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Domain\Exceptions\PresetNotFound;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 
@@ -64,7 +65,7 @@ final class ConfigResolverTest extends TestCase
         self::assertSame('drupal', $preset);
     }
 
-    public function testResolveWithRightMerge(): void
+    public function testResolvedConfigIsCorrectlyMerged(): void
     {
         $config = [
             'exclude' => [
@@ -90,5 +91,15 @@ final class ConfigResolverTest extends TestCase
             2,
             $finalConfig['config'][DocCommentSpacingSniff::class]['linesCountBetweenDifferentAnnotationsTypes']
         );
+    }
+
+    public function testUnknownPresetThrowException(): void
+    {
+        self::expectException(PresetNotFound::class);
+        self::expectExceptionMessage('UnknownPreset not found');
+
+        $config = ['preset' => 'UnknownPreset'];
+
+        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
     }
 }
