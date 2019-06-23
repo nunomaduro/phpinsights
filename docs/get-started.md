@@ -47,6 +47,12 @@ You can ask `phpinsights` to analyse only a directory or even a specific file by
 ./vendor/bin/phpinsights analyse path/to/analyse.php
 ```
 
+In laravel, launch command as usual with your path:
+
+```bash
+php artisan insights path/to/analyse
+```
+
 ## Allowed memory size of X bytes exhausted
 
 If you encounter the error `Allowed memory size of XXXXX bytes exhausted`, the current workaround is to increase the memory limit:
