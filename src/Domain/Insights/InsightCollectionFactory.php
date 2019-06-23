@@ -9,7 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -48,7 +47,7 @@ final class InsightCollectionFactory
     public function get(array $metrics, array $config, string $dir): InsightCollection
     {
         try {
-            $files = array_map(static function (SplFileInfo $file) {
+            $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();
             }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
         } catch (\InvalidArgumentException $exception) {
