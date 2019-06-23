@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerLockMustBeFresh;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName;
+use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustExist;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
+
 /**
  * @internal
  */
@@ -47,6 +53,22 @@ final class Kernel
             'composer.json',
             'composer.lock',
             // '.gitignore',
+        ];
+    }
+
+    /**
+     * Returns the list of Insights required on root.
+     *
+     * @return array<string>
+     */
+    public static function getGlobalInsights(): array
+    {
+        return [
+            ComposerMustBeValid::class,
+            ComposerLockMustBeFresh::class,
+            ComposerMustContainName::class,
+            ComposerMustExist::class,
+            ForbiddenSecurityIssues::class,
         ];
     }
 }

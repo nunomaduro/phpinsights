@@ -24,4 +24,17 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertEmpty($files);
     }
+
+    public function testPassFileInsteadOfDirectory(): void
+    {
+        $finder = new Finder();
+
+        $repository = new LocalFilesRepository($finder);
+        $repository->within(__DIR__ . '/Fixtures/FileToInspect.php');
+        $files = iterator_to_array($repository->getFiles());
+
+        self::assertCount(1, $files);
+        self::assertInstanceOf(\SplFileInfo::class, $files[0]);
+        self::assertStringContainsString('/Fixtures/FileToInspect.php', $files[0]->getRealPath());
+    }
 }
