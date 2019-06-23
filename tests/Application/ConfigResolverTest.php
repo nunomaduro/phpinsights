@@ -6,6 +6,7 @@ namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use PHPUnit\Framework\TestCase;
+use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 
 final class ConfigResolverTest extends TestCase
 {
@@ -61,5 +62,33 @@ final class ConfigResolverTest extends TestCase
     {
         $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerDrupal');
         self::assertSame('drupal', $preset);
+    }
+
+    public function testResolveWithRightMerge(): void
+    {
+        $config = [
+            'exclude' => [
+                'my/path',
+            ],
+            'config' => [
+                DocCommentSpacingSniff::class => [
+                    'linesCountBetweenDifferentAnnotationsTypes' => 2
+                ]
+            ]
+        ];
+
+        $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+
+        self::assertArrayHasKey('exclude', $finalConfig);
+        self::assertArrayHasKey('config', $finalConfig);
+        self::assertContains('my/path', $finalConfig['exclude']);
+        // assert we don't replace the first value
+        self::assertContains('bower_components', $finalConfig['exclude']);
+        self::assertArrayHasKey(DocCommentSpacingSniff::class, $finalConfig['config']);
+        // assert we replace the config value
+        self::assertEquals(
+            2,
+            $finalConfig['config'][DocCommentSpacingSniff::class]['linesCountBetweenDifferentAnnotationsTypes']
+        );
     }
 }
