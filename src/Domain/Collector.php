@@ -125,6 +125,11 @@ final class Collector
     /**
      * @var array<string>
      */
+    private $globalVariables = [];
+
+    /**
+     * @var string[]
+     */
     private $possibleConstantAccesses = [];
 
     /**
