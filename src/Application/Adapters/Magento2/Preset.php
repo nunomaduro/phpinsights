@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Adapters\Magento2;
 
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 
 /**
@@ -21,7 +23,7 @@ final class Preset implements PresetContract
      */
     public static function get(): array
     {
-        return [
+        $config = [
             'exclude' => [
                 'bin',
                 'dev',
@@ -47,6 +49,8 @@ final class Preset implements PresetContract
                 // ...
             ],
         ];
+
+        return ConfigResolver::mergeConfig(DefaultPreset::get(), $config);
     }
 
     /**
