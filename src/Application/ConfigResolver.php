@@ -96,7 +96,7 @@ final class ConfigResolver
                 $base[$key] = $replacement[$key];
                 continue;
             }
-            if (is_array($value) || is_array($base[$key])) {
+            if (is_array($value) || (array_key_exists($key, $base) && is_array($base[$key]))) {
                 $base[$key] = self::mergeConfig($base[$key], $replacement[$key]);
             } elseif (is_numeric($key)) {
                 if (! in_array($value, $base, true)) {
