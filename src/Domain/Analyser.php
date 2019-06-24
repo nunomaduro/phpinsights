@@ -368,6 +368,8 @@ final class Analyser
                 case \T_VARIABLE:
                     if ($value === '$GLOBALS') {
                         $collector->incrementGlobalVariableAccesses();
+                        $collector->addGlobalVariableAccess($tokens[$i][2], $tokens[$i][1]);
+                        // var_dump($tokens[$i][1], $tokens[$i][2]); die();
                     } else if (isset(array_flip($this->superGlobals)[$value])) {
                         $collector->incrementSuperGlobalVariableAccesses();
                     }

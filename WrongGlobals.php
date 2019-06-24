@@ -1,0 +1,6 @@
+<?php
+
+
+
+
+$post = $GLOBALS['post'];

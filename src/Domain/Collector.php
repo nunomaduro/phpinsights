@@ -125,6 +125,11 @@ final class Collector
     /**
      * @var string[]
      */
+    private $globalVariables = [];
+
+    /**
+     * @var string[]
+     */
     private $possibleConstantAccesses = [];
 
     /**
@@ -533,6 +538,19 @@ final class Collector
     public function addGlobalConstant(string $name): void
     {
         $this->globalConstants[$this->currentFilename] = $name;
+    }
+
+    public function addGlobalVariableAccess(string $line, string $name): void
+    {
+        $this->globalVariables[$this->currentFilename . ':' . $line] = $name;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getGlobalVariables(): array
+    {
+        return $this->globalVariables;
     }
 
     /**
