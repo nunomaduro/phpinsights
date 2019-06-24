@@ -13,8 +13,7 @@
   </p>
 </p>
 
-
-**PHP Insights** was created by, and is maintained by **[Nuno Maduro](https://github.com/nunomaduro)**, and is the perfect starting point to analyze the code quality of your PHP projects.
+**PHP Insights** was created by **[Nuno Maduro](https://github.com/nunomaduro)**, and is maintained by **[Jibé Barth](https://github.com/Jibbarth)**, **[Nuno Maduro](https://github.com/nunomaduro)**, **[Oliver Nybroe](https://github.com/olivernybroe)**  and is the perfect starting point to analyze the code quality of your PHP projects.
 Carefully crafted to simplify the analysis of your code directly from your terminal.
 
 ## 🚀 Quick start
