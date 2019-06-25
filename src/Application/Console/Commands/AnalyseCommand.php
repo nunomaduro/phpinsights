@@ -113,6 +113,7 @@ final class AnalyseCommand
             $hasError = true;
         }
 
+        $consoleStyle->newLine();
         $consoleStyle->writeln('✨ See something that needs to be improved? <bold>Create an issue</bold> or send us a <bold>pull request</bold>: <title>https://github.com/nunomaduro/phpinsights</title>');
 
         return (int) $hasError;

@@ -345,6 +345,5 @@ EOD;
             ->miscellaneous($results);
 
         $this->issues($insightCollection, $metrics, $dir);
-        $this->style->newLine();
     }
 }
