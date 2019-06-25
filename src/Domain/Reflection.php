@@ -55,23 +55,31 @@ final class Reflection
 
     /**
      * @param ReflectionClass $class
-     * @param                 $instance
+     * @param mixed           $instance
      * @param string          $attribute
-     * @param                 $value
+     * @param mixed           $value
+     *
+     * @throws ReflectionException
      */
     private static function setProperty(
         ReflectionClass $class,
         $instance,
         string $attribute,
         $value
-    ) {
+    ): void {
         try {
             $property = $class->getProperty($attribute);
             $property->setAccessible(true);
             $property->setValue($instance, $value);
         } catch (ReflectionException $exception) {
+            $parentClass = $class->getParentClass();
+
+            if ($parentClass === false) {
+                throw $exception;
+            }
+
             self::setProperty(
-                $class->getParentClass(),
+                $parentClass,
                 $instance,
                 $attribute,
                 $value
