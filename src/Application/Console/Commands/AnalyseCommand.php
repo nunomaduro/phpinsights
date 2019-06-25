@@ -59,7 +59,7 @@ final class AnalyseCommand
         $consoleOutput = $output;
         if ($consoleOutput instanceof ConsoleOutputInterface) {
             $consoleOutput = $consoleOutput->getErrorOutput();
-            $consoleOutput->setDecorated(true);
+            $consoleOutput->setDecorated($output->isDecorated());
         }
         $consoleStyle = new Style($input, $consoleOutput);
 
