@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
@@ -38,13 +39,19 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param array<string> $metrics
-     * @param  array<string, array<string, string>>  $config
-     * @param  string  $dir
+     * @param array<string>                        $metrics
+     * @param array<string, array<string, string>> $config
+     * @param string                               $dir
      *
+     * @param OutputInterface                      $consoleOutput
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
-    public function get(array $metrics, array $config, string $dir): InsightCollection
+    public function get(
+        array $metrics,
+        array $config,
+        string $dir,
+        OutputInterface $consoleOutput
+    ): InsightCollection
     {
         try {
             $files = array_map(static function (\SplFileInfo $file) {
@@ -65,12 +72,13 @@ final class InsightCollectionFactory
         $insightFactory = new InsightFactory($this->filesRepository, $dir, $insightsClasses);
         $insightsForCollection = [];
         foreach ($metrics as $metricClass) {
-            $insightsForCollection[$metricClass] = array_map(static function (string $insightClass) use ($insightFactory, $collector, $config) {
+            $insightsForCollection[$metricClass] = array_map(static function (string $insightClass) use ($insightFactory, $collector, $config, $consoleOutput) {
                 if (! array_key_exists(Insight::class, class_implements($insightClass))) {
 
                     return $insightFactory->makeFrom(
                         $insightClass,
-                        $config
+                        $config,
+                        $consoleOutput
                     );
                 }
 

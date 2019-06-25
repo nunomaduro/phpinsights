@@ -11,8 +11,10 @@ use NunoMaduro\PhpInsights\Domain\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
+use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Error\Error;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
@@ -59,16 +61,26 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param  string  $errorClass
-     * @param  array<string, array>  $config
+     * @param string               $errorClass
+     * @param array<string, array> $config
      *
+     * @param OutputInterface      $consoleOutput
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
-    public function makeFrom(string $errorClass, array $config): Sniff
+    public function makeFrom(
+        string $errorClass,
+        array $config,
+        OutputInterface $consoleOutput
+    ): Sniff
     {
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                return new Sniff($this->getSniffErrors($this->getSniffCollector($config), $errorClass));
+                return new Sniff(
+                    $this->getSniffErrors(
+                        $this->getSniffCollector($config, $consoleOutput),
+                        $errorClass
+                    )
+                );
                 break;
 
             default:
@@ -149,11 +161,16 @@ final class InsightFactory
     }
 
     /**
-     * @param  array<string, array>  $config
+     * @param array<string, array> $config
      *
+     * @param OutputInterface      $consoleOutput
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
+     * @throws \Exception
      */
-    private function getSniffCollector(array $config): ErrorAndDiffCollector
+    private function getSniffCollector(
+        array $config,
+        OutputInterface $consoleOutput
+    ): ErrorAndDiffCollector
     {
         if ($this->sniffCollector !== null) {
             return $this->sniffCollector;
@@ -167,6 +184,10 @@ final class InsightFactory
         $ecsContainer = EcsContainer::make();
 
         $ecsContainer->set(Configuration::class, $configuration);
+        /** @var EasyCodingStandardStyle $style */
+        $style = $ecsContainer->get(EasyCodingStandardStyle::class);
+        $style->setDecorated($consoleOutput->isDecorated());
+
 
         /** @var \Symplify\EasyCodingStandard\Finder\SourceFinder $sourceFinder */
         $sourceFinder = $ecsContainer->get(SourceFinder::class);
