@@ -12,10 +12,8 @@ use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Terminal;
 
 /**
  * @internal

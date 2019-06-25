@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Console\Contracts;
 
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
-use NunoMaduro\PhpInsights\Domain\Results;
 
 /**
  * This interface is used to define the format of the result.
@@ -17,7 +16,7 @@ interface Formatter
      *
      * @param InsightCollection $insightCollection
      * @param string            $dir
-     * @param array             $metrics
+     * @param array<string>     $metrics
      */
     public function format(
         InsightCollection $insightCollection,

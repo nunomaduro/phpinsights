@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
+use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
-use NunoMaduro\PhpInsights\Application\Console\Style;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -22,16 +22,22 @@ final class FormatResolver
         'json' => Json::class,
     ];
 
-    private static $default = Console::class;
-
     public static function resolve(
         InputInterface $input,
         OutputInterface $output
     ): Formatter
     {
-        $requestedFormat = strtolower($input->getOption('format'));
+        $requestedFormat = $input->getOption('format');
 
-        $formatter = self::$formatters[$requestedFormat] ?? self::$default;
+        if (! is_string($requestedFormat)) {
+            throw new InvalidArgumentException(
+                "Format has to be a string."
+            );
+        }
+
+        $requestedFormat = strtolower($requestedFormat);
+
+        $formatter = self::$formatters[$requestedFormat] ?? Console::class;
 
         return new $formatter($input, $output);
     }

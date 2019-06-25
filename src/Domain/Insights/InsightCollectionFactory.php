@@ -42,8 +42,8 @@ final class InsightCollectionFactory
      * @param array<string>                        $metrics
      * @param array<string, array<string, string>> $config
      * @param string                               $dir
-     *
      * @param OutputInterface                      $consoleOutput
+     *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
     public function get(

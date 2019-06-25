@@ -15,6 +15,7 @@ use PHP_CodeSniffer\Ruleset;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;
+use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
 
 abstract class TestCase extends BaseTestCase
@@ -90,7 +91,8 @@ abstract class TestCase extends BaseTestCase
         return $insightCollectionFactory->get(
             MetricsFinder::find(),
             $config,
-            $dir
+            $dir,
+            new NullOutput
         );
     }
 

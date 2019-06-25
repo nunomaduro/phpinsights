@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * @internal
@@ -36,17 +37,46 @@ final class Reflection
      * Sets an private attribute value on the given instance.
      *
      * @param  string  $attribute
-     * @param array<string>|bool $value
+     * @param mixed $value
      *
      * @return \NunoMaduro\PhpInsights\Domain\Reflection
      */
     public function set(string $attribute, $value): Reflection
     {
-        $property = $this->reflectionClass->getProperty($attribute);
-        $property->setAccessible(true);
-        $property->setValue($this->instance, $value);
+        self::setProperty(
+            $this->reflectionClass,
+            $this->instance,
+            $attribute,
+            $value
+        );
 
         return $this;
+    }
+
+    /**
+     * @param ReflectionClass $class
+     * @param                 $instance
+     * @param string          $attribute
+     * @param                 $value
+     */
+    private static function setProperty(
+        ReflectionClass $class,
+        $instance,
+        string $attribute,
+        $value
+    ) {
+        try {
+            $property = $class->getProperty($attribute);
+            $property->setAccessible(true);
+            $property->setValue($instance, $value);
+        } catch (ReflectionException $exception) {
+            self::setProperty(
+                $class->getParentClass(),
+                $instance,
+                $attribute,
+                $value
+            );
+        }
     }
 
     /**

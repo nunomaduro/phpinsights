@@ -63,8 +63,8 @@ final class InsightFactory
      *
      * @param string               $errorClass
      * @param array<string, array> $config
-     *
      * @param OutputInterface      $consoleOutput
+     *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
     public function makeFrom(
@@ -162,9 +162,10 @@ final class InsightFactory
 
     /**
      * @param array<string, array> $config
-     *
      * @param OutputInterface      $consoleOutput
+     *
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
+     *
      * @throws \Exception
      */
     private function getSniffCollector(
@@ -186,8 +187,7 @@ final class InsightFactory
         $ecsContainer->set(Configuration::class, $configuration);
         /** @var EasyCodingStandardStyle $style */
         $style = $ecsContainer->get(EasyCodingStandardStyle::class);
-        $style->setDecorated($consoleOutput->isDecorated());
-
+        (new Reflection($style))->set('output', $consoleOutput);
 
         /** @var \Symplify\EasyCodingStandard\Finder\SourceFinder $sourceFinder */
         $sourceFinder = $ecsContainer->get(SourceFinder::class);

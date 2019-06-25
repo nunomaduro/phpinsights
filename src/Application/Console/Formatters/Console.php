@@ -81,6 +81,7 @@ EOD;
      *
      * @param InsightCollection $insightCollection
      * @param Results           $results
+     *
      * @return self
      */
     public function code(
@@ -90,7 +91,7 @@ EOD;
         $this->style->newLine();
         $this->style->writeln(sprintf("[CODE] %s within <title>%s</title> lines",
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
-            (new Code)->getValue($insightCollection->getCollector())
+            (new Code())->getValue($insightCollection->getCollector())
         ));
         $this->style->newLine();
 
@@ -120,6 +121,7 @@ EOD;
      *
      * @param InsightCollection $insightCollection
      * @param Results           $results
+     *
      * @return self
      */
     public function complexity(
@@ -130,7 +132,7 @@ EOD;
 
         $this->style->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity",
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
-            (new Complexity)->getAvg($insightCollection->getCollector())
+            (new Complexity())->getAvg($insightCollection->getCollector())
         ));
 
         return $this;
@@ -141,6 +143,7 @@ EOD;
      *
      * @param InsightCollection $insightCollection
      * @param Results           $results
+     *
      * @return self
      */
     public function architecture(
@@ -151,7 +154,7 @@ EOD;
 
         $this->style->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</title> files",
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
-            (new Files)->getValue($insightCollection->getCollector())
+            (new Files())->getValue($insightCollection->getCollector())
         ));
 
         $this->style->newLine();
@@ -161,10 +164,10 @@ EOD;
                      ArchitectureClasses::class,
                      ArchitectureInterfaces::class,
                      ArchitectureGlobally::class,
-                     ArchitectureTraits::class
+                     ArchitectureTraits::class,
                  ] as $metric) {
             $name = explode('\\', $metric);
-            $lines[end($name)] = (new $metric)->getPercentage($insightCollection->getCollector());
+            $lines[end($name)] = (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
         foreach ($lines as $name => $percentage) {
@@ -186,6 +189,7 @@ EOD;
      * Outputs the miscellaneous errors according to the format.
      *
      * @param Results $results
+     *
      * @return self
      */
     public function miscellaneous(
@@ -216,6 +220,7 @@ EOD;
      * @param InsightCollection $insightCollection
      * @param array<string>     $metrics
      * @param string            $dir
+     *
      * @return self
      */
     public function issues(
@@ -226,7 +231,7 @@ EOD;
         $previousCategory = null;
 
         foreach ($metrics as $metricClass) {
-            foreach ($insightCollection->allFrom(new $metricClass) as $insight) {
+            foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
                 if (! $insight->hasIssue()) {
                     continue;
                 }
@@ -323,7 +328,7 @@ EOD;
      *
      * @param InsightCollection $insightCollection
      * @param string            $dir
-     * @param array             $metrics
+     * @param array<string>     $metrics
      */
     public function format(
         InsightCollection $insightCollection,
