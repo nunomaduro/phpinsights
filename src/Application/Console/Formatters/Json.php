@@ -27,8 +27,8 @@ final class Json implements Formatter
      * Format the result to the desired format.
      *
      * @param InsightCollection $insightCollection
-     * @param string            $dir
-     * @param array<string>     $metrics
+     * @param string $dir
+     * @param array<string> $metrics
      *
      * @throws Exception
      */
@@ -36,7 +36,8 @@ final class Json implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void {
+    ): void
+    {
         $results = $insightCollection->results();
 
         $data = [
@@ -63,36 +64,32 @@ final class Json implements Formatter
      * Outputs the issues errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param array<string>     $metrics
+     * @param array<string> $metrics
      *
      * @return array<string, array<int, array<string, int|string>>|null>
      */
-    public function issues(
+    private function issues(
         InsightCollection $insightCollection,
         array $metrics
-    ): array {
-        $previousCategory = null;
-
+    ): array
+    {
         $data = [];
-        $current = null;
 
         foreach ($metrics as $metricClass) {
+            $category = explode('\\', $metricClass);
+            $category = $category[count($category) - 2];
+
+            if (! isset($data[$category])) {
+                $data[$category] = [];
+            }
+
+            $current = $data[$category];
+
             /** @var Insight $insight */
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
                 if (! $insight->hasIssue()) {
                     continue;
                 }
-
-                $category = explode('\\', $metricClass);
-                $category = $category[count($category) - 2];
-
-                if ($previousCategory !== $category
-                    && $previousCategory !== null) {
-                    $data[$previousCategory] = $current;
-                    $current = [];
-                }
-
-                $previousCategory = $category;
 
                 if (! $insight instanceof HasDetails) {
                     $current[] = [
@@ -122,6 +119,8 @@ final class Json implements Formatter
                     ];
                 }
             }
+
+            $data[$category] = $current;
         }
 
         return $data;

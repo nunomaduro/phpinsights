@@ -29,8 +29,8 @@ final class InsightCollectionFactory
     /**
      * Creates a new instance of InsightCollection Factory.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  \NunoMaduro\PhpInsights\Domain\Analyser  $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param \NunoMaduro\PhpInsights\Domain\Analyser $analyser
      */
     public function __construct(FilesRepository $filesRepository, Analyser $analyser)
     {
@@ -39,10 +39,10 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param array<string>                        $metrics
+     * @param array<string> $metrics
      * @param array<string, array<string, string>> $config
-     * @param string                               $dir
-     * @param OutputInterface                      $consoleOutput
+     * @param string $dir
+     * @param OutputInterface $consoleOutput
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
      */
@@ -92,8 +92,8 @@ final class InsightCollectionFactory
     /**
      * Returns the `Insights` from the given metric class.
      *
-     * @param  string  $metricClass
-     * @param  array<string, array<string, string|array>>  $config
+     * @param string $metricClass
+     * @param array<string, array<string, string|array>> $config
      *
      * @return array<string>
      */

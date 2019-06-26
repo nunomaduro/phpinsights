@@ -67,7 +67,7 @@ final class AnalyseDefinition
               'format',
               null,
               InputOption::VALUE_REQUIRED,
-                'Format to output the result in',
+                'Format to output the result in [console, json]',
                 "console"
             ),
         ];

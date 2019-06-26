@@ -35,18 +35,48 @@ final class Console implements Formatter
     }
 
     /**
+     * Format the result to the desired format.
+     *
+     * @param InsightCollection $insightCollection
+     * @param string $dir
+     * @param array<string> $metrics
+     */
+    public function format(
+        InsightCollection $insightCollection,
+        string $dir,
+        array $metrics
+    ): void
+    {
+        $results = $insightCollection->results();
+
+        $this->summary($results, $dir)
+            ->code($insightCollection, $results)
+            ->complexity($insightCollection, $results)
+            ->architecture($insightCollection, $results)
+            ->miscellaneous($results);
+
+        $this->issues($insightCollection, $metrics, $dir);
+    }
+
+    /**
      * Outputs the summary according to the format.
      *
      * @param Results $results
-     * @param string  $dir
+     * @param string $dir
      *
      * @return self
      */
-    public function summary(Results $results, string $dir): self
+    private function summary(Results $results, string $dir): self
     {
         $this->style->newLine(2);
 
-        $this->style->writeln(sprintf('<fg=yellow>[%s]</> `%s`', date('Y-m-d H:i:s'), $dir));
+        $this->style->writeln(
+            sprintf(
+                '<fg=yellow>[%s]</> `%s`',
+                date('Y-m-d H:i:s'),
+                $dir
+            )
+        );
 
         $subtitle = 'fg=white;options=bold;fg=white';
         $this->style->newLine();
@@ -80,14 +110,15 @@ EOD;
      * Outputs the code errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param Results           $results
+     * @param Results $results
      *
      * @return self
      */
-    public function code(
+    private function code(
         InsightCollection $insightCollection,
         Results $results
-    ): self {
+    ): self
+    {
         $this->style->newLine();
         $this->style->writeln(sprintf("[CODE] %s within <title>%s</title> lines",
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
@@ -96,7 +127,12 @@ EOD;
         $this->style->newLine();
 
         $lines = [];
-        foreach ([Comments::class, Classes::class, Functions::class, Globally::class] as $metric) {
+        foreach ([
+                     Comments::class,
+                     Classes::class,
+                     Functions::class,
+                     Globally::class,
+                 ] as $metric) {
             $name = explode('\\', $metric);
             $lines[end($name)] = (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -120,14 +156,15 @@ EOD;
      * Outputs the complexity errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param Results           $results
+     * @param Results $results
      *
      * @return self
      */
-    public function complexity(
+    private function complexity(
         InsightCollection $insightCollection,
         Results $results
-    ): self {
+    ): self
+    {
         $this->style->newLine();
 
         $this->style->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity",
@@ -142,14 +179,15 @@ EOD;
      * Outputs the architecture errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param Results           $results
+     * @param Results $results
      *
      * @return self
      */
-    public function architecture(
+    private function architecture(
         InsightCollection $insightCollection,
         Results $results
-    ): self {
+    ): self
+    {
         $this->style->newLine();
 
         $this->style->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</title> files",
@@ -192,9 +230,10 @@ EOD;
      *
      * @return self
      */
-    public function miscellaneous(
+    private function miscellaneous(
         Results $results
-    ): self {
+    ): self
+    {
         $this->style->newLine();
 
         $message = sprintf(
@@ -218,16 +257,17 @@ EOD;
      * Outputs the issues errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param array<string>     $metrics
-     * @param string            $dir
+     * @param array<string> $metrics
+     * @param string $dir
      *
      * @return self
      */
-    public function issues(
+    private function issues(
         InsightCollection $insightCollection,
         array $metrics,
         string $dir
-    ): self {
+    ): self
+    {
         $previousCategory = null;
 
         foreach ($metrics as $metricClass) {
@@ -290,7 +330,7 @@ EOD;
     /**
      * Returns the percentage as 5 chars string.
      *
-     * @param  float  $percentage
+     * @param float $percentage
      *
      * @return string
      */
@@ -306,7 +346,7 @@ EOD;
     /**
      * Returns the color for the given percentage.
      *
-     * @param  float  $percentage
+     * @param float $percentage
      *
      * @return string
      */
@@ -321,29 +361,5 @@ EOD;
         }
 
         return 'red';
-    }
-
-    /**
-     * Format the result to the desired format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param string            $dir
-     * @param array<string>     $metrics
-     */
-    public function format(
-        InsightCollection $insightCollection,
-        string $dir,
-        array $metrics
-    ): void
-    {
-        $results = $insightCollection->results();
-
-        $this->summary($results, $dir)
-            ->code($insightCollection, $results)
-            ->complexity($insightCollection, $results)
-            ->architecture($insightCollection, $results)
-            ->miscellaneous($results);
-
-        $this->issues($insightCollection, $metrics, $dir);
     }
 }

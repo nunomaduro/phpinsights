@@ -27,8 +27,8 @@ final class Style extends SymfonyStyle
     /**
      * Style constructor.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -38,7 +38,7 @@ final class Style extends SymfonyStyle
     /**
      * Waits for Enter key.
      *
-     * @param  string  $category
+     * @param string $category
      *
      * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */

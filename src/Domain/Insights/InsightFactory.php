@@ -47,9 +47,9 @@ final class InsightFactory
     /**
      * Creates a new instance of Insight Factory
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  string  $dir
-     * @param  array<string>  $insightsClasses
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param string $dir
+     * @param array<string> $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -61,9 +61,9 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param string               $errorClass
+     * @param string $errorClass
      * @param array<string, array> $config
-     * @param OutputInterface      $consoleOutput
+     * @param OutputInterface $consoleOutput
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
@@ -92,8 +92,8 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param  array<string>  $insights
-     * @param  array<string, array>  $config
+     * @param array<string> $insights
+     * @param array<string, array> $config
      *
      * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
      */
@@ -120,8 +120,8 @@ final class InsightFactory
     /**
      * Returns the Error with of the given $sniff, if any.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $collector
-     * @param  string  $sniff
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $collector
+     * @param string $sniff
      *
      * @return array<\Symplify\EasyCodingStandard\Error\Error>
      */
@@ -146,7 +146,7 @@ final class InsightFactory
     /**
      * Gets a key from a Error.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error  $error
+     * @param \Symplify\EasyCodingStandard\Error\Error $error
      *
      * @return string
      */
@@ -162,7 +162,7 @@ final class InsightFactory
 
     /**
      * @param array<string, array> $config
-     * @param OutputInterface      $consoleOutput
+     * @param OutputInterface $consoleOutput
      *
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
      *

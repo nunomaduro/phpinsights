@@ -25,7 +25,7 @@ final class Reflection
     /**
      * Creates an new instance of Reflection.
      *
-     * @param  object  $instance
+     * @param object $instance
      */
     public function __construct($instance)
     {
@@ -36,7 +36,7 @@ final class Reflection
     /**
      * Sets an private attribute value on the given instance.
      *
-     * @param  string  $attribute
+     * @param string $attribute
      * @param mixed $value
      *
      * @return \NunoMaduro\PhpInsights\Domain\Reflection
@@ -55,9 +55,9 @@ final class Reflection
 
     /**
      * @param ReflectionClass $class
-     * @param mixed           $instance
-     * @param string          $attribute
-     * @param mixed           $value
+     * @param mixed $instance
+     * @param string $attribute
+     * @param mixed $value
      *
      * @throws ReflectionException
      */
@@ -66,7 +66,8 @@ final class Reflection
         $instance,
         string $attribute,
         $value
-    ): void {
+    ): void
+    {
         try {
             $property = $class->getProperty($attribute);
             $property->setAccessible(true);
@@ -90,7 +91,7 @@ final class Reflection
     /**
      * Gets an private attribute value on the given instance.
      *
-     * @param  string  $attribute
+     * @param string $attribute
      *
      * @return mixed
      */
