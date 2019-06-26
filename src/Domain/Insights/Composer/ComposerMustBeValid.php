@@ -8,6 +8,7 @@ use Composer\IO\NullIO;
 use Composer\Util\ConfigValidator;
 use NunoMaduro\PhpInsights\Domain\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerMustBeValid extends Insight implements HasDetails
@@ -46,7 +47,9 @@ final class ComposerMustBeValid extends Insight implements HasDetails
             if (strpos($issue, ' : ') !== false) {
                 $issue = explode(' : ', $issue)[1];
             }
-            $details[] = 'composer.json: ' . $issue;
+            $details[] = Details::make()
+                ->withFile('composer.json')
+                ->withMessage($issue);
         }
 
         return $details;

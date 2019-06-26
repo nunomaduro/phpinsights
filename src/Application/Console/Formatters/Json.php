@@ -99,24 +99,16 @@ final class Json implements Formatter
                     continue;
                 }
 
+                /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($insight->getDetails() as $detail) {
-                    $information = explode(':', $detail);
-
-                    if (count($information) !== 3) {
-                        $current[] = [
-                            'title' => $insight->getTitle(),
-                            'insightClass' => $insight->getInsightClass(),
-                        ];
-                        continue;
-                    }
-
-                    $current[] = [
+                    $current[] = array_filter([
                         'title' => $insight->getTitle(),
                         'insightClass' => $insight->getInsightClass(),
-                        'file' => $information[0],
-                        'line' => (int) $information[1],
-                        'message' => $information[2],
-                    ];
+                        'file' => $detail->hasFile() ? $detail->getFile() : null,
+                        'line' => $detail->hasLine() ? $detail->getLine() : null,
+                        'function' => $detail->hasFunction() ? $detail->getFunction() : null,
+                        'message' => $detail->hasMessage() ? $detail->getMessage() : null,
+                    ]);
                 }
             }
 

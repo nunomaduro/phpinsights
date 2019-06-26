@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights\Composer;
 
 use NunoMaduro\PhpInsights\Domain\ComposerLoader;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
@@ -29,6 +30,9 @@ final class ComposerLockMustBeFresh extends Insight implements HasDetails
 
     public function getDetails(): array
     {
-        return ['You may be getting outdated dependencies. Run update to update them.'];
+        return [
+            Details::make()
+                ->withMessage('You may be getting outdated dependencies. Run update to update them.'),
+        ];
     }
 }

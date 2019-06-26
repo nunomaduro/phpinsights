@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 
 final class ForbiddenFinalClasses extends Insight implements HasDetails
 {
@@ -23,6 +24,8 @@ final class ForbiddenFinalClasses extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        return $this->collector->getConcreteFinalClasses();
+        return array_map(static function (string $name): Details {
+            return Details::make()->withFile($name);
+        }, $this->collector->getConcreteFinalClasses());
     }
 }

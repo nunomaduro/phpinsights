@@ -199,11 +199,11 @@ EOD;
 
         $lines = [];
         foreach ([
-                     ArchitectureClasses::class,
-                     ArchitectureInterfaces::class,
-                     ArchitectureGlobally::class,
-                     ArchitectureTraits::class,
-                 ] as $metric) {
+            ArchitectureClasses::class,
+            ArchitectureInterfaces::class,
+            ArchitectureGlobally::class,
+            ArchitectureTraits::class,
+        ] as $metric) {
             $name = explode('\\', $metric);
             $lines[end($name)] = (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -308,9 +308,26 @@ EOD;
                     $details = array_slice($details, -3, 3, true);
                 }
 
+                /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($details as $detail) {
-                    $detail = str_replace(realpath($dir) . '/', '', $detail);
-                    $issue .= "\n  $detail";
+                    $detailString = null;
+                    if ($detail->hasFile()) {
+                        $detailString .= str_replace(realpath($dir) . '/', '', $detail->getFile());
+                    }
+
+                    if ($detail->hasLine()) {
+                        $detailString .= ($detailString !== null ? ':' : '') . $detail->getLine();
+                    }
+
+                    if ($detail->hasFunction()) {
+                        $detailString .= ($detailString !== null ? ':' : '') . $detail->getFunction();
+                    }
+
+                    if ($detail->hasMessage()) {
+                        $detailString .= ($detailString !== null ? ': ' : '') . $detail->getMessage();
+                    }
+
+                    $issue .= "\n  $detailString";
                 }
 
                 if (! $this->style->output->isVerbose() && $totalDetails > 3) {
