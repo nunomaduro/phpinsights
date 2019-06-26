@@ -79,8 +79,8 @@ final class Preset implements PresetContract
     private static function composerDiscovery(array $requirements): bool
     {
         foreach (array_keys($requirements) as $requirement) {
-
-            if (strpos($requirement, 'johnpbloch/wordpress') !== false) {
+            if (strpos($requirement, 'johnpbloch/wordpress') !== false
+                || strpos($requirement, 'phpcompatibility/phpcompatibility-wp') !== false) {
                 return true;
             }
         }
