@@ -20,21 +20,19 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * LocalFilesRepository constructor.
      *
-     * @param  \Symfony\Component\Finder\Finder  $finder
+     * @param \Symfony\Component\Finder\Finder  $finder
      */
     public function __construct(Finder $finder)
     {
         $this->finder = $finder
             ->files()
-            ->name(['*.php'])
-            ->exclude(['vendor', 'tests', 'Tests', 'test', 'Test'])
+            ->name(['*.php',])
+            ->exclude(['vendor', 'tests', 'Tests', 'test', 'Test',])
+            ->notName(['*.blade.php',])
             // ->ignoreVCSIgnored(true)
             ->ignoreUnreadableDirs();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultDirectory(): string
     {
         return (string) getcwd();
@@ -51,9 +49,14 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * {@inheritdoc}
      */
-    public function within(string $directory, array $exclude): FilesRepository
+    public function within(string $directory, array $exclude = []): FilesRepository
     {
-        $this->finder->in([$directory])->exclude($exclude);
+        if (! is_dir($directory) && is_file($directory)) {
+            $this->finder->append([$directory]);
+
+            return $this;
+        }
+        $this->finder->in([$directory])->notPath($exclude);
 
         foreach ($exclude as $value) {
             if (substr($value, -4) === '.php') {

@@ -31,31 +31,25 @@ final class Sniff implements Insight, HasDetails
     /**
      * The errors are from the same type.
      *
-     * @var \Symplify\EasyCodingStandard\Error\Error[]
+     * @var array<\Symplify\EasyCodingStandard\Error\Error>
      */
     private $errors;
 
     /**
      * Creates a new instance of Sniff Insight
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error[]  $errors
+     * @param array<\Symplify\EasyCodingStandard\Error\Error> $errors
      */
     public function __construct(array $errors)
     {
         $this->errors = $errors;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function hasIssue(): bool
     {
         return count($this->errors) > 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTitle(): string
     {
         $sniffClass = $this->getInsightClass();
@@ -82,13 +76,10 @@ final class Sniff implements Insight, HasDetails
         }, $this->errors);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInsightClass(): string
     {
         if (\count($this->errors) === 0) {
-            throw new SniffClassNotFound('Unable to found Sniff used.');
+            throw new SniffClassNotFound('Unable to find Sniff used.');
         }
 
         return explode('.', $this->errors[0]->getSourceClass())[0];

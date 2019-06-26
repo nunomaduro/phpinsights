@@ -9,9 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 
 final class Globally implements HasPercentage
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         $value = count($collector->getFiles()) - $collector->getClasses() - $collector->getInterfaces() - count($collector->getTraits());

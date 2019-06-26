@@ -11,9 +11,6 @@ use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
 
 final class Files implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return (string) count($collector->getFiles());

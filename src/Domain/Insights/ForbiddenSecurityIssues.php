@@ -16,17 +16,11 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     private static $result;
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         return (bool) count($this->getDetails());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return 'Security issues found on dependencies';

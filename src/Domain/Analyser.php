@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain;
 
 use ReflectionMethod;
@@ -19,7 +21,7 @@ use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
 final class Analyser
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $superGlobals = [
         '$_ENV',
@@ -41,7 +43,7 @@ final class Analyser
      * Processes a set of files.
      *
      * @param  string  $dir
-     * @param  string[]  $files
+     * @param array<string> $files
      *
      * @return \NunoMaduro\PhpInsights\Domain\Collector
      */
@@ -96,22 +98,26 @@ final class Analyser
                         if ($functionName !== null) {
                             $collector->currentMethodIncrementLines();
                         }
-                    } else if ($functionName !== null) {
+                    } elseif ($functionName !== null) {
                         $collector->incrementFunctionLines();
                     }
 
                     $collector->incrementLogicalLines();
-                } else if ($token === '?') {
+                } elseif ($token === '?') {
+                    if($currentBlock === \T_FUNCTION) {
+                        continue;
+                    }
+
                     if ($className !== null) {
                         $collector->currentClassIncrementComplexity();
                         $collector->currentMethodIncrementComplexity();
                     }
 
                     $collector->incrementComplexity();
-                } else if ($token === '{') {
+                } elseif ($token === '{') {
                     if ($currentBlock === \T_CLASS) {
                         $block = $className;
-                    } else if ($currentBlock === \T_FUNCTION) {
+                    } elseif ($currentBlock === \T_FUNCTION) {
                         $block = $functionName;
                     } else {
                         $block = false;
@@ -120,7 +126,7 @@ final class Analyser
                     \array_push($blocks, $block);
 
                     $currentBlock = false;
-                } else if ($token === '}') {
+                } elseif ($token === '}') {
                     $block = \array_pop($blocks);
 
                     if ($block !== false && $block !== null) {
@@ -131,7 +137,7 @@ final class Analyser
                                 $isInMethod = false;
                             }
                             $functionName = null;
-                        } else if ($block === $className) {
+                        } elseif ($block === $className) {
                             $className = null;
                             $collector->currentClassReset();
                         }
@@ -164,14 +170,14 @@ final class Analyser
 
                     if ($token === \T_TRAIT) {
                         $collector->incrementTraits();
-                    } else if ($token === \T_INTERFACE) {
+                    } elseif ($token === \T_INTERFACE) {
                         $collector->incrementInterfaces();
                     } else {
                         if (isset($tokens[$i - 2]) &&
                             \is_array($tokens[$i - 2])) {
                             if ($tokens[$i - 2][0] === \T_ABSTRACT) {
                                 $collector->addAbstractClass($filename);
-                            } else if ($tokens[$i - 2][0] === \T_FINAL) {
+                            } elseif ($tokens[$i - 2][0] === \T_FINAL) {
                                 $collector->addConcreteFinalClass($filename);
                             } else {
                                 $collector->addConcreteNonFinalClass($filename);
@@ -209,7 +215,7 @@ final class Analyser
 
                     if ($currentBlock === \T_FUNCTION) {
                         if ($className === null &&
-                            $functionName != 'anonymous function') {
+                            $functionName !== 'anonymous function') {
                             $collector->addNamedFunctions($functionName);
                         } else {
                             $static = false;
@@ -257,7 +263,7 @@ final class Analyser
 
                             if ($visibility === \T_PUBLIC) {
                                 $collector->incrementPublicMethods();
-                            } else if ($visibility === \T_PROTECTED) {
+                            } elseif ($visibility === \T_PROTECTED) {
                                 $collector->incrementProtectedMethods();
                             } else {
                                 $collector->incrementPrivateMethods();
@@ -317,7 +323,7 @@ final class Analyser
 
                         $j = $i + 1;
 
-                        while (isset($tokens[$j]) && $tokens[$j] != ';') {
+                        while (isset($tokens[$j]) && $tokens[$j] !== ';') {
                             if (\is_array($tokens[$j]) &&
                                 $tokens[$j][0] === \T_CONSTANT_ENCAPSED_STRING) {
 
@@ -353,7 +359,7 @@ final class Analyser
                         if ($token === \T_DOUBLE_COLON &&
                             $tokens[$n][0] === \T_VARIABLE) {
                             $collector->incrementStaticAttributeAccesses();
-                        } else if ($token === \T_OBJECT_OPERATOR) {
+                        } elseif ($token === \T_OBJECT_OPERATOR) {
                             $collector->incrementNonStaticAttributeAccesses();
                         }
                     }
@@ -368,7 +374,7 @@ final class Analyser
                 case \T_VARIABLE:
                     if ($value === '$GLOBALS') {
                         $collector->incrementGlobalVariableAccesses();
-                    } else if (isset(array_flip($this->superGlobals)[$value])) {
+                    } elseif (isset(array_flip($this->superGlobals)[$value])) {
                         $collector->incrementSuperGlobalVariableAccesses();
                     }
 
@@ -379,9 +385,9 @@ final class Analyser
 
     /**
      * @param  string  $method
-     * @param  array<int|float|string[],int|float|string[]>  $args
+     * @param array<(int|float|array<string>), (int|float|array<string>)> $args
      *
-     * @return int|float|string[]
+     * @return int|float|array<string>
      */
     public function __call(string $method, array $args)
     {

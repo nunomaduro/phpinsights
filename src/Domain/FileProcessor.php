@@ -15,12 +15,12 @@ use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 final class FileProcessor implements FileProcessorInterface
 {
     /**
-     * @var \PHP_CodeSniffer\Sniffs\Sniff[]
+     * @var array<\PHP_CodeSniffer\Sniffs\Sniff>
      */
     private $sniffs = [];
 
     /**
-     * @var \PHP_CodeSniffer\Sniffs\Sniff[][]
+     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator>>
      */
     private $tokenListeners = [];
 
@@ -61,7 +61,7 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @return \PHP_CodeSniffer\Sniffs\Sniff[]
+     * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
      */
     public function getCheckers(): array
     {

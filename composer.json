@@ -11,12 +11,13 @@
     ],
     "require": {
         "php": "^7.2",
-        "ext-json": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
+        "composer/composer": "^1.7",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
-        "sensiolabs/security-checker": "^5.0",
+        "sensiolabs/security-checker": "^6.0",
         "symfony/console": "^4.2",
         "symfony/finder": "^4.2",
         "symplify/coding-standard": "^6.0",
@@ -26,7 +27,7 @@
     "require-dev": {
         "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
-        "localheinz/phpstan-rules": "^0.6.0",
+        "localheinz/phpstan-rules": "^0.10.0",
         "phpstan/phpstan-strict-rules": "^0.11",
         "roave/no-floaters": "^1.1",
         "phpstan/phpstan": "^0.11.5",
@@ -64,7 +65,7 @@
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
-        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=85.7 --min-architecture=76.2 --min-style=89.0",
+        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=85.7 --min-architecture=76.2 --min-style=97.8",
         "test": [
             "@phpstan:test",
             "@ecs:test",

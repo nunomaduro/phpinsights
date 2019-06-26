@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Adapters\Yii;
 
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 
 /**
@@ -11,9 +13,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
  */
 final class Preset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'yii';
@@ -24,7 +23,7 @@ final class Preset implements PresetContract
      */
     public static function get(): array
     {
-        return [
+        $config = [
             'exclude' => [
                 'web',
                 'views',
@@ -41,6 +40,8 @@ final class Preset implements PresetContract
                 // ...
             ],
         ];
+
+        return ConfigResolver::mergeConfig(DefaultPreset::get(), $config);
     }
 
     /**
@@ -48,7 +49,7 @@ final class Preset implements PresetContract
      */
     public static function shouldBeApplied(array $composer, string $directory): bool
     {
-        /** @var string[] $requirements */
+        /** @var array<string> $requirements */
         $requirements = $composer['require'] ?? [];
 
         foreach (array_keys($requirements) as $requirement) {

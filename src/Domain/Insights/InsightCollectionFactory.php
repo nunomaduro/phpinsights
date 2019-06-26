@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Analyser;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\Contracts\{HasInsights, Insight};
 use NunoMaduro\PhpInsights\Domain\Exceptions\DirectoryNotFound;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -39,7 +38,7 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param  string[]  $metrics
+     * @param array<string> $metrics
      * @param  array<string, array<string, string>>  $config
      * @param  string  $dir
      *
@@ -48,10 +47,10 @@ final class InsightCollectionFactory
     public function get(array $metrics, array $config, string $dir): InsightCollection
     {
         try {
-            $files = array_map(static function (SplFileInfo $file) {
+            $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();
             }, iterator_to_array($this->filesRepository->within($dir, $config['exclude'] ?? [])->getFiles()));
-        } catch (InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
 
@@ -88,20 +87,27 @@ final class InsightCollectionFactory
      * @param  string  $metricClass
      * @param  array<string, array<string, string|array>>  $config
      *
-     * @return string[]
+     * @return array<string>
      */
     private function getInsights(string $metricClass, array $config): array
     {
+        /** @var HasInsights $metric */
         $metric = new $metricClass();
 
-        $insights = array_key_exists(HasInsights::class, class_implements($metricClass)) ? $metric->getInsights() : [];
+        $insights = array_key_exists(
+            HasInsights::class,
+            class_implements($metricClass)
+        ) ? $metric->getInsights() : [];
 
         $toAdd = array_key_exists('add', $config) &&
         array_key_exists($metricClass, $config['add']) &&
-        is_array($config['add'][$metricClass]) ? $config['add'][$metricClass] : [];
+        is_array($config['add'][$metricClass])
+            ? $config['add'][$metricClass]
+            : [];
 
         $insights = array_merge($insights, $toAdd);
 
+        // Remove insights based on config.
         return array_diff($insights, $config['remove'] ?? []);
     }
 }
