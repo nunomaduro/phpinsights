@@ -65,7 +65,7 @@ final class AnalyseCommand
 
         $output = OutputDecorator::decorate($output);
 
-        $format = FormatResolver::resolve($input, $output);
+        $format = FormatResolver::resolve($input, $output, $consoleOutput);
 
         $directory = $this->getDirectory($input);
 

@@ -24,7 +24,8 @@ final class FormatResolver
 
     public static function resolve(
         InputInterface $input,
-        OutputInterface $output
+        OutputInterface $output,
+        OutputInterface $consoleOutput
     ): Formatter
     {
         $requestedFormat = $input->getOption('format');
@@ -36,6 +37,10 @@ final class FormatResolver
         }
 
         $requestedFormat = strtolower($requestedFormat);
+
+        if (! array_key_exists($requestedFormat, self::$formatters)) {
+            $consoleOutput->writeln("<fg=red>Could not find requested format [$requestedFormat], using fallback [console] instead.</>");
+        }
 
         $formatter = self::$formatters[$requestedFormat] ?? Console::class;
 
