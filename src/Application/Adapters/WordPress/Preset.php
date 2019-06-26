@@ -42,7 +42,7 @@ final class Preset implements PresetContract
                 DeclareStrictTypesSniff::class,
                 ForbiddenDefineFunctions::class,
                 TypeHintDeclarationSniff::class,
-                ForbiddenUsingGlobals::class
+                ForbiddenUsingGlobals::class,
             ],
             'config'  => [
                 ForbiddenFunctionsSniff::class => [
