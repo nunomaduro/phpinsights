@@ -13,11 +13,7 @@ return [
     | to make your code reliable, simple, and clean. However, you can always
     | adjust the `Metrics` and `Insights` below in this configuration file.
     |
-<<<<<<< HEAD
-    | Supported: "default", "laravel", "symfony", "magento2", "wordpress"
-=======
-    | Supported: "default", "laravel", "symfony", "magento2", "drupal"
->>>>>>> master
+    | Supported: "default", "laravel", "symfony", "magento2", "drupal", "wordpress"
     |
     */
 
