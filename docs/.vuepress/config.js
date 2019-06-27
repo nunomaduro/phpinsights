@@ -9,7 +9,11 @@ module.exports = {
       '/testimonial',
       '/configuration',
       '/contribute',
-      '/support'
+      '/support',
+      '/changelog'
+    ],
+    nav: [
+      { text: 'Changelog', link: '/changelog' },
     ]
   },
   algolia: {
