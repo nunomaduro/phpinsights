@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class FormatResolver
 {
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     private static $formatters = [
         'console' => Console::class,

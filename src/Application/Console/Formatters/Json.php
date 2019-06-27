@@ -13,6 +13,9 @@ use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 final class Json implements Formatter
 {
     /** @var OutputInterface */

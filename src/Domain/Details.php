@@ -26,11 +26,6 @@ final class Details
         return new Details();
     }
 
-    /**
-     * @param string $file
-     *
-     * @return Details
-     */
     public function withFile(string $file): Details
     {
         $this->file = $file;
@@ -48,42 +43,24 @@ final class Details
         return $this;
     }
 
-    /**
-     * @param int $line
-     *
-     * @return Details
-     */
     public function withLine(int $line): Details
     {
         $this->line = $line;
         return $this;
     }
 
-    /**
-     * @param string $message
-     *
-     * @return Details
-     */
     public function withMessage(string $message): Details
     {
         $this->message = $message;
         return $this;
     }
 
-    /**
-     * @param string $function
-     *
-     * @return Details
-     */
     public function withFunction(string $function): Details
     {
         $this->function = $function;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getFile(): string
     {
         return $this->file;
@@ -94,9 +71,6 @@ final class Details
         return $this->file !== null;
     }
 
-    /**
-     * @return int
-     */
     public function getLine(): int
     {
         return $this->line;
@@ -107,9 +81,6 @@ final class Details
         return $this->line !== null;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;
@@ -120,9 +91,6 @@ final class Details
         return $this->message !== null;
     }
 
-    /**
-     * @return string
-     */
     public function getFunction(): string
     {
         return $this->function;
