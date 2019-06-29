@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
@@ -525,7 +525,7 @@ final class Collector
      */
     public function addNamedFunctions(string $name): void
     {
-        if (! array_key_exists($this->currentFilename, $this->namedFunctions)) {
+        if (!array_key_exists($this->currentFilename, $this->namedFunctions)) {
             $this->namedFunctions[$this->currentFilename] = [];
         }
 
@@ -633,7 +633,7 @@ final class Collector
      */
     public function getClassLines(): int
     {
-        return (int) $this->getSum($this->classLines);
+        return (int)$this->getSum($this->classLines);
     }
 
     /**
@@ -951,7 +951,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return (bool) count($array) ? max($array) : 0;
+        return (bool)count($array) ? max($array) : 0;
     }
 
     /**
@@ -970,7 +970,7 @@ final class Collector
      */
     public function getMaximumClassLength(): int
     {
-        return (int) $this->getMaximum($this->classLines);
+        return (int)$this->getMaximum($this->classLines);
     }
 
     /**
@@ -978,7 +978,7 @@ final class Collector
      */
     public function getAverageMethodLength(): int
     {
-        return (int) $this->getAverage($this->methodLines);
+        return (int)$this->getAverage($this->methodLines);
     }
 
     /**
@@ -986,7 +986,7 @@ final class Collector
      */
     public function getMaximumMethodLength(): int
     {
-        return (int) $this->getMaximum($this->methodLines);
+        return (int)$this->getMaximum($this->methodLines);
     }
 
     /**
@@ -994,7 +994,7 @@ final class Collector
      */
     public function getAverageFunctionLength(): int
     {
-        return (int) $this->divide($this->getFunctionLines(), $this->getFunctions());
+        return (int)$this->divide($this->getFunctionLines(), $this->getFunctions());
     }
 
     /**
@@ -1036,7 +1036,7 @@ final class Collector
      */
     public function getMaximumClassComplexity(): int
     {
-        return (int) $this->getMaximum($this->getClassComplexity());
+        return (int)$this->getMaximum($this->getClassComplexity());
     }
 
     /**

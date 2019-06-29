@@ -25,7 +25,7 @@ final class ForbiddenGlobals extends Insight implements HasDetails
     {
         $details = [];
         foreach ($this->collector->getGlobalVariables() as $file => $global) {
-            $details[] = "$file: $global";
+            $details[] = "$file: Usage of $global found; Usage of GLOBALS are discouraged consider not relying on global scope";
         }
 
         return $details;
