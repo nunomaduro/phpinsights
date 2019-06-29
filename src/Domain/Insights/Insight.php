@@ -30,4 +30,9 @@ abstract class Insight implements InsightContract
         $this->collector = $collector;
         $this->config = $config;
     }
+
+    public function getInsightClass(): string
+    {
+        return static::class;
+    }
 }

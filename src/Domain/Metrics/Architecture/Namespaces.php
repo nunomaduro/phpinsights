@@ -13,9 +13,6 @@ use SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff;
 
 final class Namespaces implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', count($collector->getNamespaces()));
@@ -24,7 +21,7 @@ final class Namespaces implements HasValue, HasInsights
     /**
      * Returns the insights classes applied on the metric.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInsights(): array
     {
@@ -32,7 +29,6 @@ final class Namespaces implements HasValue, HasInsights
             NamespaceDeclarationSniff::class,
             UselessAliasSniff::class,
             CompoundNamespaceDepthSniff::class,
-            NamespaceDeclarationSniff::class,
         ];
     }
 }

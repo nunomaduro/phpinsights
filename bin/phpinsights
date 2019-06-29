@@ -25,7 +25,7 @@ use Symfony\Component\Console\Input\ArgvInput;
     /**
      * Creates a new console application, and runs it.
      */
-    $application = new Application('PHP Insights', 'v1.0.0');
+    $application = new Application('PHP Insights', Kernel::VERSION);
     foreach ($application->all() as $command) {
         $command->setHidden(true);
     }

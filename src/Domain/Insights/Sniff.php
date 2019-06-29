@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Exceptions\SniffClassNotFound;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
@@ -30,34 +31,28 @@ final class Sniff implements Insight, HasDetails
     /**
      * The errors are from the same type.
      *
-     * @var \Symplify\EasyCodingStandard\Error\Error[]
+     * @var array<\Symplify\EasyCodingStandard\Error\Error>
      */
     private $errors;
 
     /**
      * Creates a new instance of Sniff Insight
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error[]  $errors
+     * @param array<\Symplify\EasyCodingStandard\Error\Error> $errors
      */
     public function __construct(array $errors)
     {
         $this->errors = $errors;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function hasIssue(): bool
     {
         return count($this->errors) > 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTitle(): string
     {
-        $sniffClass = explode('.', $this->errors[0]->getSourceClass())[0];
+        $sniffClass = $this->getInsightClass();
 
         if (array_key_exists($sniffClass, self::$messages)) {
             return sprintf(self::$messages[$sniffClass], count($this->errors));
@@ -79,5 +74,14 @@ final class Sniff implements Insight, HasDetails
         return array_map(static function (Error $error) {
             return $error->getFileInfo()->getRealPath() . ':' . $error->getLine() . ': ' . $error->getMessage();
         }, $this->errors);
+    }
+
+    public function getInsightClass(): string
+    {
+        if (\count($this->errors) === 0) {
+            throw new SniffClassNotFound('Unable to find Sniff used.');
+        }
+
+        return explode('.', $this->errors[0]->getSourceClass())[0];
     }
 }

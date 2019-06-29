@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InsightClassNotFound;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 
 /**
@@ -53,7 +55,7 @@ final class Results
         $avg = $this->collector->getAverageComplexityPerMethod() - 1.0;
 
         return (float) number_format(
-            100.0 - min(($avg * 100.0) / 3.0, 100.0),
+            100.0 - max(min(($avg * 100.0) / 3.0, 100.0), 0.0),
             1,
             '.',
             ''
@@ -97,15 +99,24 @@ final class Results
      */
     public function getTotalSecurityIssues(): int
     {
-        foreach ($this->perCategoryInsights['Security'] as $insight) {
-            if ($insight instanceof ForbiddenSecurityIssues) {
-                return count($insight->getDetails());
-            }
+        try {
+            /** @var ForbiddenSecurityIssues $insight */
+            $insight = $this->getInsightByCategory(ForbiddenSecurityIssues::class, 'Security');
+            return count($insight->getDetails());
+        } catch (InsightClassNotFound $exception) {
+            return 0;
         }
-
-        throw new \RuntimeException('This should not happen');
     }
 
+    public function hasInsightInCategory(string $insightClass, string $category): bool
+    {
+        try {
+            $this->getInsightByCategory($insightClass, $category);
+            return true;
+        } catch (InsightClassNotFound $exception) {
+            return false;
+        }
+    }
     /**
      * Returns the percentage of the given category.
      *
@@ -127,5 +138,16 @@ final class Results
         $percentage = (bool) $issuesNotFound ? (($issuesNotFound * 100.0) / $total) : 100.0;
 
         return (float) number_format($percentage, 1, '.', '');
+    }
+
+    private function getInsightByCategory(string $insightClass, string $category): Insight
+    {
+        foreach ($this->perCategoryInsights[$category] as $insight) {
+            if ($insight instanceof $insightClass) {
+                return $insight;
+            }
+        }
+
+        throw new InsightClassNotFound("$insightClass not found in $category");
     }
 }

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
+use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 
 /**
@@ -13,9 +16,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
  */
 final class Preset implements PresetContract
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getName(): string
     {
         return 'laravel';
@@ -26,7 +26,7 @@ final class Preset implements PresetContract
      */
     public static function get(): array
     {
-        return [
+        $config = [
             'exclude' => [
                 'config',
                 'storage',
@@ -56,8 +56,15 @@ final class Preset implements PresetContract
                         'dump' => null,
                     ],
                 ],
+                ForbiddenSetterSniff::class => [
+                    'allowedMethodRegex' => [
+                        '/^set.*?Attribute$/',
+                    ],
+                ],
             ],
         ];
+
+        return ConfigResolver::mergeConfig(DefaultPreset::get(), $config);
     }
 
     /**
@@ -65,7 +72,7 @@ final class Preset implements PresetContract
      */
     public static function shouldBeApplied(array $composer): bool
     {
-        /** @var string[] $requirements */
+        /** @var array<string> $requirements */
         $requirements = $composer['require'] ?? [];
 
         foreach (array_keys($requirements) as $requirement) {

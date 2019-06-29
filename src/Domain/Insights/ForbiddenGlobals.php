@@ -8,17 +8,11 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
 final class ForbiddenGlobals extends Insight implements HasDetails
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         return (bool)$this->collector->getGlobalAccesses();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return "{$this->collector->getGlobalAccesses()} globals accesses detected";

@@ -10,7 +10,6 @@ use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Kernel;
-use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -59,13 +58,19 @@ final class AnalyseCommand
 
         $directory = $this->getDirectory($input);
 
+        $isRootAnalyse = true;
         foreach (Kernel::getRequiredFiles() as $file) {
             if (! file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
-                throw new RuntimeException("The file `$file` must exist. You should run PHP Insights from the root of your project.");
+                $isRootAnalyse = false;
+                break;
             }
         }
+        $config = $this->getConfig($input, $directory);
 
-        $results = $this->analyser->analyse($style, $this->getConfig($input, $directory), $directory);
+        if (! $isRootAnalyse) {
+            $config = $this->excludeGlobalInsights($config);
+        }
+        $results = $this->analyser->analyse($style, $config, $directory);
 
         $hasError = false;
         if ($input->getOption('min-quality') > $results->getCodeQuality()) {
@@ -135,5 +140,19 @@ final class AnalyseCommand
         }
 
         return $directory;
+    }
+
+    /**
+     * @param array<string, array> $config
+     *
+     * @return array<string, array>
+     */
+    private function excludeGlobalInsights(array $config): array
+    {
+        foreach (Kernel::getGlobalInsights() as $insight) {
+            $config['remove'][] = $insight;
+        }
+
+        return $config;
     }
 }

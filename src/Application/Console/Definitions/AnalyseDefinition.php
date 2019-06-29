@@ -62,7 +62,7 @@ final class AnalyseDefinition
                 null,
                 InputOption::VALUE_NONE,
                 'Disable Security issues check to not throw error if vulnerability is found'
-            )
+            ),
         ];
     }
 }

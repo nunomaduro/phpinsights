@@ -10,8 +10,8 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
+use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
-use ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnnecessaryFinalModifierSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\PropertyDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff;
@@ -22,33 +22,21 @@ use SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff;
 
 final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getClassLines());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPercentage(Collector $collector): float
     {
         return $collector->getLines() > 0 ? ($collector->getClassLines() / $collector->getLines()) * 100 : 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAvg(Collector $collector): string
     {
         return sprintf('%d', $collector->getAverageClassLength());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMax(Collector $collector): string
     {
         return sprintf(' % d', $collector->getMaximumClassLength());
@@ -63,7 +51,7 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
             //FullyQualifiedClassNameAfterKeywordSniff::class,
             ForbiddenPublicPropertySniff::class,
             UnusedPrivateElementsSniff::class,
-            NoSetterSniff::class,
+            ForbiddenSetterSniff::class,
             UnnecessaryFinalModifierSniff::class,
             PropertyDeclarationSniff::class,
             ClassConstantVisibilitySniff::class,

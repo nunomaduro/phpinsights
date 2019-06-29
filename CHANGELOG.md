@@ -4,6 +4,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.7.0]
+### Added
+- ComposerMustBeValid and ComposerLockMustBeFresh insights ([#169](https://github.com/nunomaduro/phpinsights/pull/169))
+- CyclomaticComplexityIsHigh max complexity is now configurable ([#190](https://github.com/nunomaduro/phpinsights/pull/190))
+- Possibility of ignoring files on specific insight ([#182](https://github.com/nunomaduro/phpinsights/pull/182))
+- Possibility of disable ForbiddenSecurityInsight ([#175](https://github.com/nunomaduro/phpinsights/pull/175)) ([#187](https://github.com/nunomaduro/phpinsights/pull/187))
+
+### Fixed
+- Non used files are no included anymore while requiring php insights ([#189](https://github.com/nunomaduro/phpinsights/pull/189))
+
+## [v1.6.0]
+### Added
+- Laravel preset now ignores model attribute setters ([#154](https://github.com/nunomaduro/phpinsights/pull/154))
+- Ignores package managers folders by default ([#144](https://github.com/nunomaduro/phpinsights/pull/144))
+- Ignores `blade.php` files ([#155](https://github.com/nunomaduro/phpinsights/pull/155))
+- You can now exclude files and directories ([#75](https://github.com/nunomaduro/phpinsights/pull/75))
+- Automatic docker image build on new release ([#160](https://github.com/nunomaduro/phpinsights/pull/160))
+
+### Changed
+- Upgraded `sensiolabs/security-checker` dependency to `^6.0` ([#158](https://github.com/nunomaduro/phpinsights/pull/158))
+
+### Fixed
+- Fixed a bug with optional type hints increasing cyclomatic complexity ([#150](https://github.com/nunomaduro/phpinsights/pull/150))
+
+## [v1.5.0]
+### Added
+- Better support with nette dependencies
+
+### Fixed
+- Complexity over `100.0`
+## [v1.4.0]
+### Added
+- Drupal preset ([#120](https://github.com/nunomaduro/phpinsights/pull/120))
+- Display insight class name on verbose mode ([#139](https://github.com/nunomaduro/phpinsights/pull/139))
+
 ## [v1.3.1]
 ### Fixed
 - Missing option `--disable-security-check` ([#106](https://github.com/nunomaduro/phpinsights/pull/106))

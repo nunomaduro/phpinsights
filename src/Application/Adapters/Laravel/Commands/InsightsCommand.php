@@ -15,19 +15,10 @@ use NunoMaduro\PhpInsights\Domain\Reflection;
  */
 final class InsightsCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected $name = 'insights';
 
-    /**
-     * {@inheritdoc}
-     */
     protected $description = 'Analyze the code quality';
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AnalyseCommand $analyseCommand): int
     {
         Kernel::bootstrap();
@@ -44,9 +35,6 @@ final class InsightsCommand extends Command
         return $analyseCommand->__invoke($this->input, $output);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         parent::configure();

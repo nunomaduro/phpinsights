@@ -33,37 +33,37 @@ final class Collector
     private $functionLines = 0;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $files = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $directories = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $concreteNonFinalClasses = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $concreteFinalClasses = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $abstractClasses = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $traits = [];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $globalConstants = [];
 
@@ -73,7 +73,7 @@ final class Collector
     private $interfaces = 0;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $namespaces = [];
 
@@ -88,7 +88,7 @@ final class Collector
     private $totalMethodComplexity = 0;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     private $methodComplexity = [];
 
@@ -123,7 +123,7 @@ final class Collector
     private $superGlobalVariableAccesses = 0;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private $globalVariables = [];
 
@@ -153,7 +153,7 @@ final class Collector
     private $anonymousFunctions = 0;
 
     /**
-     * @var array<string, string[]>
+     * @var array<string, array<string>>
      */
     private $namedFunctions = [];
 
@@ -337,6 +337,8 @@ final class Collector
     }
 
     /**
+     * Increase the complexity of the analysis
+     *
      * @return void
      */
     public function incrementComplexity(): void
@@ -398,6 +400,8 @@ final class Collector
     }
 
     /**
+     * Increment if calling non static method.
+     *
      * @return void
      */
     public function incrementNonStaticMethodCalls(): void
@@ -406,6 +410,8 @@ final class Collector
     }
 
     /**
+     * Increment if a calling a static method
+     *
      * @return void
      */
     public function incrementStaticMethodCalls(): void
@@ -423,6 +429,8 @@ final class Collector
     }
 
     /**
+     * Increment if class is a interface.
+     *
      * @return void
      */
     public function incrementInterfaces(): void
@@ -431,7 +439,7 @@ final class Collector
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return void
      */
@@ -461,6 +469,8 @@ final class Collector
     }
 
     /**
+     * Increment if method.
+     *
      * @return void
      */
     public function incrementNonStaticMethods(): void
@@ -469,6 +479,8 @@ final class Collector
     }
 
     /**
+     * Increment if static method.
+     *
      * @return void
      */
     public function incrementStaticMethods(): void
@@ -477,6 +489,8 @@ final class Collector
     }
 
     /**
+     * Increment if public method.
+     *
      * @return void
      */
     public function incrementPublicMethods(): void
@@ -485,6 +499,8 @@ final class Collector
     }
 
     /**
+     * Increment if protected method.
+     *
      * @return void
      */
     public function incrementProtectedMethods(): void
@@ -493,6 +509,8 @@ final class Collector
     }
 
     /**
+     * Increment if private method.
+     *
      * @return void
      */
     public function incrementPrivateMethods(): void
@@ -515,6 +533,8 @@ final class Collector
     }
 
     /**
+     * Increment if anonymous function.
+     *
      * @return void
      */
     public function incrementAnonymousFunctions(): void
@@ -606,7 +626,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getDirectories(): array
     {
@@ -614,7 +634,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGlobalConstants(): array
     {
@@ -622,7 +642,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getTraits(): array
     {
@@ -742,6 +762,8 @@ final class Collector
     }
 
     /**
+     * Returns the complexity of the analysed data.
+     *
      * @return int
      */
     public function getComplexity(): int
@@ -750,7 +772,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPossibleConstantAccesses(): array
     {
@@ -790,7 +812,7 @@ final class Collector
     }
 
     /**
-     * @return array<string, string[]>
+     * @return array<string, array<string>>
      */
     public function getNamedFunctions(): array
     {
@@ -822,7 +844,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getConcreteNonFinalClasses(): array
     {
@@ -830,7 +852,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getConcreteFinalClasses(): array
     {
@@ -838,7 +860,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getNamespaces(): array
     {
@@ -878,7 +900,7 @@ final class Collector
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAbstractClasses(): array
     {
@@ -961,7 +983,7 @@ final class Collector
      */
     private function divide(float $x, float $y): float
     {
-        return $y != 0 ? $x / $y : 0;
+        return $y !== 0.0 ? $x / $y : 0;
     }
 
     /**
@@ -1079,6 +1101,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of calls to methods analysed.
+     *
      * @return int
      */
     public function getMethodCalls(): int
@@ -1087,6 +1111,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of classes analysed.
+     *
      * @return int
      */
     public function getClasses(): int
@@ -1095,6 +1121,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of methods analysed.
+     *
      * @return int
      */
     public function getMethods(): int
@@ -1103,6 +1131,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of functions analysed.
+     *
      * @return int
      */
     public function getFunctions(): int
@@ -1111,6 +1141,8 @@ final class Collector
     }
 
     /**
+     * Get the amount of constants analysed.
+     *
      * @return int
      */
     public function getConstants(): int

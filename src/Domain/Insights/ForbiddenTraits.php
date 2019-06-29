@@ -8,17 +8,11 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 
 final class ForbiddenTraits extends Insight implements HasDetails
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasIssue(): bool
     {
         return count($this->collector->getTraits()) > 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): string
     {
         return 'The use of `traits` is prohibited';
