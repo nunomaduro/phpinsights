@@ -10,7 +10,7 @@ final class ForbiddenGlobals extends Insight implements HasDetails
 {
     public function hasIssue(): bool
     {
-        return (bool)$this->collector->getGlobalAccesses();
+        return (bool) $this->collector->getGlobalAccesses();
     }
 
     public function getTitle(): string
@@ -24,7 +24,7 @@ final class ForbiddenGlobals extends Insight implements HasDetails
     public function getDetails(): array
     {
         $details = [];
-        foreach ($this->collector->getGlobalVariables() as $file => $global) {
+        foreach ($this->collector->getGlobalVariableAccesses() as $file => $global) {
             $details[] = "$file: Usage of $global found; Usage of GLOBALS are discouraged consider not relying on global scope";
         }
 

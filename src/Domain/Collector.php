@@ -118,24 +118,19 @@ final class Collector
     private $staticAttributeAccesses = 0;
 
     /**
-     * @var int
+     * @var array<string>
      */
-    private $superGlobalVariableAccesses = 0;
+    private $superGlobalVariableAccesses = [];
 
     /**
      * @var array<string>
      */
-    private $globalVariables = [];
-
-    /**
-     * @var string[]
-     */
     private $possibleConstantAccesses = [];
 
     /**
-     * @var int
+     * @var array<string>
      */
-    private $globalVariableAccesses = 0;
+    private $globalVariableAccesses = [];
 
     /**
      * @var int
@@ -368,19 +363,25 @@ final class Collector
     }
 
     /**
+     * @param int $line
+     * @param string $name
+     *
      * @return void
      */
-    public function incrementGlobalVariableAccesses(): void
+    public function addGlobalVariableAccesses(int $line, string $name): void
     {
-        $this->globalVariableAccesses++;
+        $this->globalVariableAccesses[$this->currentFilename . ':' . $line] = $name;
     }
 
     /**
+     * @param int $line
+     * @param string $name
+     *
      * @return void
      */
-    public function incrementSuperGlobalVariableAccesses(): void
+    public function addSuperGlobalVariableAccesses(int $line, string $name): void
     {
-        $this->superGlobalVariableAccesses++;
+        $this->superGlobalVariableAccesses[$this->currentFilename . ':' . $line] = $name;
     }
 
     /**
@@ -525,7 +526,7 @@ final class Collector
      */
     public function addNamedFunctions(string $name): void
     {
-        if (!array_key_exists($this->currentFilename, $this->namedFunctions)) {
+        if (! array_key_exists($this->currentFilename, $this->namedFunctions)) {
             $this->namedFunctions[$this->currentFilename] = [];
         }
 
@@ -633,7 +634,7 @@ final class Collector
      */
     public function getClassLines(): int
     {
-        return (int)$this->getSum($this->classLines);
+        return (int) $this->getSum($this->classLines);
     }
 
     /**
@@ -759,11 +760,11 @@ final class Collector
     }
 
     /**
-     * @return int
+     * @return array<string>
      */
-    public function getGlobalVariableAccesses(): int
+    public function getGlobalVariableAccesses(): array
     {
-        return $this->globalVariableAccesses;
+        return array_merge($this->globalVariableAccesses, $this->superGlobalVariableAccesses);
     }
 
     /**
@@ -887,9 +888,9 @@ final class Collector
     }
 
     /**
-     * @return int
+     * @return array<string>
      */
-    public function getSuperGlobalVariableAccesses(): int
+    public function getSuperGlobalVariableAccesses(): array
     {
         return $this->superGlobalVariableAccesses;
     }
@@ -951,7 +952,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return (bool)count($array) ? max($array) : 0;
+        return (bool) count($array) ? max($array) : 0;
     }
 
     /**
@@ -970,7 +971,7 @@ final class Collector
      */
     public function getMaximumClassLength(): int
     {
-        return (int)$this->getMaximum($this->classLines);
+        return (int) $this->getMaximum($this->classLines);
     }
 
     /**
@@ -978,7 +979,7 @@ final class Collector
      */
     public function getAverageMethodLength(): int
     {
-        return (int)$this->getAverage($this->methodLines);
+        return (int) $this->getAverage($this->methodLines);
     }
 
     /**
@@ -986,7 +987,7 @@ final class Collector
      */
     public function getMaximumMethodLength(): int
     {
-        return (int)$this->getMaximum($this->methodLines);
+        return (int) $this->getMaximum($this->methodLines);
     }
 
     /**
@@ -994,7 +995,7 @@ final class Collector
      */
     public function getAverageFunctionLength(): int
     {
-        return (int)$this->divide($this->getFunctionLines(), $this->getFunctions());
+        return (int) $this->divide($this->getFunctionLines(), $this->getFunctions());
     }
 
     /**
@@ -1036,7 +1037,7 @@ final class Collector
      */
     public function getMaximumClassComplexity(): int
     {
-        return (int)$this->getMaximum($this->getClassComplexity());
+        return (int) $this->getMaximum($this->getClassComplexity());
     }
 
     /**
@@ -1060,7 +1061,7 @@ final class Collector
      */
     public function getGlobalAccesses(): int
     {
-        return $this->getGlobalConstantAccesses() + $this->getGlobalVariableAccesses() + $this->getSuperGlobalVariableAccesses();
+        return $this->getGlobalConstantAccesses() + count($this->globalVariableAccesses) + count($this->superGlobalVariableAccesses);
     }
 
     /**
