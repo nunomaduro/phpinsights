@@ -1,7 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
-    "title": "The Root Schema",
+    "readOnly": true,
+    "title": "The JSON format for phpinsights",
     "required": [
         "summary",
         "Code",
