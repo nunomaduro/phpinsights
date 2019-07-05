@@ -71,6 +71,9 @@
             "@ecs:test",
             "@phpunit:test",
             "@insights"
+        ],
+        "post-root-package-install": [
+            "@php -r \"copy('CHANGELOG.md', 'docs/CHANGELOG.md');\""
         ]
     },
     "scripts-descriptions": {

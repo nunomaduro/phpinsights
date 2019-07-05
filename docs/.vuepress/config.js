@@ -22,6 +22,10 @@ module.exports = {
       },
       '/contribute',
       '/support',
+      '/changelog'
+    ],
+    nav: [
+      { text: 'Changelog', link: '/changelog' },
     ],
     algolia: {
       apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
