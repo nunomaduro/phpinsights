@@ -10,10 +10,10 @@ module.exports = {
       '/configuration',
       '/contribute',
       '/support',
-      '/changelog'
+      '/CHANGELOG'
     ],
     nav: [
-      { text: 'Changelog', link: '/changelog' },
+      { text: 'Changelog', link: '/CHANGELOG' },
     ]
   },
   algolia: {
