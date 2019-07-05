@@ -8,16 +8,28 @@ module.exports = {
       '/get-started',
       '/testimonial',
       '/configuration',
+      '/continuous-integration',
+      {
+        title: 'Insights',
+        collapsable: false,
+        children: [
+          '/insights/',
+          '/insights/code',
+          '/insights/architecture',
+          '/insights/complexity',
+          '/insights/style',
+        ]
+      },
       '/contribute',
       '/support',
-      '/CHANGELOG'
+      '/changelog'
     ],
     nav: [
-      { text: 'Changelog', link: '/CHANGELOG' },
-    ]
+      { text: 'Changelog', link: '/changelog' },
+    ],
+    algolia: {
+      apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
+      indexName: 'phpinsights'
+    }
   },
-  algolia: {
-    apiKey: 'cc2ada22e5f17c4068a51fea34db4abd',
-    indexName: 'phpinsights'
-  }
 }

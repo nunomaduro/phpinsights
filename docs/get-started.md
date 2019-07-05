@@ -35,6 +35,24 @@ You can also use `phpinsights` via Docker:
 docker run -it --rm -v $(pwd):/app nunomaduro/phpinsights
 ```
 
+## Analyse a sub-directory or a specific file
+
+You can ask `phpinsights` to analyse only a directory or even a specific file by providing path with `analyse` command:
+
+```bash
+# For a directory
+./vendor/bin/phpinsights analyse path/to/analyse
+
+# For a file
+./vendor/bin/phpinsights analyse path/to/analyse.php
+```
+
+In laravel, launch command as usual with your path:
+
+```bash
+php artisan insights path/to/analyse
+```
+
 ## Allowed memory size of X bytes exhausted
 
 If you encounter the error `Allowed memory size of XXXXX bytes exhausted`, the current workaround is to increase the memory limit:

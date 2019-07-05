@@ -11,9 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 
 final class Constants implements HasValue, HasInsights
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getValue(Collector $collector): string
     {
         return sprintf('%d', $collector->getConstants());

@@ -36,7 +36,7 @@ final class Reflection
      * Sets an private attribute value on the given instance.
      *
      * @param  string  $attribute
-     * @param  string[]|bool  $value
+     * @param array<string>|bool $value
      *
      * @return \NunoMaduro\PhpInsights\Domain\Reflection
      */

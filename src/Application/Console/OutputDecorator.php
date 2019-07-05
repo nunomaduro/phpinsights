@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class OutputDecorator
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     private static $styles = [
         Title::class,
