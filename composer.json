@@ -62,6 +62,7 @@
         "bin/phpinsights"
     ],
     "scripts": {
+        "website:copy-changelog": "@php -r \"copy('CHANGELOG.md', 'docs/changelog.md');\"",
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
@@ -72,11 +73,15 @@
             "@phpunit:test",
             "@insights"
         ],
-        "post-root-package-install": [
-            "@php -r \"copy('CHANGELOG.md', 'docs/CHANGELOG.md');\""
+        "post-install-cmd": [
+            "@website:copy-changelog"
+        ],
+        "post-update-cmd": [
+            "@website:copy-changelog"
         ]
     },
     "scripts-descriptions": {
+        "website:copy-changelog": "Copy package changelog to the website",
         "ecs:test": "Run the ecs tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
