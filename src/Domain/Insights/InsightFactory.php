@@ -8,13 +8,14 @@ use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileProcessor;
-use NunoMaduro\PhpInsights\Domain\PhpstanContainer;
+use NunoMaduro\PhpInsights\Domain\PhpStanContainer;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use PHPStan\Analyser\Analyser;
 use PHPStan\Rules\Registry;
 use PHPStan\Rules\Rule as RuleContract;
+use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
@@ -75,6 +76,8 @@ final class InsightFactory
      * @param OutputInterface $consoleOutput
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
+     *
+     * @throws \Exception
      */
     public function makeFrom(
         string $errorClass,
@@ -92,7 +95,7 @@ final class InsightFactory
                 );
 
             case array_key_exists(RuleContract::class, class_implements($errorClass)):
-                $this->getSniffCollector($config);
+                $this->getSniffCollector($config, $consoleOutput);
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator $rule */
                 foreach ($this->rules as $rule) {
@@ -100,6 +103,7 @@ final class InsightFactory
                         return $rule;
                     }
                 }
+                throw new RuntimeException("The rule has been removed somehow. This shouldn't happen.");
             default:
                 throw new \RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
         }
@@ -136,12 +140,10 @@ final class InsightFactory
     /**
      * Returns the phpstan rule classes from the given array of Matrics.
      *
-     * @param  array<string>  $insights
-     * @param  array<string, array>  $config
-     *
+     * @param array<string> $insights
      * @return array<\PHPStan\Rules\Rule>
      */
-    public function rulesFrom(array $insights, array $config): array
+    public function rulesFrom(array $insights): array
     {
         $rules = [];
 
@@ -238,12 +240,11 @@ final class InsightFactory
             $sniffer->addSniff(new SniffDecorator($sniff, $this->dir));
         }
 
-        $phpstanContainer = PhpstanContainer::make($this->dir);
-        $string = (string) "test";
+        $phpStanContainer = PhpStanContainer::make($this->dir);
 
-        $rules = $this->rulesFrom($this->insightsClasses, $config);
-        $phpstanContainer->removeService('registry');
-        $phpstanContainer->addService(
+        $rules = $this->rulesFrom($this->insightsClasses);
+        $phpStanContainer->removeService('registry');
+        $phpStanContainer->addService(
             'registry',
             new Registry($rules)
         );
@@ -251,7 +252,7 @@ final class InsightFactory
 
 
         /** @var Analyser $analyser */
-        $analyser = $phpstanContainer->getByType(Analyser::class);
+        $analyser = $phpStanContainer->getByType(Analyser::class);
         $sniffer->setAnalyser($analyser);
 
         /** @var \Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication $application */

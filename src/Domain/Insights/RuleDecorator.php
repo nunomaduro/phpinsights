@@ -2,12 +2,17 @@
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use Illuminate\Support\Str;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Details;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\FileRuleError;
+use PHPStan\Rules\LineRuleError;
 use PHPStan\Rules\Rule;
 
-class RuleDecorator implements Insight, Rule
+class RuleDecorator implements Insight, Rule, HasDetails
 {
     /** @var \PHPStan\Rules\Rule */
     private $rule;
@@ -19,7 +24,7 @@ class RuleDecorator implements Insight, Rule
      *
      * @param \PHPStan\Rules\Rule $rule
      */
-    public function __construct(\PHPStan\Rules\Rule $rule)
+    public function __construct(Rule $rule)
     {
         $this->rule = $rule;
     }
@@ -41,7 +46,25 @@ class RuleDecorator implements Insight, Rule
      */
     public function getTitle(): string
     {
-        return "rule fail";
+        $ruleClass = $this->getInsightClass();
+
+
+        $path = explode('\\', $ruleClass);
+        $name = (string) array_pop($path);
+
+        $name = Str::before($name, 'Rule');
+
+        return Str::ucfirst(
+            trim(
+                Str::lower(
+                    (string) preg_replace(
+                        '/(?<!\ )[A-Z]/',
+                        ' $0',
+                        $name
+                    )
+                )
+            )
+        );
     }
 
     /**
@@ -65,14 +88,58 @@ class RuleDecorator implements Insight, Rule
     /**
      * @param \PhpParser\Node $node
      * @param \PHPStan\Analyser\Scope $scope
+     *
      * @return array<string|\PHPStan\Rules\RuleError> errors
+     *
+     * @throws \PHPStan\ShouldNotHappenException
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $errors = $this->rule->processNode($node, $scope);
+        $ruleErrors = $this->rule->processNode($node, $scope);
+
+        $errors = [];
+
+        /** @var \PHPStan\Rules\RuleError|string $error */
+        foreach ($ruleErrors as $error) {
+            $line = $node->getLine();
+            $fileName = $scope->getFileDescription();
+            if (is_string($error)) {
+                $message = $error;
+            } else {
+                $message = $error->getMessage();
+                if (
+                    $error instanceof LineRuleError
+                    && $error->getLine() !== -1
+                ) {
+                    $line = $error->getLine();
+                }
+                if (
+                    $error instanceof FileRuleError
+                    && $error->getFile() !== ''
+                ) {
+                    $fileName = $error->getFile();
+                }
+            }
+
+            $errors[] = Details::make()
+                ->withLine($line)
+                ->withFile($fileName)
+                ->withMessage($message)
+                ->withOriginal($error);
+        }
 
         $this->errors += $errors;
 
-        return $errors;
+        return $ruleErrors;
+    }
+
+    /**
+     * Returns the details of the insight.
+     *
+     * @return array<\NunoMaduro\PhpInsights\Domain\Details>
+     */
+    public function getDetails(): array
+    {
+        return $this->errors;
     }
 }

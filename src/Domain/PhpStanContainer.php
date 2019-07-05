@@ -4,7 +4,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use PHPStan\DependencyInjection\ContainerFactory;
 
-class PhpstanContainer
+class PhpStanContainer
 {
     /**
      * @var \Symfony\Component\DependencyInjection\Container

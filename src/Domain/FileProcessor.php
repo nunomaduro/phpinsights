@@ -75,9 +75,11 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @param  \Symplify\PackageBuilder\FileSystem\SmartFileInfo  $smartFileInfo
+     * @param \Symplify\PackageBuilder\FileSystem\SmartFileInfo $smartFileInfo
      *
      * @return string
+     *
+     * @throws \Throwable
      */
     public function processFile(SmartFileInfo $smartFileInfo): string
     {
