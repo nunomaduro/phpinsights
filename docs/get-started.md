@@ -53,6 +53,31 @@ In laravel, launch command as usual with your path:
 php artisan insights path/to/analyse
 ```
 
+## Formatting the output
+
+For changing the output format you can add the `format` flag. The following formats are supported:
+
+- console
+- json
+
+```bash
+./vendor/bin/phpinsights analyse --format=json
+```
+
+## Saving output to file
+
+You can pipe the result to a file or to anywhere you like. 
+A common use case is parsing the output formatted as json to a json file.
+
+```bash
+./vendor/bin/phpinsights analyse --format=json > test.json
+```
+
+When piping the result remember to add the no interaction flag `-n`, as the part where you need to interact is also getting piped. (the json format does not have any interaction)
+While piping data, if you want the progress bar to refresh itself instead of printing a new one, add the `--ansi` flag.
+
+
+
 ## Allowed memory size of X bytes exhausted
 
 If you encounter the error `Allowed memory size of XXXXX bytes exhausted`, the current workaround is to increase the memory limit:

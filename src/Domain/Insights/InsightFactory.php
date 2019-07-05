@@ -15,8 +15,10 @@ use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use PHPStan\Analyser\Analyser;
 use PHPStan\Rules\Registry;
 use PHPStan\Rules\Rule as RuleContract;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
+use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Error\Error;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
@@ -54,9 +56,9 @@ final class InsightFactory
     /**
      * Creates a new instance of Insight Factory
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
-     * @param  string  $dir
-     * @param  array<string>  $insightsClasses
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     * @param string $dir
+     * @param array<string> $insightsClasses
      */
     public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
     {
@@ -68,16 +70,26 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param  string  $errorClass
-     * @param  array<string, array>  $config
+     * @param string $errorClass
+     * @param array<string, array> $config
+     * @param OutputInterface $consoleOutput
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
-    public function makeFrom(string $errorClass, array $config)
+    public function makeFrom(
+        string $errorClass,
+        array $config,
+        OutputInterface $consoleOutput
+    )
     {
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                return new Sniff($this->getSniffErrors($this->getSniffCollector($config), $errorClass));
+                return new Sniff(
+                    $this->getSniffErrors(
+                        $this->getSniffCollector($config, $consoleOutput),
+                        $errorClass
+                    )
+                );
 
             case array_key_exists(RuleContract::class, class_implements($errorClass)):
                 $this->getSniffCollector($config);
@@ -96,8 +108,8 @@ final class InsightFactory
     /**
      * Returns the Sniffs PHP CS classes from the given array of Metrics.
      *
-     * @param  array<string>  $insights
-     * @param  array<string, array>  $config
+     * @param array<string> $insights
+     * @param array<string, array> $config
      *
      * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
      */
@@ -148,8 +160,8 @@ final class InsightFactory
     /**
      * Returns the Error with of the given $sniff, if any.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector  $collector
-     * @param  string  $sniff
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $collector
+     * @param string $sniff
      *
      * @return array<\Symplify\EasyCodingStandard\Error\Error>
      */
@@ -174,7 +186,7 @@ final class InsightFactory
     /**
      * Gets a key from a Error.
      *
-     * @param  \Symplify\EasyCodingStandard\Error\Error  $error
+     * @param \Symplify\EasyCodingStandard\Error\Error $error
      *
      * @return string
      */
@@ -189,11 +201,17 @@ final class InsightFactory
     }
 
     /**
-     * @param  array<string, array>  $config
+     * @param array<string, array> $config
+     * @param OutputInterface $consoleOutput
      *
      * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
+     *
+     * @throws \Exception
      */
-    private function getSniffCollector(array $config): ErrorAndDiffCollector
+    private function getSniffCollector(
+        array $config,
+        OutputInterface $consoleOutput
+    ): ErrorAndDiffCollector
     {
         if ($this->sniffCollector !== null) {
             return $this->sniffCollector;
@@ -207,6 +225,9 @@ final class InsightFactory
         $ecsContainer = EcsContainer::make();
 
         $ecsContainer->set(Configuration::class, $configuration);
+        /** @var EasyCodingStandardStyle $style */
+        $style = $ecsContainer->get(EasyCodingStandardStyle::class);
+        (new Reflection($style))->set('output', $consoleOutput);
 
         /** @var \Symplify\EasyCodingStandard\Finder\SourceFinder $sourceFinder */
         $sourceFinder = $ecsContainer->get(SourceFinder::class);

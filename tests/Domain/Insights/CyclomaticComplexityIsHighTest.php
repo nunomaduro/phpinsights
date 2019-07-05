@@ -44,8 +44,20 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         self::assertTrue($insight->hasIssue());
         self::assertIsArray($insight->getDetails());
         self::assertCount(2, $insight->getDetails());
-        self::assertContains('LittleToComplexClass.php: 6 cyclomatic complexity', $insight->getDetails());
-        self::assertContains('VeryMuchToComplexClass.php: 13 cyclomatic complexity', $insight->getDetails());
+
+        $messages = [];
+        $files = [];
+        /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+        foreach ($insight->getDetails() as $detail) {
+            $messages[] = $detail->getMessage();
+            $files[] = $detail->getFile();
+        }
+
+        self::assertContains('LittleToComplexClass.php', $files);
+        self::assertContains('6 cyclomatic complexity', $messages);
+
+        self::assertContains('VeryMuchToComplexClass.php', $files);
+        self::assertContains('13 cyclomatic complexity', $messages);
     }
 
     public function testClassWeCanConfigureTheMaxComplexity(): void
@@ -70,7 +82,19 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         self::assertTrue($insight->hasIssue());
         self::assertIsArray($insight->getDetails());
         self::assertCount(1, $insight->getDetails());
-        self::assertNotContains('LittleToComplexClass.php: 6 cyclomatic complexity', $insight->getDetails());
-        self::assertContains('VeryMuchToComplexClass.php: 13 cyclomatic complexity', $insight->getDetails());
+
+        $messages = [];
+        $files = [];
+        /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+        foreach ($insight->getDetails() as $detail) {
+            $messages[] = $detail->getMessage();
+            $files[] = $detail->getFile();
+        }
+
+        self::assertNotContains('LittleToComplexClass.php', $files);
+        self::assertNotContains('6 cyclomatic complexity', $messages);
+
+        self::assertContains('VeryMuchToComplexClass.php', $files);
+        self::assertContains('13 cyclomatic complexity', $messages);
     }
 }

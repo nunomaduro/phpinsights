@@ -17,9 +17,17 @@ final class ComposerMustBeValidTest extends TestCase
 
         self::assertTrue($insight->hasIssue());
         self::assertIsArray($insight->getDetails());
-        self::assertContains('composer.json: The property name is required', $insight->getDetails());
-        self::assertContains('composer.json: The property description is required', $insight->getDetails());
-        self::assertContains('composer.json: No license specified, it is recommended to do so. For closed-source software you may use "proprietary" as license.', $insight->getDetails());
+
+        $messages = [];
+        /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+        foreach ($insight->getDetails() as $detail) {
+            self::assertEquals('composer.json', $detail->getFile());
+            $messages[] = $detail->getMessage();
+        }
+
+        self::assertContains('The property name is required', $messages);
+        self::assertContains('The property description is required', $messages);
+        self::assertContains('No license specified, it is recommended to do so. For closed-source software you may use "proprietary" as license.', $messages);
     }
 
     public function testComposerIsValid(): void

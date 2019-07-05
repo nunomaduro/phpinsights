@@ -6,11 +6,13 @@ namespace NunoMaduro\PhpInsights\Application\Console\Commands;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Analyser;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -35,8 +37,8 @@ final class AnalyseCommand
     /**
      * Creates a new instance of the Analyse Command.
      *
-     * @param  \NunoMaduro\PhpInsights\Application\Console\Analyser  $analyser
-     * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
+     * @param \NunoMaduro\PhpInsights\Application\Console\Analyser $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      */
     public function __construct(Analyser $analyser, FilesRepository $filesRepository)
     {
@@ -47,14 +49,23 @@ final class AnalyseCommand
     /**
      * Handle the given input.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int
      */
     public function __invoke(InputInterface $input, OutputInterface $output): int
     {
-        $style = new Style($input, OutputDecorator::decorate($output));
+        $consoleOutput = $output;
+        if ($consoleOutput instanceof ConsoleOutputInterface) {
+            $consoleOutput = $consoleOutput->getErrorOutput();
+            $consoleOutput->setDecorated($output->isDecorated());
+        }
+        $consoleStyle = new Style($input, $consoleOutput);
+
+        $output = OutputDecorator::decorate($output);
+
+        $format = FormatResolver::resolve($input, $output, $consoleOutput);
 
         $directory = $this->getDirectory($input);
 
@@ -70,26 +81,31 @@ final class AnalyseCommand
         if (! $isRootAnalyse) {
             $config = $this->excludeGlobalInsights($config);
         }
-        $results = $this->analyser->analyse($style, $config, $directory);
+        $results = $this->analyser->analyse(
+            $format,
+            $config,
+            $directory,
+            $consoleOutput
+        );
 
         $hasError = false;
         if ($input->getOption('min-quality') > $results->getCodeQuality()) {
-            $style->error('The code quality score is too low');
+            $consoleStyle->error('The code quality score is too low');
             $hasError = true;
         }
 
         if ($input->getOption('min-complexity') > $results->getComplexity()) {
-            $style->error('The complexity score is too low');
+            $consoleStyle->error('The complexity score is too low');
             $hasError = true;
         }
 
         if ($input->getOption('min-architecture') > $results->getStructure()) {
-            $style->error('The architecture score is too low');
+            $consoleStyle->error('The architecture score is too low');
             $hasError = true;
         }
 
         if ($input->getOption('min-style') > $results->getStyle()) {
-            $style->error('The style score is too low');
+            $consoleStyle->error('The style score is too low');
             $hasError = true;
         }
 
@@ -97,8 +113,8 @@ final class AnalyseCommand
             $hasError = true;
         }
 
-        $style->newLine();
-        $style->writeln('✨ See something that needs to be improved? <bold>Create an issue</> or send us a <bold>pull request</>: <title>https://github.com/nunomaduro/phpinsights</title>');
+        $consoleStyle->newLine();
+        $consoleStyle->writeln('✨ See something that needs to be improved? <bold>Create an issue</bold> or send us a <bold>pull request</bold>: <title>https://github.com/nunomaduro/phpinsights</title>');
 
         return (int) $hasError;
     }
@@ -106,8 +122,8 @@ final class AnalyseCommand
     /**
      * Gets the config from the given input.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  string  $directory
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string $directory
      *
      * @return array<string, array>
      */
@@ -126,7 +142,7 @@ final class AnalyseCommand
     /**
      * Gets the directory from the given input.
      *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return string
      */

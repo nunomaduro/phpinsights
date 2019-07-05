@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Exceptions\SniffClassNotFound;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
@@ -72,7 +73,16 @@ final class Sniff implements Insight, HasDetails
     public function getDetails(): array
     {
         return array_map(static function (Error $error) {
-            return $error->getFileInfo()->getRealPath() . ':' . $error->getLine() . ': ' . $error->getMessage();
+            $details = Details::make()
+                ->withOriginal($error)
+                ->withLine($error->getLine())
+                ->withMessage($error->getMessage());
+
+            if (($file = $error->getFileInfo()->getRealPath()) !== false) {
+                $details->withFile($file);
+            }
+
+            return $details;
         }, $this->errors);
     }
 

@@ -17,3 +17,11 @@ trim_trailing_whitespace = false
 
 [*.yml]
 indent_size = 2
+
+[*.php]
+ij_php_align_phpdoc_comments = false
+ij_php_align_phpdoc_param_names = false
+ij_php_phpdoc_use_fqcn = true
+ij_php_space_after_unary_not = true
+ij_php_force_short_declaration_array_style = true
+ij_php_comma_after_last_array_element = true
