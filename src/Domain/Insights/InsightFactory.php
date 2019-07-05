@@ -8,9 +8,13 @@ use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileProcessor;
+use NunoMaduro\PhpInsights\Domain\PhpstanContainer;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
+use PHPStan\Analyser\Analyser;
+use PHPStan\Rules\Registry;
+use PHPStan\Rules\Rule as RuleContract;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Error\Error;
@@ -43,6 +47,11 @@ final class InsightFactory
     private $sniffCollector;
 
     /**
+     * @var array<\NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator>
+     */
+    private $rules;
+
+    /**
      * Creates a new instance of Insight Factory
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
@@ -64,16 +73,23 @@ final class InsightFactory
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
      */
-    public function makeFrom(string $errorClass, array $config): Sniff
+    public function makeFrom(string $errorClass, array $config)
     {
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
                 return new Sniff($this->getSniffErrors($this->getSniffCollector($config), $errorClass));
-                break;
 
+            case array_key_exists(RuleContract::class, class_implements($errorClass)):
+                $this->getSniffCollector($config);
+
+                /** @var \NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator $rule */
+                foreach ($this->rules as $rule) {
+                    if ($rule->getInsightClass() === $errorClass) {
+                        return $rule;
+                    }
+                }
             default:
                 throw new \RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
-                break;
         }
     }
 
@@ -103,6 +119,30 @@ final class InsightFactory
         }
 
         return $sniffs;
+    }
+
+    /**
+     * Returns the phpstan rule classes from the given array of Matrics.
+     *
+     * @param  array<string>  $insights
+     * @param  array<string, array>  $config
+     *
+     * @return array<\PHPStan\Rules\Rule>
+     */
+    public function rulesFrom(array $insights, array $config): array
+    {
+        $rules = [];
+
+        foreach ($insights as $insight) {
+            if (array_key_exists(RuleContract::class, class_implements($insight))) {
+                /** @var \PHPStan\Rules\Rule $rule */
+                $rule = new RuleDecorator(new $insight());
+
+                $rules[] = $rule;
+            }
+        }
+
+        return $rules;
     }
 
     /**
@@ -177,6 +217,22 @@ final class InsightFactory
             $sniffer->addSniff(new SniffDecorator($sniff, $this->dir));
         }
 
+        $phpstanContainer = PhpstanContainer::make($this->dir);
+        $string = (string) "test";
+
+        $rules = $this->rulesFrom($this->insightsClasses, $config);
+        $phpstanContainer->removeService('registry');
+        $phpstanContainer->addService(
+            'registry',
+            new Registry($rules)
+        );
+        $this->rules = $rules;
+
+
+        /** @var Analyser $analyser */
+        $analyser = $phpstanContainer->getByType(Analyser::class);
+        $sniffer->setAnalyser($analyser);
+
         /** @var \Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication $application */
         $application = $ecsContainer->get(EasyCodingStandardApplication::class);
         $reflection = new Reflection($application);
@@ -193,7 +249,7 @@ final class InsightFactory
         /** @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $errorAndDiffCollector */
         $errorAndDiffCollector = $ecsContainer->get(ErrorAndDiffCollector::class);
 
-        // Destroy the container, so we insights doesn't fail on consecutive
+        // Destroy the container, so insights doesn't fail on consecutive
         // runs. This is needed for tests also.
         $ecsContainer->reset();
 

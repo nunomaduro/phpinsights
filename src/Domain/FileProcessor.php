@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHPStan\Rules\Rule;
 use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 
@@ -15,9 +16,9 @@ use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 final class FileProcessor implements FileProcessorInterface
 {
     /**
-     * @var array<\PHP_CodeSniffer\Sniffs\Sniff>
+     * @var array<\PHP_CodeSniffer\Sniffs\Sniff|\PHPStan\Rules\Rule>
      */
-    private $sniffs = [];
+    private $checkers = [];
 
     /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator>>
@@ -33,6 +34,11 @@ final class FileProcessor implements FileProcessorInterface
      * @var \NunoMaduro\PhpInsights\Domain\FileFactory
      */
     private $fileFactory;
+
+    /**
+     * @var \PHPStan\Analyser\Analyser
+     */
+    private $analyser;
 
     /**
      * FileProcessor constructor.
@@ -53,7 +59,7 @@ final class FileProcessor implements FileProcessorInterface
      */
     public function addSniff(Sniff $sniff): void
     {
-        $this->sniffs[] = $sniff;
+        $this->checkers[] = $sniff;
 
         foreach ($sniff->register() as $token) {
             $this->tokenListeners[$token][] = $sniff;
@@ -61,11 +67,11 @@ final class FileProcessor implements FileProcessorInterface
     }
 
     /**
-     * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
+     * @return array<\PHP_CodeSniffer\Sniffs\Sniff|\PHPStan\Rules\Rule>
      */
     public function getCheckers(): array
     {
-        return $this->sniffs;
+        return $this->checkers;
     }
 
     /**
@@ -78,6 +84,16 @@ final class FileProcessor implements FileProcessorInterface
         $file = $this->fileFactory->createFromFileInfo($smartFileInfo);
         $file->processWithTokenListenersAndFileInfo($this->tokenListeners, $smartFileInfo);
 
+        $this->analyser->analyse([$smartFileInfo->getRealPath()], true);
+
         return $this->fixer->getContents();
+    }
+
+    /**
+     * @param \PHPStan\Analyser\Analyser $analyser
+     */
+    public function setAnalyser(\PHPStan\Analyser\Analyser $analyser): void
+    {
+        $this->analyser = $analyser;
     }
 }
