@@ -26,12 +26,12 @@ interface FilesRepository extends CustomSourceProviderInterface
     public function getFiles(): iterable;
 
     /**
-     * Sets the current files dirs.
+     * Sets the current files directories.
      *
-     * @param  string  $dir
+     * @param  string  $path
      * @param array<string> $exclude
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
-    public function within(string $dir, array $exclude): FilesRepository;
+    public function within(string $path, array $exclude): FilesRepository;
 }
