@@ -53,7 +53,7 @@ abstract class TestCase extends BaseTestCase
     public function runAnalyserOnPreset(
         string $preset,
         array $filePaths,
-        string $dir = ""
+        string $dir = ''
     ) : InsightCollection {
         return $this->runAnalyserOnConfig(
             ['preset' => $preset],
@@ -73,7 +73,7 @@ abstract class TestCase extends BaseTestCase
     public function runAnalyserOnConfig(
         array $config,
         array $filePaths,
-        string $dir = ""
+        string $dir = ''
     ) : InsightCollection {
         $config = ConfigResolver::resolve($config, $dir);
 
@@ -140,6 +140,6 @@ abstract class TestCase extends BaseTestCase
 
         $filename = $reflector->getFileName();
 
-        return $filename === false ? "" : $filename;
+        return $filename === false ? '' : $filename;
     }
 }
