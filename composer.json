@@ -66,7 +66,7 @@
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
-        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=85.7 --min-architecture=76.2 --min-style=97.8",
+        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=90.8 --min-complexity=71.9 --min-architecture=78.3 --min-style=97.8",
         "test": [
             "@phpstan:test",
             "@ecs:test",
