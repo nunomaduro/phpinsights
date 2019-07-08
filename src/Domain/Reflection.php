@@ -27,7 +27,7 @@ final class Reflection
      *
      * @param object $instance
      */
-    public function __construct($instance)
+    public function __construct(object $instance)
     {
         $this->instance = $instance;
         $this->reflectionClass = new ReflectionClass($instance);

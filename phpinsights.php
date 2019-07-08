@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 
 return [
 
@@ -46,6 +47,11 @@ return [
         LineLengthSniff::class => [
             'lineLimit' => 80,
             'absoluteLineLimit' => 120,
+        ],
+        DisallowMixedTypeHintSniff::class => [
+            'exclude' => [
+                'Reflection.php',
+            ],
         ],
     ],
 
