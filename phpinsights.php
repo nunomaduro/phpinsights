@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 
@@ -49,6 +50,11 @@ return [
             'absoluteLineLimit' => 120,
         ],
         DisallowMixedTypeHintSniff::class => [
+            'exclude' => [
+                'src/Domain/Reflection.php',
+            ],
+        ],
+        ForbiddenSetterSniff::class => [
             'exclude' => [
                 'src/Domain/Reflection.php',
             ],
