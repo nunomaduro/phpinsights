@@ -1,21 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain;
 
+use Nette\DI\Container;
 use PHPStan\DependencyInjection\ContainerFactory;
 
-class PhpStanContainer
+final class PhpStanContainer
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\Container
+     * @var \Nette\DI\Container
      */
     private static $container;
 
-    /**
-     * @param $currentWorkingDirectory
-     * @return \Nette\DI\Container
-     */
-    public static function make($currentWorkingDirectory): \Nette\DI\Container
+    public static function make(string $currentWorkingDirectory): Container
     {
         if (self::$container === null) {
             $factory = new ContainerFactory($currentWorkingDirectory);

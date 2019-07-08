@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use PHPStan\Rules\Rule;
 use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
 use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 
@@ -52,11 +51,6 @@ final class FileProcessor implements FileProcessorInterface
         $this->fileFactory = $fileFactory;
     }
 
-    /**
-     * @param  \PHP_CodeSniffer\Sniffs\Sniff  $sniff
-     *
-     * @return void
-     */
     public function addSniff(Sniff $sniff): void
     {
         $this->checkers[] = $sniff;
@@ -74,26 +68,21 @@ final class FileProcessor implements FileProcessorInterface
         return $this->checkers;
     }
 
-    /**
-     * @param \Symplify\PackageBuilder\FileSystem\SmartFileInfo $smartFileInfo
-     *
-     * @return string
-     *
-     * @throws \Throwable
-     */
     public function processFile(SmartFileInfo $smartFileInfo): string
     {
         $file = $this->fileFactory->createFromFileInfo($smartFileInfo);
-        $file->processWithTokenListenersAndFileInfo($this->tokenListeners, $smartFileInfo);
+        $file->processWithTokenListenersAndFileInfo(
+            $this->tokenListeners,
+            $smartFileInfo
+        );
 
-        $this->analyser->analyse([$smartFileInfo->getRealPath()], true);
+        if ($smartFileInfo->getRealPath() !== false) {
+            $this->analyser->analyse([$smartFileInfo->getRealPath()], true);
+        }
 
         return $this->fixer->getContents();
     }
 
-    /**
-     * @param \PHPStan\Analyser\Analyser $analyser
-     */
     public function setAnalyser(\PHPStan\Analyser\Analyser $analyser): void
     {
         $this->analyser = $analyser;

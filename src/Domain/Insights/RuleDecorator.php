@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use Illuminate\Support\Str;
@@ -12,11 +14,12 @@ use PHPStan\Rules\FileRuleError;
 use PHPStan\Rules\LineRuleError;
 use PHPStan\Rules\Rule;
 
-class RuleDecorator implements Insight, Rule, HasDetails
+final class RuleDecorator implements Insight, Rule, HasDetails
 {
     /** @var \PHPStan\Rules\Rule */
     private $rule;
 
+    /** @var array<Details> */
     private $errors = [];
 
     /**
@@ -36,7 +39,7 @@ class RuleDecorator implements Insight, Rule, HasDetails
      */
     public function hasIssue(): bool
     {
-        return ! empty($this->errors);
+        return count($this->errors) !== 0;
     }
 
     /**
@@ -47,7 +50,6 @@ class RuleDecorator implements Insight, Rule, HasDetails
     public function getTitle(): string
     {
         $ruleClass = $this->getInsightClass();
-
 
         $path = explode('\\', $ruleClass);
         $name = (string) array_pop($path);
