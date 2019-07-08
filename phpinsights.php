@@ -50,7 +50,7 @@ return [
         ],
         DisallowMixedTypeHintSniff::class => [
             'exclude' => [
-                'Reflection.php',
+                'src/Domain/Reflection.php',
             ],
         ],
     ],
