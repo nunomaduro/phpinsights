@@ -23,7 +23,7 @@ final class Details
 
     public static function make(): Details
     {
-        return new Details();
+        return new self();
     }
 
     public function withFile(string $file): Details

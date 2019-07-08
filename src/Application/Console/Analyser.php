@@ -33,7 +33,7 @@ final class Analyser
     /**
      * Analyse the given dirs.
      *
-     * @param Formatter $format
+     * @param Formatter $formatter
      * @param array<string, array> $config
      * @param string $dir
      * @param OutputInterface $consoleOutput
@@ -41,7 +41,7 @@ final class Analyser
      * @return  \NunoMaduro\PhpInsights\Domain\Results
      */
     public function analyse(
-        Formatter $format,
+        Formatter $formatter,
         array $config,
         string $dir,
         OutputInterface $consoleOutput
@@ -52,7 +52,7 @@ final class Analyser
         $insightCollection = $this->insightCollectionFactory
             ->get($metrics, $config, $dir, $consoleOutput);
 
-        $format->format($insightCollection, $dir, $metrics);
+        $formatter->format($insightCollection, $dir, $metrics);
 
         return $insightCollection->results();
     }

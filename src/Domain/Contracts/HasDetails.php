@@ -12,7 +12,7 @@ interface HasDetails extends Insight
     /**
      * Returns the details of the insight.
      *
-     * @return array<\NunoMaduro\PhpInsights\Domain\Details>
+     * @return array<int, \NunoMaduro\PhpInsights\Domain\Details>
      */
     public function getDetails(): array;
 }
