@@ -14,15 +14,21 @@ use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
+/**
+ * @internal
+ */
 final class Runner
 {
     /** @var \Symfony\Component\DependencyInjection\Container */
     private $ecsContainer;
 
+    /** @var \Nette\DI\Container */
     private $phpStanContainer;
 
+    /** @var \NunoMaduro\PhpInsights\Domain\FileProcessor */
     private $fileProcessor;
 
+    /** @var string */
     private $baseDir;
 
     /**
@@ -31,6 +37,7 @@ final class Runner
      * @param string $baseDir
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
+     *
      * @throws \Exception
      */
     public function __construct(
@@ -64,17 +71,16 @@ final class Runner
 
         $analyser = $this->phpStanContainer->getByType(\PHPStan\Analyser\Analyser::class);
         $this->fileProcessor->setAnalyser($analyser);
-
     }
 
-    public function getEcsApplication() : EasyCodingStandardApplication
+    public function getEcsApplication(): EasyCodingStandardApplication
     {
         return $this->ecsContainer->get(EasyCodingStandardApplication::class);
     }
 
-    public function getSniffErrorCollector() : ErrorAndDiffCollector
+    public function getSniffErrorCollector(): ErrorAndDiffCollector
     {
-        return $this->ecsContainer->getParameter(ErrorAndDiffCollector::class);
+        return $this->ecsContainer->get(ErrorAndDiffCollector::class);
     }
 
     public function reset(): void
@@ -82,6 +88,9 @@ final class Runner
         $this->ecsContainer->reset();
     }
 
+    /**
+     * @param array<\PHPStan\Rules\Rule> $rules
+     */
     public function addRules(array $rules): void
     {
         $this->phpStanContainer->removeService('registry');
@@ -91,6 +100,9 @@ final class Runner
         );
     }
 
+    /**
+     * @param array<\PHP_CodeSniffer\Sniffs\Sniff> $sniffs
+     */
     public function addSniffs(array $sniffs): void
     {
         foreach ($sniffs as $sniff) {
