@@ -25,7 +25,7 @@ final class ForbiddenNormalClasses extends Insight implements HasDetails
     public function getDetails(): array
     {
         return array_map(static function (string $file): Details {
-            return Details::make()->withFile($file);
+            return Details::make()->setFile($file);
         }, $this->collector->getConcreteNonFinalClasses());
     }
 }

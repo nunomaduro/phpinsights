@@ -31,9 +31,9 @@ final class ForbiddenDefineFunctions extends Insight implements HasDetails
             foreach ($namedFunctions as $key => $namedFunction) {
                 $number = $key + 1;
                 $details[] = Details::make()
-                    ->withFile($file)
-                    ->withLine($number)
-                    ->withFunction($namedFunction);
+                    ->setFile($file)
+                    ->setLine($number)
+                    ->setFunction($namedFunction);
             }
         }
 

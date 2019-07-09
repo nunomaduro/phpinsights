@@ -57,6 +57,7 @@ return [
         ForbiddenSetterSniff::class => [
             'exclude' => [
                 'src/Domain/Reflection.php',
+                'src/Domain/Details.php',
             ],
         ],
     ],

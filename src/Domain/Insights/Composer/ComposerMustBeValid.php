@@ -48,8 +48,8 @@ final class ComposerMustBeValid extends Insight implements HasDetails
                 $issue = explode(' : ', $issue)[1];
             }
             $details[] = Details::make()
-                ->withFile('composer.json')
-                ->withMessage($issue);
+                ->setFile('composer.json')
+                ->setMessage($issue);
         }
 
         return $details;
