@@ -12,7 +12,7 @@ use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 /**
  * @internal
  */
-final class FileProcessor implements FileProcessorInterface
+final class SniffFileProcessor implements FileProcessorInterface
 {
     /**
      * @var array<\PHP_CodeSniffer\Sniffs\Sniff>

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Injectors;
 
+use NunoMaduro\PhpInsights\Domain\Differ;
 use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
-use NunoMaduro\PhpInsights\Domain\FileProcessor;
+use NunoMaduro\PhpInsights\Domain\FixerFileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
+use NunoMaduro\PhpInsights\Domain\SniffFileProcessor;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
+use Symplify\EasyCodingStandard\FixerRunner\Application\FixerFileProcessor as EcsFixerFileProcessor;
 use Symplify\EasyCodingStandard\Skipper;
-use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor;
+use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor as EcsSniffFileProcessor;
 
 /**
  * @internal
@@ -24,11 +27,11 @@ final class FileProcessors
      */
     public function __invoke(): array
     {
-        return [
-            FileProcessor::class => static function () {
-                $container = EcsContainer::make();
+        $container = EcsContainer::make();
 
-                $reflection = new Reflection($container->get(SniffFileProcessor::class));
+        return [
+            SniffFileProcessor::class => static function () use ($container) {
+                $reflection = new Reflection($container->get(EcsSniffFileProcessor::class));
 
                 $fixer = $reflection->get('fixer');
                 $errorAndDiffCollector = $reflection->get('errorAndDiffCollector');
@@ -38,7 +41,7 @@ final class FileProcessors
                 /** @var \Symplify\EasyCodingStandard\Skipper $skipper */
                 $skipper = $container->get(Skipper::class);
 
-                return new FileProcessor(
+                return new SniffFileProcessor(
                     $fixer,
                     new FileFactory(
                         $fixer,
@@ -47,6 +50,20 @@ final class FileProcessors
                         $appliedCheckersCollector,
                         $easyCodingStandardStyle
                     )
+                );
+            },
+            FixerFileProcessor::class => static function () use ($container) {
+                $reflection = new Reflection($container->get(EcsFixerFileProcessor::class));
+                $cachedFileLoader = $reflection->get('cachedFileLoader');
+                $errorAndDiffCollector = $reflection->get('errorAndDiffCollector');
+                $fileToTokensParser = $reflection->get('fileToTokensParser');
+
+                $differ = new Differ();
+                return new FixerFileProcessor(
+                    $cachedFileLoader,
+                    $errorAndDiffCollector,
+                    $fileToTokensParser,
+                    $differ
                 );
             },
         ];
