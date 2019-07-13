@@ -28,6 +28,8 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSni
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
+use PhpCsFixer\Fixer\FunctionNotation\CombineNestedDirnameFixer;
+use PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
@@ -111,6 +113,8 @@ final class Code implements HasValue, HasInsights
             DuplicateAssignmentToVariableSniff::class,
             // FullyQualifiedExceptionsSniff::class,
             // FullyQualifiedGlobalConstantsSniff::class,
+            TernaryToNullCoalescingFixer::class,
+            CombineNestedDirnameFixer::class,
         ];
     }
 }
