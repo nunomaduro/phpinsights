@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
+use PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer;
 use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
@@ -54,6 +55,7 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             TypeHintDeclarationSniff::class,
             UselessConstantTypeHintSniff::class,
             UselessInheritDocCommentSniff::class,
+            NoBreakCommentFixer::class,
         ];
     }
 }

@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
+use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
 
 final class Functions implements HasValue, HasInsights
 {
@@ -23,6 +24,7 @@ final class Functions implements HasValue, HasInsights
     {
         return [
             FunctionLengthSniff::class,
+            MethodArgumentSpaceFixer::class,
         ];
     }
 }
