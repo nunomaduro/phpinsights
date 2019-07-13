@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use PhpCsFixer\Diff\v3_0\Differ as BaseDiffer;
-use PhpCsFixer\Diff\v3_0\Output\DiffOnlyOutputBuilder;
+use PhpCsFixer\Diff\v3_0\Output\StrictUnifiedDiffOutputBuilder;
 use PhpCsFixer\Differ\DifferInterface;
 
 final class Differ implements DifferInterface
@@ -18,7 +18,13 @@ final class Differ implements DifferInterface
 
     public function __construct()
     {
-        $outputBuilder = new DiffOnlyOutputBuilder('');
+        $outputBuilder = new StrictUnifiedDiffOutputBuilder([
+            'collapseRanges' => true,
+            'commonLineThreshold' => 1,
+            'contextLines' => 0,
+            'fromFile' => '',
+            'toFile' => '',
+        ]);
         $this->differ = new BaseDiffer($outputBuilder);
     }
 

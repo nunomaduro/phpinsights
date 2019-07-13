@@ -38,11 +38,6 @@ final class FixerFileProcessor implements FileProcessorInterface
      * @var \NunoMaduro\PhpInsights\Domain\Differ
      */
     private $differ;
-    /**
-     * @var array<string>
-     */
-    private $appliedFixers;
-
 
     public function __construct(
         CachedFileLoader $cachedFileLoader,
@@ -79,40 +74,26 @@ final class FixerFileProcessor implements FileProcessorInterface
             throw new \LogicException('Unable to found file ' . $smartFileInfo->getFilename());
         }
         $oldContent = $this->cachedFileLoader->getFileContent($smartFileInfo);
-        $splittedOldContent = $this->splitStringByLines($oldContent);
-
-        $this->appliedFixers = [];
         $tokens = $this->fileToTokensParser->parseFromFilePath($filePath);
 
         /** @var FixerInterface $fixer */
         foreach ($this->getCheckers() as $fixer) {
             $this->processTokensByFixer($smartFileInfo, $tokens, $fixer);
-
-            if ($tokens->isChanged()) {
-                $newContent = $this->splitStringByLines($tokens->generateCode());
-                foreach ($splittedOldContent as $lineNumber => $content) {
-                    $diff = $this->differ->diff($content, $newContent[$lineNumber]);
-                    if ($diff === '') {
-                        continue;
-                    }
-                    $this->errorAndDiffCollector->addErrorMessage(
-                        $smartFileInfo,
-                        $lineNumber,
-                        $this->createErrorMessage($content, $newContent[$lineNumber]),
-                        get_class($fixer)
-                    );
-                }
+            if (! $tokens->isChanged()) {
+                continue;
             }
+
+            $newContent = $tokens->generateCode();
+            $fullDiff = $this->differ->diff($oldContent, $newContent);
+
+            $this->processDiff($fullDiff, get_class($fixer), $smartFileInfo);
+
             Tokens::clearCache();
             // Reinit tokens
             $tokens = $this->fileToTokensParser->parseFromFilePath($filePath);
         }
 
-        if ($this->appliedFixers === []) {
-            return $oldContent;
-        }
-
-        return $this->differ->diff($oldContent, $tokens->generateCode());
+        return 'processed';
     }
 
     private function processTokensByFixer(SmartFileInfo $smartFileInfo, Tokens $tokens, FixerInterface $fixer): void
@@ -133,8 +114,53 @@ final class FixerFileProcessor implements FileProcessorInterface
         if (! $tokens->isChanged()) {
             return;
         }
+    }
 
-        $this->appliedFixers[] = get_class($fixer);
+    private function processDiff(string $diff, string $fixerClass, SmartFileInfo $smartFileInfo): void
+    {
+        $parsedDiff = $this->splitStringByLines($diff);
+        // Get first line number & Remove headers of diff
+        $currentLineNumber = $this->parseLineNumber($parsedDiff[2]);
+        $parsedDiff = array_slice($parsedDiff, 3);
+
+        $headerMessage = "You should change following \n";
+        $currentMessage = $headerMessage;
+        $hasColor = false;
+        foreach ($parsedDiff as $diffLine) {
+            if (mb_strpos($diffLine, '@@ ') === 0) {
+                $this->errorAndDiffCollector->addErrorMessage(
+                    $smartFileInfo,
+                    $currentLineNumber,
+                    $currentMessage,
+                    $fixerClass
+                );
+
+                $currentLineNumber = $this->parseLineNumber($diffLine);
+                $currentMessage = $headerMessage;
+                continue;
+            }
+
+            if (mb_strpos($diffLine, '-') === 0) {
+                $hasColor = true;
+                $currentMessage .= '<fg=red>';
+            }
+            if (mb_strpos($diffLine, '+') === 0) {
+                $hasColor = true;
+                $currentMessage .= '<fg=green>';
+            }
+            $currentMessage .= $diffLine;
+            if ($hasColor) {
+                $hasColor = false;
+                $currentMessage .= '</>';
+            }
+        }
+
+        $this->errorAndDiffCollector->addErrorMessage(
+            $smartFileInfo,
+            $currentLineNumber,
+            $currentMessage,
+            $fixerClass
+        );
     }
 
     /**
@@ -153,11 +179,12 @@ final class FixerFileProcessor implements FileProcessorInterface
         return $result;
     }
 
-    private function createErrorMessage(string $oldContent, string $newContent): string
+    private function parseLineNumber(string $diffLine): int
     {
-        $oldContent = '<fg=red><fg=red;options=bold>--- </>' . trim($oldContent) . '</>';
-        $newContent = '<fg=green><fg=green;options=bold>+++ </>' . trim($newContent) . '</>';
+        $pattern = '@^(?:\@\@ -)?([^,]+)@i';
+        $matches = null;
+        preg_match($pattern, $diffLine, $matches);
 
-        return $oldContent . ' ' . $newContent;
+        return (int) $matches[1];
     }
 }
