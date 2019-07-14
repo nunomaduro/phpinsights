@@ -17,6 +17,7 @@ use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Error\Error;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
+use Symplify\EasyCodingStandard\Error\FileDiff;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
 /**
@@ -75,7 +76,7 @@ final class InsightFactory
                 break;
 
             case array_key_exists(FixerInterface::class, class_implements($errorClass)):
-                return new CSFixer($this->getErrors($collector, $errorClass));
+                return new CSFixer($this->getDiffs($collector, $errorClass));
                 break;
 
             default:
@@ -137,6 +138,31 @@ final class InsightFactory
         }
 
         return array_values($errors);
+    }
+
+    /**
+     * Returns Diffs with of the given $fixer, if any.
+     *
+     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $collector
+     * @param string $fixer
+     *
+     * @return array<string, \Symplify\EasyCodingStandard\Error\FileDiff>
+     */
+    private function getDiffs(ErrorAndDiffCollector $collector, string $fixer): array
+    {
+        $diffs = [];
+
+        /** @var string $file */
+        foreach ($collector->getFileDiffs() as $file => $fileDiffs) {
+            foreach ($fileDiffs as $fileDiff) {
+                if (\in_array($fixer, $fileDiff->getAppliedCheckers(), true)) {
+                    // one fileDiff by file and fixer
+                    $diffs[$file] = $fileDiff;
+                }
+            }
+        }
+
+        return $diffs;
     }
 
     /**

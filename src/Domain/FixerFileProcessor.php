@@ -83,10 +83,11 @@ final class FixerFileProcessor implements FileProcessorInterface
                 continue;
             }
 
-            $newContent = $tokens->generateCode();
-            $fullDiff = $this->differ->diff($oldContent, $newContent);
-
-            $this->processDiff($fullDiff, get_class($fixer), $smartFileInfo);
+            $this->errorAndDiffCollector->addDiffForFileInfo(
+                $smartFileInfo,
+                $this->differ->diff($oldContent, $tokens->generateCode()),
+                [get_class($fixer)]
+            );
 
             Tokens::clearCache();
             // Reinit tokens
@@ -114,77 +115,5 @@ final class FixerFileProcessor implements FileProcessorInterface
         if (! $tokens->isChanged()) {
             return;
         }
-    }
-
-    private function processDiff(string $diff, string $fixerClass, SmartFileInfo $smartFileInfo): void
-    {
-        $parsedDiff = $this->splitStringByLines($diff);
-        // Get first line number & Remove headers of diff
-        $currentLineNumber = $this->parseLineNumber($parsedDiff[2]);
-        $parsedDiff = array_slice($parsedDiff, 3);
-
-        $headerMessage = "You should change following \n";
-        $currentMessage = $headerMessage;
-        $hasColor = false;
-        foreach ($parsedDiff as $diffLine) {
-            if (mb_strpos($diffLine, '@@ ') === 0) {
-                $this->errorAndDiffCollector->addErrorMessage(
-                    $smartFileInfo,
-                    $currentLineNumber,
-                    $currentMessage,
-                    $fixerClass
-                );
-
-                $currentLineNumber = $this->parseLineNumber($diffLine);
-                $currentMessage = $headerMessage;
-                continue;
-            }
-
-            if (mb_strpos($diffLine, '-') === 0) {
-                $hasColor = true;
-                $currentMessage .= '<fg=red>';
-            }
-            if (mb_strpos($diffLine, '+') === 0) {
-                $hasColor = true;
-                $currentMessage .= '<fg=green>';
-            }
-            $currentMessage .= $diffLine;
-            if ($hasColor) {
-                $hasColor = false;
-                $currentMessage .= '</>';
-            }
-        }
-
-        $this->errorAndDiffCollector->addErrorMessage(
-            $smartFileInfo,
-            $currentLineNumber,
-            $currentMessage,
-            $fixerClass
-        );
-    }
-
-    /**
-     * @param string $input
-     *
-     * @return array<int, string>
-     */
-    private function splitStringByLines(string $input): array
-    {
-        $result = \preg_split('/(.*\R)/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-
-        if ($result === false) {
-            throw new \RuntimeException('Unable to split ' . $input);
-        }
-
-        return $result;
-    }
-
-    private function parseLineNumber(string $diffLine): int
-    {
-        $pattern = '@^(?:\@\@ -)?([^,]+)@i';
-        $matches = null;
-        preg_match($pattern, $diffLine, $matches);
-
-        return (int) $matches[1];
     }
 }
