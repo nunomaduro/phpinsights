@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use Nette\DI\Container;
 use PHPStan\DependencyInjection\ContainerFactory;
+use PHPStan\Rules\Registry;
 
 final class PhpStanContainer
 {
@@ -23,6 +24,12 @@ final class PhpStanContainer
                 sys_get_temp_dir() . '/phpstan',
                 [],
                 []
+            );
+
+            $container->removeService('registry');
+            $container->addService(
+                'registry',
+                new PhpStanRulesRegistry([])
             );
 
             self::$container = $container;

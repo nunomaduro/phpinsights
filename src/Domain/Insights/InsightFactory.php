@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\FileProcessor;
+use NunoMaduro\PhpInsights\Domain\SniffFileProcessor;
 use NunoMaduro\PhpInsights\Domain\Runner;
 use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
@@ -209,12 +209,15 @@ final class InsightFactory
 
         $rules = $this->rulesFrom($this->insightsClasses);
         $this->rules = $rules;
+        // TODO: inject rules in another way.
         $runner->addRules($rules);
 
         $runner->addSniffs($this->sniffsFrom($this->insightsClasses, $config));
 
         // Run it.
-        $runner->run();;
+        $runner->run();
+        $test = "test";
+        $test = (string) $test;
 
         // Collect the errors from sniffs
         $this->sniffCollector = $runner->getSniffErrorCollector();

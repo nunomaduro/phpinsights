@@ -12,7 +12,7 @@ use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
 /**
  * @internal
  */
-final class FileProcessor implements FileProcessorInterface
+final class SniffFileProcessor implements FileProcessorInterface
 {
     /**
      * @var array<\PHP_CodeSniffer\Sniffs\Sniff|\PHPStan\Rules\Rule>
@@ -33,11 +33,6 @@ final class FileProcessor implements FileProcessorInterface
      * @var \NunoMaduro\PhpInsights\Domain\FileFactory
      */
     private $fileFactory;
-
-    /**
-     * @var \PHPStan\Analyser\Analyser
-     */
-    private $analyser;
 
     /**
      * FileProcessor constructor.
@@ -76,15 +71,6 @@ final class FileProcessor implements FileProcessorInterface
             $smartFileInfo
         );
 
-        if ($smartFileInfo->getRealPath() !== false) {
-            $this->analyser->analyse([$smartFileInfo->getRealPath()], true);
-        }
-
         return $this->fixer->getContents();
-    }
-
-    public function setAnalyser(\PHPStan\Analyser\Analyser $analyser): void
-    {
-        $this->analyser = $analyser;
     }
 }

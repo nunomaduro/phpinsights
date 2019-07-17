@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
+use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
@@ -25,11 +26,16 @@ final class Runner
     /** @var \Nette\DI\Container */
     private $phpStanContainer;
 
-    /** @var \NunoMaduro\PhpInsights\Domain\FileProcessor */
-    private $fileProcessor;
+    /** @var \NunoMaduro\PhpInsights\Domain\SniffFileProcessor */
+    private $phpCsFileProcessor;
 
     /** @var string */
     private $baseDir;
+
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\PhpStanFileProcessor
+     */
+    private $phpStanFileProcessor;
 
     /**
      * InsightContainer constructor.
@@ -63,14 +69,16 @@ final class Runner
         $sourceFinder->setCustomSourceProvider($filesRepository);
 
         $this->phpStanContainer = PhpStanContainer::make($baseDir);
+        $container = Container::make();
 
-        $this->fileProcessor = Container::make()->get(FileProcessor::class);
+        $this->phpCsFileProcessor = $container->get(SniffFileProcessor::class);
+        $this->phpStanFileProcessor = $container->get(PhpStanFileProcessor::class);
         $this->baseDir = $baseDir;
 
-        $this->addFileProcessor($this->fileProcessor);
-
-        $analyser = $this->phpStanContainer->getByType(\PHPStan\Analyser\Analyser::class);
-        $this->fileProcessor->setAnalyser($analyser);
+        $this->setFileProcessor([
+            $this->phpCsFileProcessor,
+            $this->phpStanFileProcessor,
+        ]);
     }
 
     public function getEcsApplication(): EasyCodingStandardApplication
@@ -93,11 +101,10 @@ final class Runner
      */
     public function addRules(array $rules): void
     {
-        $this->phpStanContainer->removeService('registry');
-        $this->phpStanContainer->addService(
-            'registry',
-            new Registry($rules)
-        );
+        /** @var \NunoMaduro\PhpInsights\Domain\PhpStanRulesRegistry $registry */
+        $registry = $this->phpStanContainer->getService('registry');
+
+        $registry->addRules($rules);
     }
 
     /**
@@ -106,11 +113,14 @@ final class Runner
     public function addSniffs(array $sniffs): void
     {
         foreach ($sniffs as $sniff) {
-            $this->fileProcessor->addSniff(new SniffDecorator($sniff, $this->baseDir));
+            $this->phpCsFileProcessor->addSniff(new SniffDecorator($sniff, $this->baseDir));
         }
     }
 
-    private function addFileProcessor(FileProcessor $fileProcessor): void
+    /**
+     * @param array<\Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface> $fileProcessors
+     */
+    private function setFileProcessor(array $fileProcessors): void
     {
         $application = $this->getEcsApplication();
         $reflection = new Reflection($application);
@@ -119,8 +129,10 @@ final class Runner
         $fileProcessorCollector = $reflection->set('fileProcessors', [])
             ->get('singleFileProcessor');
 
-        $fileProcessorCollector->addFileProcessor($fileProcessor);
-        $application->addFileProcessor($fileProcessor);
+        foreach ($fileProcessors as $fileProcessor) {
+            $fileProcessorCollector->addFileProcessor($fileProcessor);
+            $application->addFileProcessor($fileProcessor);
+        }
     }
 
     public function run(): void
