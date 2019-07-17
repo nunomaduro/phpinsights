@@ -35,8 +35,8 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
 
         return array_map(static function ($file, $constant): Details {
             return Details::make()
-                ->withFile($file)
-                ->withMessage($constant);
+                ->setFile($file)
+                ->setMessage($constant);
         }, array_keys($globalConstants), $globalConstants);
     }
 }

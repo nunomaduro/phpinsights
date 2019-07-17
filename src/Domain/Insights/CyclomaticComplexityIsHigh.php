@@ -50,8 +50,8 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 
         return array_map(static function ($class, $complexity): Details {
             return Details::make()
-                ->withFile($class)
-                ->withMessage("$complexity cyclomatic complexity");
+                ->setFile($class)
+                ->setMessage("$complexity cyclomatic complexity");
         }, array_keys($classesComplexity), $classesComplexity);
     }
 

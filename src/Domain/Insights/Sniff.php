@@ -74,12 +74,12 @@ final class Sniff implements Insight, HasDetails
     {
         return array_map(static function (Error $error) {
             $details = Details::make()
-                ->withOriginal($error)
-                ->withLine($error->getLine())
-                ->withMessage($error->getMessage());
+                ->setOriginal($error)
+                ->setLine($error->getLine())
+                ->setMessage($error->getMessage());
 
             if (($file = $error->getFileInfo()->getRealPath()) !== false) {
-                $details->withFile($file);
+                $details->setFile($file);
             }
 
             return $details;

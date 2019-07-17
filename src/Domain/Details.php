@@ -23,10 +23,10 @@ final class Details
 
     public static function make(): Details
     {
-        return new Details();
+        return new self();
     }
 
-    public function withFile(string $file): Details
+    public function setFile(string $file): Details
     {
         $this->file = $file;
         return $this;
@@ -37,25 +37,25 @@ final class Details
      *
      * @return Details
      */
-    public function withOriginal($original): Details
+    public function setOriginal($original): Details
     {
         $this->original = $original;
         return $this;
     }
 
-    public function withLine(int $line): Details
+    public function setLine(int $line): Details
     {
         $this->line = $line;
         return $this;
     }
 
-    public function withMessage(string $message): Details
+    public function setMessage(string $message): Details
     {
         $this->message = $message;
         return $this;
     }
 
-    public function withFunction(string $function): Details
+    public function setFunction(string $function): Details
     {
         $this->function = $function;
         return $this;

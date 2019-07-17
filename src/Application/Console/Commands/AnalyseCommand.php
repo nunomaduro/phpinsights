@@ -65,7 +65,7 @@ final class AnalyseCommand
 
         $output = OutputDecorator::decorate($output);
 
-        $format = FormatResolver::resolve($input, $output, $consoleOutput);
+        $formatter = FormatResolver::resolve($input, $output, $consoleOutput);
 
         $directory = $this->getDirectory($input);
 
@@ -82,7 +82,7 @@ final class AnalyseCommand
             $config = $this->excludeGlobalInsights($config);
         }
         $results = $this->analyser->analyse(
-            $format,
+            $formatter,
             $config,
             $directory,
             $consoleOutput

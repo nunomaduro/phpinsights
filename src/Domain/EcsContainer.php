@@ -33,7 +33,7 @@ final class EcsContainer
 
             $container = $easyCodingStandardKernel->getContainer();
 
-            if ($container === null || ! ($container instanceof Container)) {
+            if (! ($container instanceof Container)) {
                 throw new \RuntimeException('Unable to get EcsContainer.');
             }
 

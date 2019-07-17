@@ -16,9 +16,9 @@ interface Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param InsightCollection $insightCollection
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param string $dir
-     * @param array<string> $metrics
+     * @param array<int, string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,

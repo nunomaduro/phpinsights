@@ -32,7 +32,7 @@ final class ComposerLockMustBeFresh extends Insight implements HasDetails
     {
         return [
             Details::make()
-                ->withMessage('You may be getting outdated dependencies. Run update to update them.'),
+                ->setMessage('You may be getting outdated dependencies. Run update to update them.'),
         ];
     }
 }
