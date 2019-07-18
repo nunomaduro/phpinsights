@@ -23,11 +23,11 @@ final class Runner
     /** @var \Symfony\Component\DependencyInjection\Container */
     private $ecsContainer;
 
-    /** @var \Nette\DI\Container */
-    private $phpStanContainer;
-
     /** @var \NunoMaduro\PhpInsights\Infrastructure\FileProcessors\SniffFileProcessor */
     private $phpCsFileProcessor;
+
+    /** @var \NunoMaduro\PhpInsights\Infrastructure\FileProcessors\PhpStanFileProcessor */
+    private $phpStanFileProcessor;
 
     /** @var string */
     private $baseDir;
@@ -63,16 +63,15 @@ final class Runner
         $sourceFinder = $ecsContainer->get(SourceFinder::class);
         $sourceFinder->setCustomSourceProvider($filesRepository);
 
-        $this->phpStanContainer = PhpStanContainer::make();
         $container = Container::make();
 
         $this->phpCsFileProcessor = $container->get(SniffFileProcessor::class);
-        $phpStanFileProcessor = $container->get(PhpStanFileProcessor::class);
+        $this->phpStanFileProcessor = $container->get(PhpStanFileProcessor::class);
         $this->baseDir = $baseDir;
 
         $this->setFileProcessor([
             $this->phpCsFileProcessor,
-            $phpStanFileProcessor,
+            $this->phpStanFileProcessor,
         ]);
     }
 
@@ -96,10 +95,7 @@ final class Runner
      */
     public function addRules(array $rules): void
     {
-        /** @var \NunoMaduro\PhpInsights\Domain\PhpStanRulesRegistry $registry */
-        $registry = $this->phpStanContainer->getService('registry');
-
-        $registry->addRules($rules);
+        $this->phpStanFileProcessor->addRules($rules);
     }
 
     /**

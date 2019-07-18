@@ -207,7 +207,7 @@ final class InsightFactory
         $rules = $this->rulesFrom($this->insightsClasses);
         $this->rules = $rules;
 
-        // Add phptan rules
+        // Add php stan rules
         $runner->addRules($rules);
 
         // Add sniff rules

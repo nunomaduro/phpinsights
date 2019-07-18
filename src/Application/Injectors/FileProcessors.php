@@ -11,6 +11,9 @@ use NunoMaduro\PhpInsights\Infrastructure\FileProcessors\SniffFileProcessor;
 use NunoMaduro\PhpInsights\Domain\PhpStanContainer;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use PHPStan\Analyser\Analyser;
+use PHPStan\Analyser\NodeScopeResolver;
+use PHPStan\Analyser\ScopeFactory;
+use PHPStan\Parser\Parser;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
 use Symplify\EasyCodingStandard\Skipper;
 use Symplify\EasyCodingStandard\SniffRunner\Application\SniffFileProcessor as EcsSniffFileProcessor;
@@ -55,10 +58,11 @@ final class FileProcessors
             PhpStanFileProcessor::class => static function () {
                 $container = PhpStanContainer::make();
 
-                /** @var Analyser $analyser */
-                $analyser = $container->getByType(Analyser::class);
-
-                return new PhpStanFileProcessor($analyser);
+                return new PhpStanFileProcessor(
+                    $container->getByType(ScopeFactory::class),
+                    $container->getByType(Parser::class),
+                    $container->getByType(NodeScopeResolver::class)
+                );
             }
         ];
     }
