@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use Nette\DI\Container;
 use PHPStan\DependencyInjection\ContainerFactory;
-use PHPStan\Rules\Registry;
 
 final class PhpStanContainer
 {
@@ -15,10 +14,10 @@ final class PhpStanContainer
      */
     private static $container;
 
-    public static function make(string $currentWorkingDirectory): Container
+    public static function make(): Container
     {
         if (self::$container === null) {
-            $factory = new ContainerFactory($currentWorkingDirectory);
+            $factory = new ContainerFactory("");
 
             $container = $factory->create(
                 sys_get_temp_dir() . '/phpstan',

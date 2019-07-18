@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain;
+namespace NunoMaduro\PhpInsights\Infrastructure\FileProcessors;
 
+use NunoMaduro\PhpInsights\Domain\FileFactory;
 use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;

@@ -124,10 +124,10 @@ final class RuleDecorator implements Insight, Rule, HasDetails
             }
 
             $errors[] = Details::make()
-                ->withLine($line)
-                ->withFile($fileName)
-                ->withMessage($message)
-                ->withOriginal($error);
+                ->setLine($line)
+                ->setFile($fileName)
+                ->setMessage($message)
+                ->setOriginal($error);
         }
 
         $this->errors += $errors;

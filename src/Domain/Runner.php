@@ -6,12 +6,12 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
-use PHPStan\Rules\Registry;
+use NunoMaduro\PhpInsights\Infrastructure\FileProcessors\PhpStanFileProcessor;
+use NunoMaduro\PhpInsights\Infrastructure\FileProcessors\SniffFileProcessor;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
-use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
@@ -26,16 +26,11 @@ final class Runner
     /** @var \Nette\DI\Container */
     private $phpStanContainer;
 
-    /** @var \NunoMaduro\PhpInsights\Domain\SniffFileProcessor */
+    /** @var \NunoMaduro\PhpInsights\Infrastructure\FileProcessors\SniffFileProcessor */
     private $phpCsFileProcessor;
 
     /** @var string */
     private $baseDir;
-
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\PhpStanFileProcessor
-     */
-    private $phpStanFileProcessor;
 
     /**
      * InsightContainer constructor.
@@ -68,20 +63,20 @@ final class Runner
         $sourceFinder = $ecsContainer->get(SourceFinder::class);
         $sourceFinder->setCustomSourceProvider($filesRepository);
 
-        $this->phpStanContainer = PhpStanContainer::make($baseDir);
+        $this->phpStanContainer = PhpStanContainer::make();
         $container = Container::make();
 
         $this->phpCsFileProcessor = $container->get(SniffFileProcessor::class);
-        $this->phpStanFileProcessor = $container->get(PhpStanFileProcessor::class);
+        $phpStanFileProcessor = $container->get(PhpStanFileProcessor::class);
         $this->baseDir = $baseDir;
 
         $this->setFileProcessor([
             $this->phpCsFileProcessor,
-            $this->phpStanFileProcessor,
+            $phpStanFileProcessor,
         ]);
     }
 
-    public function getEcsApplication(): EasyCodingStandardApplication
+    private function getEcsApplication(): EasyCodingStandardApplication
     {
         return $this->ecsContainer->get(EasyCodingStandardApplication::class);
     }
@@ -119,6 +114,8 @@ final class Runner
 
     /**
      * @param array<\Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface> $fileProcessors
+     *
+     * @throws \ReflectionException
      */
     private function setFileProcessor(array $fileProcessors): void
     {

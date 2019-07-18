@@ -1,6 +1,6 @@
 <?php
 
-namespace NunoMaduro\PhpInsights\Domain;
+namespace NunoMaduro\PhpInsights\Infrastructure\FileProcessors;
 
 use PHPStan\Analyser\Analyser;
 use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;

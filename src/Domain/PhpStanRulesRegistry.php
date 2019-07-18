@@ -10,10 +10,12 @@ class PhpStanRulesRegistry extends Registry
     {
 
         $reflection = new Reflection($this);
-        dd($reflection->get('rules'));
+        $loadedRules = $reflection->get('rules') ?? [];
 
         foreach ($rules as $rule) {
-            $this->rules[$rule->getNodeType()][] = $rule;
+            $loadedRules[$rule->getNodeType()][] = $rule;
         }
+
+        $reflection->set('rules', $loadedRules);
     }
 }

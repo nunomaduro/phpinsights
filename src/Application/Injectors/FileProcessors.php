@@ -6,9 +6,9 @@ namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Domain\EcsContainer;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
-use NunoMaduro\PhpInsights\Domain\SniffFileProcessor;
+use NunoMaduro\PhpInsights\Infrastructure\FileProcessors\PhpStanFileProcessor;
+use NunoMaduro\PhpInsights\Infrastructure\FileProcessors\SniffFileProcessor;
 use NunoMaduro\PhpInsights\Domain\PhpStanContainer;
-use NunoMaduro\PhpInsights\Domain\PhpStanFileProcessor;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use PHPStan\Analyser\Analyser;
 use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
@@ -53,7 +53,7 @@ final class FileProcessors
                 );
             },
             PhpStanFileProcessor::class => static function () {
-                $container = PhpStanContainer::make("");
+                $container = PhpStanContainer::make();
 
                 /** @var Analyser $analyser */
                 $analyser = $container->getByType(Analyser::class);

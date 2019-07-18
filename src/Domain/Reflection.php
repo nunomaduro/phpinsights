@@ -94,13 +94,50 @@ final class Reflection
      * @param string $attribute
      *
      * @return mixed
+     *
+     * @throws \ReflectionException
      */
     public function get(string $attribute)
     {
-        $property = $this->reflectionClass->getProperty($attribute);
+        return self::getProperty(
+            $this->reflectionClass,
+            $this->instance,
+            $attribute
+        );
+    }
 
-        $property->setAccessible(true);
+    /**
+     * @param ReflectionClass $class
+     * @param mixed $instance
+     * @param string $attribute
+     *
+     * @return mixed
+     *
+     * @throws \ReflectionException
+     */
+    private static function getProperty(
+        ReflectionClass $class,
+        $instance,
+        string $attribute
+    )
+    {
+        try {
+            $property = $class->getProperty($attribute);
+            $property->setAccessible(true);
 
-        return $property->getValue($this->instance);
+            return $property->getValue($instance);
+        } catch (ReflectionException $exception) {
+            $parentClass = $class->getParentClass();
+
+            if ($parentClass === false) {
+                throw $exception;
+            }
+
+            self::getProperty(
+                $parentClass,
+                $instance,
+                $attribute
+            );
+        }
     }
 }
