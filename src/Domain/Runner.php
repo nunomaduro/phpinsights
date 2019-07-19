@@ -74,7 +74,7 @@ final class Runner
     public function run(): void
     {
         // Get the files.
-        $files = $this->filesRepository->find([]);
+        $files = $this->filesRepository->getFiles();
         $files = iterator_to_array($files);
 
         // No files found

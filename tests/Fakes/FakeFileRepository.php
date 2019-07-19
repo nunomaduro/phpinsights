@@ -27,15 +27,6 @@ final class FakeFileRepository implements FilesRepository
         }, $filePaths);
     }
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function find(array $source)
-    {
-        return $this->getFiles();
-    }
-
     /**
      * {@inheritdoc}
      */

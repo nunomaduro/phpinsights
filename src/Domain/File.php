@@ -9,7 +9,6 @@ use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Util\Common;
 use Symfony\Component\Finder\SplFileInfo;
-use Symplify\EasyCodingStandard\SniffRunner\Exception\File\NotImplementedException;
 
 final class File extends BaseFile
 {
@@ -70,7 +69,7 @@ final class File extends BaseFile
 
     public function getErrorCount(): int
     {
-        throw new NotImplementedException();
+        return 0;
     }
 
     /**
@@ -78,7 +77,7 @@ final class File extends BaseFile
      */
     public function getErrors(): array
     {
-        throw new NotImplementedException();
+        return [];
     }
 
     /**

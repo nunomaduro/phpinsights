@@ -66,12 +66,4 @@ final class LocalFilesRepository implements FilesRepository
 
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function find(array $source)
-    {
-        return $this->getFiles();
-    }
 }
