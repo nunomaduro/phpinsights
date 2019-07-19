@@ -1,11 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain;
 
 use PHPStan\Rules\Registry;
 
-class PhpStanRulesRegistry extends Registry
+final class PhpStanRulesRegistry extends Registry
 {
+    /**
+     * @param array<\NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator> $rules
+     *
+     * @throws \ReflectionException
+     */
     public function addRules(array $rules): void
     {
 

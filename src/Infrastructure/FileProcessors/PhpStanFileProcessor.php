@@ -1,26 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Infrastructure\FileProcessors;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\PhpStanRulesRegistry;
 use PhpParser\Node;
-use PHPStan\Analyser\Analyser;
 use PHPStan\Analyser\NodeScopeResolver;
 use PHPStan\Analyser\Scope;
 use PHPStan\Analyser\ScopeContext;
 use PHPStan\Analyser\ScopeFactory;
 use PHPStan\Node\FileNode;
 use PHPStan\Parser\Parser;
-use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symfony\Component\Finder\SplFileInfo;
 
-class PhpStanFileProcessor implements FileProcessorInterface
+final class PhpStanFileProcessor implements FileProcessor
 {
-    /**
-     * @var \PHPStan\Analyser\Analyser
-     */
-    private $analyser;
-
     /** @var \PHPStan\Analyser\ScopeFactory */
     private $scopeFactory;
 
@@ -38,8 +34,11 @@ class PhpStanFileProcessor implements FileProcessorInterface
      *
      * @param \PHPStan\Analyser\ScopeFactory $scopeFactory
      * @param \PHPStan\Parser\Parser $parser
+     * @param \PHPStan\Analyser\NodeScopeResolver $nodeScopeResolver
      */
-    public function __construct(ScopeFactory $scopeFactory, Parser $parser, NodeScopeResolver $nodeScopeResolver)
+    public function __construct(ScopeFactory $scopeFactory,
+                                Parser $parser,
+                                NodeScopeResolver $nodeScopeResolver)
     {
         $this->scopeFactory = $scopeFactory;
         $this->parser = $parser;
@@ -47,32 +46,22 @@ class PhpStanFileProcessor implements FileProcessorInterface
         $this->registry = new PhpStanRulesRegistry([]);
     }
 
-    public function getCheckers(): array
-    {
-        return ["filler"];
-    }
-
     /**
-     * @param array<\PHPStan\Rules\Rule> $rules
+     * @param array<\NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator> $rules
+     *
+     * @throws \ReflectionException
      */
     public function addRules(array $rules): void
     {
         $this->registry->addRules($rules);
     }
 
-    /**
-     * @param \Symplify\PackageBuilder\FileSystem\SmartFileInfo $smartFileInfo
-     *
-     * @return string
-     *
-     * @throws \Throwable
-     */
-    public function processFile(SmartFileInfo $smartFileInfo): string
+    public function processFile(SplFileInfo $splFileInfo): void
     {
-        $path = $smartFileInfo->getRealPath();
+        $path = $splFileInfo->getRealPath();
 
         if ($path === false) {
-            return "Failed getting real path of file.";
+            return;
         }
 
         $scope = $this->scopeFactory->create(ScopeContext::create($path));
@@ -80,18 +69,20 @@ class PhpStanFileProcessor implements FileProcessorInterface
 
         $this->processNode(new FileNode($node), $scope);
 
+        // We load the file as phpStan needs it loaded to parse
+        // it correctly.
+        require_once $path;
+
         $this->nodeScopeResolver->processNodes(
             $node,
             $scope,
-            function (Node $node, Scope $scope) {
+            function (Node $node, Scope $scope): void {
                 $this->processNode($node, $scope);
             }
         );
-
-        return "Processed";
     }
 
-    private function processNode(Node $node, Scope $scope)
+    private function processNode(Node $node, Scope $scope): void
     {
         foreach ($this->registry->getRules(get_class($node)) as $rule) {
             $rule->processNode($node, $scope);

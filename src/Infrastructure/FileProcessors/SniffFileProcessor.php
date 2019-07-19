@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Infrastructure\FileProcessors;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
-use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use Symplify\EasyCodingStandard\Contract\Application\FileProcessorInterface;
-use Symplify\PackageBuilder\FileSystem\SmartFileInfo;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
  */
-final class SniffFileProcessor implements FileProcessorInterface
+final class SniffFileProcessor implements FileProcessor
 {
     /**
      * @var array<\PHP_CodeSniffer\Sniffs\Sniff|\PHPStan\Rules\Rule>
@@ -21,14 +20,9 @@ final class SniffFileProcessor implements FileProcessorInterface
     private $checkers = [];
 
     /**
-     * @var array<array<\NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator>>
+     * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
     private $tokenListeners = [];
-
-    /**
-     * @var \PHP_CodeSniffer\Fixer
-     */
-    private $fixer;
 
     /**
      * @var \NunoMaduro\PhpInsights\Domain\FileFactory
@@ -38,12 +32,10 @@ final class SniffFileProcessor implements FileProcessorInterface
     /**
      * FileProcessor constructor.
      *
-     * @param  \PHP_CodeSniffer\Fixer  $fixer
-     * @param  \NunoMaduro\PhpInsights\Domain\FileFactory  $fileFactory
+     * @param \NunoMaduro\PhpInsights\Domain\FileFactory $fileFactory
      */
-    public function __construct(Fixer $fixer, FileFactory $fileFactory)
+    public function __construct(FileFactory $fileFactory)
     {
-        $this->fixer = $fixer;
         $this->fileFactory = $fileFactory;
     }
 
@@ -56,22 +48,12 @@ final class SniffFileProcessor implements FileProcessorInterface
         }
     }
 
-    /**
-     * @return array<\PHP_CodeSniffer\Sniffs\Sniff|\PHPStan\Rules\Rule>
-     */
-    public function getCheckers(): array
+    public function processFile(SplFileInfo $splFileInfo): void
     {
-        return $this->checkers;
-    }
-
-    public function processFile(SmartFileInfo $smartFileInfo): string
-    {
-        $file = $this->fileFactory->createFromFileInfo($smartFileInfo);
+        $file = $this->fileFactory->createFromFileInfo($splFileInfo);
         $file->processWithTokenListenersAndFileInfo(
             $this->tokenListeners,
-            $smartFileInfo
+            $splFileInfo
         );
-
-        return $this->fixer->getContents();
     }
 }

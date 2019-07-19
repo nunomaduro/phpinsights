@@ -21,14 +21,10 @@ final class PhpStanContainer
 
             $container = $factory->create(
                 sys_get_temp_dir() . '/phpstan',
-                [],
+                [
+                    'vendor/phpstan/phpstan-strict-rules/rules.neon',
+                ],
                 []
-            );
-
-            $container->removeService('registry');
-            $container->addService(
-                'registry',
-                new PhpStanRulesRegistry([])
             );
 
             self::$container = $container;

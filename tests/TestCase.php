@@ -87,7 +87,6 @@ abstract class TestCase extends BaseTestCase
             $analyser
         );
 
-
         return $insightCollectionFactory->get(
             MetricsFinder::find(),
             $config,

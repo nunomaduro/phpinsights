@@ -21,6 +21,9 @@ final class Details
     /** @var string */
     private $message;
 
+    /** @var int */
+    private $severity = 5;
+
     public static function make(): Details
     {
         return new self();
@@ -58,6 +61,12 @@ final class Details
     public function setFunction(string $function): Details
     {
         $this->function = $function;
+        return $this;
+    }
+
+    public function setSeverity(int $severity): Details
+    {
+        $this->severity = $severity;
         return $this;
     }
 
@@ -112,5 +121,10 @@ final class Details
     public function hasOriginal(): bool
     {
         return $this->original !== null;
+    }
+
+    public function getSeverity(): int
+    {
+        return $this->severity;
     }
 }

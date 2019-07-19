@@ -28,7 +28,14 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSni
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
+use PHPStan\Rules\BooleansInConditions\BooleanInBooleanAndRule;
+use PHPStan\Rules\BooleansInConditions\BooleanInBooleanNotRule;
+use PHPStan\Rules\BooleansInConditions\BooleanInBooleanOrRule;
+use PHPStan\Rules\BooleansInConditions\BooleanInElseIfConditionRule;
+use PHPStan\Rules\BooleansInConditions\BooleanInIfConditionRule;
+use PHPStan\Rules\BooleansInConditions\BooleanInTernaryOperatorRule;
 use PHPStan\Rules\Cast\UselessCastRule;
+use PHPStan\Rules\ForeachLoop\OverwriteVariablesWithForeachRule;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
@@ -111,6 +118,13 @@ final class Code implements HasValue, HasInsights
             DeclareStrictTypesSniff::class,
             DuplicateAssignmentToVariableSniff::class,
             UselessCastRule::class,
+            BooleanInBooleanAndRule::class,
+            BooleanInBooleanNotRule::class,
+            BooleanInBooleanOrRule::class,
+            BooleanInElseIfConditionRule::class,
+            BooleanInIfConditionRule::class,
+            BooleanInTernaryOperatorRule::class,
+            OverwriteVariablesWithForeachRule::class,
             // FullyQualifiedExceptionsSniff::class,
             // FullyQualifiedGlobalConstantsSniff::class,
         ];

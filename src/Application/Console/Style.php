@@ -22,7 +22,7 @@ final class Style extends SymfonyStyle
     /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
-    public $output;
+    private $output;
 
     /**
      * Style constructor.
@@ -46,14 +46,26 @@ final class Style extends SymfonyStyle
     {
         $stdin = fopen('php://stdin', 'r');
 
-        if ($stdin !== false && $this->output instanceof ConsoleOutput && $this->input->isInteractive() === true) {
+        if (
+            $stdin !== false
+            && $this->output instanceof ConsoleOutput
+            && $this->input->isInteractive() === true
+        ) {
             $this->newLine();
             $section = $this->output->section();
-            $section->writeln(sprintf('<title>Press enter to see %s issues...</title>', strtolower($category)));
+            $section->writeln(sprintf(
+                '<title>Press enter to see %s issues...</title>',
+                strtolower($category)
+            ));
             fgetc($stdin);
             $section->clear(3);
         }
 
         return $this;
+    }
+
+    public function getOutput(): OutputInterface
+    {
+        return $this->output;
     }
 }

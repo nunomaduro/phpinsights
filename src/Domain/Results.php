@@ -29,7 +29,7 @@ final class Results
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
      */
-    public function __construct(\NunoMaduro\PhpInsights\Domain\Collector $collector, array $perCategoryInsights)
+    public function __construct(Collector $collector, array $perCategoryInsights)
     {
         $this->collector = $collector;
         $this->perCategoryInsights = $perCategoryInsights;

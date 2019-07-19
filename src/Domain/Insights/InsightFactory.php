@@ -6,12 +6,12 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\PhpStanContainer;
 use NunoMaduro\PhpInsights\Domain\Runner;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use PHPStan\Rules\Rule as RuleContract;
 use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symplify\EasyCodingStandard\Error\Error;
 
 /**
  * @internal
@@ -34,14 +34,17 @@ final class InsightFactory
     private $insightsClasses;
 
     /**
-     * @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector|null
-     */
-    private $sniffCollector;
-
-    /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator>
      */
     private $rules;
+
+    /**
+     * @var array<SniffDecorator>
+     */
+    private $sniffs;
+
+    /** @var bool */
+    private $ran = false;
 
     /**
      * Creates a new instance of Insight Factory
@@ -76,14 +79,19 @@ final class InsightFactory
     {
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                $this->runErrorCollector($config, $consoleOutput);
+                $this->runInsightCollector($config, $consoleOutput);
 
-                return new Sniff(
-                    $this->getSniffErrors($errorClass)
-                );
+                /** @var SniffDecorator $sniff */
+                foreach ($this->sniffs as $sniff) {
+                    if ($sniff->getInsightClass() === $errorClass) {
+                        return $sniff;
+                    }
+                }
+
+                throw new RuntimeException("The rule has been removed somehow. This shouldn't happen.");
 
             case array_key_exists(RuleContract::class, class_implements($errorClass)):
-                $this->runErrorCollector($config, $consoleOutput);
+                $this->runInsightCollector($config, $consoleOutput);
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator $rule */
                 foreach ($this->rules as $rule) {
@@ -94,7 +102,7 @@ final class InsightFactory
                 throw new RuntimeException("The rule has been removed somehow. This shouldn't happen.");
 
             default:
-                throw new \RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
+                throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
         }
     }
 
@@ -104,7 +112,7 @@ final class InsightFactory
      * @param array<string> $insights
      * @param array<string, array> $config
      *
-     * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
+     * @return array<SniffDecorator>
      */
     public function sniffsFrom(array $insights, array $config): array
     {
@@ -119,7 +127,10 @@ final class InsightFactory
                     $sniff->{$property} = $value;
                 }
 
-                $sniffs[] = $sniff;
+                $sniffs[] = new SniffDecorator(
+                    $sniff,
+                    $this->dir
+                );
             }
         }
 
@@ -130,15 +141,19 @@ final class InsightFactory
      * Returns the phpstan rule classes from the given array of Metrics.
      *
      * @param array<string> $insights
+     *
      * @return array<\NunoMaduro\PhpInsights\Domain\Insights\RuleDecorator>
      */
     public function rulesFrom(array $insights): array
     {
         $rules = [];
+        $container = PhpStanContainer::make();
 
         foreach ($insights as $insight) {
             if (array_key_exists(RuleContract::class, class_implements($insight))) {
-                $rule = new RuleDecorator(new $insight());
+                /** @var \PHPStan\Rules\Rule $rule */
+                $rule = $container->createInstance($insight);
+                $rule = new RuleDecorator($rule);
 
                 $rules[] = $rule;
             }
@@ -148,79 +163,37 @@ final class InsightFactory
     }
 
     /**
-     * Returns the Error with of the given $sniff, if any.
+     * @param array<string, mixed> $config
+     * @param \Symfony\Component\Console\Output\OutputInterface $consoleOutput
      *
-     * @param string $sniff
-     *
-     * @return array<\Symplify\EasyCodingStandard\Error\Error>
+     * @throws \ReflectionException
      */
-    private function getSniffErrors(string $sniff): array
-    {
-        $errors = [];
-
-        foreach ($this->sniffCollector->getErrors() as $errorsPerFile) {
-            foreach ($errorsPerFile as $error) {
-                if (strpos($error->getSourceClass(), $sniff) !== false) {
-                    $key = $this->getSniffKey($error);
-                    if (! array_key_exists($key, $errors)) {
-                        $errors[$key] = $error;
-                    }
-                }
-            }
-        }
-
-        return array_values($errors);
-    }
-
-    /**
-     * Gets a key from a Error.
-     *
-     * @param \Symplify\EasyCodingStandard\Error\Error $error
-     *
-     * @return string
-     */
-    private function getSniffKey(Error $error): string
-    {
-        return sprintf('%s||%s||%s||%s',
-            $error->getFileInfo()->getRealPath(),
-            $error->getSourceClass(),
-            $error->getLine(),
-            $error->getMessage()
-        );
-    }
-
-    private function runErrorCollector(
+    private function runInsightCollector(
         array $config,
         OutputInterface $consoleOutput
     ): void
     {
-        if ($this->sniffCollector !== null) {
+        if ($this->ran === true) {
             return;
         }
 
         $runner = new Runner(
-            $this->dir,
             $consoleOutput,
             $this->filesRepository
         );
 
+        // Add php stan rules
         $rules = $this->rulesFrom($this->insightsClasses);
         $this->rules = $rules;
-
-        // Add php stan rules
         $runner->addRules($rules);
 
-        // Add sniff rules
-        $runner->addSniffs($this->sniffsFrom($this->insightsClasses, $config));
+        // Add php cs sniffs
+        $sniffs = $this->sniffsFrom($this->insightsClasses, $config);
+        $this->sniffs = $sniffs;
+        $runner->addSniffs($sniffs);
 
         // Run it.
         $runner->run();
-
-        // Collect the errors from sniffs
-        $this->sniffCollector = $runner->getSniffErrorCollector();
-
-        // Destroy the container, so insights doesn't fail on consecutive
-        // runs. This is needed for tests also.
-        $runner->reset();
+        $this->ran = true;
     }
 }
