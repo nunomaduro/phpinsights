@@ -55,7 +55,6 @@ final class InsightCollectionFactory
         }
 
         $collector = $this->analyser->analyse($dir, $files);
-        /** @var \Symfony\Component\DependencyInjection\Container $container */
 
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {

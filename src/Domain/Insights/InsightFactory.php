@@ -12,12 +12,12 @@ use NunoMaduro\PhpInsights\Domain\Reflection;
 use NunoMaduro\PhpInsights\Domain\SniffFileProcessor;
 use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
 use Symplify\EasyCodingStandard\Configuration\Configuration;
 use Symplify\EasyCodingStandard\Error\Error;
 use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
-use Symplify\EasyCodingStandard\Error\FileDiff;
 use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
 /**
@@ -103,8 +103,8 @@ final class InsightFactory
                 /** @var SniffContract|FixerInterface $currentInsight */
                 $currentInsight = new $insight();
 
-                foreach ($config['config'][$insight] ?? [] as $property => $value) {
-                    $currentInsight->{$property} = $value;
+                if (isset($config['config'][$insight])) {
+                    $this->configureInsight($currentInsight, $config['config'][$insight]);
                 }
 
                 $collectedInsights[] = $currentInsight;
@@ -244,5 +244,24 @@ final class InsightFactory
         $ecsContainer->reset();
 
         return $this->collector = $errorAndDiffCollector;
+    }
+
+    /**
+     * @param SniffContract|\PhpCsFixer\Fixer\FixerInterface $insight
+     * @param array<string, array|string|int|bool> $config
+     */
+    private function configureInsight($insight, array $config): void
+    {
+        if ($insight instanceof SniffContract) {
+            foreach ($config ?? [] as $property => $value) {
+                $insight->{$property} = $value;
+            }
+            return;
+        }
+
+        if ($insight instanceof ConfigurableFixerInterface) {
+            $insight->configure($config);
+            return;
+        }
     }
 }

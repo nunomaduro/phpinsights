@@ -17,7 +17,6 @@ final class CSFixer implements InsightContract, HasDetails
      * @var array<string>
      */
     private $details;
-
     /**
      * @var string
      */
@@ -47,8 +46,8 @@ final class CSFixer implements InsightContract, HasDetails
 
     public function getTitle(): string
     {
-        $sniffClass = $this->getInsightClass();
-        $path = explode('\\', $sniffClass);
+        $fixerClass = $this->getInsightClass();
+        $path = explode('\\', $fixerClass);
         $name = (string) array_pop($path);
         $name = str_replace('Fixer', '', $name);
 
