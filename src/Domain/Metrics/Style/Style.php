@@ -173,7 +173,7 @@ final class Style implements HasInsights
             NoWhitespaceBeforeCommaInArrayFixer::class,
             NoWhitespaceInBlankLineFixer::class,
             SingleQuoteFixer::class,
-            StandardizeNotEqualsFixer::class
+            StandardizeNotEqualsFixer::class,
         ];
     }
 }

@@ -43,6 +43,11 @@ final class SniffDecorator implements Sniff
         return $this->sniff->process($file, $stackPtr);
     }
 
+    public function getSniff(): Sniff
+    {
+        return $this->sniff;
+    }
+
     private function skipFilesFromIgnoreFiles(InsightFile $file): bool
     {
         $path = $file->getFileInfo()->getRealPath();
@@ -73,10 +78,5 @@ final class SniffDecorator implements Sniff
     private static function pathsAreEqual(string $pathA, string $pathB): bool
     {
         return realpath($pathA) === realpath($pathB);
-    }
-
-    public function getSniff(): Sniff
-    {
-        return $this->sniff;
     }
 }

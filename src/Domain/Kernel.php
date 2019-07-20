@@ -35,7 +35,7 @@ final class Kernel
             : __DIR__ . '/../../../../../vendor/squizlabs/php_codesniffer/autoload.php';
 
         /**
-         * Defines PHP Codesniffer's needed constants
+         * Defines PHP Codesniffer's needed constants.
          */
         if (! defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', false);

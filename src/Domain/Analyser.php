@@ -8,7 +8,7 @@ use ReflectionMethod;
 use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
 
 /**
- * Code originally taken from {SebastianBergmann\PHPLOC\Analyser}
+ * Code originally taken from {SebastianBergmann\PHPLOC\Analyser}.
  *
  * @method string    getNamespaceName(array $tolens, int $i)
  * @method bool      isClassDeclaration(array $tokens, int $i)
@@ -40,6 +40,20 @@ final class Analyser
     ];
 
     /**
+     * @param string $method
+     * @param array<(int|float|array<string>), (int|float|array<string>)> $args
+     *
+     * @return int|float|array<string>
+     */
+    public function __call(string $method, array $args)
+    {
+        $method = new ReflectionMethod(BaseAnalyser::class, $method);
+        $method->setAccessible(true);
+
+        return $method->invoke(new BaseAnalyser(), ...$args);
+    }
+
+    /**
      * Processes a set of files.
      *
      * @param  string  $dir
@@ -59,7 +73,6 @@ final class Analyser
 
         return $collector;
     }
-
     /**
      * Processes a single file.
      *
@@ -87,7 +100,6 @@ final class Analyser
         $isInMethod = false;
 
         for ($i = 0; $i < $numTokens; $i++) {
-
             if (\is_string($tokens[$i])) {
                 $token = \trim($tokens[$i]);
 
@@ -104,7 +116,7 @@ final class Analyser
 
                     $collector->incrementLogicalLines();
                 } elseif ($token === '?') {
-                    if($currentBlock === \T_FUNCTION) {
+                    if ($currentBlock === \T_FUNCTION) {
                         continue;
                     }
 
@@ -131,7 +143,6 @@ final class Analyser
 
                     if ($block !== false && $block !== null) {
                         if ($block === $functionName) {
-
                             if ($isInMethod) {
                                 $collector->currentMethodStop($functionName);
                                 $isInMethod = false;
@@ -317,16 +328,14 @@ final class Analyser
 
                 case \T_STRING:
                     if ($value === 'define'
-                        && $tokens[$i - 1][1] !== "::"
-                        && $tokens[$i - 1][1] !== "->"
+                        && $tokens[$i - 1][1] !== '::'
+                        && $tokens[$i - 1][1] !== '->'
                         && (! isset($tokens[$i - 2][1]) || $tokens[$i - 2][1] !== 'function')) {
-
                         $j = $i + 1;
 
                         while (isset($tokens[$j]) && $tokens[$j] !== ';') {
                             if (\is_array($tokens[$j]) &&
                                 $tokens[$j][0] === \T_CONSTANT_ENCAPSED_STRING) {
-
                                 $collector->addGlobalConstant(\str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
@@ -381,19 +390,5 @@ final class Analyser
                     break;
             }
         }
-    }
-
-    /**
-     * @param  string  $method
-     * @param array<(int|float|array<string>), (int|float|array<string>)> $args
-     *
-     * @return int|float|array<string>
-     */
-    public function __call(string $method, array $args)
-    {
-        $method = new ReflectionMethod(BaseAnalyser::class, $method);
-        $method->setAccessible(true);
-
-        return $method->invoke(new BaseAnalyser(), ...$args);
     }
 }

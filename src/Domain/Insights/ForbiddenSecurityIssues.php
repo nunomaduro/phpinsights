@@ -41,7 +41,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
 
         foreach ($issues as $packageName => $package) {
             foreach ($package['advisories'] as $advisory) {
-                $details[] = "$packageName@{$package['version']} {$advisory['title']} - {$advisory['link']}";
+                $details[] = "${packageName}@{$package['version']} {$advisory['title']} - {$advisory['link']}";
             }
         }
 

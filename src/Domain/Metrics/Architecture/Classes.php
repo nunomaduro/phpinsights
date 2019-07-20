@@ -46,7 +46,7 @@ final class Classes implements HasValue, HasInsights
             SingleClassElementPerStatementFixer::class,
             SingleImportPerStatementFixer::class,
             OrderedClassElementsFixer::class,
-            OrderedImportsFixer::class
+            OrderedImportsFixer::class,
         ];
     }
 

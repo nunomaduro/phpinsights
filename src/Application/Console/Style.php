@@ -68,16 +68,16 @@ final class Style extends SymfonyStyle
         $style = self::getPercentageAsString($results->getStyle());
 
         $output = <<<EOD
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$codeQuality}  </>            <fg=black;options=bold;$complexityColor>  {$complexity}  </>            <fg=black;options=bold;$structureColor>  {$structure}  </>            <fg=black;options=bold;$styleColor>  {$style}  </>
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
+      <${codeQualityColor}>         </>            <${complexityColor}>         </>            <${structureColor}>         </>            <${styleColor}>         </>
+      <fg=black;options=bold;${codeQualityColor}>  {$codeQuality}  </>            <fg=black;options=bold;${complexityColor}>  {$complexity}  </>            <fg=black;options=bold;${structureColor}>  {$structure}  </>            <fg=black;options=bold;${styleColor}>  {$style}  </>
+      <${codeQualityColor}>         </>            <${complexityColor}>         </>            <${structureColor}>         </>            <${styleColor}>         </>
 
-        <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
+        <${subtitle}>Code</>               <${subtitle}>Complexity</>          <${subtitle}>Architecture</>            <${subtitle}>Style</>
 EOD;
         $this->write($output);
         $this->newLine(2);
 
-        $this->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100");
+        $this->writeln('Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100');
 
         return $this;
     }
@@ -91,7 +91,7 @@ EOD;
     public function code(InsightCollection $insightCollection, Results $results): Style
     {
         $this->newLine();
-        $this->writeln(sprintf("[CODE] %s within <title>%s</> lines",
+        $this->writeln(sprintf('[CODE] %s within <title>%s</> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code\Code())->getValue($insightCollection->getCollector())
         ));
@@ -119,7 +119,6 @@ EOD;
         return $this;
     }
 
-
     /**
      * @param  \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection  $insightCollection
      * @param  \NunoMaduro\PhpInsights\Domain\Results  $results
@@ -130,7 +129,7 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity",
+        $this->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity\Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -148,7 +147,7 @@ EOD;
     {
         $this->newLine();
 
-        $this->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</> files",
+        $this->writeln(sprintf('[ARCHITECTURE] %s within <title>%s</> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Architecture\Files())->getValue($insightCollection->getCollector())
         ));
@@ -231,7 +230,7 @@ EOD;
 
                 $previousCategory = $category;
 
-                $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
+                $issue = "\n<fg=red>•</> [${category}] <bold>{$insight->getTitle()}</bold>";
 
                 if (! $insight instanceof HasDetails && ! $this->output->isVerbose()) {
                     $this->writeln($issue);
@@ -256,7 +255,7 @@ EOD;
 
                 foreach ($details as $detail) {
                     $detail = str_replace(realpath($dir) . '/', '', $detail);
-                    $issue .= "\n  $detail";
+                    $issue .= "\n  ${detail}";
                 }
 
                 if (! $this->output->isVerbose() && $totalDetails > 3) {

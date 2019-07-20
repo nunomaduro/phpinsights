@@ -46,7 +46,7 @@ final class InsightFactory
     private $collector;
 
     /**
-     * Creates a new instance of Insight Factory
+     * Creates a new instance of Insight Factory.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository  $filesRepository
      * @param  string  $dir

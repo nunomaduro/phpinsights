@@ -10,7 +10,6 @@ use PhpCsFixer\Differ\DifferInterface;
 
 final class Differ implements DifferInterface
 {
-
     /**
      * @var \PhpCsFixer\Diff\v3_0\Differ
      */

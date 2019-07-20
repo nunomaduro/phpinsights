@@ -8,7 +8,6 @@ use NunoMaduro\PhpInsights\Application\Injectors\FileProcessors;
 use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
 
 return (static function () {
-
     $injectors = [
         Repositories::class,
         FileProcessors::class,

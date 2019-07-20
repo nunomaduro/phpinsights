@@ -66,7 +66,6 @@ final class InsightCollectionFactory
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(static function (string $insightClass) use ($insightFactory, $collector, $config) {
                 if (! array_key_exists(Insight::class, class_implements($insightClass))) {
-
                     return $insightFactory->makeFrom(
                         $insightClass,
                         $config

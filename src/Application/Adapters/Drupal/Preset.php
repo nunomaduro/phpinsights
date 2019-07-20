@@ -20,7 +20,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function get(): array
     {
@@ -46,7 +46,7 @@ final class Preset implements PresetContract
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function shouldBeApplied(array $composer): bool
     {

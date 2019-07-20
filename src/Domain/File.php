@@ -76,8 +76,7 @@ final class File extends BaseFile
         Skipper $skipper,
         AppliedCheckersCollector $appliedCheckersCollector,
         EasyCodingStandardStyle $easyCodingStandardStyle
-    )
-    {
+    ) {
         $this->path = $path;
         $this->content = $content;
         $this->fixer = $fixer;
@@ -176,8 +175,7 @@ final class File extends BaseFile
         $data,
         $severity,
         $isFixable = false
-    ): bool
-    {
+    ): bool {
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
         $this->errorAndDiffCollector->addErrorMessage(

@@ -48,7 +48,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         $classesComplexity = array_reverse($classesComplexity);
 
         return array_map(static function ($class, $complexity) {
-            return "$class: $complexity cyclomatic complexity";
+            return "${class}: ${complexity} cyclomatic complexity";
         }, array_keys($classesComplexity), $classesComplexity);
     }
 

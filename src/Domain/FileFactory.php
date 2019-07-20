@@ -47,8 +47,7 @@ final class FileFactory
         Skipper $skipper,
         AppliedCheckersCollector $appliedCheckersCollector,
         EasyCodingStandardStyle $easyCodingStandardStyle
-    )
-    {
+    ) {
         $this->fixer = $fixer;
         $this->errorAndDiffCollector = $errorAndDiffCollector;
         $this->skipper = $skipper;

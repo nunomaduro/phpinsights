@@ -9,14 +9,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\ClassHelper;
 
 /**
- * This sniff disallows setter methods
+ * This sniff disallows setter methods.
  */
 final class ForbiddenSetterSniff implements Sniff
 {
     private const ERROR_MESSAGE = <<<'EOD'
 Setters are not allowed. Use constructor injection and behavior naming instead.
 EOD;
-
 
     private const SETTER_REGEX = '#^set[A-Z0-9]#';
 

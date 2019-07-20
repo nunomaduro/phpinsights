@@ -22,7 +22,7 @@ final class CSFixer implements InsightContract, HasDetails
      */
     private $fixer;
     /**
-     * Creates a new instance of Sniff Insight
+     * Creates a new instance of Fixer Insight.
      *
      * @param array<string, \Symplify\EasyCodingStandard\Error\FileDiff> $diffs
      */
@@ -32,7 +32,7 @@ final class CSFixer implements InsightContract, HasDetails
 
         /** @var FileDiff $fileDiff */
         foreach ($diffs as $file => $fileDiff) {
-            if (null === $this->fixer) {
+            if ($this->fixer === null) {
                 $this->fixer = $fileDiff->getAppliedCheckers()[0];
             }
             $this->processDiff($fileDiff->getDiff(), $file);
@@ -82,7 +82,7 @@ final class CSFixer implements InsightContract, HasDetails
             if (mb_strpos($diffLine, '@@ ') === 0) {
                 $this->details[] = $currentMessage;
                 $currentLineNumber = $this->parseLineNumber($diffLine);
-                $currentMessage = sprintf('%s:%s: %s', $file, $currentLineNumber, $headerMessage) ;
+                $currentMessage = sprintf('%s:%s: %s', $file, $currentLineNumber, $headerMessage);
                 continue;
             }
 

@@ -36,7 +36,7 @@ final class Sniff implements Insight, HasDetails
     private $errors;
 
     /**
-     * Creates a new instance of Sniff Insight
+     * Creates a new instance of Sniff Insight.
      *
      * @param array<\Symplify\EasyCodingStandard\Error\Error> $errors
      */
@@ -67,7 +67,7 @@ final class Sniff implements Insight, HasDetails
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDetails(): array
     {
