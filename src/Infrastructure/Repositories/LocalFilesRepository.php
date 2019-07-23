@@ -33,6 +33,9 @@ final class LocalFilesRepository implements FilesRepository
             ->ignoreUnreadableDirs();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultDirectory(): string
     {
         return (string) getcwd();
@@ -49,14 +52,14 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * {@inheritdoc}
      */
-    public function within(string $directory, array $exclude = []): FilesRepository
+    public function within(string $path, array $exclude = []): FilesRepository
     {
-        if (! is_dir($directory) && is_file($directory)) {
-            $this->finder->append([$directory]);
+        if (! is_dir($path) && is_file($path)) {
+            $this->finder->append([$path]);
 
             return $this;
         }
-        $this->finder->in([$directory])->notPath($exclude);
+        $this->finder->in([$path])->notPath($exclude);
 
         foreach ($exclude as $value) {
             if (substr($value, -4) === '.php') {

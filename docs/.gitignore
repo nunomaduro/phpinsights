@@ -1,3 +1,4 @@
 /node_modules
 .vuepress/dist
 yarn.lock
+changelog.md
