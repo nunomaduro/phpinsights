@@ -70,8 +70,10 @@ final class PhpStanFileProcessor implements FileProcessor
         $this->processNode(new FileNode($node), $scope);
 
         // We load the file as phpStan needs it loaded to parse
-        // it correctly.
-        require_once $path;
+        // it correctly. (only needed when autoloader fails to load it)
+        spl_autoload_register($autoloader = static function () use ($path): void {
+            require_once $path;
+        });
 
         $this->nodeScopeResolver->processNodes(
             $node,
@@ -80,6 +82,8 @@ final class PhpStanFileProcessor implements FileProcessor
                 $this->processNode($node, $scope);
             }
         );
+
+        spl_autoload_unregister($autoloader);
     }
 
     private function processNode(Node $node, Scope $scope): void

@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File as BaseFile;
-use PHP_CodeSniffer\Fixer;
+use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Util\Common;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -30,20 +30,23 @@ final class File extends BaseFile
      *
      * @param string $path
      * @param string $content
-     * @param \PHP_CodeSniffer\Fixer $fixer
      */
-    public function __construct(string $path, string $content, Fixer $fixer)
+    public function __construct(string $path, string $content)
     {
-        $this->path = $path;
         $this->content = $content;
-        $this->fixer = $fixer;
 
         $this->eolChar = Common::detectLineEndings($content);
 
-        $this->config = new Config([], false);
-        $this->config->__set('tabWidth', 4);
-        $this->config->__set('annotations', false);
-        $this->config->__set('encoding', 'UTF-8');
+        $config = new Config([], false);
+        $config->__set('tabWidth', 4);
+        $config->__set('annotations', false);
+        $config->__set('encoding', 'UTF-8');
+
+        parent::__construct(
+            $path,
+            new Ruleset($config),
+            $config
+        );
     }
 
     public function process(): void

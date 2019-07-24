@@ -33,6 +33,48 @@ final class RuleDecorator implements Insight, Rule, HasDetails
     }
 
     /**
+     * Convert a error to a detail
+     *
+     * @param \PhpParser\Node $node
+     * @param \PHPStan\Analyser\Scope $scope
+     * @param \PHPStan\Rules\RuleError|string $error
+     *
+     * @return \NunoMaduro\PhpInsights\Domain\Details
+     *
+     * @throws \PHPStan\ShouldNotHappenException
+     */
+    private static function errorToDetail(Node $node,
+                                          Scope $scope,
+                                          $error): Details
+    {
+        $line = $node->getLine();
+        $fileName = $scope->getFileDescription();
+        if (is_string($error)) {
+            $message = $error;
+        } else {
+            $message = $error->getMessage();
+            if (
+                $error instanceof LineRuleError
+                && $error->getLine() !== -1
+            ) {
+                $line = $error->getLine();
+            }
+            if (
+                $error instanceof FileRuleError
+                && $error->getFile() !== ''
+            ) {
+                $fileName = $error->getFile();
+            }
+        }
+
+        return Details::make()
+            ->setLine($line)
+            ->setFile($fileName)
+            ->setMessage($message)
+            ->setOriginal($error);
+    }
+
+    /**
      * Checks if the insight detects an issue.
      *
      * @return bool
@@ -103,31 +145,8 @@ final class RuleDecorator implements Insight, Rule, HasDetails
 
         /** @var \PHPStan\Rules\RuleError|string $error */
         foreach ($ruleErrors as $error) {
-            $line = $node->getLine();
-            $fileName = $scope->getFileDescription();
-            if (is_string($error)) {
-                $message = $error;
-            } else {
-                $message = $error->getMessage();
-                if (
-                    $error instanceof LineRuleError
-                    && $error->getLine() !== -1
-                ) {
-                    $line = $error->getLine();
-                }
-                if (
-                    $error instanceof FileRuleError
-                    && $error->getFile() !== ''
-                ) {
-                    $fileName = $error->getFile();
-                }
-            }
 
-            $errors[] = Details::make()
-                ->setLine($line)
-                ->setFile($fileName)
-                ->setMessage($message)
-                ->setOriginal($error);
+            $errors[] = self::errorToDetail($node, $scope, $error);
         }
 
         $this->errors += $errors;
