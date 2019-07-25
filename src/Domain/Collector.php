@@ -118,9 +118,9 @@ final class Collector
     private $staticAttributeAccesses = 0;
 
     /**
-     * @var int
+     * @var array<string>
      */
-    private $superGlobalVariableAccesses = 0;
+    private $superGlobalVariableAccesses = [];
 
     /**
      * @var array<string>
@@ -128,9 +128,9 @@ final class Collector
     private $possibleConstantAccesses = [];
 
     /**
-     * @var int
+     * @var array<string>
      */
-    private $globalVariableAccesses = 0;
+    private $globalVariableAccesses = [];
 
     /**
      * @var int
@@ -363,19 +363,25 @@ final class Collector
     }
 
     /**
+     * @param int $line
+     * @param string $name
+     *
      * @return void
      */
-    public function incrementGlobalVariableAccesses(): void
+    public function addGlobalVariableAccesses(int $line, string $name): void
     {
-        $this->globalVariableAccesses++;
+        $this->globalVariableAccesses[$this->currentFilename . ':' . $line] = $name;
     }
 
     /**
+     * @param int $line
+     * @param string $name
+     *
      * @return void
      */
-    public function incrementSuperGlobalVariableAccesses(): void
+    public function addSuperGlobalVariableAccesses(int $line, string $name): void
     {
-        $this->superGlobalVariableAccesses++;
+        $this->superGlobalVariableAccesses[$this->currentFilename . ':' . $line] = $name;
     }
 
     /**
@@ -754,11 +760,11 @@ final class Collector
     }
 
     /**
-     * @return int
+     * @return array<string>
      */
-    public function getGlobalVariableAccesses(): int
+    public function getGlobalVariableAccesses(): array
     {
-        return $this->globalVariableAccesses;
+        return array_merge($this->globalVariableAccesses, $this->superGlobalVariableAccesses);
     }
 
     /**
@@ -882,9 +888,9 @@ final class Collector
     }
 
     /**
-     * @return int
+     * @return array<string>
      */
-    public function getSuperGlobalVariableAccesses(): int
+    public function getSuperGlobalVariableAccesses(): array
     {
         return $this->superGlobalVariableAccesses;
     }
@@ -1055,7 +1061,7 @@ final class Collector
      */
     public function getGlobalAccesses(): int
     {
-        return $this->getGlobalConstantAccesses() + $this->getGlobalVariableAccesses() + $this->getSuperGlobalVariableAccesses();
+        return $this->getGlobalConstantAccesses() + count($this->globalVariableAccesses) + count($this->superGlobalVariableAccesses);
     }
 
     /**
