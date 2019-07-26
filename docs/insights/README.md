@@ -113,9 +113,9 @@ For example, to remove "Unused Parameters" Insight only for some file:
         \SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class => [
             'exclude' => [
                 'src/Path/To/My/File.php',
-                'src/Path/To/Other/File.php,
+                'src/Path/To/Other/File.php',
             ],
-        ]
-    ]
+        ],
+    ],
 ```
 
