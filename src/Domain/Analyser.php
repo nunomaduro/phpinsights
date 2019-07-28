@@ -367,15 +367,15 @@ final class Analyser
                     break;
 
                 case \T_GLOBAL:
-                    $collector->incrementGlobalVariableAccesses();
+                    $collector->addGlobalVariableAccesses($tokens[$i][2], '"' .$tokens[$i][1] .'" keyword');
 
                     break;
 
                 case \T_VARIABLE:
                     if ($value === '$GLOBALS') {
-                        $collector->incrementGlobalVariableAccesses();
+                        $collector->addGlobalVariableAccesses($tokens[$i][2], $tokens[$i][1]);
                     } elseif (isset(array_flip($this->superGlobals)[$value])) {
-                        $collector->incrementSuperGlobalVariableAccesses();
+                        $collector->addSuperGlobalVariableAccesses($tokens[$i][2], "super global {$tokens[$i][1]}");
                     }
 
                     break;
