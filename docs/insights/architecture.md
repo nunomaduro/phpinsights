@@ -252,7 +252,7 @@ This sniff order `use` statements (import of classes).
 
 ```php
 \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
-    'import_order' => null, // or [ 'class', 'const', 'function']
+    'import_order' => ['class', 'const', 'function'],
     'sort_algorithm' => 'alpha', // possible values ['alpha', 'length', 'none']
 ]
 ```
