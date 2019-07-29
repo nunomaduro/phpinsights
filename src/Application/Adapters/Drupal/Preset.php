@@ -19,9 +19,6 @@ final class Preset implements PresetContract
         return 'drupal';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function get(): array
     {
         $config = [
@@ -45,9 +42,6 @@ final class Preset implements PresetContract
         return ConfigResolver::mergeConfig(DefaultPreset::get(), $config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function shouldBeApplied(array $composer): bool
     {
         /** @var array<string, string> $requirements */
