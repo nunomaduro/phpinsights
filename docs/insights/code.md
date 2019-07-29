@@ -561,19 +561,19 @@ Visibility must be declared on all properties and methods. `abstract` and `final
 
 ## Ternary to Null Coalescing <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff enforce using null coalescing operator `??` where possible.
+This fixer enforce using null coalescing operator `??` where possible.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer`
 
 ## Combine nested dirname <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff replace multiple nested calls of dirname by only one call with second `$level` parameter. 
+This fixer replace multiple nested calls of dirname by only one call with second `$level` parameter. 
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\CombineNestedDirnameFixer`
 
 ## Declare Equal normalize <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
-This sniff normalize space around equal sign in declare section. 
+This fixer normalize space around equal sign in declare section. 
 
 **Insight Class**: `PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer`
 
@@ -589,25 +589,25 @@ This sniff normalize space around equal sign in declare section.
 
 ## Explicit string variable <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff converts implicit variables into explicit ones in double-quoted strings or heredoc syntax.
+This fixer converts implicit variables into explicit ones in double-quoted strings or heredoc syntax.
 
 **Insight Class**: `PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer`
 
 ## New with braces <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff assert all instances created with new keyword must be followed by braces.
+This fixer assert all instances created with new keyword must be followed by braces.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\NewWithBracesFixer`
 
 ## No alternative syntax <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff replace control structure alternative syntax to use braces.
+This fixer replace control structure alternative syntax to use braces.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoAlternativeSyntaxFixer`
 
 ## No mixed echo print <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
-This sniff enforce either language construct print or echo should be used.
+This fixer enforce either language construct print or echo should be used.
 
 **Insight Class**: `PhpCsFixer\Fixer\Alias\NoMixedEchoPrintFixer`
 
@@ -629,19 +629,19 @@ Operator `=>` should not be surrounded by multi-line whitespaces.
 
 ## No short bool cast <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff assert short cast bool using double exclamation mark should not be used
+This fixer assert short cast bool using double exclamation mark should not be used
 
 **Insight Class**: `PhpCsFixer\Fixer\CastNotation\NoShortBoolCastFixer`
 
 ## No superfluous Elseif <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff replaces superfluous elseif with if.
+This fixer replaces superfluous elseif with if.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoSuperfluousElseifFixer`
 
 ## No unneeded control parentheses <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
-This sniff removes unneeded parentheses around control statements.
+This fixer removes unneeded parentheses around control statements.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer`
 
@@ -665,7 +665,7 @@ This sniff removes unneeded parentheses around control statements.
 
 ## No useless Else <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff assert there should not be useless `else` cases.
+This fixer assert there should not be useless `else` cases.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer`
 
@@ -689,7 +689,7 @@ Cast `(boolean)` and `(integer)` should be written as `(bool)` and `(int)`, `(do
 
 ## Ternary operator spaces <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff standardize spaces around ternary operator.
+This fixer standardize spaces around ternary operator.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer`
 
@@ -730,7 +730,7 @@ Docblocks should have the same indentation as the documented subject.
 
 ## Phpdoc inline tag <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
 
-This sniff fix PHPDoc inline tags, make `@inheritdoc` always inline.
+This fixer fix PHPDoc inline tags, make `@inheritdoc` always inline.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagFixer`
 

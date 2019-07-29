@@ -266,7 +266,7 @@ There must be one `use` keyword per declaration.
 
 ## Protected to private <Badge text="^1.8"/> <Badge text="Architecture\Functions" type="warn"/>
 
-This sniff converts `protected` variables and methods to `private` where possible.
+This fixer converts `protected` variables and methods to `private` where possible.
 
 **Insight Class**: `PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer`
 
@@ -293,7 +293,7 @@ When doing so, the first item in the list must be on the next line, and there mu
 
 ## Void return <Badge text="^1.8"/> <Badge text="Architecture\Functions" type="warn"/>
 
-This sniff add `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
+This fixer add `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer`
 

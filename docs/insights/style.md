@@ -422,7 +422,7 @@ This sniff verifies that classes are instantiated with parentheses.
 
 ## No trailing comma in singleline array <Badge text="^1.8"/> <Badge text="Style" type="warn"/>
 
-This sniff remove trailing commas in list function calls.
+This fixer remove trailing commas in list function calls.
 
 **Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer`
 
@@ -553,7 +553,7 @@ A case should be followed by a colon and not a semicolon.
 
 ## Switch case space <Badge text="^1.8"/> <Badge text="Style" type="warn"/>
 
-This sniff removes extra spaces between colon and case value.
+This fixer removes extra spaces between colon and case value.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\SwitchCaseSpaceFixer`
 
@@ -575,7 +575,7 @@ Spaces should be properly placed in a function declaration.
 
 ## Function typehint space <Badge text="^1.8"/> <Badge text="Style" type="warn"/>
 
-This sniff add missing space between function's argument and its typehint.
+This fixer add missing space between function's argument and its typehint.
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer`
 
@@ -599,7 +599,7 @@ Binary operators should be surrounded by space as configured.
 
 ## Standardize not equals <Badge text="^1.8"/> <Badge text="Style" type="warn"/>
 
-This sniff replace all `<>` with `!=`.
+This fixer replace all `<>` with `!=`.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer`
 
@@ -633,7 +633,7 @@ Single-line whitespace before closing semicolon are prohibited.
 
 ## Single quote <Badge text="^1.8"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-This sniff converts double quotes to single quotes for simple strings.
+This fixer converts double quotes to single quotes for simple strings.
 
 **Insight Class**: `PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer`
 
@@ -656,7 +656,7 @@ Method chaining with different levels of indentation is not supported.
 
 ## No extra blank lines <Badge text="^1.8"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-This sniff removes extra blank lines and/or blank lines following configuration.
+This fixer removes extra blank lines and/or blank lines following configuration.
 
 **Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer`
 
@@ -695,13 +695,13 @@ There must not be a space before the closing parenthesis.
 
 ## No trailing whitespace <Badge text="^1.8"/> <Badge text="Style" type="warn"/>
 
-This sniff removes trailing whitespace at the end of non-blank lines.
+This fixer removes trailing whitespace at the end of non-blank lines.
 
 **Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer`
 
 ## No whitespace in blank line <Badge text="^1.8"/> <Badge text="Style" type="warn"/>
 
-This sniff removes trailing whitespace at the end of blank lines.
+This fixer removes trailing whitespace at the end of blank lines.
 
 **Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer`
 
