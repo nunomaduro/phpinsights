@@ -76,7 +76,7 @@ You could also simplify the namespace with `use My\Insight\Namespace;`
 :::
 
 ::: tip
-Although `PHPInsights` has it's own insights, it can handle Sniff from [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) and Fixer from [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer/).
+Although `PHPInsights` has it's own insights, it can handle Sniffs from [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) and Fixers from [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer/).
 So you can add every sniff or fixers that implements `PHP_CodeSniffer\Sniffs\Sniff` or `PhpCsFixer\Fixer\FixerInterface`.
 :::
 

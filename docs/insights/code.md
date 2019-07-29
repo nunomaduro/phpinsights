@@ -561,7 +561,7 @@ Visibility must be declared on all properties and methods. `abstract` and `final
 
 ## Ternary to Null Coalescing <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff enforce use null coalescing operator `??` where possible.
+This sniff enforce using null coalescing operator `??` where possible.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer`
 

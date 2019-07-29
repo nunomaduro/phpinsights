@@ -243,7 +243,7 @@ There must not be more than one property or constant declared per statement.
 
 ## Ordered imports <Badge text="^1.8"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
-This sniff order `use` statements.
+This sniff order `use` statements (import of classes).
 
 **Insight Class**: `PhpCsFixer\Fixer\Import\OrderedImportsFixer`
 
@@ -260,7 +260,7 @@ This sniff order `use` statements.
 
 ## Single import pert statement <Badge text="^1.8"/> <Badge text="Architecture\Classes" type="warn"/>
 
-There must be one use keyword per declaration.
+There must be one `use` keyword per declaration.
 
 **Insight Class**: `PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer`
 
@@ -293,7 +293,7 @@ When doing so, the first item in the list must be on the next line, and there mu
 
 ## Void return <Badge text="^1.8"/> <Badge text="Architecture\Functions" type="warn"/>
 
-This sniff add void return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
+This sniff add `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer`
 
