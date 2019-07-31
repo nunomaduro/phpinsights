@@ -3,10 +3,12 @@
     "description": "Instant PHP quality checks from your console.",
     "keywords": ["php", "insights", "console", "quality", "source", "code"],
     "license": "MIT",
-    "authors": [{
-        "name": "Nuno Maduro",
-        "email": "enunomaduro@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "Nuno Maduro",
+            "email": "enunomaduro@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "ext-iconv": "*",
