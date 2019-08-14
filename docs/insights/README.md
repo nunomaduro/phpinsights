@@ -2,11 +2,11 @@
 
 The default configuration attached with `PHP Insights` is opiniated and may be not convenient for you.
 
-Here you will learn how to *pimp* your PHPInsights configuration.
+Here you will learn how to configure PHPInsights for your project. 
 
-Before continue, please create a `phpinsights.php` file by reading the [configuration docs](/configuration.md).
+Before continuing, please create a `phpinsights.php` file by reading the [configuration docs](/configuration.md).
 
-You should have the following structure :
+You should have the following structure:
 
 ```php
 <?php
@@ -36,17 +36,17 @@ return [
 
 ## Exclude folder or files
 
-By default, `phpinsights` will analyse all your php files into your project directory, excepts folders `bower_components`, `node_modules`, `vendor`.
+By default, `phpinsights` will analyse all your php files in your project directory, except folders `bower_components`, `node_modules` and `vendor`.
 
 ::: tip For others preset
-In addition of theses folders :
+In addition to theses folders :
 - With **laravel** preset, `phpinsights` will exclude `config`, `storage`, `resources`, `bootstrap`, `nova`, `database`, `server.php`, `_ide_helper.php`, `_ide_helper_models.php`, `app/Providers/TelescopeServiceProvider.php` and `public`.
 - With **symfony** preset, `phpinsights` will exclude `var`, `translations`, `config`, and `public`.
 - With **magento2** preset, `phpinsights` will exclude `bin`, `dev`, `generated`, `lib`, `phpserver`, `pub`, `setup`, `update`, `var`, `app/autoload.php`, `app/bootstrap.php`, `app/functions.php` and `index.php`.
 - With **drupal** preset, `phpinsights` will exclude `core`, `modules/contrib`, `sites`, `profiles/contrib`, and `themes/contrib`.
 :::
 
-In your `phpinsights.php` file, you can add in `exclude` key everything you want to exclude.
+In your `phpinsights.php` file, you can add to the `exclude` key everything you want to exclude.
 
 For example:
 
@@ -60,7 +60,7 @@ For example:
 
 ## Add Insights
 
-If you create an Insight, or an Insight is not enabled, you have to do it in the `add` section.
+If you create an Insight, or an Insight is not enabled, you can enable it in the `add` section.
 
 For example, if you want to enable "Fully Qualified ClassName In Annotation":
 
@@ -77,7 +77,7 @@ You could also simplify the namespace with `use My\Insight\Namespace;`
 
 ## Remove Insights
 
-If there is an insight that go against your standards, you can add it in the `remove` section.
+If there is an insight that goes against your standards, you can add it in the `remove` section.
 
 For example, if you don't like adding a space after not (`! $myVariable`):
 ```php
@@ -87,7 +87,7 @@ For example, if you don't like adding a space after not (`! $myVariable`):
 ```
 
 ::: tip
-To know the className of an Insights, launch `phpinsights` with `-v` option (verbose)
+To know the className of an Insight, launch `phpinsights` with `-v` option (verbose)
 :::
 
 ## Configure Insights
@@ -113,9 +113,9 @@ For example, to remove "Unused Parameters" Insight only for some file:
         \SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class => [
             'exclude' => [
                 'src/Path/To/My/File.php',
-                'src/Path/To/Other/File.php,
+                'src/Path/To/Other/File.php',
             ],
-        ]
-    ]
+        ],
+    ],
 ```
 

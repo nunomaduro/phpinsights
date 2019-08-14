@@ -20,9 +20,9 @@
         "sensiolabs/security-checker": "^6.0",
         "symfony/console": "^4.2",
         "symfony/finder": "^4.2",
-        "symplify/coding-standard": "^6.0",
-        "symplify/easy-coding-standard": "^6.0",
-        "symplify/package-builder": "^6.0"
+        "symplify/coding-standard": "^6.0.4",
+        "symplify/easy-coding-standard": "^6.0.4",
+        "symplify/package-builder": "^6.0.4"
     },
     "require-dev": {
         "illuminate/console": "^5.8",
@@ -62,6 +62,8 @@
         "bin/phpinsights"
     ],
     "scripts": {
+        "website:copy-changelog": "@php -r \"copy('CHANGELOG.md', 'docs/changelog.md');\"",
+        "website:copy-logo": "@php -r \"copy('art/logo_mixed.gif', 'docs/.vuepress/public/logo.gif');\"",
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
@@ -71,9 +73,19 @@
             "@ecs:test",
             "@phpunit:test",
             "@insights"
+        ],
+        "post-install-cmd": [
+            "@website:copy-changelog",
+            "@website:copy-logo"
+        ],
+        "post-update-cmd": [
+            "@website:copy-changelog",
+            "@website:copy-logo"
         ]
     },
     "scripts-descriptions": {
+        "website:copy-changelog": "Copy package changelog to the website",
+        "website:copy-logo": "Copy logo from art directory to the website",
         "ecs:test": "Run the ecs tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",

@@ -8,17 +8,60 @@ use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use Symfony\Component\Finder\Finder;
 use Tests\TestCase;
 
-/**
- * This test class tests if the local file repository works as expected.
- */
 final class LocalFilesRepositoryTest extends TestCase
 {
-    public function testCanIgnoreBladeFiles() : void
+    /**
+     * @var string
+     */
+    private $base = __DIR__ . '/../../Fixtures/Tree';
+
+    /**
+     * @dataProvider provider
+     * @param int $expected
+     * @param array<string> $exclude
+     */
+    public function testItExcludesFilesGivenAPath(int $expected, array $exclude): void
+    {
+        $repository = new LocalFilesRepository(Finder::create());
+
+        $files = $repository->within($this->base, $exclude)->getFiles();
+
+        self::assertCount($expected, $files);
+    }
+
+    /**
+     * @return array<int, array<int, array<int, string>|int>>
+     */
+    public function provider(): array
+    {
+        return [
+            [3, ['FolderA/ClassA.php']],
+            [4, []],
+            [2, ['ClassA.php']],
+            [2, ['FolderA']],
+            [1, ['FolderA', 'FolderB/ClassB.php']],
+            [3, ['FolderA/SubFolderA']],
+            [3, ['FolderA/SubFolderA/ClassC.php']],
+            [2, ['/(\w).*(A.php)$/']],
+            [2, ['/((\w).*)?(FolderA\/)(\w).*/']]
+        ];
+    }
+
+    public function testDefaultDirectory(): void
     {
         $finder = new Finder();
 
         $repository = new LocalFilesRepository($finder);
-        $repository->within( __DIR__.'/Fixtures/FolderWithBladeFile');
+
+        self::assertSame((string) getcwd(), $repository->getDefaultDirectory());
+    }
+
+    public function testCanIgnoreBladeFiles(): void
+    {
+        $finder = new Finder();
+
+        $repository = new LocalFilesRepository($finder);
+        $repository->within(__DIR__.'/Fixtures/FolderWithBladeFile');
 
         $files = iterator_to_array($repository->getFiles());
 

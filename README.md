@@ -1,7 +1,6 @@
 <p align="center">
-
-  <img alt="PHP Insights" src="https://raw.githubusercontent.com/nunomaduro/phpinsights/master/docs/banner.png" >
-
+  <img src="https://raw.githubusercontent.com/nunomaduro/phpinsights/master/art/logo.gif" width="334" alt="PHP Insights">
+  <img src="https://raw.githubusercontent.com/nunomaduro/phpinsights/master/art/preview.png" width="882" alt="PHP Insights Preview">
   <p align="center">
     <a href="https://travis-ci.org/nunomaduro/phpinsights"><img src="https://img.shields.io/travis/nunomaduro/phpinsights/master.svg" alt="Build Status"></a>
     <a href="https://packagist.org/packages/nunomaduro/phpinsights"><img src="https://poser.pugx.org/nunomaduro/phpinsights/d/total.svg" alt="Total Downloads"></a>
@@ -13,8 +12,8 @@
   </p>
 </p>
 
-**PHP Insights** was created by **[Nuno Maduro](https://github.com/nunomaduro)**, and is maintained by **[Jibé Barth](https://github.com/Jibbarth)**, **[Nuno Maduro](https://github.com/nunomaduro)**, **[Oliver Nybroe](https://github.com/olivernybroe)**  and is the perfect starting point to analyze the code quality of your PHP projects.
-Carefully crafted to simplify the analysis of your code directly from your terminal.
+**PHP Insights** was carefully crafted to simplify the analysis of your code directly from your terminal, and is the perfect starting point to analyze the code quality of your PHP projects.
+It was created by **[Nuno Maduro](https://github.com/nunomaduro)**, and currently maintained by **[Jibé Barth](https://github.com/Jibbarth)**, **[Nuno Maduro](https://github.com/nunomaduro)**, **[Oliver Nybroe](https://github.com/olivernybroe)**, and **[Caneco](https://github.com/caneco)**.
 
 ## 🚀 Quick start
 
