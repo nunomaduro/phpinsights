@@ -63,6 +63,13 @@ final class AnalyseDefinition
                 InputOption::VALUE_NONE,
                 'Disable Security issues check to not throw error if vulnerability is found'
             ),
+            new InputOption(
+              'format',
+              null,
+              InputOption::VALUE_REQUIRED,
+                'Format to output the result in [console, json]',
+                "console"
+            ),
         ];
     }
 }

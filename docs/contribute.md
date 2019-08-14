@@ -2,10 +2,7 @@
 
 The project is under development. As such, any help is welcome!
 
-1. [Create a new insight from scratch](#create-a-new-insight)
-2. [Add a new insight from PHP CS Sniff](#add-a-new-insight-from-php-cs-sniff)
-3. [Create or improve create a preset for your favorite framework](#create-or-improve-create-a-preset-for-your-favorite-framework)
-4. [Create the test suite](#create-the-test-suite)
+[[TOC]]
 
 ## Create a new `Insight`
 
@@ -129,3 +126,10 @@ final class Preset implements PresetContract
     }
 }
 ```
+
+## Create a new `Formatter`
+
+The package has support for formatting the result. 
+All formats implements the contract `src/Application/Console/Contracts/Formatter`.
+
+You are welcome to contribute with new formats or improve on the ones we already have.

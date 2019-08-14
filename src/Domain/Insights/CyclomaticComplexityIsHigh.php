@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 
 final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 {
@@ -47,8 +48,10 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 
         $classesComplexity = array_reverse($classesComplexity);
 
-        return array_map(static function ($class, $complexity) {
-            return "$class: $complexity cyclomatic complexity";
+        return array_map(static function ($class, $complexity): Details {
+            return Details::make()
+                ->setFile($class)
+                ->setMessage("$complexity cyclomatic complexity");
         }, array_keys($classesComplexity), $classesComplexity);
     }
 

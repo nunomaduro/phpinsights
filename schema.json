@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "readOnly": true,
+    "title": "The JSON format for phpinsights",
+    "required": [
+        "summary",
+        "Code",
+        "Complexity",
+        "Architecture",
+        "Style",
+        "Security"
+    ],
+    "definitions": {
+        "percentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+        },
+        "insight": {
+            "type": "object",
+            "required": [
+                "title",
+                "insightClass"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "insightClass": {
+                    "type": "string"
+                },
+                "file": {
+                    "type": "string"
+                },
+                "line": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "properties": {
+        "summary": {
+            "$id": "#/properties/summary",
+            "type": "object",
+            "title": "The Summary Schema",
+            "properties": {
+                "code": {
+                    "$ref": "#/definitions/percentage"
+                },
+                "complexity": {
+                    "$ref": "#/definitions/percentage"
+                },
+                "architecture": {
+                    "$ref": "#/definitions/percentage"
+                },
+                "style": {
+                    "$ref": "#/definitions/percentage"
+                },
+                "security issues": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "Code": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/insight"
+            }
+        },
+        "Complexity": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/insight"
+            }
+        },
+        "Architecture": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/insight"
+            }
+        },
+        "Style": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/insight"
+            }
+        },
+        "Security": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/insight"
+            }
+        }
+    }
+}
