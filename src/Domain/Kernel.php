@@ -18,7 +18,7 @@ final class Kernel
     /**
      * The app version.
      */
-    public const VERSION = 'v1.7.0';
+    public const VERSION = 'v1.8.0';
 
     /**
      * Bootstraps the usage of the package.
