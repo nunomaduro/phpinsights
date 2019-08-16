@@ -10,7 +10,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff;
@@ -40,7 +39,7 @@ final class Comments implements HasValue, HasPercentage, HasInsights
     public function getInsights(): array
     {
         return [
-            EmptyCommentSniff::class,
+            // EmptyCommentSniff::class,
             // FullyQualifiedClassNameInAnnotationSniff::class,
             NullableTypeForNullDefaultValueSniff::class,
             FixmeSniff::class,
