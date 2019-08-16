@@ -29,7 +29,7 @@ final class LocalFilesRepository implements FilesRepository
             ->name(['*.php',])
             ->exclude(['vendor', 'tests', 'Tests', 'test', 'Test',])
             ->notName(['*.blade.php',])
-            // ->ignoreVCSIgnored(true)
+            ->ignoreVCSIgnored(true)
             ->ignoreUnreadableDirs();
     }
 

@@ -19,7 +19,7 @@
         "phploc/phploc": "^5.0",
         "sensiolabs/security-checker": "^6.0",
         "symfony/console": "^4.2",
-        "symfony/finder": "^4.2",
+        "symfony/finder": "^4.3",
         "symplify/coding-standard": "^6.0.4",
         "symplify/easy-coding-standard": "^6.0.4",
         "symplify/package-builder": "^6.0.4"
