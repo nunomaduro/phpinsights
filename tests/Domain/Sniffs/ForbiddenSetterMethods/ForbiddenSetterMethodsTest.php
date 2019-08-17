@@ -6,10 +6,6 @@ declare(strict_types=1);
 namespace Tests\Domain\Sniffs\ForbiddenSetterMethods;
 
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Files\LocalFile;
-use PHP_CodeSniffer\Ruleset;
-use ReflectionClass;
 use Tests\TestCase;
 
 final class ForbiddenSetterMethodsTest extends TestCase
