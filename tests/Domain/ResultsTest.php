@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
-use NunoMaduro\PhpInsights\Domain\Exceptions\InsightClassNotFound;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Results;
 use PHPUnit\Framework\TestCase;
