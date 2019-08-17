@@ -24,6 +24,7 @@ parameters:
         - '#Access to an undefined property PHP_CodeSniffer\\Config::\$standards.#'
         - '#Access to an undefined property PHP_CodeSniffer\\Sniffs\\Sniff::\$#'
         - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Json has an unused parameter \$input#'
+        - '#In method "NunoMaduro\\PhpInsights\\Domain\\File::process", caught "Throwable" must be rethrown#'
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
