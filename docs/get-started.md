@@ -28,6 +28,28 @@ Then, use the `insights` Artisan command:
 php artisan insights
 ```
 
+## Within Lumen
+
+Because we cannot use Artisan's publish command within a Lumen project you must manually copy the config file into your project:
+
+```bash
+cp vendor/nunomaduro/phpinsights/stubs/laravel.php config/insights.php
+```
+
+Then register the `phpinsights` provider and load the configuration into the application within your `bootstrap/app.php` file:
+
+```php
+$app->register(\NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider::class);
+$app->configure('insights');
+```
+
+And setup is done, so you can now run `phpinsights` with the following command:
+
+```bash
+php artisan insights
+```
+
+
 ## With Docker
 
 You can also use `phpinsights` via Docker:
