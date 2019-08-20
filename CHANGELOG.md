@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.9.0]
+### Added
+- Better support to Laravel Lumen ([#247](https://github.com/nunomaduro/phpinsights/pull/247))
+
+### Fixed
+- Issue when internal insight code is an integer ([6c6650f](https://github.com/nunomaduro/phpinsights/commit/6c6650fec1101222e2a63e2736aaf07cd0b152be))
+
 ## [v1.8.1]
 ### Fixed
 - Throwable sniffs ([#249](https://github.com/nunomaduro/phpinsights/pull/249))
