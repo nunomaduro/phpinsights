@@ -142,7 +142,7 @@ final class File extends BaseFile
     {
         $this->appliedCheckersCollector->addFileInfoAndChecker(
             $this->fileInfo,
-            $this->resolveFullyQualifiedCode($code)
+            $this->resolveFullyQualifiedCode((string) $code)
         );
 
         return $this->addError($error, $stackPtr, $code, $data, $severity);
@@ -188,7 +188,7 @@ final class File extends BaseFile
             $this->fileInfo,
             $line,
             $message,
-            $this->resolveFullyQualifiedCode($sniffClassOrCode)
+            $this->resolveFullyQualifiedCode((string) $sniffClassOrCode)
         );
 
         return true;
