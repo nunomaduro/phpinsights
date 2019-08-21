@@ -15,11 +15,6 @@ use Symfony\Component\Finder\SplFileInfo;
 final class SniffFileProcessor implements FileProcessor
 {
     /**
-     * @var array<\PHP_CodeSniffer\Sniffs\Sniff|\PHPStan\Rules\Rule>
-     */
-    private $checkers = [];
-
-    /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
     private $tokenListeners = [];
@@ -41,8 +36,6 @@ final class SniffFileProcessor implements FileProcessor
 
     public function addSniff(Sniff $sniff): void
     {
-        $this->checkers[] = $sniff;
-
         foreach ($sniff->register() as $token) {
             $this->tokenListeners[$token][] = $sniff;
         }
