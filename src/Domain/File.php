@@ -63,7 +63,11 @@ final class File extends BaseFile
             foreach ($this->tokenListeners[$token['code']] as $sniff) {
                 $this->activeSniff = $sniff;
 
-                $sniff->process($this, $stackPtr);
+                try {
+                    $sniff->process($this, $stackPtr);
+                } catch (\Throwable $e) {
+                    $this->addError('Unparsable php code: syntax error or wrong phpdocs.', $stackPtr, $token['code']);
+                }
             }
         }
 
