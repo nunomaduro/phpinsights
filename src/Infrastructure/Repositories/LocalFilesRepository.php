@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\Finder;
+use Traversable;
 
 /**
  * @internal
@@ -44,7 +45,7 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * {@inheritdoc}
      */
-    public function getFiles(): iterable
+    public function getFiles(): Traversable
     {
         return $this->finder->getIterator();
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Contracts\Repositories;
 
+use Traversable;
+
 /**
  * @internal
  */
@@ -19,9 +21,9 @@ interface FilesRepository
     /**
      * Get the files.
      *
-     * @return iterable<\Symfony\Component\Finder\SplFileInfo>|\Traversable
+     * @return Traversable<\Symfony\Component\Finder\SplFileInfo>
      */
-    public function getFiles(): iterable;
+    public function getFiles(): Traversable;
 
     /**
      * Sets the current files directories.
