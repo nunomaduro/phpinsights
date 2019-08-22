@@ -64,7 +64,7 @@ final class File extends BaseFile
                 $this->activeSniff = $sniff;
 
                 try {
-                    $sniff->process($this, $stackPtr);
+                    @$sniff->process($this, $stackPtr);
                 } catch (\Throwable $e) {
                     $this->addError('Unparsable php code: syntax error or wrong phpdocs.', $stackPtr, $token['code']);
                 }
