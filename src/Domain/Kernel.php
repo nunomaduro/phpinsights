@@ -40,6 +40,10 @@ final class Kernel
         if (! defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', false);
         }
+
+        if (! defined('PHP_CODESNIFFER_VERBOSITY')) {
+            define('PHP_CODESNIFFER_VERBOSITY', 0);
+        }
     }
 
     /**

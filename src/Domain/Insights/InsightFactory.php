@@ -4,20 +4,12 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use NunoMaduro\PhpInsights\Domain\Container;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\EcsContainer;
-use NunoMaduro\PhpInsights\Domain\FileProcessor;
-use NunoMaduro\PhpInsights\Domain\Reflection;
-use NunoMaduro\PhpInsights\Domain\Sniffs\SniffDecorator;
+use NunoMaduro\PhpInsights\Domain\Runner;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
+use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication;
-use Symplify\EasyCodingStandard\Configuration\Configuration;
-use Symplify\EasyCodingStandard\Console\Style\EasyCodingStandardStyle;
-use Symplify\EasyCodingStandard\Error\Error;
-use Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector;
-use Symplify\EasyCodingStandard\Finder\SourceFinder;
 
 /**
  * @internal
@@ -40,9 +32,12 @@ final class InsightFactory
     private $insightsClasses;
 
     /**
-     * @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector|null
+     * @var array<SniffDecorator>
      */
-    private $sniffCollector;
+    private $sniffs;
+
+    /** @var bool */
+    private $ran = false;
 
     /**
      * Creates a new instance of Insight Factory
@@ -65,27 +60,30 @@ final class InsightFactory
      * @param array<string, array> $config
      * @param OutputInterface $consoleOutput
      *
-     * @return \NunoMaduro\PhpInsights\Domain\Insights\Sniff
+     * @return InsightContract
+     *
+     * @throws \Exception
      */
     public function makeFrom(
         string $errorClass,
         array $config,
         OutputInterface $consoleOutput
-    ): Sniff
+    ): InsightContract
     {
         switch (true) {
             case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                return new Sniff(
-                    $this->getSniffErrors(
-                        $this->getSniffCollector($config, $consoleOutput),
-                        $errorClass
-                    )
-                );
-                break;
+                $this->runInsightCollector($config, $consoleOutput);
 
+                /** @var SniffDecorator $sniff */
+                foreach ($this->sniffs as $sniff) {
+                    if ($sniff->getInsightClass() === $errorClass) {
+                        return $sniff;
+                    }
+                }
+
+                throw new RuntimeException("The sniff has been removed somehow. This shouldn't happen.");
             default:
-                throw new \RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
-                break;
+                throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
         }
     }
 
@@ -95,7 +93,7 @@ final class InsightFactory
      * @param array<string> $insights
      * @param array<string, array> $config
      *
-     * @return array<\PHP_CodeSniffer\Sniffs\Sniff>
+     * @return array<SniffDecorator>
      */
     public function sniffsFrom(array $insights, array $config): array
     {
@@ -110,7 +108,10 @@ final class InsightFactory
                     $sniff->{$property} = $value;
                 }
 
-                $sniffs[] = $sniff;
+                $sniffs[] = new SniffDecorator(
+                    $sniff,
+                    $this->dir
+                );
             }
         }
 
@@ -118,106 +119,30 @@ final class InsightFactory
     }
 
     /**
-     * Returns the Error with of the given $sniff, if any.
-     *
-     * @param \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $collector
-     * @param string $sniff
-     *
-     * @return array<\Symplify\EasyCodingStandard\Error\Error>
+     * @param array<string, mixed> $config
+     * @param \Symfony\Component\Console\Output\OutputInterface $consoleOutput
      */
-    private function getSniffErrors(ErrorAndDiffCollector $collector, string $sniff): array
-    {
-        $errors = [];
-
-        foreach ($collector->getErrors() as $errorsPerFile) {
-            foreach ($errorsPerFile as $error) {
-                if (strpos($error->getSourceClass(), $sniff) !== false) {
-                    $key = $this->getSniffKey($error);
-                    if (! array_key_exists($key, $errors)) {
-                        $errors[$key] = $error;
-                    }
-                }
-            }
-        }
-
-        return array_values($errors);
-    }
-
-    /**
-     * Gets a key from a Error.
-     *
-     * @param \Symplify\EasyCodingStandard\Error\Error $error
-     *
-     * @return string
-     */
-    private function getSniffKey(Error $error): string
-    {
-        return sprintf('%s||%s||%s||%s',
-            $error->getFileInfo()->getRealPath(),
-            $error->getSourceClass(),
-            $error->getLine(),
-            $error->getMessage()
-        );
-    }
-
-    /**
-     * @param array<string, array> $config
-     * @param OutputInterface $consoleOutput
-     *
-     * @return \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector
-     *
-     * @throws \Exception
-     */
-    private function getSniffCollector(
+    private function runInsightCollector(
         array $config,
         OutputInterface $consoleOutput
-    ): ErrorAndDiffCollector
+    ): void
     {
-        if ($this->sniffCollector !== null) {
-            return $this->sniffCollector;
+        if ($this->ran === true) {
+            return;
         }
 
-        $reflection = new Reflection($configuration = new Configuration());
-        $reflection->set('sources', [$this->dir])
-            ->set('shouldClearCache', true)
-            ->set('showProgressBar', true);
+        $runner = new Runner(
+            $consoleOutput,
+            $this->filesRepository
+        );
 
-        $ecsContainer = EcsContainer::make();
+        // Add php cs sniffs
+        $sniffs = $this->sniffsFrom($this->insightsClasses, $config);
+        $this->sniffs = $sniffs;
+        $runner->addSniffs($sniffs);
 
-        $ecsContainer->set(Configuration::class, $configuration);
-        /** @var EasyCodingStandardStyle $style */
-        $style = $ecsContainer->get(EasyCodingStandardStyle::class);
-        (new Reflection($style))->set('output', $consoleOutput);
-
-        /** @var \Symplify\EasyCodingStandard\Finder\SourceFinder $sourceFinder */
-        $sourceFinder = $ecsContainer->get(SourceFinder::class);
-        $sourceFinder->setCustomSourceProvider($this->filesRepository);
-
-        $sniffer = Container::make()->get(FileProcessor::class);
-        foreach ($this->sniffsFrom($this->insightsClasses, $config) as $sniff) {
-            $sniffer->addSniff(new SniffDecorator($sniff, $this->dir));
-        }
-
-        /** @var \Symplify\EasyCodingStandard\Application\EasyCodingStandardApplication $application */
-        $application = $ecsContainer->get(EasyCodingStandardApplication::class);
-        $reflection = new Reflection($application);
-
-        /** @var \Symplify\EasyCodingStandard\Contract\Application\FileProcessorCollectorInterface $fileProcessorCollector */
-        $fileProcessorCollector = $reflection->set('fileProcessors', [])
-            ->get('singleFileProcessor');
-
-        $fileProcessorCollector->addFileProcessor($sniffer);
-        $application->addFileProcessor($sniffer);
-
-        $application->run();
-
-        /** @var \Symplify\EasyCodingStandard\Error\ErrorAndDiffCollector $errorAndDiffCollector */
-        $errorAndDiffCollector = $ecsContainer->get(ErrorAndDiffCollector::class);
-
-        // Destroy the container, so we insights doesn't fail on consecutive
-        // runs. This is needed for tests also.
-        $ecsContainer->reset();
-
-        return $this->sniffCollector = $errorAndDiffCollector;
+        // Run it.
+        $runner->run();
+        $this->ran = true;
     }
 }

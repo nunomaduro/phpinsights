@@ -27,9 +27,6 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
         return 'Security issues found on dependencies';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDetails(): array
     {
         $issues = json_decode((string) $this->getResult(), true);

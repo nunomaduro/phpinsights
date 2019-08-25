@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
@@ -49,10 +50,12 @@ return [
         LineLengthSniff::class => [
             'lineLimit' => 80,
             'absoluteLineLimit' => 120,
+            'ignoreComments' => true,
         ],
         DisallowMixedTypeHintSniff::class => [
             'exclude' => [
                 'src/Domain/Reflection.php',
+                'src/Domain/Details.php',
             ],
         ],
         ForbiddenSetterSniff::class => [
@@ -67,6 +70,11 @@ return [
                 'src/Domain/File.php',
             ],
         ],
+        ForbiddenDefineGlobalConstants::class => [
+            'ignore' => [
+                'PHP_CODESNIFFER_VERBOSITY',
+                'PHP_CODESNIFFER_CBF',
+            ],
+        ],
     ],
-
 ];

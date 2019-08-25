@@ -131,11 +131,11 @@ EOD;
 
         $lines = [];
         foreach ([
-                     Comments::class,
-                     Classes::class,
-                     Functions::class,
-                     Globally::class,
-                 ] as $metric) {
+            Comments::class,
+            Classes::class,
+            Functions::class,
+            Globally::class,
+        ] as $metric) {
             $name = explode('\\', $metric);
             $lines[end($name)] = (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -290,12 +290,12 @@ EOD;
 
                 $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
 
-                if (! $insight instanceof HasDetails && ! $this->style->output->isVerbose()) {
+                if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
                     continue;
                 }
                 $issue .= ':';
-                if ($this->style->output->isVerbose()) {
+                if ($this->style->getOutput()->isVerbose()) {
                     $issue .= " ({$insight->getInsightClass()})";
                 }
 
@@ -307,7 +307,7 @@ EOD;
                 $details = $insight->getDetails();
                 $totalDetails = count($details);
 
-                if (! $this->style->output->isVerbose()) {
+                if (! $this->style->getOutput()->isVerbose()) {
                     $details = array_slice($details, -3, 3, true);
                 }
 
@@ -333,7 +333,7 @@ EOD;
                     $issue .= "\n  $detailString";
                 }
 
-                if (! $this->style->output->isVerbose() && $totalDetails > 3) {
+                if (! $this->style->getOutput()->isVerbose() && $totalDetails > 3) {
                     $totalRemainDetails = $totalDetails - 3;
 
                     $issue .= "\n  <fg=red>+{$totalRemainDetails} issues omitted</>";
