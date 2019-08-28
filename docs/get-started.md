@@ -81,6 +81,7 @@ For changing the output format you can add the `format` flag. The following form
 
 - console
 - json
+- html
 
 ```bash
 ./vendor/bin/phpinsights analyse --format=json
@@ -89,10 +90,11 @@ For changing the output format you can add the `format` flag. The following form
 ## Saving output to file
 
 You can pipe the result to a file or to anywhere you like. 
-A common use case is parsing the output formatted as json to a json file.
+A common use case is parsing the output formatted as json or html to a file.
 
 ```bash
 ./vendor/bin/phpinsights analyse --format=json > test.json
+./vendor/bin/phpinsights analyse --format=html > test.html
 ```
 
 When piping the result remember to add the no interaction flag `-n`, as the part where you need to interact is also getting piped. (the json format does not have any interaction)
