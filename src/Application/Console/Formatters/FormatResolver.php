@@ -20,6 +20,7 @@ final class FormatResolver
     private static $formatters = [
         'console' => Console::class,
         'json' => Json::class,
+        'html' => Html::class,
     ];
 
     public static function resolve(
