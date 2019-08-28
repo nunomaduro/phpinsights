@@ -104,8 +104,9 @@ For example, to increase the line length limits:
     ]
 ```
 
-You can also configure the `exclude` parameter on each insight, to disallow an
-insight on a specific file.
+You can also configure the `exclude` parameter on each sniff, to disallow a
+sniff on a specific file.
+This **only** works for sniffs and not for insights.
 
 For example, to remove "Unused Parameters" Insight only for some file:
 ```php

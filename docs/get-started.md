@@ -123,3 +123,7 @@ composer require --dev bamarni/composer-bin-plugin
 composer bin phpinsights require nunomaduro/phpinsights
 ./vendor/bin/phpinsights
 ```
+
+## PHPStorm: link files from console
+
+If you want to have a clickable link in your PHPStorm terminal to the file with an issue you can use [awesome console plugin](https://plugins.jetbrains.com/plugin/7677-awesome-console). This will make all file links clickable and even respects the line.
