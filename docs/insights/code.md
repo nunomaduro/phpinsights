@@ -540,7 +540,7 @@ This sniff detects globals accesses.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals`
 
-## Visibility Required <Badge text="^1.8"/> <Badge text="Code\Classes" type="warn"/> <Badge text="configurable"/>
+## Visibility Required <Badge text="^1.10"/> <Badge text="Code\Classes" type="warn"/> <Badge text="configurable"/>
 
 Visibility must be declared on all properties and methods. `abstract` and `final` must be declared before the visibility. `static` must be declared after the visibility.
 
@@ -559,19 +559,19 @@ Visibility must be declared on all properties and methods. `abstract` and `final
 ```
 </details>
 
-## Ternary to Null Coalescing <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Ternary to Null Coalescing <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer enforce using null coalescing operator `??` where possible.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer`
 
-## Combine nested dirname <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Combine nested dirname <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer replace multiple nested calls of dirname by only one call with second `$level` parameter. 
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\CombineNestedDirnameFixer`
 
-## Declare Equal normalize <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+## Declare Equal normalize <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
 This fixer normalize space around equal sign in declare section. 
 
@@ -587,25 +587,25 @@ This fixer normalize space around equal sign in declare section.
 ```
 </details>
 
-## Explicit string variable <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Explicit string variable <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer converts implicit variables into explicit ones in double-quoted strings or heredoc syntax.
 
 **Insight Class**: `PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer`
 
-## New with braces <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## New with braces <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer assert all instances created with new keyword must be followed by braces.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\NewWithBracesFixer`
 
-## No alternative syntax <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## No alternative syntax <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer replace control structure alternative syntax to use braces.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoAlternativeSyntaxFixer`
 
-## No mixed echo print <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+## No mixed echo print <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
 This fixer enforce either language construct print or echo should be used.
 
@@ -621,25 +621,25 @@ This fixer enforce either language construct print or echo should be used.
 ```
 </details>
 
-## No multiline whitespace around double arrow <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## No multiline whitespace around double arrow <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 Operator `=>` should not be surrounded by multi-line whitespaces.
 
 **Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer`
 
-## No short bool cast <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## No short bool cast <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer assert short cast bool using double exclamation mark should not be used
 
 **Insight Class**: `PhpCsFixer\Fixer\CastNotation\NoShortBoolCastFixer`
 
-## No superfluous Elseif <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## No superfluous Elseif <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer replaces superfluous elseif with if.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoSuperfluousElseifFixer`
 
-## No unneeded control parentheses <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+## No unneeded control parentheses <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
 This fixer removes unneeded parentheses around control statements.
 
@@ -663,50 +663,50 @@ This fixer removes unneeded parentheses around control statements.
 ```
 </details>
 
-## No useless Else <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## No useless Else <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer assert there should not be useless `else` cases.
 
 **Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer`
 
-## Normalize index brace <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Normalize index brace <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 Array index should always be written by using square braces.
 
 **Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer`
 
-## Object operator without Whitespace <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Object operator without Whitespace <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 There should not be space before or after object `T_OBJECT_OPERATOR ->`.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer`
 
-## Short scalar cast <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Short scalar cast <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 Cast `(boolean)` and `(integer)` should be written as `(bool)` and `(int)`, `(double)` and `(real)` as `(float)`, `(binary)` as `(string)`.
 
 **Insight Class**: `PhpCsFixer\Fixer\CastNotation\ShortScalarCastFixer`
 
-## Ternary operator spaces <Badge text="^1.8"/> <Badge text="Code\Code" type="warn"/>
+## Ternary operator spaces <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
 
 This fixer standardize spaces around ternary operator.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer`
 
-## Multiline comment opening closing <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## Multiline comment opening closing <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 DocBlocks must start with two asterisks, multiline comments must start with a single asterisk, after the opening slash. 
 Both must end with a single asterisk before the closing slash.
 
 **Insight Class**: `PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer`
 
-## No empty comment <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## No empty comment <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 There should not be any empty comments.
 
 **Insight Class**: `PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer`
 
-## No break comment <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
+## No break comment <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
 
 There must be a comment when fall-through is intentional in a non-empty case body.
 
@@ -722,19 +722,19 @@ There must be a comment when fall-through is intentional in a non-empty case bod
 ```
 </details>
 
-## Phpdoc indent <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc indent <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 Docblocks should have the same indentation as the documented subject.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer`
 
-## Phpdoc inline tag <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc inline tag <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 This fixer fix PHPDoc inline tags, make `@inheritdoc` always inline.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagFixer`
 
-## Phpdoc scalar <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
+## Phpdoc scalar <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
 
 Scalar types should always be written in the same form. 
 `int` not `integer`, `bool` not `boolean`, `float` not `real` or `double`.
@@ -757,31 +757,31 @@ Scalar types should always be written in the same form.
 ```
 </details>
 
-## Phpdoc separation <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc separation <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 Annotations in PHPDoc should be grouped together so that annotations of the same type immediately follow each other, and annotations of a different type are separated by a single blank line.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer`
 
-## Phpdoc trim <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc trim <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 PHPDoc should start and end with content, excluding the very first and last line of the docblocks.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer`
 
-## Phpdoc var annotation correct order <Badge text="^1.8"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc var annotation correct order <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
 
 `@var` and `@type` annotations must have type and name in the correct order.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer`
 
-## No spaces after function name <Badge text="^1.8"/> <Badge text="Code\Functions" type="warn"/>
+## No spaces after function name <Badge text="^1.10"/> <Badge text="Code\Functions" type="warn"/>
 
 When making a method or function call, there must not be a space between the method or function name and the opening parenthesis.
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\NoSpacesAfterFunctionNameFixer`
 
-## Return assignment <Badge text="^1.8"/> <Badge text="Code\Functions" type="warn"/>
+## Return assignment <Badge text="^1.10"/> <Badge text="Code\Functions" type="warn"/>
 
 Local, dynamic and directly referenced variables should not be assigned and directly returned by a function or method.
 

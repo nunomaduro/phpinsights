@@ -190,7 +190,7 @@ This sniff reports use of superfluous prefix or suffix "Trait" for traits.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff`
 
-## Ordered class elements <Badge text="^1.8"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+## Ordered class elements <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
 This sniff orders the elements of classes/interfaces/traits.
 
@@ -222,7 +222,7 @@ This sniff orders the elements of classes/interfaces/traits.
 ```
 </details>
 
-## Single class element per statement <Badge text="^1.8"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+## Single class element per statement <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
 There must not be more than one property or constant declared per statement.
 
@@ -241,7 +241,7 @@ There must not be more than one property or constant declared per statement.
 ```
 </details>
 
-## Ordered imports <Badge text="^1.8"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+## Ordered imports <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
 This sniff order `use` statements (import of classes).
 
@@ -258,19 +258,19 @@ This sniff order `use` statements (import of classes).
 ```
 </details>
 
-## Single import pert statement <Badge text="^1.8"/> <Badge text="Architecture\Classes" type="warn"/>
+## Single import pert statement <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/>
 
 There must be one `use` keyword per declaration.
 
 **Insight Class**: `PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer`
 
-## Protected to private <Badge text="^1.8"/> <Badge text="Architecture\Functions" type="warn"/>
+## Protected to private <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/>
 
 This fixer converts `protected` variables and methods to `private` where possible.
 
 **Insight Class**: `PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer`
 
-## Method argument space <Badge text="^1.8"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
+## Method argument space <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
 
 In method arguments and method call, there must not be a space before each comma and there must be one space after each comma. 
 Argument lists may be split across multiple lines, where each subsequent line is indented once. 
@@ -291,7 +291,7 @@ When doing so, the first item in the list must be on the next line, and there mu
 ```
 </details>
 
-## Void return <Badge text="^1.8"/> <Badge text="Architecture\Functions" type="warn"/>
+## Void return <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/>
 
 This fixer add `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
 
