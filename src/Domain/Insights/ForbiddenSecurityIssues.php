@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InternetConnectionNotFound;
 use SensioLabs\Security\Result;
 use SensioLabs\Security\SecurityChecker;
@@ -26,9 +27,6 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
         return 'Security issues found on dependencies';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDetails(): array
     {
         $issues = json_decode((string) $this->getResult(), true);
@@ -41,7 +39,9 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
 
         foreach ($issues as $packageName => $package) {
             foreach ($package['advisories'] as $advisory) {
-                $details[] = "${packageName}@{$package['version']} {$advisory['title']} - {$advisory['link']}";
+                $details[] = Details::make()->setMessage(
+                    "$packageName@{$package['version']} {$advisory['title']} - {$advisory['link']}"
+                );
             }
         }
 

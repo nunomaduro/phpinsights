@@ -18,7 +18,7 @@ final class Kernel
     /**
      * The app version.
      */
-    public const VERSION = 'v1.7.0';
+    public const VERSION = 'v1.8.0';
 
     /**
      * Bootstraps the usage of the package.
@@ -39,6 +39,10 @@ final class Kernel
          */
         if (! defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', false);
+        }
+
+        if (! defined('PHP_CODESNIFFER_VERBOSITY')) {
+            define('PHP_CODESNIFFER_VERBOSITY', 0);
         }
     }
 

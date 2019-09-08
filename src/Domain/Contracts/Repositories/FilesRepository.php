@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Contracts\Repositories;
 
-use Symplify\EasyCodingStandard\Contract\Finder\CustomSourceProviderInterface;
+use Traversable;
 
 /**
  * @internal
  */
-interface FilesRepository extends CustomSourceProviderInterface
+interface FilesRepository
 {
     /**
      * Get the default repository.
@@ -21,9 +21,9 @@ interface FilesRepository extends CustomSourceProviderInterface
     /**
      * Get the files.
      *
-     * @return iterable<\Symfony\Component\Finder\SplFileInfo>
+     * @return Traversable<\Symfony\Component\Finder\SplFileInfo>
      */
-    public function getFiles(): iterable;
+    public function getFiles(): Traversable;
 
     /**
      * Sets the current files directories.

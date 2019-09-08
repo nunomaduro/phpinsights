@@ -28,6 +28,28 @@ Then, use the `insights` Artisan command:
 php artisan insights
 ```
 
+## Within Lumen
+
+Because we cannot use Artisan's publish command within a Lumen project you must manually copy the config file into your project:
+
+```bash
+cp vendor/nunomaduro/phpinsights/stubs/laravel.php config/insights.php
+```
+
+Then register the `phpinsights` provider and load the configuration into the application within your `bootstrap/app.php` file:
+
+```php
+$app->register(\NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider::class);
+$app->configure('insights');
+```
+
+And setup is done, so you can now run `phpinsights` with the following command:
+
+```bash
+php artisan insights
+```
+
+
 ## With Docker
 
 You can also use `phpinsights` via Docker:
@@ -52,6 +74,31 @@ In laravel, launch command as usual with your path:
 ```bash
 php artisan insights path/to/analyse
 ```
+
+## Formatting the output
+
+For changing the output format you can add the `format` flag. The following formats are supported:
+
+- console
+- json
+
+```bash
+./vendor/bin/phpinsights analyse --format=json
+```
+
+## Saving output to file
+
+You can pipe the result to a file or to anywhere you like. 
+A common use case is parsing the output formatted as json to a json file.
+
+```bash
+./vendor/bin/phpinsights analyse --format=json > test.json
+```
+
+When piping the result remember to add the no interaction flag `-n`, as the part where you need to interact is also getting piped. (the json format does not have any interaction)
+While piping data, if you want the progress bar to refresh itself instead of printing a new one, add the `--ansi` flag.
+
+
 
 ## Allowed memory size of X bytes exhausted
 

@@ -13,28 +13,30 @@
         "php": "^7.2",
         "ext-iconv": "*",
         "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-tokenizer": "*",
         "composer/composer": "^1.7",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
+        "psr/container": "^1.0",
         "sensiolabs/security-checker": "^6.0",
+        "slevomat/coding-standard": "^5.0",
+        "squizlabs/php_codesniffer": "^3.4",
         "symfony/console": "^4.2",
-        "symfony/finder": "^4.2",
-        "symplify/coding-standard": "^6.0.4",
-        "symplify/easy-coding-standard": "^6.0.4",
-        "symplify/package-builder": "^6.0.4"
+        "symfony/finder": "^4.2"
     },
     "require-dev": {
         "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
         "localheinz/phpstan-rules": "^0.10.0",
+        "mockery/mockery": "^1.0",
         "phpstan/phpstan-strict-rules": "^0.11",
-        "roave/no-floaters": "^1.1",
-        "phpstan/phpstan": "^0.11.5",
-        "symfony/var-dumper": "^4.2",
-        "thecodingmachine/phpstan-strict-rules": "^0.11.0",
         "phpunit/phpunit": "^8.0",
-        "mockery/mockery": "^1.0"
+        "roave/no-floaters": "^1.1",
+        "symfony/var-dumper": "^4.2",
+        "symplify/easy-coding-standard": "^6.0",
+        "thecodingmachine/phpstan-strict-rules": "^0.11.0"
     },
     "autoload-dev": {
         "psr-4": {
@@ -63,10 +65,11 @@
     ],
     "scripts": {
         "website:copy-changelog": "@php -r \"copy('CHANGELOG.md', 'docs/changelog.md');\"",
+        "website:copy-logo": "@php -r \"(is_dir('docs/.vuepress/public') || mkdir('docs/.vuepress/public')) && copy('art/logo_mixed.gif', 'docs/.vuepress/public/logo.gif');\"",
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
-        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=85.7 --min-architecture=76.2 --min-style=97.8",
+        "insights": "bin/phpinsights analyse --ansi -v --no-interaction --min-quality=90.0 --min-architecture=80.0 --min-style=97.8",
         "test": [
             "@phpstan:test",
             "@ecs:test",
@@ -74,14 +77,17 @@
             "@insights"
         ],
         "post-install-cmd": [
-            "@website:copy-changelog"
+            "@website:copy-changelog",
+            "@website:copy-logo"
         ],
         "post-update-cmd": [
-            "@website:copy-changelog"
+            "@website:copy-changelog",
+            "@website:copy-logo"
         ]
     },
     "scripts-descriptions": {
         "website:copy-changelog": "Copy package changelog to the website",
+        "website:copy-logo": "Copy logo from art directory to the website",
         "ecs:test": "Run the ecs tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",

@@ -36,7 +36,14 @@ final class ForbiddenGlobalsTest extends TestCase
 
         self::assertTrue($insight->hasIssue());
         self::assertCount(1, $insight->getDetails());
-        self::assertContains('FileWithGlobals.php:3: Usage of super global $_POST found; Usage of GLOBALS are discouraged consider not relying on global scope', $insight->getDetails());
+
+        $detail = $insight->getDetails()[0];
+
+        $message = $detail->getMessage();
+        self::assertEquals('Usage of super global $_POST found; Usage of GLOBALS are discouraged consider not relying on global scope', $message);
+
+        $file = $detail->getFile();
+        self::assertEquals('FileWithGlobals.php:3', $file);
     }
 
     public function testHasMultipleGlobalsUsage() : void
@@ -51,7 +58,12 @@ final class ForbiddenGlobalsTest extends TestCase
 
         self::assertTrue($insight->hasIssue());
         self::assertCount(3, $insight->getDetails());
-        self::assertContains('FileWithMultipleGlobals.php:3: Usage of "global" keyword found; Usage of GLOBALS are discouraged consider not relying on global scope', $insight->getDetails());
-        self::assertNotContains('FileWithGlobals.php:3: Usage of super global $_POST found; Usage of GLOBALS are discouraged consider not relying on global scope', $insight->getDetails());
+        $detail = $insight->getDetails()[0];
+
+        $message = $detail->getMessage();
+        self::assertEquals('Usage of "global" keyword found; Usage of GLOBALS are discouraged consider not relying on global scope', $message);
+
+        $file = $detail->getFile();
+        self::assertEquals('FileWithMultipleGlobals.php:3', $file);
     }
 }
