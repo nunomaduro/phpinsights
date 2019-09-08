@@ -26,7 +26,9 @@ script:
       composer run phpunit:test
       composer run insights -- --disable-security-check
     fi
-
+  - rm -rf vendor/
+  - composer install --no-dev
+  - composer run insights -- --disable-security-check
 jobs:
   include:
     - stage: build docker image
