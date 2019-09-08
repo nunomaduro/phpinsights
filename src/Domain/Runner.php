@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor as FileProcessorContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
+use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\SniffFileProcessor;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
 use SplFileInfo;
@@ -17,8 +19,8 @@ use Symfony\Component\Finder\SplFileInfo as SymfonySplFileInfo;
  */
 final class Runner
 {
-    /** @var \NunoMaduro\PhpInsights\Domain\FileProcessors\SniffFileProcessor */
-    private $phpCsFileProcessor;
+    /** @var array<FileProcessorContract> */
+    private $filesProcessors;
 
     /** @var \Symfony\Component\Console\Output\OutputInterface */
     private $output;
@@ -35,26 +37,32 @@ final class Runner
     public function __construct(
         OutputInterface $output,
         FilesRepository $filesRepository
-    )
-    {
+    ) {
         $this->filesRepository = $filesRepository;
         $this->output = $output;
 
         $container = Container::make();
 
-        $this->phpCsFileProcessor = $container->get(SniffFileProcessor::class);
+        $this->filesProcessors = [
+            $container->get(SniffFileProcessor::class),
+            $container->get(FixerFileProcessor::class),
+        ];
     }
 
     /**
-     * @param array<SniffDecorator> $sniffs
+     * @param array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight> $insights
      */
-    public function addSniffs(array $sniffs): void
+    public function addInsights(array $insights): void
     {
-        foreach ($sniffs as $sniff) {
-            $this->phpCsFileProcessor->addSniff($sniff);
+        /** @var FileProcessorContract $fileProcessor */
+        foreach ($this->filesProcessors as $fileProcessor) {
+            foreach ($insights as $insight) {
+                if ($fileProcessor->support($insight)) {
+                    $fileProcessor->addChecker($insight);
+                }
+            }
         }
     }
-
 
     public function run(): void
     {
@@ -71,6 +79,7 @@ final class Runner
         $progressBar = new ProgressBar($this->output, count($files));
         $progressBar->start();
 
+        /** @var SplFileInfo $file */
         foreach ($files as $file) {
             // Output file name if verbose
             if ($this->output->isVerbose()) {
@@ -96,10 +105,8 @@ final class Runner
             );
         }
 
-        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor $fileProcessor */
-        foreach ([
-            $this->phpCsFileProcessor,
-        ] as $fileProcessor) {
+        /** @var FileProcessorContract $fileProcessor */
+        foreach ($this->filesProcessors as $fileProcessor) {
             $fileProcessor->processFile($file);
         }
     }

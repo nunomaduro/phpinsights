@@ -8,6 +8,8 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Runner;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
+use PhpCsFixer\Fixer\ConfigurableFixerInterface;
+use PhpCsFixer\Fixer\FixerInterface;
 use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -34,13 +36,18 @@ final class InsightFactory
     /**
      * @var array<SniffDecorator>
      */
-    private $sniffs;
+    private $sniffs = [];
+
+    /**
+     * @var array<\NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator>
+     */
+    private $fixers = [];
 
     /** @var bool */
     private $ran = false;
 
     /**
-     * Creates a new instance of Insight Factory.
+     * Creates a new instance of Insight Factory
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      * @param string $dir
@@ -68,13 +75,11 @@ final class InsightFactory
         string $errorClass,
         array $config,
         OutputInterface $consoleOutput
-    ): InsightContract
-    {
-        $collector = $this->getCollector($config);
-        switch (true) {
-            case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                $this->runInsightCollector($config, $consoleOutput);
+    ): InsightContract {
+        $this->runInsightCollector($config, $consoleOutput);
 
+        switch (true) {
+            case $this->isClassImplementInterface($errorClass,SniffContract::class):
                 /** @var SniffDecorator $sniff */
                 foreach ($this->sniffs as $sniff) {
                     if ($sniff->getInsightClass() === $errorClass) {
@@ -82,41 +87,24 @@ final class InsightFactory
                     }
                 }
 
-                throw new RuntimeException("The sniff has been removed somehow. This shouldn't happen.");
+                throw new RuntimeException(sprintf(
+                    'The sniff "%s" has been removed somehow. This shouldn\'t happen.',
+                    $errorClass
+                ));
+            case $this->isClassImplementInterface($errorClass,FixerInterface::class):
+                /** @var \NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator $fixer */
+                foreach ($this->fixers as $fixer) {
+                    if ($fixer->getInsightClass() === $errorClass) {
+                        return $fixer;
+                    }
+                }
+                throw new RuntimeException(sprintf(
+                    'The fixer "%s" has been removed somehow. This shouldn\'t happen.',
+                    $errorClass
+                ));
             default:
                 throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
         }
-    }
-
-    /**
-     * Returns the Sniffs PHP CS classes from the given array of Metrics.
-     *
-     * @param array<string> $insights
-     * @param array<string, array> $config
-     *
-     * @return array<SniffDecorator>
-     */
-    public function insightsFrom(array $insights, array $config, string $interface): array
-    {
-        $collectedInsights = [];
-
-        foreach ($insights as $insight) {
-            if (array_key_exists($interface, class_implements($insight))) {
-                /** @var SniffContract|FixerInterface $currentInsight */
-                $currentInsight = new $insight();
-
-                if (isset($config['config'][$insight])) {
-                    $this->configureInsight($currentInsight, $config['config'][$insight]);
-                }
-
-                $sniffs[] = new SniffDecorator(
-                    $sniff,
-                    $this->dir
-                );
-            }
-        }
-
-        return $collectedInsights;
     }
 
     /**
@@ -126,8 +114,7 @@ final class InsightFactory
     private function runInsightCollector(
         array $config,
         OutputInterface $consoleOutput
-    ): void
-    {
+    ): void {
         if ($this->ran === true) {
             return;
         }
@@ -139,8 +126,12 @@ final class InsightFactory
 
         // Add php cs sniffs
         $sniffs = $this->sniffsFrom($this->insightsClasses, $config);
+        $fixers = $this->fixersFrom($this->insightsClasses, $config);
         $this->sniffs = $sniffs;
-        $runner->addSniffs($sniffs);
+        $this->fixers = $fixers;
+
+        $runner->addInsights($sniffs);
+        $runner->addInsights($fixers);
 
         // Run it.
         $runner->run();
@@ -148,21 +139,73 @@ final class InsightFactory
     }
 
     /**
-     * @param SniffContract|\PhpCsFixer\Fixer\FixerInterface $insight
-     * @param array<string, array|string|int|bool> $config
+     * Returns the Sniffs PHP CS classes from the given array of Metrics.
+     *
+     * @param array<string> $insights
+     * @param array<string, array> $config
+     *
+     * @return array<SniffDecorator>
      */
-    private function configureInsight($insight, array $config): void
+    private function sniffsFrom(array $insights, array $config): array
     {
-        if ($insight instanceof SniffContract) {
-            foreach ($config ?? [] as $property => $value) {
-                $insight->{$property} = $value;
+        $sniffs = [];
+
+        foreach ($insights as $insight) {
+            if ($this->isClassImplementInterface($insight, SniffContract::class)) {
+                /** @var \PHP_CodeSniffer\Sniffs\Sniff $sniff */
+                $sniff = new $insight();
+
+                foreach ($config['config'][$insight] ?? [] as $property => $value) {
+                    $sniff->{$property} = $value;
+                }
+
+                $sniffs[] = new SniffDecorator(
+                    $sniff,
+                    $this->dir
+                );
             }
-            return;
         }
 
-        if ($insight instanceof ConfigurableFixerInterface) {
-            $insight->configure($config);
-            return;
+        return $sniffs;
+    }
+
+    /**
+     * Returns the PHP_CS_Fixers classes from the given array of Metrics.
+     *
+     * @param array<string> $insights
+     * @param array<string, array> $config
+     *
+     * @return array<\NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator>
+     */
+    private function fixersFrom(array $insights, array $config): array
+    {
+        $fixers = [];
+
+        foreach ($insights as $insight) {
+            if ($this->isClassImplementInterface($insight, FixerInterface::class)) {
+                $fixer = new $insight();
+
+                $excludeConfig = [];
+                $insightConfig = $config['config'][$insight] ?? null;
+
+                if (isset($insightConfig['exclude'])) {
+                    $excludeConfig = $insightConfig['exclude'];
+                    unset($insightConfig['exclude']);
+                }
+
+                if ($fixer instanceof ConfigurableFixerInterface && $insightConfig !== null) {
+                    $fixer->configure($insightConfig);
+                }
+
+                $fixers[] = new FixerDecorator($fixer, $this->dir, $excludeConfig);
+            }
         }
+
+        return $fixers;
+    }
+
+    private function isClassImplementInterface(string $class, string $interface): bool
+    {
+        return array_key_exists($interface, class_implements($class));
     }
 }

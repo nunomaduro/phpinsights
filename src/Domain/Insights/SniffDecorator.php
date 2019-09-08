@@ -14,6 +14,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Decorates original php-cs sniffs with additional behavior.
+ * @internal
  */
 final class SniffDecorator implements Sniff, Insight, HasDetails
 {
@@ -57,38 +58,6 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
         }
 
         return $this->sniff->process($file, $stackPtr);
-    }
-
-    private function skipFilesFromIgnoreFiles(InsightFile $file): bool
-    {
-        $path = $file->getFileInfo()->getRealPath();
-
-        if ($path === false) {
-            return false;
-        }
-
-        foreach ($this->getIgnoredFilesPath() as $ignoredFilePath) {
-            if (self::pathsAreEqual($this->dir . DIRECTORY_SEPARATOR . $ignoredFilePath, $path)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Contains the setting for all files which the sniff should ignore.
-     *
-     * @return array<int, string>
-     */
-    private function getIgnoredFilesPath(): array
-    {
-        return $this->sniff->exclude ?? [];
-    }
-
-    private static function pathsAreEqual(string $pathA, string $pathB): bool
-    {
-        return realpath($pathA) === realpath($pathB);
     }
 
     /**
@@ -151,5 +120,37 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
     public function addDetails(Details $details): void
     {
         $this->errors[] = $details;
+    }
+
+    private function skipFilesFromIgnoreFiles(InsightFile $file): bool
+    {
+        $path = $file->getFileInfo()->getRealPath();
+
+        if ($path === false) {
+            return false;
+        }
+
+        foreach ($this->getIgnoredFilesPath() as $ignoredFilePath) {
+            if (self::pathsAreEqual($this->dir . DIRECTORY_SEPARATOR . $ignoredFilePath, $path)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Contains the setting for all files which the sniff should ignore.
+     *
+     * @return array<int, string>
+     */
+    private function getIgnoredFilesPath(): array
+    {
+        return $this->sniff->exclude ?? [];
+    }
+
+    private static function pathsAreEqual(string $pathA, string $pathB): bool
+    {
+        return realpath($pathA) === realpath($pathB);
     }
 }
