@@ -7,9 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
-use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
-use PHP_CodeSniffer\Sniffs\Sniff;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**

@@ -40,7 +40,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
         foreach ($issues as $packageName => $package) {
             foreach ($package['advisories'] as $advisory) {
                 $details[] = Details::make()->setMessage(
-                    "$packageName@{$package['version']} {$advisory['title']} - {$advisory['link']}"
+                    "${packageName}@{$package['version']} {$advisory['title']} - {$advisory['link']}"
                 );
             }
         }

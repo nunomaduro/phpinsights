@@ -14,6 +14,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Decorates original php-cs sniffs with additional behavior.
+ *
  * @internal
  */
 final class SniffDecorator implements Sniff, Insight, HasDetails

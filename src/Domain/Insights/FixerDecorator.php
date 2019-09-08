@@ -12,6 +12,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 /**
  * Decorates original php-cs-fixers with additional behavior.
+ *
  * @internal
  */
 final class FixerDecorator implements FixerInterface, InsightContract, HasDetails

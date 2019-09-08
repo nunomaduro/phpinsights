@@ -51,8 +51,7 @@ final class InsightCollectionFactory
         array $config,
         string $dir,
         OutputInterface $consoleOutput
-    ): InsightCollection
-    {
+    ): InsightCollection {
         try {
             $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();

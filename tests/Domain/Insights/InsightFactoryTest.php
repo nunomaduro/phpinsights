@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights;
 
-use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightFactory;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
@@ -21,6 +20,9 @@ use Tests\Fakes\FakeFileRepository;
 
 final class InsightFactoryTest extends TestCase
 {
+    /**
+     * @var array<string>
+     */
     private static $usedInsights = [
         BacktickToShellExecFixer::class,
         ForbiddenPublicPropertySniff::class,

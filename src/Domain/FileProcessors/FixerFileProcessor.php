@@ -8,7 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Differ;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
-use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use Symfony\Component\Finder\SplFileInfo;
 

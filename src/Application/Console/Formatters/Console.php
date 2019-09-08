@@ -48,8 +48,7 @@ final class Console implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void
-    {
+    ): void {
         $results = $insightCollection->results();
 
         $this->summary($results, $dir)
@@ -95,16 +94,16 @@ final class Console implements Formatter
         $style = self::getPercentageAsString($results->getStyle());
 
         $output = <<<EOD
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$codeQuality}  </>            <fg=black;options=bold;$complexityColor>  {$complexity}  </>            <fg=black;options=bold;$structureColor>  {$structure}  </>            <fg=black;options=bold;$styleColor>  {$style}  </>
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
+      <${codeQualityColor}>         </>            <${complexityColor}>         </>            <${structureColor}>         </>            <${styleColor}>         </>
+      <fg=black;options=bold;${codeQualityColor}>  {$codeQuality}  </>            <fg=black;options=bold;${complexityColor}>  {$complexity}  </>            <fg=black;options=bold;${structureColor}>  {$structure}  </>            <fg=black;options=bold;${styleColor}>  {$style}  </>
+      <${codeQualityColor}>         </>            <${complexityColor}>         </>            <${structureColor}>         </>            <${styleColor}>         </>
 
-        <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
+        <${subtitle}>Code</>               <${subtitle}>Complexity</>          <${subtitle}>Architecture</>            <${subtitle}>Style</>
 EOD;
         $this->style->write($output);
         $this->style->newLine(2);
 
-        $this->style->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100");
+        $this->style->writeln('Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100');
 
         return $this;
     }
@@ -120,10 +119,9 @@ EOD;
     private function code(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
-        $this->style->writeln(sprintf("[CODE] %s within <title>%s</title> lines",
+        $this->style->writeln(sprintf('[CODE] %s within <title>%s</title> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code())->getValue($insightCollection->getCollector())
         ));
@@ -166,11 +164,10 @@ EOD;
     private function complexity(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity",
+        $this->style->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -189,11 +186,10 @@ EOD;
     private function architecture(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</title> files",
+        $this->style->writeln(sprintf('[ARCHITECTURE] %s within <title>%s</title> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Files())->getValue($insightCollection->getCollector())
         ));
@@ -235,8 +231,7 @@ EOD;
      */
     private function miscellaneous(
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
         $message = sprintf(
@@ -269,8 +264,7 @@ EOD;
         InsightCollection $insightCollection,
         array $metrics,
         string $dir
-    ): self
-    {
+    ): self {
         $previousCategory = null;
 
         foreach ($metrics as $metricClass) {
@@ -288,7 +282,7 @@ EOD;
 
                 $previousCategory = $category;
 
-                $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
+                $issue = "\n<fg=red>•</> [${category}] <bold>{$insight->getTitle()}</bold>";
 
                 if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
@@ -330,7 +324,7 @@ EOD;
                         $detailString .= ($detailString !== null ? ': ' : '') . $detail->getMessage();
                     }
 
-                    $issue .= "\n  $detailString";
+                    $issue .= "\n  ${detailString}";
                 }
 
                 if (! $this->style->getOutput()->isVerbose() && $totalDetails > 3) {
@@ -345,7 +339,6 @@ EOD;
 
         return $this;
     }
-
 
     /**
      * Returns the percentage as 5 chars string.

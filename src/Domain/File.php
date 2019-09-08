@@ -105,8 +105,7 @@ final class File extends BaseFile
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners,
                                                          SplFileInfo $fileInfo
-    ): void
-    {
+    ): void {
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
         $this->process();

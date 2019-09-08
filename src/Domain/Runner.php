@@ -8,7 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor as FileProcessorContra
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\SniffFileProcessor;
-use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
 use SplFileInfo;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;

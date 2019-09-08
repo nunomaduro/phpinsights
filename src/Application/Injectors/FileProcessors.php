@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Injectors;
-use NunoMaduro\PhpInsights\Domain\CachedFileLoader;
+
 use NunoMaduro\PhpInsights\Domain\Differ;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;

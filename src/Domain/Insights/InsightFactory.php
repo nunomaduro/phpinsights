@@ -47,7 +47,7 @@ final class InsightFactory
     private $ran = false;
 
     /**
-     * Creates a new instance of Insight Factory
+     * Creates a new instance of Insight Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      * @param string $dir
@@ -79,7 +79,7 @@ final class InsightFactory
         $this->runInsightCollector($config, $consoleOutput);
 
         switch (true) {
-            case $this->isClassImplementInterface($errorClass,SniffContract::class):
+            case $this->isClassImplementInterface($errorClass, SniffContract::class):
                 /** @var SniffDecorator $sniff */
                 foreach ($this->sniffs as $sniff) {
                     if ($sniff->getInsightClass() === $errorClass) {
@@ -91,7 +91,7 @@ final class InsightFactory
                     'The sniff "%s" has been removed somehow. This shouldn\'t happen.',
                     $errorClass
                 ));
-            case $this->isClassImplementInterface($errorClass,FixerInterface::class):
+            case $this->isClassImplementInterface($errorClass, FixerInterface::class):
                 /** @var \NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator $fixer */
                 foreach ($this->fixers as $fixer) {
                     if ($fixer->getInsightClass() === $errorClass) {
