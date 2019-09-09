@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use Illuminate\Support\Str;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -123,11 +122,11 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
         $path = explode('\\', $sniffClass);
         $name = (string) array_pop($path);
 
-        $name = Str::before($name, 'Sniff');
+        $name = str_replace('Sniff', '', $name);
 
-        return Str::ucfirst(
-            trim(
-                Str::lower(
+        return ucfirst(
+            mb_strtolower(
+                trim(
                     (string) preg_replace(
                         '/(?<!\ )[A-Z]/',
                         ' $0',
