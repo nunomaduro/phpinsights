@@ -41,6 +41,15 @@ You can fill `ide` config with the followings values:
 * atom 
 * vscode
 
+::: tip About PhpStorm
+The phpstorm option is supported natively by PhpStorm on MacOS.
+
+Windows requires [PhpStormProtocol](https://github.com/aik099/PhpStormProtocol) 
+and Linux requires [phpstorm-url-handler](https://github.com/sanduhrs/phpstorm-url-handler).
+
+You may also have to enable the [command-line launcher](https://www.jetbrains.com/help/phpstorm/working-with-the-ide-features-from-command-line.html).
+:::
+
 ## Unsupported IDE
 
 If you use another editor, the expected configuration value is a URL template 
