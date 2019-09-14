@@ -24,6 +24,7 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Code\Functions;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code\Globally;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity\Complexity;
 use NunoMaduro\PhpInsights\Domain\Results;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -52,11 +53,18 @@ final class Console implements Formatter
      * @var FileLinkFormatter
      */
     private $fileLinkFormatter;
+    /**
+     * @var bool
+     */
+    private $supportHyperLinks;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->style = new Style($input, $output);
         $this->totalWidth = (new Terminal())->getWidth();
+
+        $outputFormatterStyle = new OutputFormatterStyle();
+        $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
     }
 
     public function injectFileLinkFormatter(FileLinkFormatter $fileLinkFormatter): void
@@ -554,7 +562,11 @@ EOD;
             $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine());
         }
 
-        if ($formattedLink !== '' && $detailString !== '') {
+        if (
+            $this->supportHyperLinks &&
+            $formattedLink !== '' &&
+            $detailString !== ''
+        ) {
             $detailString = sprintf(
                 '<href=%s>%s</>',
                 $formattedLink,
