@@ -59,7 +59,7 @@ final class Console implements Formatter
         $this->totalWidth = (new Terminal())->getWidth();
     }
 
-    public function setFileLinkFormatter(FileLinkFormatter $fileLinkFormatter)
+    public function injectFileLinkFormatter(FileLinkFormatter $fileLinkFormatter): void
     {
         $this->fileLinkFormatter = $fileLinkFormatter;
     }
@@ -320,11 +320,11 @@ final class Console implements Formatter
                     $detailString = $this->formatFileLine($detail, $dir);
 
                     if ($detail->hasFunction()) {
-                        $detailString .= ($detailString !== null ? ':' : '') . $detail->getFunction();
+                        $detailString .= ($detailString !== '' ? ':' : '') . $detail->getFunction();
                     }
 
                     if ($detail->hasMessage()) {
-                        $detailString .= ($detailString !== null ? ': ' : '') . $detail->getMessage();
+                        $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
                     }
 
                     $issue .= "\n  ${detailString}";
@@ -532,9 +532,9 @@ EOD;
         return $this->fileLinkFormatter;
     }
 
-    private function formatFileLine(Details $detail, string $directory): ?string
+    private function formatFileLine(Details $detail, string $directory): string
     {
-        $detailString = null;
+        $detailString = '';
         $basePath = realpath($directory) . DIRECTORY_SEPARATOR;
         $file = null;
 
@@ -546,15 +546,15 @@ EOD;
         }
 
         if ($detail->hasLine()) {
-            $detailString .= ($detailString !== null ? ':' : '') . $detail->getLine();
+            $detailString .= ($detailString !== '' ? ':' : '') . $detail->getLine();
         }
 
         $formattedLink = null;
-        if ($detail->hasFile()) {
-            $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine() ?? 0);
+        if ($file !== null) {
+            $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine());
         }
 
-        if ('' !== $formattedLink) {
+        if ($formattedLink !== '' && $detailString !== '') {
             $detailString = sprintf(
                 '<href=%s>%s</>',
                 $formattedLink,

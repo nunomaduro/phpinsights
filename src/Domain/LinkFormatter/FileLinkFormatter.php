@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\LinkFormatter;
 
-
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 
-class FileLinkFormatter implements FileLinkFormatterContract
+/**
+ * @internal
+ */
+final class FileLinkFormatter implements FileLinkFormatterContract
 {
     /**
      * @var string
@@ -15,17 +18,17 @@ class FileLinkFormatter implements FileLinkFormatterContract
 
     public function __construct(string $pattern)
     {
-        if (false === mb_strpos($pattern, '%f') ||
-            false === mb_strpos($pattern, '%l')
+        if (mb_strpos($pattern, '%f') === false ||
+            mb_strpos($pattern, '%l') === false
         ) {
-            throw new \RuntimeException('Unparsable pattern ' . $pattern);
+            throw new \LogicException('Unparsable pattern "' . $pattern . '" to handle hyperlinks');
         }
 
         $this->pattern = $pattern;
     }
 
-    public function format(string $file, ?int $line): string
+    public function format(string $file, int $line): string
     {
-        return strtr($this->pattern, ['%f' => $file, '%l' => $line ?? 0]);
+        return strtr($this->pattern, ['%f' => $file, '%l' => $line]);
     }
 }
