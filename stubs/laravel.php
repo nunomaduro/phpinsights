@@ -29,7 +29,21 @@ return [
     */
 
     'preset' => 'laravel',
+    /*
+    |--------------------------------------------------------------------------
+    | IDE
+    |--------------------------------------------------------------------------
+    |
+    | This options allow to add hyperlinks in your terminal to quickly open
+    | files.
+    | IDE supported: textmate, macvim, emacs, sublime, phpstorm, atom, vscode
+    | If you have an other who provide an url-handler, you could fill with
+    | something like this:
+    | myide://open?url=file://%f&line=%l
+    |
+    */
 
+    'ide' => null,
     /*
     |--------------------------------------------------------------------------
     | Configuration
