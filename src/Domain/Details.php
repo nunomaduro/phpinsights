@@ -71,7 +71,7 @@ final class Details
         return $this->file !== null;
     }
 
-    public function getLine(): int
+    public function getLine(): ?int
     {
         return $this->line;
     }

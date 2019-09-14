@@ -6,9 +6,12 @@ namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Application\Console\Style;
+use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
+use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes as ArchitectureClasses;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Files;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Globally as ArchitectureGlobally;
@@ -45,11 +48,20 @@ final class Console implements Formatter
      * @var int
      */
     private $totalWidth;
+    /**
+     * @var FileLinkFormatter
+     */
+    private $fileLinkFormatter;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->style = new Style($input, $output);
         $this->totalWidth = (new Terminal())->getWidth();
+    }
+
+    public function setFileLinkFormatter(FileLinkFormatter $fileLinkFormatter)
+    {
+        $this->fileLinkFormatter = $fileLinkFormatter;
     }
 
     /**
@@ -305,14 +317,7 @@ final class Console implements Formatter
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = null;
-                    if ($detail->hasFile()) {
-                        $detailString .= str_replace(realpath($dir) . '/', '', $detail->getFile());
-                    }
-
-                    if ($detail->hasLine()) {
-                        $detailString .= ($detailString !== null ? ':' : '') . $detail->getLine();
-                    }
+                    $detailString = $this->formatFileLine($detail, $dir);
 
                     if ($detail->hasFunction()) {
                         $detailString .= ($detailString !== null ? ':' : '') . $detail->getFunction();
@@ -505,7 +510,7 @@ EOD;
      */
     private function getSpaceWidth(int $totalWidth, int $blockSize, int $disposition): int
     {
-        $spaceWidth = (int) floor(($totalWidth - $blockSize * $disposition) / ($disposition + 1));
+        $spaceWidth = (int)floor(($totalWidth - $blockSize * $disposition) / ($disposition + 1));
 
         if ($spaceWidth > self::MAX_SPACEWIDTH) {
             $spaceWidth = self::MAX_SPACEWIDTH;
@@ -516,5 +521,47 @@ EOD;
         }
 
         return $spaceWidth;
+    }
+
+    private function getFileLinkFormatter(): FileLinkFormatter
+    {
+        if ($this->fileLinkFormatter === null) {
+            $this->fileLinkFormatter = new NullFileLinkFormatter();
+        }
+
+        return $this->fileLinkFormatter;
+    }
+
+    private function formatFileLine(Details $detail, string $directory): ?string
+    {
+        $detailString = null;
+        $basePath = realpath($directory) . DIRECTORY_SEPARATOR;
+        $file = null;
+
+        if ($detail->hasFile()) {
+            $file = mb_strpos($basePath, $detail->getFile()) !== false ? '' : $basePath;
+            $file .= $detail->getFile();
+
+            $detailString .= str_replace($basePath, '', $file);
+        }
+
+        if ($detail->hasLine()) {
+            $detailString .= ($detailString !== null ? ':' : '') . $detail->getLine();
+        }
+
+        $formattedLink = null;
+        if ($detail->hasFile()) {
+            $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine() ?? 0);
+        }
+
+        if ('' !== $formattedLink) {
+            $detailString = sprintf(
+                '<href=%s>%s</>',
+                $formattedLink,
+                $detailString
+            );
+        }
+
+        return $detailString;
     }
 }
