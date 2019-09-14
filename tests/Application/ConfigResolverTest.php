@@ -7,8 +7,10 @@ namespace Tests\Application;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
+use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Exceptions\PresetNotFound;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -129,5 +131,57 @@ final class ConfigResolverTest extends TestCase
 
         $config = ['add' => [Classes::class => ['hello']]];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+    }
+
+    /**
+     * @dataProvider provideValidIde
+     */
+    public function testResolveValidIde(string $ide): void
+    {
+        $config = ['ide' => $ide];
+
+        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+
+        self::assertArrayHasKey('fileLinkFormatter', $config);
+        self::assertInstanceOf(FileLinkFormatter::class, $config['fileLinkFormatter']);
+        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config['fileLinkFormatter']);
+    }
+
+    public function testResolveWithoutIde():void
+    {
+        $config = [];
+
+        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+
+        self::assertArrayHasKey('fileLinkFormatter', $config);
+        self::assertInstanceOf(FileLinkFormatter::class, $config['fileLinkFormatter']);
+        self::assertInstanceOf(NullFileLinkFormatter::class, $config['fileLinkFormatter']);
+    }
+
+    public function testResolveWithIdePattern(): void
+    {
+        $config = ['ide' => 'myide://file=%f&line=%l'];
+
+        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+
+        self::assertArrayHasKey('fileLinkFormatter', $config);
+        self::assertInstanceOf(FileLinkFormatter::class, $config['fileLinkFormatter']);
+        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config['fileLinkFormatter']);
+    }
+
+    /**
+     * @return array<string, array<string>>
+     */
+    public function provideValidIde(): array
+    {
+        return [
+            'Sublime Text' => ['sublime'],
+            'PhpStorm' => ['phpstorm'],
+            'Visual studio Code' => ['vscode'],
+            'Textmate' => ['textmate'],
+            'Emacs' => ['textmate'],
+            'Atom' => ['atom'],
+            'Macvim' => ['macvim'],
+        ];
     }
 }
