@@ -25,7 +25,9 @@ For example:
 <?php
 
 return [
+    // ...
     'ide' => 'vscode',
+    // ...
 ];
 ```
 
@@ -62,6 +64,8 @@ For example:
 <?php
 
 return [
+    // ...
     'ide' => 'myide://open?url=file://%f&line=%l',
+    // ...
 ];
 ```
