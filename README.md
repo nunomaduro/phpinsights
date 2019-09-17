@@ -25,6 +25,10 @@ composer require nunomaduro/phpinsights --dev
 ./vendor/bin/phpinsights
 
 # For Laravel:
+First, publish the configuration file:
+php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"
+
+Then, use it:
 php artisan insights
 ```
 
