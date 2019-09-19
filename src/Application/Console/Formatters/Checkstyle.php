@@ -32,8 +32,6 @@ final class Checkstyle implements Formatter
      * @param InsightCollection $insightCollection
      * @param string $dir
      * @param array<string> $metrics
-     *
-     * @throws Exception
      */
     public function format(
         InsightCollection $insightCollection,

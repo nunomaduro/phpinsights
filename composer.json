@@ -39,6 +39,9 @@
         "symplify/easy-coding-standard": "^6.0",
         "thecodingmachine/phpstan-strict-rules": "^0.11.0"
     },
+    "suggest": {
+        "ext-simplexml": "*"
+    },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
