@@ -9,11 +9,9 @@ use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Twig\Environment;
-use Twig\Extension\DebugExtension;
+use Twig\Environment as Twig;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
-use Twig\TwigTest;
 
 /**
  * @internal
@@ -43,28 +41,31 @@ final class Html implements Formatter
         array $metrics
     ): void
     {
-        $loader = new FilesystemLoader(__DIR__.'/../../../../views');
-        $twig = new Environment($loader, [
-            'cache' => false,
-            'debug' => true,
-        ]);
-        $twig->addExtension(new DebugExtension());
-        $twig->addTest(new TwigTest('instanceof', function($var, $instance) {
-            $reflexionClass = new \ReflectionClass($instance);
-            return $reflexionClass->isInstance($var);
-        }));
-        $twig->addFilter(new TwigFilter('sluggify', function ($slug) {
-            $slug = preg_replace('/<(.*?)>/u', '', $slug);
-            $slug = preg_replace('/[\'"‘’“”]/u', '', $slug);
-            $slug = mb_strtolower($slug, 'UTF-8');
-            preg_match_all('/[\p{L}\p{N}\.]+/u', $slug, $words);
-            return implode('-', array_filter($words[0]));
-        }));
-
-        $this->output->write($twig->render('dashboard.html.twig', [
+        $this->output->write($this->getTwig()->render('dashboard.html.twig', [
             'dir' => $dir,
             'results' => $insightCollection->results(),
             'insights' => $insightCollection,
         ]), false, OutputInterface::OUTPUT_RAW);
+    }
+
+    protected function getTwig(): Twig
+    {
+        $loader = new FilesystemLoader(__DIR__.'/../../../../views');
+        $twig = new Twig($loader, [
+            'cache' => false,
+            'debug' => true,
+        ]);
+
+        $twig->addFilter(new TwigFilter('sluggify', function (string $slug) {
+            $slug = preg_replace('/<(.*?)>/u', '', $slug);
+            $slug = preg_replace('/[\'"‘’“”]/u', '', $slug);
+            $slug = mb_strtolower($slug, 'UTF-8');
+
+            preg_match_all('/[\p{L}\p{N}\.]+/u', $slug, $words);
+
+            return implode('-', array_filter($words[0]));
+        }));
+
+        return $twig;
     }
 }
