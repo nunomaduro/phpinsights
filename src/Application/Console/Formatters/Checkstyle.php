@@ -54,7 +54,7 @@ final class Checkstyle implements Formatter
                 foreach ($insight->getDetails() as $detail) {
                     $fileName = $this->getFileName($detail, $dir);
 
-                    if (isset($checkstyle->file) && (string)$checkstyle->file->attributes()['name'] === $fileName) {
+                    if (isset($checkstyle->file) && (string) $checkstyle->file->attributes()['name'] === $fileName) {
                         $file = $checkstyle->file;
                     } else {
                         $file = $checkstyle->addChild('file');
@@ -64,7 +64,7 @@ final class Checkstyle implements Formatter
                     $error = $file->addChild('error');
                     $error->addAttribute('severity', 'error');
                     $error->addAttribute('source', $insight->getTitle());
-                    $error->addAttribute('line', $detail->hasLine() ? (string)$detail->getLine() : '');
+                    $error->addAttribute('line', $detail->hasLine() ? (string) $detail->getLine() : '');
                     $error->addAttribute('message', $detail->hasMessage() ? $detail->getMessage() : '');
                 }
             }
