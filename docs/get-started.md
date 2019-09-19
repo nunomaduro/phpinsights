@@ -87,6 +87,12 @@ For changing the output format you can add the `format` flag. The following form
 ./vendor/bin/phpinsights analyse --format=json
 ```
 
+::: Twig for HTML
+The HTML formatter requires Twig to render.
+So you have to add it do your dependencies if you want to use it.
+`composer require --dev twig/twig: ^2.0`
+:::
+
 ## Saving output to file
 
 You can pipe the result to a file or to anywhere you like. 
