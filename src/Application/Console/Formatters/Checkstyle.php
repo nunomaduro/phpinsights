@@ -70,7 +70,7 @@ final class Checkstyle implements Formatter
             }
         }
 
-        $this->output->write($checkstyle->asXML());
+        $this->output->write((string) $checkstyle->asXML());
     }
 
     private function getFileName(Details $detail, string $dir): string
