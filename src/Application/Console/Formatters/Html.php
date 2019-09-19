@@ -48,7 +48,7 @@ final class Html implements Formatter
         ]), false, OutputInterface::OUTPUT_RAW);
     }
 
-    protected function getTwig(): Twig
+    private function getTwig(): Twig
     {
         $loader = new FilesystemLoader(__DIR__.'/../../../../views');
         $twig = new Twig($loader, [
