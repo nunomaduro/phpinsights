@@ -56,12 +56,12 @@ final class Html implements Formatter
             'debug' => true,
         ]);
 
-        $twig->addFilter(new TwigFilter('sluggify', function (string $slug) {
-            $slug = preg_replace('/<(.*?)>/u', '', $slug);
-            $slug = preg_replace('/[\'"‘’“”]/u', '', $slug);
-            $slug = mb_strtolower($slug, 'UTF-8');
+        $twig->addFilter(new TwigFilter('sluggify', static function (string $slug): string {
+            $slug = preg_replace('/<(.*?)>/u', '', (string) $slug);
+            $slug = preg_replace('/[\'"‘’“”]/u', '', (string) $slug);
+            $slug = mb_strtolower((string) $slug, 'UTF-8');
 
-            preg_match_all('/[\p{L}\p{N}\.]+/u', $slug, $words);
+            preg_match_all('/[\p{L}\p{N}\.]+/u', (string) $slug, $words);
 
             return implode('-', array_filter($words[0]));
         }));
