@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
-use Exception;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -39,6 +39,9 @@ final class Checkstyle implements Formatter
         array $metrics
     ): void
     {
+        if (! extension_loaded('simplexml')) {
+            throw new RuntimeException('To use checkstyle format install simplexml extension.');
+        }
         $checkstyle = new \SimpleXMLElement('<checkstyle/>');
 
         foreach ($metrics as $metricClass) {

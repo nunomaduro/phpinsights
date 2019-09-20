@@ -39,7 +39,7 @@
         "thecodingmachine/phpstan-strict-rules": "^0.11.0"
     },
     "suggest": {
-        "ext-simplexml": "*"
+        "ext-simplexml": "It is needed for the checkstyle formatter"
     },
     "autoload-dev": {
         "psr-4": {
