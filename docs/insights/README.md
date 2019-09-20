@@ -119,3 +119,22 @@ For example, to remove "Unused Parameters" Insight only for some file:
     ],
 ```
 
+### Suppressing insights locally
+
+You could also suppress some insights locally using `@phpcsSuppress` annotation.  
+
+```php
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     * @param \Illuminate\Foundation\Auth\User|null $user
+     *
+     * @return bool
+     */
+    public function viewAny(?User $user)
+    {
+        return true;
+    }
+```
+
+You can see [slevomat/coding-standard docs](https://github.com/slevomat/coding-standard#suppressing-sniffs-locally) for more info
+
