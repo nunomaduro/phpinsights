@@ -518,7 +518,7 @@ EOD;
      */
     private function getSpaceWidth(int $totalWidth, int $blockSize, int $disposition): int
     {
-        $spaceWidth = (int)floor(($totalWidth - $blockSize * $disposition) / ($disposition + 1));
+        $spaceWidth = (int) floor(($totalWidth - $blockSize * $disposition) / ($disposition + 1));
 
         if ($spaceWidth > self::MAX_SPACEWIDTH) {
             $spaceWidth = self::MAX_SPACEWIDTH;
