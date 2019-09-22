@@ -37,8 +37,7 @@ final class Checkstyle implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void
-    {
+    ): void {
         if (! extension_loaded('simplexml')) {
             throw new RuntimeException('To use checkstyle format install simplexml extension.');
         }
