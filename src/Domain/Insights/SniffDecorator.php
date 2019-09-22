@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\File as InsightFile;
+use NunoMaduro\PhpInsights\Domain\Helper\Comparator\PathComparator;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -131,7 +132,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
         }
 
         foreach ($this->getIgnoredFilesPath() as $ignoredFilePath) {
-            if (self::pathsAreEqual($this->dir . DIRECTORY_SEPARATOR . $ignoredFilePath, $path)) {
+            if (PathComparator::areEqual($this->dir . DIRECTORY_SEPARATOR . $ignoredFilePath, $path)) {
                 return true;
             }
         }
@@ -147,10 +148,5 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
     private function getIgnoredFilesPath(): array
     {
         return $this->sniff->exclude ?? [];
-    }
-
-    private static function pathsAreEqual(string $pathA, string $pathB): bool
-    {
-        return realpath($pathA) === realpath($pathB);
     }
 }

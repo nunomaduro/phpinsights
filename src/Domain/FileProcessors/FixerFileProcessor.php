@@ -50,9 +50,6 @@ final class FixerFileProcessor implements FileProcessor
         $this->fixers[] = $insight;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function processFile(SplFileInfo $splFileInfo): void
     {
         $filePath = $splFileInfo->getRealPath();

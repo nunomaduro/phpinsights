@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
+use NunoMaduro\PhpInsights\Domain\Helper\Comparator\PathComparator;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -30,7 +31,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      */
     private $excludedFiles;
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Details[]
+     * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
     private $errors = [];
 
@@ -142,17 +143,12 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
             return false;
         }
         foreach ($this->excludedFiles as $excludedFile) {
-            if (self::pathsAreEqual($this->dir . DIRECTORY_SEPARATOR . $excludedFile, $path)) {
+            if (PathComparator::areEqual($this->dir . DIRECTORY_SEPARATOR . $excludedFile, $path)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    private static function pathsAreEqual(string $pathA, string $pathB): bool
-    {
-        return realpath($pathA) === realpath($pathB);
     }
 
     private function processDiff(string $diff, string $file): void

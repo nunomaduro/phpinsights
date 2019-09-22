@@ -6,8 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor as FileProcessorContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;
-use NunoMaduro\PhpInsights\Domain\FileProcessors\SniffFileProcessor;
 use SplFileInfo;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,10 +40,7 @@ final class Runner
 
         $container = Container::make();
 
-        $this->filesProcessors = [
-            $container->get(SniffFileProcessor::class),
-            $container->get(FixerFileProcessor::class),
-        ];
+        $this->filesProcessors = $container->get(FileProcessorContract::FILE_PROCESSOR_TAG);
     }
 
     /**
