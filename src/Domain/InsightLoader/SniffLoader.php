@@ -19,10 +19,10 @@ final class SniffLoader implements InsightLoader
         return array_key_exists(SniffContract::class, class_implements($insightClass));
     }
 
-    public function load(string $insight, string $dir, array $config): Insight
+    public function load(string $insightClass, string $dir, array $config): Insight
     {
         /** @var SniffContract $sniff */
-        $sniff = new $insight();
+        $sniff = new $insightClass();
 
         foreach ($config as $property => $value) {
             $sniff->{$property} = $value;

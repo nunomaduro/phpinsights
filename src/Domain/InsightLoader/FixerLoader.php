@@ -20,9 +20,9 @@ final class FixerLoader implements InsightLoader
         return array_key_exists(FixerInterface::class, class_implements($insightClass));
     }
 
-    public function load(string $insight, string $dir, array $config): Insight
+    public function load(string $insightClass, string $dir, array $config): Insight
     {
-        $fixer = new $insight();
+        $fixer = new $insightClass();
 
         $excludeConfig = [];
 

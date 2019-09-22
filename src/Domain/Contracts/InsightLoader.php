@@ -21,11 +21,13 @@ interface InsightLoader
     public function support(string $insightClass): bool;
 
     /**
-     * @param string $insight
+     * Create a new instance of insight.
+     *
+     * @param string $insightClass
      * @param string $dir
-     * @param array<string, string|array> $config
+     * @param array<string, string|array> $config Related to $insightClass
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight
      */
-    public function load(string $insight, string $dir, array $config): Insight;
+    public function load(string $insightClass, string $dir, array $config): Insight;
 }

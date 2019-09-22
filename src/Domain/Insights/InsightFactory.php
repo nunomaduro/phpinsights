@@ -105,7 +105,7 @@ final class InsightFactory
             $this->filesRepository
         );
 
-        // Add php cs sniffs
+        // Add insights
         $insights = $this->loadInsights($this->insightsClasses, $config);
         $this->insights = $insights;
         $runner->addInsights($insights);
