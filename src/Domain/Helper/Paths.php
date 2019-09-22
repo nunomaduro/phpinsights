@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Helper\Comparator;
+namespace NunoMaduro\PhpInsights\Domain\Helper;
 
 /**
  * @internal
  */
-final class PathComparator
+final class Paths
 {
     public static function areEqual(string $pathA, string $pathB): bool
     {

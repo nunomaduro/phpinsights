@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
-use NunoMaduro\PhpInsights\Domain\Helper\Comparator\PathComparator;
+use NunoMaduro\PhpInsights\Domain\Helper\Paths;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -143,7 +143,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
             return false;
         }
         foreach ($this->excludedFiles as $excludedFile) {
-            if (PathComparator::areEqual($this->dir . DIRECTORY_SEPARATOR . $excludedFile, $path)) {
+            if (Paths::areEqual($this->dir . DIRECTORY_SEPARATOR . $excludedFile, $path)) {
                 return true;
             }
         }
