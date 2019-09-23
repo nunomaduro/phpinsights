@@ -63,8 +63,7 @@ final class Console implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void
-    {
+    ): void {
         $results = $insightCollection->results();
 
         $this->summary($results, $dir)
@@ -138,10 +137,9 @@ final class Console implements Formatter
     private function code(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
-        $this->style->writeln(sprintf("[CODE] %s within <title>%s</title> lines",
+        $this->style->writeln(sprintf('[CODE] %s within <title>%s</title> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code())->getValue($insightCollection->getCollector())
         ));
@@ -174,11 +172,10 @@ final class Console implements Formatter
     private function complexity(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity",
+        $this->style->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -197,11 +194,10 @@ final class Console implements Formatter
     private function architecture(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</title> files",
+        $this->style->writeln(sprintf('[ARCHITECTURE] %s within <title>%s</title> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Files())->getValue($insightCollection->getCollector())
         ));
@@ -233,8 +229,7 @@ final class Console implements Formatter
      */
     private function miscellaneous(
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
         $message = sprintf(
@@ -267,8 +262,7 @@ final class Console implements Formatter
         InsightCollection $insightCollection,
         array $metrics,
         string $dir
-    ): self
-    {
+    ): self {
         $previousCategory = null;
 
         foreach ($metrics as $metricClass) {
@@ -286,7 +280,7 @@ final class Console implements Formatter
 
                 $previousCategory = $category;
 
-                $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
+                $issue = "\n<fg=red>•</> [${category}] <bold>{$insight->getTitle()}</bold>";
 
                 if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
@@ -328,7 +322,7 @@ final class Console implements Formatter
                         $detailString .= ($detailString !== null ? ': ' : '') . $detail->getMessage();
                     }
 
-                    $issue .= "\n  $detailString";
+                    $issue .= "\n  ${detailString}";
                 }
 
                 if (! $this->style->getOutput()->isVerbose() && $totalDetails > 3) {
@@ -343,7 +337,6 @@ final class Console implements Formatter
 
         return $this;
     }
-
 
     /**
      * Returns the percentage as 5 chars string.

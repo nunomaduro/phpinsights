@@ -420,6 +420,297 @@ This sniff verifies that classes are instantiated with parentheses.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff`
 
+## No trailing comma in singleline array <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer remove trailing commas in list function calls.
+
+**Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer`
+
+## No whitespace before comma in array <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+In array declaration, there MUST NOT be a whitespace before each comma.
+
+**Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer::class => [
+    'after_heredoc' => false, // Whether the whitespace between heredoc end and comma should be removed.
+]
+```
+</details>
+
+## Braces <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+The body of each structure must be enclosed by braces.
+Braces should be properly placed.
+Body of braces should be properly indented.
+
+**Insight Class**: `PhpCsFixer\Fixer\Basic\BracesFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Basic\BracesFixer::class => [
+    'allow_single_line_closure' => false,
+    'position_after_anonymous_constructs' => 'same', // possible values ['same', 'next']
+    'position_after_control_structures' => 'same', // possible values ['same', 'next']
+    'position_after_functions_and_oop_constructs' => 'same', // possible values ['same', 'next']
+]
+```
+</details>
+
+## Encoding <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+PHP code must use only UTF-8 without BOM (remove BOM).
+
+**Insight Class**: `PhpCsFixer\Fixer\Basic\EncodingFixer`
+
+## Lowercase static reference <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Class static references `self`, `static` and `parent` must be in lower case.
+
+**Insight Class**: `PhpCsFixer\Fixer\Casing\LowercaseStaticReferenceFixer`
+
+## Magic constant casing <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Magic constants should be referred to using the correct casing.
+
+**Insight Class**: `PhpCsFixer\Fixer\Casing\MagicConstantCasingFixer`
+
+## Magic method casing <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Magic method definitions and calls must be using the correct casing.
+
+**Insight Class**: `PhpCsFixer\Fixer\Casing\MagicMethodCasingFixer`
+
+## Native function casing <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Function defined by PHP should be called using the correct casing.
+
+**Insight Class**: `PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer`
+
+## Native function type declaration casing <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Native type hints for functions should use the correct case.
+
+**Insight Class**: `PhpCsFixer\Fixer\Casing\NativeFunctionTypeDeclarationCasingFixer`
+
+## Cast spaces <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+A single space or none should be between cast and variable.
+
+**Insight Class**: `PhpCsFixer\Fixer\CastNotation\CastSpacesFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\CastNotation\CastSpacesFixer::class => [
+    'space' => 'single' // possible values ['single', 'none']
+]
+```
+</details>
+
+## Class definition fixer <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+Whitespace around the keywords of a class, trait or interfaces definition should be one space.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\ClassDefinitionFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ClassNotation\ClassDefinitionFixer::class => [
+    'multi_line_extends_each_single_line' => false,
+    'single_item_single_line' => false,
+    'single_line' => false,
+]
+```
+</details>
+
+## No blank lines after class opening <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Ensure there is no code on the same line as the PHP open tag and it is followed by a blank line.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\NoBlankLinesAfterClassOpeningFixer`
+
+## No trailing whitespace in comment <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+There must be no trailing spaces inside comment or PHPDoc.
+
+**Insight Class**: `PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer`
+
+## Switch case semicolon to colon <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+A case should be followed by a colon and not a semicolon.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\SwitchCaseSemicolonToColonFixer`
+
+## Switch case space <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer removes extra spaces between colon and case value.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\SwitchCaseSpaceFixer`
+
+## Function declaration <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+Spaces should be properly placed in a function declaration.
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer::class => [
+    'closure_function_spacing' => 'one' // possible values ['one', 'none']
+]
+```
+</details>
+
+## Function typehint space <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer add missing space between function's argument and its typehint.
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer`
+
+## Binary operator space <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+Binary operators should be surrounded by space as configured.
+
+**Insight Class**: `PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class => [
+    'align_double_arrow' => false, // Whether to apply, remove or ignore double arrows alignment: possibles values [true, false, null]
+    'align_equals' => false, // Whether to apply, remove or ignore equals alignment: possibles values [true, false, null]
+    'default' => 'single_space', // default fix strategie: possibles values ['align', 'align_single_space', 'align_single_space_minimal', 'single_space', 'no_space', null]
+]
+```
+</details>
+
+## Standardize not equals <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer replace all `<>` with `!=`.
+
+**Insight Class**: `PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer`
+
+## Align multiline comment <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+Each line of multi-line DocComments must have an asterisk and must be aligned with the first one.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\AlignMultilineCommentFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Phpdoc\AlignMultilineCommentFixer::class => [
+    'comment_type' => 'phpdocs_only' // possible values ['phpdocs_only', 'phpdocs_like', 'all_multiline']
+]
+```
+</details>
+
+## Full opening tag <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+PHP code must use the long `<?php` tags or short-echo `<?=` tags and not other tag variations.
+
+**Insight Class**: `PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer`
+
+## No singleline whitespace before semicolons <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Single-line whitespace before closing semicolon are prohibited.
+
+**Insight Class**: `PhpCsFixer\Fixer\Semicolon\NoSinglelineWhitespaceBeforeSemicolonsFixer`
+
+## Single quote <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+This fixer converts double quotes to single quotes for simple strings.
+
+**Insight Class**: `PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer::class => [
+    'strings_containing_single_quote_chars' => false,
+]
+```
+</details>
+
+## Method chaining indentation <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Method chaining must be properly indented.
+Method chaining with different levels of indentation is not supported.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer`
+
+## No extra blank lines <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+This fixer removes extra blank lines and/or blank lines following configuration.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer::class => [
+    'tokens' => ['extra'], // possibles values ['break', 'case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'return', 'square_brace_block', 'switch', 'throw', 'use', 'use_trait']
+]
+```
+</details>
+
+## No spaces around offset <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+There must not be spaces around offset braces.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer::class => [
+    'positions' => ['inside', 'outside'],
+]
+```
+</details>
+
+## No spaces inside parenthesis <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+There must not be a space after the opening parenthesis.
+There must not be a space before the closing parenthesis.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoSpacesInsideParenthesisFixer`
+
+## No trailing whitespace <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer removes trailing whitespace at the end of non-blank lines.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoTrailingWhitespaceFixer`
+
+## No whitespace in blank line <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer removes trailing whitespace at the end of blank lines.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer`
+
+## Single blank line at eof <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+A PHP file without end tag must always end with a single empty line feed.
+
+**Insight Class**: `PhpCsFixer\Fixer\Whitespace\SingleBlankLineAtEofFixer`
+
 <!--
 Insight template
 ##  <Badge text="^1.0"/> <Badge text="Style" type="warn"/>

@@ -22,7 +22,6 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
         return 'Define `globals` is prohibited';
     }
 
-
     /**
      * {@inheritdoc}
      */

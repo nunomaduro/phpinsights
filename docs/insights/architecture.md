@@ -190,6 +190,113 @@ This sniff reports use of superfluous prefix or suffix "Trait" for traits.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff`
 
+## Ordered class elements <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+
+This sniff orders the elements of classes/interfaces/traits.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer::class => [
+    'order' => [ // List of strings defining order of elements.
+        'use_trait',
+        'constant_public',
+        'constant_protected',
+        'constant_private',
+        'property_public',
+        'property_protected',
+        'property_private',
+        'construct',
+        'destruct',
+        'magic',
+        'phpunit',
+        'method_public',
+        'method_protected',
+        'method_private',  
+    ],
+    'sortAlgorithm' => 'none' // possible values ['none', 'alpha']
+]
+```
+</details>
+
+## Single class element per statement <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+
+There must not be more than one property or constant declared per statement.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\SingleClassElementPerStatementFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ClassNotation\SingleClassElementPerStatementFixer::class => [
+    'elements' => [
+        'const',
+        'property',
+    ],
+]
+```
+</details>
+
+## Ordered imports <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+
+This sniff order `use` statements (import of classes).
+
+**Insight Class**: `PhpCsFixer\Fixer\Import\OrderedImportsFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
+    'import_order' => ['class', 'const', 'function'],
+    'sort_algorithm' => 'alpha', // possible values ['alpha', 'length', 'none']
+]
+```
+</details>
+
+## Single import pert statement <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/>
+
+There must be one `use` keyword per declaration.
+
+**Insight Class**: `PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer`
+
+## Protected to private <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/>
+
+This fixer converts `protected` variables and methods to `private` where possible.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer`
+
+## Method argument space <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
+
+In method arguments and method call, there must not be a space before each comma and there must be one space after each comma. 
+Argument lists may be split across multiple lines, where each subsequent line is indented once. 
+When doing so, the first item in the list must be on the next line, and there must be only one argument per line.
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class => [
+    'after_heredoc' => false,
+    'ensure_fully_multiline' => false,
+    'keep_multiple_spaces_after_comma' => false,
+    'on_multiline' => 'ignore' // possible values ['ignore', 'ensure_single_line', 'ensure_fully_multiline']
+]
+```
+</details>
+
+## Void return <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/>
+
+This fixer add `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer`
+
 <!--
 Insight template
 ##  <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>

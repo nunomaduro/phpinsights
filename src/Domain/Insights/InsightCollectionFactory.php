@@ -51,8 +51,7 @@ final class InsightCollectionFactory
         array $config,
         string $dir,
         OutputInterface $consoleOutput
-    ): InsightCollection
-    {
+    ): InsightCollection {
         try {
             $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();
@@ -62,7 +61,6 @@ final class InsightCollectionFactory
         }
 
         $collector = $this->analyser->analyse($dir, $files);
-        /** @var \Symfony\Component\DependencyInjection\Container $container */
 
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {
@@ -74,7 +72,6 @@ final class InsightCollectionFactory
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(static function (string $insightClass) use ($insightFactory, $collector, $config, $consoleOutput) {
                 if (! array_key_exists(Insight::class, class_implements($insightClass))) {
-
                     return $insightFactory->makeFrom(
                         $insightClass,
                         $config,
