@@ -28,6 +28,22 @@ use PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\SwitchDeclarationSni
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff;
 use PHP_CodeSniffer\Standards\Zend\Sniffs\Debug\CodeAnalyzerSniff;
+use PhpCsFixer\Fixer\Alias\NoMixedEchoPrintFixer;
+use PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer;
+use PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer;
+use PhpCsFixer\Fixer\CastNotation\NoShortBoolCastFixer;
+use PhpCsFixer\Fixer\CastNotation\ShortScalarCastFixer;
+use PhpCsFixer\Fixer\ControlStructure\NoAlternativeSyntaxFixer;
+use PhpCsFixer\Fixer\ControlStructure\NoSuperfluousElseifFixer;
+use PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer;
+use PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer;
+use PhpCsFixer\Fixer\FunctionNotation\CombineNestedDirnameFixer;
+use PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer;
+use PhpCsFixer\Fixer\Operator\NewWithBracesFixer;
+use PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer;
+use PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer;
+use PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer;
+use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
@@ -111,6 +127,22 @@ final class Code implements HasValue, HasInsights
             DuplicateAssignmentToVariableSniff::class,
             // FullyQualifiedExceptionsSniff::class,
             // FullyQualifiedGlobalConstantsSniff::class,
+            TernaryToNullCoalescingFixer::class,
+            CombineNestedDirnameFixer::class,
+            DeclareEqualNormalizeFixer::class,
+            ExplicitStringVariableFixer::class,
+            NewWithBracesFixer::class,
+            NoAlternativeSyntaxFixer::class,
+            NoMixedEchoPrintFixer::class,
+            NoMultilineWhitespaceAroundDoubleArrowFixer::class,
+            NoShortBoolCastFixer::class,
+            NoSuperfluousElseifFixer::class,
+            NoUnneededControlParenthesesFixer::class,
+            NoUselessElseFixer::class,
+            NormalizeIndexBraceFixer::class,
+            ObjectOperatorWithoutWhitespaceFixer::class,
+            ShortScalarCastFixer::class,
+            TernaryOperatorSpacesFixer::class,
         ];
     }
 }

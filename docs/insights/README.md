@@ -75,6 +75,11 @@ For example, if you want to enable "Fully Qualified ClassName In Annotation":
 You could also simplify the namespace with `use My\Insight\Namespace;`
 :::
 
+::: tip
+Although `PHPInsights` has it's own insights, it can handle Sniffs from [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) and Fixers from [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer/).
+So you can add every sniff or fixers that implements `PHP_CodeSniffer\Sniffs\Sniff` or `PhpCsFixer\Fixer\FixerInterface`.
+:::
+
 ## Remove Insights
 
 If there is an insight that goes against your standards, you can add it in the `remove` section.

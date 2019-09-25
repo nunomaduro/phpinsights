@@ -21,20 +21,35 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Code\Functions;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code\Globally;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity\Complexity;
 use NunoMaduro\PhpInsights\Domain\Results;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Terminal;
 
 /**
  * @internal
  */
 final class Console implements Formatter
 {
-    /** @var Style */
+    private const BLOCK_SIZE = 9;
+    private const ALL_BLOCKS_IN_ROW = 4;
+    private const TWO_BLOCKS_IN_ROW = 2;
+    private const MIN_SPACEWIDTH = 5;
+    private const MAX_SPACEWIDTH = 15;
+
+    /**
+     * @var Style
+     */
     private $style;
+    /**
+     * @var int
+     */
+    private $totalWidth;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->style = new Style($input, $output);
+        $this->totalWidth = (new Terminal())->getWidth();
     }
 
     /**
@@ -48,8 +63,7 @@ final class Console implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void
-    {
+    ): void {
         $results = $insightCollection->results();
 
         $this->summary($results, $dir)
@@ -94,17 +108,20 @@ final class Console implements Formatter
         $structure = self::getPercentageAsString($results->getStructure());
         $style = self::getPercentageAsString($results->getStyle());
 
-        $output = <<<EOD
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
-      <fg=black;options=bold;$codeQualityColor>  {$codeQuality}  </>            <fg=black;options=bold;$complexityColor>  {$complexity}  </>            <fg=black;options=bold;$structureColor>  {$structure}  </>            <fg=black;options=bold;$styleColor>  {$style}  </>
-      <$codeQualityColor>         </>            <$complexityColor>         </>            <$structureColor>         </>            <$styleColor>         </>
+        $this->renderBlocksScores([
+            '%quality%' => $codeQuality,
+            '%quality_color%' => $codeQualityColor,
+            '%complexity%' => $complexity,
+            '%complexity_color%' => $complexityColor,
+            '%structure%' => $structure,
+            '%structure_color%' => $structureColor,
+            '%style%' => $style,
+            '%style_color%' => $styleColor,
+            '%subtitle%' => $subtitle,
+        ]);
 
-        <$subtitle>Code</>               <$subtitle>Complexity</>          <$subtitle>Architecture</>            <$subtitle>Style</>
-EOD;
-        $this->style->write($output);
         $this->style->newLine(2);
-
-        $this->style->writeln("Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100");
+        $this->style->writeln('Score scale: <fg=red>◼</> 1-49 <fg=yellow>◼</> 50-79 <fg=green>◼</> 80-100');
 
         return $this;
     }
@@ -120,10 +137,9 @@ EOD;
     private function code(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
-        $this->style->writeln(sprintf("[CODE] %s within <title>%s</title> lines",
+        $this->style->writeln(sprintf('[CODE] %s within <title>%s</title> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code())->getValue($insightCollection->getCollector())
         ));
@@ -137,20 +153,10 @@ EOD;
             Globally::class,
         ] as $metric) {
             $name = explode('\\', $metric);
-            $lines[end($name)] = (new $metric())->getPercentage($insightCollection->getCollector());
+            $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
-        foreach ($lines as $name => $percentage) {
-            $percentage = number_format((float) $percentage, 1, '.', '');
-
-            $takenSize = strlen($name . $percentage);
-
-            $this->style->writeln(sprintf('%s %s %s %%',
-                $name,
-                str_repeat('.', 70 - $takenSize),
-                $percentage
-            ));
-        }
+        $this->writePercentageLines($lines);
 
         return $this;
     }
@@ -166,11 +172,10 @@ EOD;
     private function complexity(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf("[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity",
+        $this->style->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -189,11 +194,10 @@ EOD;
     private function architecture(
         InsightCollection $insightCollection,
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf("[ARCHITECTURE] %s within <title>%s</title> files",
+        $this->style->writeln(sprintf('[ARCHITECTURE] %s within <title>%s</title> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Files())->getValue($insightCollection->getCollector())
         ));
@@ -208,20 +212,10 @@ EOD;
             ArchitectureTraits::class,
         ] as $metric) {
             $name = explode('\\', $metric);
-            $lines[end($name)] = (new $metric())->getPercentage($insightCollection->getCollector());
+            $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
-        foreach ($lines as $name => $percentage) {
-            $percentage = number_format((float) $percentage, 1, '.', '');
-
-            $takenSize = strlen($name . $percentage);
-
-            $this->style->writeln(sprintf('%s %s %s %%',
-                $name,
-                str_repeat('.', 70 - $takenSize),
-                $percentage
-            ));
-        }
+        $this->writePercentageLines($lines);
 
         return $this;
     }
@@ -235,8 +229,7 @@ EOD;
      */
     private function miscellaneous(
         Results $results
-    ): self
-    {
+    ): self {
         $this->style->newLine();
 
         $message = sprintf(
@@ -269,8 +262,7 @@ EOD;
         InsightCollection $insightCollection,
         array $metrics,
         string $dir
-    ): self
-    {
+    ): self {
         $previousCategory = null;
 
         foreach ($metrics as $metricClass) {
@@ -288,7 +280,7 @@ EOD;
 
                 $previousCategory = $category;
 
-                $issue = "\n<fg=red>•</> [$category] <bold>{$insight->getTitle()}</bold>";
+                $issue = "\n<fg=red>•</> [${category}] <bold>{$insight->getTitle()}</bold>";
 
                 if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
@@ -330,7 +322,7 @@ EOD;
                         $detailString .= ($detailString !== null ? ': ' : '') . $detail->getMessage();
                     }
 
-                    $issue .= "\n  $detailString";
+                    $issue .= "\n  ${detailString}";
                 }
 
                 if (! $this->style->getOutput()->isVerbose() && $totalDetails > 3) {
@@ -345,7 +337,6 @@ EOD;
 
         return $this;
     }
-
 
     /**
      * Returns the percentage as 5 chars string.
@@ -381,5 +372,149 @@ EOD;
         }
 
         return 'red';
+    }
+
+    /**
+     * @param array<string, float|string> $lines
+     */
+    private function writePercentageLines(array $lines): void
+    {
+        $dottedLineLength = $this->totalWidth <= 70 ? $this->totalWidth : 70;
+
+        foreach ($lines as $name => $percentage) {
+            $percentage = number_format((float) $percentage, 1, '.', '');
+            $takenSize = strlen($name . $percentage) + 4; // adding 3 space and percent sign
+
+            $this->style->writeln(sprintf('%s %s %s %%',
+                $name,
+                str_repeat('.', $dottedLineLength - $takenSize),
+                $percentage
+            ));
+        }
+    }
+
+    /**
+     * @param array<string, string> $templates
+     */
+    private function renderBlocksScores(array $templates): void
+    {
+        $blockSize = self::BLOCK_SIZE;
+        $disposition = self::ALL_BLOCKS_IN_ROW; // 4 blocks in a row
+        $spaceWidth = $this->getSpaceWidth($this->totalWidth, $blockSize, $disposition);
+
+        if ($this->totalWidth < (($blockSize * $disposition) + 5 * $spaceWidth)) {
+            $disposition = self::TWO_BLOCKS_IN_ROW; // Two block in a row
+            $spaceWidth = $this->getSpaceWidth($this->totalWidth, $blockSize, $disposition);
+        }
+
+        $templates = array_merge($templates, [
+            '%block_size%' => str_pad('', $blockSize),
+        ]);
+
+        $quality = <<<EOD
+<%quality_color%>%block_size%</>
+<fg=black;options=bold;%quality_color%>  %quality%  </>
+<%quality_color%>%block_size%</>
+EOD;
+        $complexity = <<<EOD
+<%complexity_color%>%block_size%</>
+<fg=black;options=bold;%complexity_color%>  %complexity%  </>
+<%complexity_color%>%block_size%</>
+EOD;
+        $structure = <<<EOD
+<%structure_color%>%block_size%</>
+<fg=black;options=bold;%structure_color%>  %structure%  </>
+<%structure_color%>%block_size%</>
+EOD;
+        $style = <<<EOD
+<%style_color%>%block_size%</>
+<fg=black;options=bold;%style_color%>  %style%  </>
+<%style_color%>%block_size%</>
+EOD;
+
+        $styleDefinition = clone Table::getStyleDefinition('compact');
+
+        $styleDefinition->setVerticalBorderChars(
+            str_pad('', (int) floor($spaceWidth / 2)), // outside
+            '' // inside
+        );
+
+        $styleDefinition->setPadType(STR_PAD_BOTH);
+        $styleDefinition->setCellRowContentFormat('%s');
+
+        $table = new Table($this->style);
+        $table->setStyle($styleDefinition);
+
+        $table->setColumnWidth(0, $blockSize + $spaceWidth);
+        $table->setColumnWidth(1, $blockSize + $spaceWidth);
+        $table->setColumnWidth(2, $blockSize + $spaceWidth);
+        $table->setColumnWidth(3, $blockSize + $spaceWidth);
+
+        if ($disposition === self::ALL_BLOCKS_IN_ROW) {
+            $table->setRows([
+                [
+                    strtr($quality, $templates),
+                    strtr($complexity, $templates),
+                    strtr($structure, $templates),
+                    strtr($style, $templates),
+                ],
+                ['', '', '', ''],
+                [
+                    strtr('<%subtitle%>Code</>', $templates),
+                    strtr('<%subtitle%> Complexity</>', $templates),
+                    strtr('<%subtitle%> Architecture</>', $templates),
+                    strtr('<%subtitle%>Style</>', $templates),
+                ],
+            ]);
+        }
+        if ($disposition === self::TWO_BLOCKS_IN_ROW) {
+            $table->setRows([
+                [
+                    strtr($quality, $templates),
+                    strtr($complexity, $templates),
+                ],
+                ['', ''],
+                [
+                    strtr('<%subtitle%>Code</>', $templates),
+                    strtr('<%subtitle%> Complexity</>', $templates),
+                ],
+                ['', ''],
+                [
+                    strtr($structure, $templates),
+                    strtr($style, $templates),
+                ],
+                ['', ''],
+                [
+                    strtr('<%subtitle%> Architecture</>', $templates),
+                    strtr('<%subtitle%>Style</>', $templates),
+                ],
+            ]);
+        }
+
+        $table->render();
+    }
+
+    /**
+     * Total width of terminal - block size * disposition (4 or 2) / number of space block.
+     *
+     * @param int $totalWidth
+     * @param int $blockSize
+     * @param int $disposition
+     *
+     * @return int
+     */
+    private function getSpaceWidth(int $totalWidth, int $blockSize, int $disposition): int
+    {
+        $spaceWidth = (int) floor(($totalWidth - $blockSize * $disposition) / ($disposition + 1));
+
+        if ($spaceWidth > self::MAX_SPACEWIDTH) {
+            $spaceWidth = self::MAX_SPACEWIDTH;
+        }
+
+        if ($spaceWidth < self::MIN_SPACEWIDTH) {
+            $spaceWidth = self::MIN_SPACEWIDTH;
+        }
+
+        return $spaceWidth;
     }
 }

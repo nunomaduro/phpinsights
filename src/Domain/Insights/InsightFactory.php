@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
+use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use NunoMaduro\PhpInsights\Domain\Runner;
-use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 use RuntimeException;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,15 +33,20 @@ final class InsightFactory
     private $insightsClasses;
 
     /**
-     * @var array<SniffDecorator>
+     * @var array<InsightContract>
      */
-    private $sniffs;
+    private $insights = [];
+
+    /**
+     * @var array<InsightLoader>
+     */
+    private $insightLoaders;
 
     /** @var bool */
     private $ran = false;
 
     /**
-     * Creates a new instance of Insight Factory
+     * Creates a new instance of Insight Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      * @param string $dir
@@ -51,6 +57,7 @@ final class InsightFactory
         $this->filesRepository = $filesRepository;
         $this->dir = $dir;
         $this->insightsClasses = $insightsClasses;
+        $this->insightLoaders = Container::make()->get(InsightLoader::INSIGHT_LOADER_TAG);
     }
 
     /**
@@ -68,65 +75,27 @@ final class InsightFactory
         string $errorClass,
         array $config,
         OutputInterface $consoleOutput
-    ): InsightContract
-    {
-        switch (true) {
-            case array_key_exists(SniffContract::class, class_implements($errorClass)):
-                $this->runInsightCollector($config, $consoleOutput);
+    ): InsightContract {
+        $this->runInsightCollector($config, $consoleOutput);
 
-                /** @var SniffDecorator $sniff */
-                foreach ($this->sniffs as $sniff) {
-                    if ($sniff->getInsightClass() === $errorClass) {
-                        return $sniff;
-                    }
-                }
-
-                throw new RuntimeException("The sniff has been removed somehow. This shouldn't happen.");
-            default:
-                throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
-        }
-    }
-
-    /**
-     * Returns the Sniffs PHP CS classes from the given array of Metrics.
-     *
-     * @param array<string> $insights
-     * @param array<string, array> $config
-     *
-     * @return array<SniffDecorator>
-     */
-    public function sniffsFrom(array $insights, array $config): array
-    {
-        $sniffs = [];
-
-        foreach ($insights as $insight) {
-            if (array_key_exists(SniffContract::class, class_implements($insight))) {
-                /** @var \PHP_CodeSniffer\Sniffs\Sniff $sniff */
-                $sniff = new $insight();
-
-                foreach ($config['config'][$insight] ?? [] as $property => $value) {
-                    $sniff->{$property} = $value;
-                }
-
-                $sniffs[] = new SniffDecorator(
-                    $sniff,
-                    $this->dir
-                );
+        /** @var InsightContract $insight */
+        foreach ($this->insights as $insight) {
+            if ($insight->getInsightClass() === $errorClass) {
+                return $insight;
             }
         }
 
-        return $sniffs;
+        throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
     }
 
     /**
-     * @param array<string, mixed> $config
+     * @param array<string, array> $config
      * @param \Symfony\Component\Console\Output\OutputInterface $consoleOutput
      */
     private function runInsightCollector(
         array $config,
         OutputInterface $consoleOutput
-    ): void
-    {
+    ): void {
         if ($this->ran === true) {
             return;
         }
@@ -136,13 +105,36 @@ final class InsightFactory
             $this->filesRepository
         );
 
-        // Add php cs sniffs
-        $sniffs = $this->sniffsFrom($this->insightsClasses, $config);
-        $this->sniffs = $sniffs;
-        $runner->addSniffs($sniffs);
+        // Add insights
+        $insights = $this->loadInsights($this->insightsClasses, $config);
+        $this->insights = $insights;
+        $runner->addInsights($insights);
 
         // Run it.
         $runner->run();
         $this->ran = true;
+    }
+
+    /**
+     * Return instancied insights.
+     *
+     * @param array<string> $insights
+     * @param array<string, array> $config
+     *
+     * @return array<InsightContract>
+     */
+    private function loadInsights(array $insights, array $config): array
+    {
+        $insightsAdded = [];
+        foreach ($insights as $insight) {
+            /** @var InsightLoader $loader */
+            foreach ($this->insightLoaders as $loader) {
+                if ($loader->support($insight)) {
+                    $insightsAdded[] = $loader->load($insight, $this->dir, $config['config'][$insight] ?? []);
+                }
+            }
+        }
+
+        return $insightsAdded;
     }
 }

@@ -105,8 +105,7 @@ final class File extends BaseFile
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners,
                                                          SplFileInfo $fileInfo
-    ): void
-    {
+    ): void {
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
         $this->process();
@@ -134,8 +133,7 @@ final class File extends BaseFile
         $data,
         $severity,
         $isFixable = false
-    ): bool
-    {
+    ): bool {
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
         $this->activeSniff->addDetails(

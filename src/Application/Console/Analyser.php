@@ -45,8 +45,7 @@ final class Analyser
         array $config,
         string $dir,
         OutputInterface $consoleOutput
-    ): Results
-    {
+    ): Results {
         $metrics = MetricsFinder::find();
 
         $insightCollection = $this->insightCollectionFactory

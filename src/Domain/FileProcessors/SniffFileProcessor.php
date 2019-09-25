@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
-use PHP_CodeSniffer\Sniffs\Sniff;
+use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -34,10 +35,22 @@ final class SniffFileProcessor implements FileProcessor
         $this->fileFactory = $fileFactory;
     }
 
-    public function addSniff(Sniff $sniff): void
+    public function support(InsightContract $insight): bool
     {
-        foreach ($sniff->register() as $token) {
-            $this->tokenListeners[$token][] = $sniff;
+        return $insight instanceof SniffDecorator;
+    }
+
+    public function addChecker(InsightContract $insight): void
+    {
+        if (! $insight instanceof SniffDecorator) {
+            throw new \RuntimeException(sprintf(
+                'Unable to add %s, not an Sniff instance',
+                get_class($insight)
+            ));
+        }
+
+        foreach ($insight->register() as $token) {
+            $this->tokenListeners[$token][] = $insight;
         }
     }
 

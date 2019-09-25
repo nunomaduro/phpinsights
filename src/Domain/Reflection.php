@@ -54,6 +54,22 @@ final class Reflection
     }
 
     /**
+     * Gets an private attribute value on the given instance.
+     *
+     * @param string $attribute
+     *
+     * @return mixed
+     */
+    public function get(string $attribute)
+    {
+        $property = $this->reflectionClass->getProperty($attribute);
+
+        $property->setAccessible(true);
+
+        return $property->getValue($this->instance);
+    }
+
+    /**
      * @param ReflectionClass $class
      * @param mixed $instance
      * @param string $attribute
@@ -66,8 +82,7 @@ final class Reflection
         $instance,
         string $attribute,
         $value
-    ): void
-    {
+    ): void {
         try {
             $property = $class->getProperty($attribute);
             $property->setAccessible(true);
@@ -86,21 +101,5 @@ final class Reflection
                 $value
             );
         }
-    }
-
-    /**
-     * Gets an private attribute value on the given instance.
-     *
-     * @param string $attribute
-     *
-     * @return mixed
-     */
-    public function get(string $attribute)
-    {
-        $property = $this->reflectionClass->getProperty($attribute);
-
-        $property->setAccessible(true);
-
-        return $property->getValue($this->instance);
     }
 }

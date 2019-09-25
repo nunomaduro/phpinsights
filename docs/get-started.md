@@ -81,6 +81,7 @@ For changing the output format you can add the `format` flag. The following form
 
 - console
 - json
+- checkstyle
 - html
 
 ```bash
