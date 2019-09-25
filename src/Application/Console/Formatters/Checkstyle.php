@@ -41,7 +41,7 @@ final class Checkstyle implements Formatter
         if (! extension_loaded('simplexml')) {
             throw new RuntimeException('To use checkstyle format install simplexml extension.');
         }
-        $checkstyle = new \SimpleXMLElement('<checkstyle/>');
+        $checkstyle = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><checkstyle/>');
 
         foreach ($metrics as $metricClass) {
             /** @var Insight $insight */
