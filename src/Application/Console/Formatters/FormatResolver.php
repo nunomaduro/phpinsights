@@ -27,25 +27,23 @@ final class FormatResolver
         InputInterface $input,
         OutputInterface $output,
         OutputInterface $consoleOutput
-    ): Formatter
-    {
+    ): Formatter {
         $requestedFormat = $input->getOption('format');
 
         if (! is_string($requestedFormat)) {
             throw new InvalidArgumentException(
-                "Format has to be a string."
+                'Format has to be a string.'
             );
         }
 
         $requestedFormat = strtolower($requestedFormat);
 
         if (! array_key_exists($requestedFormat, self::$formatters)) {
-            $consoleOutput->writeln("<fg=red>Could not find requested format [$requestedFormat], using fallback [console] instead.</>");
+            $consoleOutput->writeln("<fg=red>Could not find requested format [${requestedFormat}], using fallback [console] instead.</>");
         }
 
         $formatter = self::$formatters[$requestedFormat] ?? Console::class;
 
         return new $formatter($input, $output);
     }
-
 }

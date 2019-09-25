@@ -39,14 +39,13 @@ final class Json implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void
-    {
+    ): void {
         $results = $insightCollection->results();
 
         $data = [
-            "summary" => [
-                "code" => $results->getCodeQuality(),
-                "complexity" => $results->getComplexity(),
+            'summary' => [
+                'code' => $results->getCodeQuality(),
+                'complexity' => $results->getComplexity(),
                 'architecture' => $results->getStructure(),
                 'style' => $results->getStyle(),
                 'security issues' => $results->getTotalSecurityIssues(),
@@ -57,7 +56,7 @@ final class Json implements Formatter
         $json = json_encode($data);
 
         if ($json === false) {
-            throw new InvalidArgumentException("Failed parsing result to JSON.");
+            throw new InvalidArgumentException('Failed parsing result to JSON.');
         }
 
         $this->output->write($json);
@@ -74,8 +73,7 @@ final class Json implements Formatter
     private function issues(
         InsightCollection $insightCollection,
         array $metrics
-    ): array
-    {
+    ): array {
         $data = [];
 
         foreach ($metrics as $metricClass) {

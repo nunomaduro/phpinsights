@@ -19,9 +19,6 @@ final class DefaultPreset implements PresetContract
         return 'default';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function get(): array
     {
         return [
@@ -52,9 +49,6 @@ final class DefaultPreset implements PresetContract
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function shouldBeApplied(array $composer): bool
     {
         return true;
