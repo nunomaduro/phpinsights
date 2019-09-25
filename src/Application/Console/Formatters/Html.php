@@ -39,8 +39,7 @@ final class Html implements Formatter
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
-    ): void
-    {
+    ): void {
         $this->output->write($this->getTwig()->render('dashboard.html.twig', [
             'dir' => $dir,
             'results' => $insightCollection->results(),
