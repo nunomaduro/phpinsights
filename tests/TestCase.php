@@ -31,7 +31,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @throws ReflectionException
      */
-    public function invokeStaticMethod(
+    final public function invokeStaticMethod(
         string $class,
         string $methodName,
         array $parameters
@@ -51,7 +51,7 @@ abstract class TestCase extends BaseTestCase
      * @param string $dir
      * @return InsightCollection
      */
-    public function runAnalyserOnPreset(
+    final public function runAnalyserOnPreset(
         string $preset,
         array $filePaths,
         string $dir = ''
@@ -71,7 +71,7 @@ abstract class TestCase extends BaseTestCase
      * @param string        $dir
      * @return InsightCollection
      */
-    public function runAnalyserOnConfig(
+    final public function runAnalyserOnConfig(
         array $config,
         array $filePaths,
         string $dir = ''
@@ -106,7 +106,7 @@ abstract class TestCase extends BaseTestCase
      * @return LocalFile
      * @throws ReflectionException
      */
-    public static function prepareFixtureWithSniff(
+    final public static function prepareFixtureWithSniff(
         string $sniffClassName,
         string $fixtureFile,
         array $properties = []
@@ -136,7 +136,7 @@ abstract class TestCase extends BaseTestCase
         return new LocalFile($fixtureFile, $ruleset, $config);
     }
 
-    public static function getFilePathFromClass(string $className) : string
+    final public static function getFilePathFromClass(string $className) : string
     {
         $reflector = new ReflectionClass($className);
 
