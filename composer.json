@@ -16,6 +16,7 @@
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
         "composer/composer": "^1.7",
+        "friendsofphp/php-cs-fixer": "^2.15",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
         "phploc/phploc": "^5.0",
@@ -37,6 +38,9 @@
         "symfony/var-dumper": "^4.2",
         "symplify/easy-coding-standard": "^6.0",
         "thecodingmachine/phpstan-strict-rules": "^0.11.0"
+    },
+    "suggest": {
+        "ext-simplexml": "It is needed for the checkstyle formatter"
     },
     "autoload-dev": {
         "psr-4": {

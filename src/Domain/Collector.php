@@ -182,7 +182,6 @@ final class Collector
      */
     private $staticMethodCalls = 0;
 
-
     /**
      * @var string
      */
@@ -332,7 +331,7 @@ final class Collector
     }
 
     /**
-     * Increase the complexity of the analysis
+     * Increase the complexity of the analysis.
      *
      * @return void
      */
@@ -411,7 +410,7 @@ final class Collector
     }
 
     /**
-     * Increment if a calling a static method
+     * Increment if a calling a static method.
      *
      * @return void
      */
@@ -912,61 +911,6 @@ final class Collector
     }
 
     /**
-     * @param  array<float>  $array
-     *
-     * @return float
-     */
-    private function getAverage(array $array): float
-    {
-        return $this->divide($this->getSum($array), $this->getCount($array));
-    }
-
-    /**
-     * @param  array<string, float|int>  $array
-     *
-     * @return int
-     */
-    private function getCount(array $array): int
-    {
-        return count($array);
-    }
-
-    /**
-     * Returns the sum value from the given array.
-     *
-     * @param  array<string, float|int>  $array
-     *
-     * @return int|float
-     */
-    private function getSum(array $array)
-    {
-        return array_sum($array);
-    }
-
-    /**
-     * Returns the maximum value from the given array.
-     *
-     * @param  array<string, float|int>  $array
-     *
-     * @return int|float
-     */
-    private function getMaximum(array $array)
-    {
-        return (bool) count($array) ? max($array) : 0;
-    }
-
-    /**
-     * @param  float  $x
-     * @param  float  $y
-     *
-     * @return float
-     */
-    private function divide(float $x, float $y): float
-    {
-        return $y !== 0.0 ? $x / $y : 0;
-    }
-
-    /**
      * @return int
      */
     public function getMaximumClassLength(): int
@@ -1023,8 +967,6 @@ final class Collector
     }
 
     /**
-     * Return
-     *
      * @return array<string, float>
      */
     public function getClassComplexity(): array
@@ -1128,5 +1070,60 @@ final class Collector
     public function getConstants(): int
     {
         return count($this->getGlobalConstants()) + $this->getClassConstants();
+    }
+
+    /**
+     * @param  array<float>  $array
+     *
+     * @return float
+     */
+    private function getAverage(array $array): float
+    {
+        return $this->divide($this->getSum($array), $this->getCount($array));
+    }
+
+    /**
+     * @param  array<string, float|int>  $array
+     *
+     * @return int
+     */
+    private function getCount(array $array): int
+    {
+        return count($array);
+    }
+
+    /**
+     * Returns the sum value from the given array.
+     *
+     * @param  array<string, float|int>  $array
+     *
+     * @return int|float
+     */
+    private function getSum(array $array)
+    {
+        return array_sum($array);
+    }
+
+    /**
+     * Returns the maximum value from the given array.
+     *
+     * @param  array<string, float|int>  $array
+     *
+     * @return int|float
+     */
+    private function getMaximum(array $array)
+    {
+        return (bool) count($array) ? max($array) : 0;
+    }
+
+    /**
+     * @param  float  $x
+     * @param  float  $y
+     *
+     * @return float
+     */
+    private function divide(float $x, float $y): float
+    {
+        return $y !== 0.0 ? $x / $y : 0;
     }
 }

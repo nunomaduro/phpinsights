@@ -10,6 +10,15 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\FixmeSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
+use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
+use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
+use PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer;
 use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
@@ -54,6 +63,15 @@ final class Comments implements HasValue, HasPercentage, HasInsights
             TypeHintDeclarationSniff::class,
             UselessConstantTypeHintSniff::class,
             UselessInheritDocCommentSniff::class,
+            NoBreakCommentFixer::class,
+            MultilineCommentOpeningClosingFixer::class,
+            NoEmptyCommentFixer::class,
+            PhpdocIndentFixer::class,
+            PhpdocInlineTagFixer::class,
+            PhpdocScalarFixer::class,
+            PhpdocSeparationFixer::class,
+            PhpdocTrimFixer::class,
+            PhpdocVarAnnotationCorrectOrderFixer::class,
         ];
     }
 }
