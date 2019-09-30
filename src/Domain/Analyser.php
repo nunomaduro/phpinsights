@@ -84,7 +84,7 @@ final class Analyser
     private function analyseFile(Collector $collector, string $filename): void
     {
         $buffer = (string) \file_get_contents($filename);
-        $tokens = @\token_get_all($buffer);
+        $tokens = \token_get_all($buffer);
         $numTokens = \count($tokens);
 
         unset($buffer);
