@@ -31,7 +31,7 @@ abstract class Insight implements InsightContract
         $this->config = $config;
     }
 
-    public function getInsightClass(): string
+    final public function getInsightClass(): string
     {
         return static::class;
     }
