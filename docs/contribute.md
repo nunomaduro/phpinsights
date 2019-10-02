@@ -25,7 +25,7 @@ final class ForbiddenFinalClasses extends Insight
 }
 ```
 
-2. Attach the `Insight` to a specific inside `src/Domain/Metrics`:
+2. Attach the `Insight` to a specific Metric inside `src/Domain/Metrics`:
 
 ```php
 final class Classes implements HasInsights

@@ -40,10 +40,10 @@ By default, `phpinsights` will analyse all your php files in your project direct
 
 ::: tip For others preset
 In addition to theses folders :
-- With **laravel** preset, `phpinsights` will exclude `config`, `storage`, `resources`, `bootstrap`, `nova`, `database`, `server.php`, `_ide_helper.php`, `_ide_helper_models.php`, `app/Providers/TelescopeServiceProvider.php` and `public`.
-- With **symfony** preset, `phpinsights` will exclude `var`, `translations`, `config`, and `public`.
-- With **magento2** preset, `phpinsights` will exclude `bin`, `dev`, `generated`, `lib`, `phpserver`, `pub`, `setup`, `update`, `var`, `app/autoload.php`, `app/bootstrap.php`, `app/functions.php` and `index.php`.
-- With **drupal** preset, `phpinsights` will exclude `core`, `modules/contrib`, `sites`, `profiles/contrib`, and `themes/contrib`.
+- With the **laravel** preset, `phpinsights` will exclude `config`, `storage`, `resources`, `bootstrap`, `nova`, `database`, `server.php`, `_ide_helper.php`, `_ide_helper_models.php`, `app/Providers/TelescopeServiceProvider.php` and `public`.
+- With the **symfony** preset, `phpinsights` will exclude `var`, `translations`, `config`, and `public`.
+- With the **magento2** preset, `phpinsights` will exclude `bin`, `dev`, `generated`, `lib`, `phpserver`, `pub`, `setup`, `update`, `var`, `app/autoload.php`, `app/bootstrap.php`, `app/functions.php` and `index.php`.
+- With the **drupal** preset, `phpinsights` will exclude `core`, `modules/contrib`, `sites`, `profiles/contrib`, and `themes/contrib`.
 :::
 
 In your `phpinsights.php` file, you can add to the `exclude` key everything you want to exclude.

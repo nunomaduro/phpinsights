@@ -1,6 +1,6 @@
 # Architecture
 
-The following insights are in organised in differents metrics :
+The following insights are organised in differents metrics :
 
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes` <Badge text="Architecture\Classes" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer` <Badge text="Architecture\Composer" type="warn" vertical="middle"/>
@@ -13,7 +13,7 @@ The following insights are in organised in differents metrics :
 
 ## Forbidden normal classes <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
 
-This insight disallow usage of normal class. Class must be `abstract` or `final`.
+This insight disallows usage of normal classes. A Class must be `abstract` or `final`.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses`
 
@@ -47,7 +47,7 @@ This sniff checks the size of your classes/traits/interface
 
 ## Method per class limit <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
-This sniff checks if the number of method per class is under a limit.
+This sniff checks if the number of methods per class is under a limit.
 
 **Insight Class**: `ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff`
 
@@ -64,7 +64,7 @@ This sniff checks if the number of method per class is under a limit.
 
 ## Property per class limit <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
-This sniff checks if the number of property per class is under a limit.
+This sniff checks if the number of properties per class is under a limit.
 
 **Insight Class**: `ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff`
 
@@ -92,7 +92,7 @@ This sniff reports use of superfluous prefix or suffix "Interface" for interface
 
 ## Superfluous abstract class naming <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
 
-This sniff reports use of superfluous prefix or suffix "Abstract" for abstract class.
+This sniff reports use of superfluous prefix or suffix "Abstract" for abstract classes.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff`
 
@@ -104,7 +104,7 @@ This insight verifies there is `composer.json`.
 
 ## The name property in the `composer.json` <Badge text="^1.0"/> <Badge text="Architecture\Composer" type="warn"/>
 
-This insight checks if the name section in `composer.json` don't contains default values (e.g. `laravel/laravel` or `symfony/symfony`).
+This insight checks if the name section in `composer.json` contains default values (e.g. `laravel/laravel` or `symfony/symfony`).
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName`
 
@@ -122,7 +122,7 @@ This insight verifies that the `composer.lock` is not outdated.
 
 ## Define `globals` is prohibited <Badge text="^1.0"/> <Badge text="Architecture\Constants" type="warn"/>
 
-This insight disallow defining `globals`.
+This insight disallows defining `globals`.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants`
 
@@ -134,7 +134,7 @@ This sniff reports use of superfluous prefix or suffix "Exception" for exception
 
 ## Function length <Badge text="^1.0"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
 
-This sniff checks size of functions
+This sniff checks the size of functions
 
 **Insight Class**: `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff`
 
@@ -162,7 +162,7 @@ This sniff enforces one space after namespace, disallows content between namespa
 
 ## Useless Alias <Badge text="^1.0"/> <Badge text="Architecture\Namespaces" type="warn"/>
 
-This sniff looks for use alias that is same as unqualified name.
+This sniff looks for use alias that is the same as the unqualified name.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff`
 
@@ -174,7 +174,7 @@ This sniff verifies that compound namespaces are not defined too deep.
 
 ## Forbidden traits <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>
 
-This insight disallow traits usage.
+This insight disallows trait usage.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits`
 
@@ -243,7 +243,7 @@ There must not be more than one property or constant declared per statement.
 
 ## Ordered imports <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
 
-This sniff order `use` statements (import of classes).
+This sniff orders `use` statements (import of classes).
 
 **Insight Class**: `PhpCsFixer\Fixer\Import\OrderedImportsFixer`
 
@@ -272,7 +272,7 @@ This fixer converts `protected` variables and methods to `private` where possibl
 
 ## Method argument space <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
 
-In method arguments and method call, there must not be a space before each comma and there must be one space after each comma. 
+In method arguments and method calls, there must not be a space before each comma and there must be one space after each comma. 
 Argument lists may be split across multiple lines, where each subsequent line is indented once. 
 When doing so, the first item in the list must be on the next line, and there must be only one argument per line.
 
@@ -293,7 +293,7 @@ When doing so, the first item in the list must be on the next line, and there mu
 
 ## Void return <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/>
 
-This fixer add `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
+This fixer adds a `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer`
 
