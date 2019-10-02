@@ -1,6 +1,6 @@
 # Complexity
 
-The Complexity section is for now only one Insight in one Metric:
+For now the Complexity section is only one Insight in one Metric:
 
 * `NunoMaduro\PhpInsights\Domain\Metrics\Complexity\Complexity` <Badge text="Complexity" type="warn" vertical="middle"/>
 
