@@ -2,6 +2,10 @@ module.exports = {
   title: 'PHP Insights',
   description: 'The perfect starting point to analyze the code quality of your PHP projects',
   sidebar: true,
+  head: [
+    ['link', { rel: 'icon', href: '/heart.png' }],
+    ['link', { rel: 'icon', href: '/heart.svg', type: 'image/svg+xml' }],
+  ],
   themeConfig: {
     repo: 'nunomaduro/phpinsights',
     sidebar: [
