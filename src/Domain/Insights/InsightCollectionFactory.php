@@ -76,7 +76,7 @@ final class InsightCollectionFactory
             $insightsClasses = array_merge($insightsClasses, $this->getInsights($metricClass));
         }
 
-        $insightFactory = new InsightFactory($this->filesRepository, $dir, $insightsClasses, $this->config);
+        $insightFactory = new InsightFactory($this->filesRepository, $insightsClasses, $this->config);
         $insightsForCollection = [];
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(function (string $insightClass) use ($insightFactory, $collector, $consoleOutput) {

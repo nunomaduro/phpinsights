@@ -55,17 +55,16 @@ final class InsightFactory
      * Creates a new instance of Insight Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
-     * @param string $dir
      * @param array<string> $insightsClasses
      * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
      */
-    public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses, Configuration $config)
+    public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config)
     {
         $this->filesRepository = $filesRepository;
-        $this->dir = $dir;
         $this->insightsClasses = $insightsClasses;
         $this->insightLoaders = Container::make()->get(InsightLoader::INSIGHT_LOADER_TAG);
         $this->config = $config;
+        $this->dir = $config->getDirectory();
     }
 
     /**

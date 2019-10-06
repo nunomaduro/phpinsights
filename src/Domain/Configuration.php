@@ -195,7 +195,7 @@ final class Configuration
                 }
                 if (! is_array($insights)) {
                     throw new InvalidConfiguration(sprintf(
-                        'Added insights for metric "%s" should be an array.',
+                        'Added insights for metric "%s" should be in an array.',
                         $metric
                     ));
                 }
