@@ -84,9 +84,9 @@ final class ConfigResolverTest extends TestCase
 
         $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
 
-        self::assertContains('my/path', $finalConfig->getExclude());
+        self::assertContains('my/path', $finalConfig->getExcludes());
         // assert we don't replace the first value
-        self::assertContains('bower_components', $finalConfig->getExclude());
+        self::assertContains('bower_components', $finalConfig->getExcludes());
         self::assertArrayHasKey(DocCommentSpacingSniff::class, $finalConfig->getConfig());
         // assert we replace the config value
         self::assertEquals(

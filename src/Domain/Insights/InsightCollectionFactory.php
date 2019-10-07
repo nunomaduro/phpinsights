@@ -64,7 +64,7 @@ final class InsightCollectionFactory
         try {
             $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();
-            }, iterator_to_array($this->filesRepository->within($dir, $this->config->getExclude())->getFiles()));
+            }, iterator_to_array($this->filesRepository->within($dir, $this->config->getExcludes())->getFiles()));
         } catch (\InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
@@ -115,6 +115,6 @@ final class InsightCollectionFactory
         $insights = array_merge($insights, $toAdd);
 
         // Remove insights based on config.
-        return array_diff($insights, $this->config->getRemove());
+        return array_diff($insights, $this->config->getRemoves());
     }
 }

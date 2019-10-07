@@ -130,7 +130,7 @@ final class Configuration
     /**
      * @return array<string>
      */
-    public function getExclude(): array
+    public function getExcludes(): array
     {
         return $this->exclude;
     }
@@ -138,7 +138,7 @@ final class Configuration
     /**
      * @return array<string>
      */
-    public function getRemove(): array
+    public function getRemoves(): array
     {
         return $this->remove;
     }
