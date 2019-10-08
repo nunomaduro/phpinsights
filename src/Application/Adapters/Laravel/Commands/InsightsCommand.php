@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel\Commands;
 
 use Illuminate\Console\Command;
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Commands\AnalyseCommand;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
+use NunoMaduro\PhpInsights\Application\DirectoryResolver;
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 
@@ -19,19 +23,29 @@ final class InsightsCommand extends Command
 
     protected $description = 'Analyze the code quality';
 
-    public function handle(AnalyseCommand $analyseCommand): int
+    public function handle(): int
     {
         Kernel::bootstrap();
 
-        $configPath = $this->input->getOption('config-path');
+        $configPath = ConfigResolver::resolvePath($this->input);
 
-        if (is_string($configPath) && ! file_exists($configPath)) {
+        if (! file_exists($configPath)) {
             $this->output->error('First, publish the configuration using: php artisan vendor:publish');
             return 1;
         }
 
-        $output = (new Reflection($this->output))->get('output');
+        $configuration = require $configPath;
+        $configuration = ConfigResolver::resolve($configuration, DirectoryResolver::resolve($this->input));
 
+        $container = Container::make();
+        if (! $container instanceof \League\Container\Container) {
+            throw new \RuntimeException('Container should be League Container instance');
+        }
+
+        $container->add(Configuration::class, $configuration);
+        $analyseCommand = $container->get(AnalyseCommand::class);
+
+        $output = (new Reflection($this->output))->get('output');
         return $analyseCommand->__invoke($this->input, $output);
     }
 

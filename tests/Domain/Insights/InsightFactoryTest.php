@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightFactory;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
@@ -38,10 +39,11 @@ final class InsightFactoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $config = ConfigResolver::resolve([], '.');
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            '.',
-            static::$usedInsights
+            static::$usedInsights,
+            $config
         );
     }
 
@@ -50,12 +52,12 @@ final class InsightFactoryTest extends TestCase
         self::expectException(\RuntimeException::class);
         self::expectExceptionMessage(sprintf('Insight `%s` is not instantiable.', FakeFileRepository::class));
 
-        $this->insightFactory->makeFrom(FakeFileRepository::class, [], new NullOutput());
+        $this->insightFactory->makeFrom(FakeFileRepository::class, new NullOutput());
     }
 
     public function testMakeFromSniffReturnInsight(): void
     {
-        $sniff = $this->insightFactory->makeFrom(ForbiddenPublicPropertySniff::class, [], new NullOutput());
+        $sniff = $this->insightFactory->makeFrom(ForbiddenPublicPropertySniff::class, new NullOutput());
 
         self::assertInstanceOf(SniffContract::class, $sniff);
         self::assertInstanceOf(SniffDecorator::class, $sniff);
@@ -63,7 +65,7 @@ final class InsightFactoryTest extends TestCase
 
     public function testMakeFromFixerReturnInsight(): void
     {
-        $fixer = $this->insightFactory->makeFrom(BacktickToShellExecFixer::class, [], new NullOutput());
+        $fixer = $this->insightFactory->makeFrom(BacktickToShellExecFixer::class, new NullOutput());
 
         self::assertInstanceOf(FixerInterface::class, $fixer);
         self::assertInstanceOf(FixerDecorator::class, $fixer);
@@ -78,8 +80,13 @@ final class InsightFactoryTest extends TestCase
                 ],
             ],
         ];
+        $configuration = ConfigResolver::resolve($config, '.');
+        $insightFactory = new InsightFactory(new FakeFileRepository([]),
+            static::$usedInsights,
+            $configuration
+        );
 
-        $sniff = $this->insightFactory->makeFrom(LineLengthSniff::class, $config, new NullOutput());
+        $sniff = $insightFactory->makeFrom(LineLengthSniff::class, new NullOutput());
         self::assertInstanceOf(SniffContract::class, $sniff);
         $reflection = new Reflection($sniff);
         $decoratedSniff = $reflection->get('sniff');
@@ -97,7 +104,13 @@ final class InsightFactoryTest extends TestCase
             ],
         ];
 
-        $fixer = $this->insightFactory->makeFrom(YodaStyleFixer::class, $config, new NullOutput());
+        $configuration = ConfigResolver::resolve($config, '.');
+        $insightFactory = new InsightFactory(new FakeFileRepository([]),
+            static::$usedInsights,
+            $configuration
+        );
+
+        $fixer = $insightFactory->makeFrom(YodaStyleFixer::class, new NullOutput());
 
         self::assertInstanceOf(FixerInterface::class, $fixer);
         $reflection = new Reflection($fixer);

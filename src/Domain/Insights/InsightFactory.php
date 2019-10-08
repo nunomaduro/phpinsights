@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
@@ -42,6 +43,11 @@ final class InsightFactory
      */
     private $insightLoaders;
 
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Configuration
+     */
+    private $config;
+
     /** @var bool */
     private $ran = false;
 
@@ -49,22 +55,22 @@ final class InsightFactory
      * Creates a new instance of Insight Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
-     * @param string $dir
      * @param array<string> $insightsClasses
+     * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
      */
-    public function __construct(FilesRepository $filesRepository, string $dir, array $insightsClasses)
+    public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config)
     {
         $this->filesRepository = $filesRepository;
-        $this->dir = $dir;
         $this->insightsClasses = $insightsClasses;
         $this->insightLoaders = Container::make()->get(InsightLoader::INSIGHT_LOADER_TAG);
+        $this->config = $config;
+        $this->dir = $config->getDirectory();
     }
 
     /**
      * Creates a Insight from the given error class.
      *
      * @param string $errorClass
-     * @param array<string, array> $config
      * @param OutputInterface $consoleOutput
      *
      * @return InsightContract
@@ -73,10 +79,9 @@ final class InsightFactory
      */
     public function makeFrom(
         string $errorClass,
-        array $config,
         OutputInterface $consoleOutput
     ): InsightContract {
-        $this->runInsightCollector($config, $consoleOutput);
+        $this->runInsightCollector($consoleOutput);
 
         /** @var InsightContract $insight */
         foreach ($this->insights as $insight) {
@@ -89,13 +94,10 @@ final class InsightFactory
     }
 
     /**
-     * @param array<string, array> $config
      * @param \Symfony\Component\Console\Output\OutputInterface $consoleOutput
      */
-    private function runInsightCollector(
-        array $config,
-        OutputInterface $consoleOutput
-    ): void {
+    private function runInsightCollector(OutputInterface $consoleOutput): void
+    {
         if ($this->ran === true) {
             return;
         }
@@ -106,7 +108,7 @@ final class InsightFactory
         );
 
         // Add insights
-        $insights = $this->loadInsights($this->insightsClasses, $config);
+        $insights = $this->loadInsights($this->insightsClasses);
         $this->insights = $insights;
         $runner->addInsights($insights);
 
@@ -119,18 +121,21 @@ final class InsightFactory
      * Return instancied insights.
      *
      * @param array<string> $insights
-     * @param array<string, array> $config
      *
      * @return array<InsightContract>
      */
-    private function loadInsights(array $insights, array $config): array
+    private function loadInsights(array $insights): array
     {
         $insightsAdded = [];
         foreach ($insights as $insight) {
             /** @var InsightLoader $loader */
             foreach ($this->insightLoaders as $loader) {
                 if ($loader->support($insight)) {
-                    $insightsAdded[] = $loader->load($insight, $this->dir, $config['config'][$insight] ?? []);
+                    $insightsAdded[] = $loader->load(
+                        $insight,
+                        $this->dir,
+                        $this->config->getConfigForInsight($insight)
+                    );
                 }
             }
         }

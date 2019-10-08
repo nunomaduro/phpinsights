@@ -84,14 +84,12 @@ abstract class TestCase extends BaseTestCase
 
         $insightCollectionFactory = new InsightCollectionFactory(
             $fileRepository,
-            $analyser
+            $analyser,
+            $config
         );
-
 
         return $insightCollectionFactory->get(
             MetricsFinder::find(),
-            $config,
-            $dir,
             new NullOutput
         );
     }

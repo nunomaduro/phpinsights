@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\Exceptions\PresetNotFound;
+use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 final class ConfigResolverTest extends TestCase
 {
@@ -80,26 +84,50 @@ final class ConfigResolverTest extends TestCase
 
         $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
 
-        self::assertArrayHasKey('exclude', $finalConfig);
-        self::assertArrayHasKey('config', $finalConfig);
-        self::assertContains('my/path', $finalConfig['exclude']);
+        self::assertContains('my/path', $finalConfig->getExcludes());
         // assert we don't replace the first value
-        self::assertContains('bower_components', $finalConfig['exclude']);
-        self::assertArrayHasKey(DocCommentSpacingSniff::class, $finalConfig['config']);
+        self::assertContains('bower_components', $finalConfig->getExcludes());
+        self::assertArrayHasKey(DocCommentSpacingSniff::class, $finalConfig->getConfig());
         // assert we replace the config value
         self::assertEquals(
             2,
-            $finalConfig['config'][DocCommentSpacingSniff::class]['linesCountBetweenDifferentAnnotationsTypes']
+            $finalConfig->getConfigForInsight(DocCommentSpacingSniff::class)['linesCountBetweenDifferentAnnotationsTypes']
         );
     }
 
     public function testUnknownPresetThrowException(): void
     {
-        self::expectException(PresetNotFound::class);
-        self::expectExceptionMessage('UnknownPreset not found');
+        self::expectException(InvalidOptionsException::class);
 
         $config = ['preset' => 'UnknownPreset'];
 
+        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+    }
+
+    public function testUnknowMetricAddedThrowException(): void
+    {
+        self::expectException(InvalidConfiguration::class);
+        self::expectErrorMessage('Unable to use "say" class as metric in section add.');
+
+        $config = ['add' => ['say' => 'hello']];
+        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+    }
+
+    public function testKnownMetricAddedWithNonArrayValueThrowException(): void
+    {
+        self::expectException(InvalidConfiguration::class);
+        self::expectErrorMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
+
+        $config = ['add' => [Classes::class => 'hello']];
+        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+    }
+
+    public function testAddUnknowClassThrowException(): void
+    {
+        self::expectException(InvalidConfiguration::class);
+        self::expectErrorMessage('Unable to add "hello" insight, class doesn\'t exists.');
+
+        $config = ['add' => [Classes::class => ['hello']]];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
     }
 }
