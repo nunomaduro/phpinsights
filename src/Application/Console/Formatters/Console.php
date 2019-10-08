@@ -6,6 +6,8 @@ namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Application\Console\Style;
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -64,12 +66,11 @@ final class Console implements Formatter
         $this->totalWidth = (new Terminal())->getWidth();
 
         $outputFormatterStyle = new OutputFormatterStyle();
-        $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
-    }
+        /** @var Configuration $config */
+        $config = Container::make()->get(Configuration::class);
 
-    public function injectFileLinkFormatter(FileLinkFormatter $fileLinkFormatter): void
-    {
-        $this->fileLinkFormatter = $fileLinkFormatter;
+        $this->fileLinkFormatter = $config->getFileLinkFormatter();
+        $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
     }
 
     /**

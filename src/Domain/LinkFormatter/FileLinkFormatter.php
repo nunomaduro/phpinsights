@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\LinkFormatter;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 
 /**
  * @internal
@@ -21,7 +22,7 @@ final class FileLinkFormatter implements FileLinkFormatterContract
         if (mb_strpos($pattern, '%f') === false ||
             mb_strpos($pattern, '%l') === false
         ) {
-            throw new \LogicException('Unparsable pattern "' . $pattern . '" to handle hyperlinks');
+            throw new InvalidConfiguration('Unparsable pattern "' . $pattern . '" to handle hyperlinks');
         }
 
         $this->pattern = $pattern;

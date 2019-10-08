@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
-use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
-use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter;
-use NunoMaduro\PhpInsights\Domain\Exceptions\PresetNotFound;
+use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use PHPUnit\Framework\TestCase;
@@ -109,7 +107,7 @@ final class ConfigResolverTest extends TestCase
     public function testUnknowMetricAddedThrowException(): void
     {
         self::expectException(InvalidConfiguration::class);
-        self::expectErrorMessage('Unable to use "say" class as metric in section add.');
+        self::expectExceptionMessage('Unable to use "say" class as metric in section add.');
 
         $config = ['add' => ['say' => 'hello']];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
@@ -118,7 +116,7 @@ final class ConfigResolverTest extends TestCase
     public function testKnownMetricAddedWithNonArrayValueThrowException(): void
     {
         self::expectException(InvalidConfiguration::class);
-        self::expectErrorMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
+        self::expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
 
         $config = ['add' => [Classes::class => 'hello']];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
@@ -127,7 +125,7 @@ final class ConfigResolverTest extends TestCase
     public function testAddUnknowClassThrowException(): void
     {
         self::expectException(InvalidConfiguration::class);
-        self::expectErrorMessage('Unable to add "hello" insight, class doesn\'t exists.');
+        self::expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');
 
         $config = ['add' => [Classes::class => ['hello']]];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
@@ -142,9 +140,8 @@ final class ConfigResolverTest extends TestCase
 
         $config = ConfigResolver::resolve($config, $this->baseFixturePath);
 
-        self::assertArrayHasKey('fileLinkFormatter', $config);
-        self::assertInstanceOf(FileLinkFormatter::class, $config['fileLinkFormatter']);
-        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config['fileLinkFormatter']);
+        self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
+        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
 
     public function testResolveWithoutIde():void
@@ -153,9 +150,7 @@ final class ConfigResolverTest extends TestCase
 
         $config = ConfigResolver::resolve($config, $this->baseFixturePath);
 
-        self::assertArrayHasKey('fileLinkFormatter', $config);
-        self::assertInstanceOf(FileLinkFormatter::class, $config['fileLinkFormatter']);
-        self::assertInstanceOf(NullFileLinkFormatter::class, $config['fileLinkFormatter']);
+        self::assertInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
 
     public function testResolveWithIdePattern(): void
@@ -164,9 +159,8 @@ final class ConfigResolverTest extends TestCase
 
         $config = ConfigResolver::resolve($config, $this->baseFixturePath);
 
-        self::assertArrayHasKey('fileLinkFormatter', $config);
-        self::assertInstanceOf(FileLinkFormatter::class, $config['fileLinkFormatter']);
-        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config['fileLinkFormatter']);
+        self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
+        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
 
     /**

@@ -43,9 +43,6 @@ final class ConfigResolver
      */
     public static function resolve(array $config, string $directory): Configuration
     {
-        $config['fileLinkFormatter'] = self::resolveIde($config);
-        unset($config['ide']);
-
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($directory);
 
