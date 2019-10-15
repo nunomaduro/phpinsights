@@ -6,6 +6,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
+use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 
 return [
@@ -76,6 +77,11 @@ return [
             'ignore' => [
                 'PHP_CODESNIFFER_VERBOSITY',
                 'PHP_CODESNIFFER_CBF',
+            ],
+        ],
+        UnusedParameterSniff::class => [
+            'exclude' => [
+                'src/Domain/LinkFormatter/NullFileLinkFormatter.php',
             ],
         ],
     ],
