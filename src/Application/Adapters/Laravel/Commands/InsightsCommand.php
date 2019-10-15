@@ -42,7 +42,9 @@ final class InsightsCommand extends Command
             throw new \RuntimeException('Container should be League Container instance');
         }
 
-        $container->add(Configuration::class, $configuration);
+        $configurationDefinition = $container->extend(Configuration::class);
+        $configurationDefinition->setConcrete($configuration);
+
         $analyseCommand = $container->get(AnalyseCommand::class);
 
         $output = (new Reflection($this->output))->get('output');
