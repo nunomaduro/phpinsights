@@ -11,7 +11,7 @@ final class ForbiddenFinalClasses extends Insight implements HasDetails
 {
     public function hasIssue(): bool
     {
-        return (bool) count($this->collector->getConcreteFinalClasses());
+        return (bool) count($this->getDetails());
     }
 
     public function getTitle(): string
@@ -24,8 +24,16 @@ final class ForbiddenFinalClasses extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
+        $concreteFinalClasses = array_filter(
+            $this->collector->getConcreteFinalClasses(),
+            function ($file) {
+                return $this->shouldSkipFile($file) === false;
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
         return array_map(static function (string $name): Details {
             return Details::make()->setFile($name);
-        }, $this->collector->getConcreteFinalClasses());
+        }, $concreteFinalClasses);
     }
 }

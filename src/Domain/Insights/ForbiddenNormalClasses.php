@@ -11,7 +11,7 @@ final class ForbiddenNormalClasses extends Insight implements HasDetails
 {
     public function hasIssue(): bool
     {
-        return (bool) count($this->collector->getConcreteNonFinalClasses());
+        return count($this->getDetails()) > 0;
     }
 
     public function getTitle(): string
@@ -24,8 +24,15 @@ final class ForbiddenNormalClasses extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
+        $nonFinalClasses = array_filter(
+            $this->collector->getConcreteNonFinalClasses(),
+            function ($file) {
+                return $this->shouldSkipFile($file) === false;
+            }
+        );
+
         return array_map(static function (string $file): Details {
             return Details::make()->setFile($file);
-        }, $this->collector->getConcreteNonFinalClasses());
+        }, $nonFinalClasses);
     }
 }

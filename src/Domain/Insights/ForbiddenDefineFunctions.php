@@ -28,6 +28,9 @@ final class ForbiddenDefineFunctions extends Insight implements HasDetails
 
         $details = [];
         foreach ($namedFunctionsPerFile as $file => $namedFunctions) {
+            if ($this->shouldSkipFile($file)) {
+                continue;
+            }
             foreach ($namedFunctions as $key => $namedFunction) {
                 $number = $key + 1;
                 $details[] = Details::make()

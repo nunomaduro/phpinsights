@@ -47,6 +47,9 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         });
 
         $classesComplexity = array_reverse($classesComplexity);
+        $classesComplexity = array_filter($classesComplexity, function ($path) {
+            return $this->shouldSkipFile($path) === false;
+        }, ARRAY_FILTER_USE_KEY);
 
         return array_map(static function ($class, $complexity): Details {
             return Details::make()
