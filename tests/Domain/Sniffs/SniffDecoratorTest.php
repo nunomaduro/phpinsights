@@ -96,4 +96,36 @@ final class SniffDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(1, $oneClassPerFileSniffErrors);
     }
+
+    public function testConfigExcludeDirectory(): void
+    {
+        $collection = $this->runAnalyserOnConfig(
+            [
+                'config' => [
+                    OneClassPerFileSniff::class => [
+                        'exclude' => [
+                            'Domain/Sniffs/'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                __DIR__ . '/../../Fixtures/Domain/Sniffs/SniffWrapper/FileWithTwoClasses.php'
+            ],
+            __DIR__ . '/../../Fixtures/'
+        );
+        $oneClassPerFileSniffErrors = 0;
+
+        foreach ($collection->allFrom(new Classes) as $insight) {
+            if (
+                $insight->hasIssue()
+                && $insight->getInsightClass() === OneClassPerFileSniff::class
+            ) {
+                $oneClassPerFileSniffErrors++;
+            }
+        }
+
+        // No errors of this type as we are ignoring the file.
+        self::assertEquals(0, $oneClassPerFileSniffErrors);
+    }
 }

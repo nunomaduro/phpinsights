@@ -24,11 +24,6 @@ final class InsightFactory
     private $filesRepository;
 
     /**
-     * @var string
-     */
-    private $dir;
-
-    /**
      * @var array<string>
      */
     private $insightsClasses;
@@ -64,7 +59,6 @@ final class InsightFactory
         $this->insightsClasses = $insightsClasses;
         $this->insightLoaders = Container::make()->get(InsightLoader::INSIGHT_LOADER_TAG);
         $this->config = $config;
-        $this->dir = $config->getDirectory();
     }
 
     /**
@@ -127,13 +121,15 @@ final class InsightFactory
     private function loadInsights(array $insights): array
     {
         $insightsAdded = [];
+        $cwd = getcwd();
+
         foreach ($insights as $insight) {
             /** @var InsightLoader $loader */
             foreach ($this->insightLoaders as $loader) {
                 if ($loader->support($insight)) {
                     $insightsAdded[] = $loader->load(
                         $insight,
-                        $this->dir,
+                        (string) $cwd,
                         $this->config->getConfigForInsight($insight)
                     );
                 }

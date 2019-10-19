@@ -8,7 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\File as InsightFile;
-use NunoMaduro\PhpInsights\Domain\Helper\Paths;
+use NunoMaduro\PhpInsights\Domain\Helper\FilesFinder;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -28,14 +28,20 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
     private $errors = [];
 
     /**
-     * @var string
+     * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
-    private $dir;
+    private $excludedFiles;
 
     public function __construct(Sniff $sniff, string $dir)
     {
         $this->sniff = $sniff;
-        $this->dir = $dir;
+        $this->excludedFiles = [];
+        if (count($this->getIgnoredFilesPath()) > 0) {
+            $this->excludedFiles = FilesFinder::find(
+                $dir,
+                $this->getIgnoredFilesPath()
+            );
+        }
     }
 
     /**
@@ -125,19 +131,10 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
 
     private function skipFilesFromIgnoreFiles(InsightFile $file): bool
     {
-        $path = $file->getFileInfo()->getRealPath();
-
-        if ($path === false) {
-            return false;
-        }
-
-        foreach ($this->getIgnoredFilesPath() as $ignoredFilePath) {
-            if (Paths::areEqual($this->dir . DIRECTORY_SEPARATOR . $ignoredFilePath, $path)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_key_exists(
+            (string) $file->getFileInfo()->getRealPath(),
+            $this->excludedFiles
+        );
     }
 
     /**
