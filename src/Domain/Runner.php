@@ -70,7 +70,7 @@ final class Runner
         }
 
         // Create progress bar
-        $progressBar = new ProgressBar($this->output, count($files));
+        $progressBar = $this->createProgressBar(count($files));
         $progressBar->start();
 
         /** @var SplFileInfo $file */
@@ -103,5 +103,23 @@ final class Runner
         foreach ($this->filesProcessors as $fileProcessor) {
             $fileProcessor->processFile($file);
         }
+    }
+
+    private function createProgressBar(int $max = 0): ProgressBar
+    {
+        $progressBar = new ProgressBar($this->output, $max);
+
+        $emptyBarCharacter = '░'; // light shade character \u2591
+        $progressCharacter = '';
+        $barCharacter = '▓'; // dark shade character \u2593
+
+        if ('\\' !== \DIRECTORY_SEPARATOR
+            || 'Hyper' === getenv('TERM_PROGRAM')) {
+            $progressBar->setEmptyBarCharacter($emptyBarCharacter);
+            $progressBar->setProgressCharacter($progressCharacter);
+            $progressBar->setBarCharacter($barCharacter);
+        }
+
+        return $progressBar;
     }
 }
