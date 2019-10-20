@@ -56,7 +56,10 @@ final class LocalFilesRepository implements FilesRepository
     public function within(string $path, array $exclude = []): FilesRepository
     {
         if (! is_dir($path) && is_file($path)) {
-            $this->finder->append([$path]);
+            $pathInfo = pathinfo($path);
+            $this->finder = Finder::create()
+                ->in($pathInfo['dirname'])
+                ->name($pathInfo['basename']);
 
             return $this;
         }
