@@ -405,6 +405,29 @@ function foo(
 ```
 </details>
 
+## Void return <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/>
+
+This fixer adds a `void` return type to functions with missing or empty return statements, but priority is given to `@return` annotations. 
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer`
+
+<!--
+Insight template
+##  <Badge text="^1.0"/> <Badge text="Architecture\Traits" type="warn"/>
+
+This sniff
+
+**Insight Class**: ``
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+
+```
+</details>
+-->
+
 ## Fixme <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
 This sniff warns about FIXME comments.
