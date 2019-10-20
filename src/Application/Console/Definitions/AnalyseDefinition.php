@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Console\Definitions;
 
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -13,11 +14,11 @@ use Symfony\Component\Console\Input\InputOption;
 final class AnalyseDefinition
 {
     /**
-     * @return array<int, \Symfony\Component\Console\Input\InputOption|\Symfony\Component\Console\Input\InputArgument>
+     * @return InputDefinition
      */
-    public static function get(): array
+    public static function get(): InputDefinition
     {
-        return [
+        return new InputDefinition([
             new InputArgument(
                 'directory',
                 InputArgument::OPTIONAL,
@@ -67,9 +68,9 @@ final class AnalyseDefinition
               'format',
               null,
               InputOption::VALUE_REQUIRED,
-                'Format to output the result in [console, json]',
-                "console"
+                'Format to output the result in [console, json, checkstyle]',
+                'console'
             ),
-        ];
+        ]);
     }
 }

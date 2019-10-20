@@ -28,6 +28,28 @@ Then, use the `insights` Artisan command:
 php artisan insights
 ```
 
+## Within Lumen
+
+Because we cannot use Artisan's publish command within a Lumen project you must manually copy the config file into your project:
+
+```bash
+cp vendor/nunomaduro/phpinsights/stubs/laravel.php config/insights.php
+```
+
+Then register the `phpinsights` provider and load the configuration into the application within your `bootstrap/app.php` file:
+
+```php
+$app->register(\NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider::class);
+$app->configure('insights');
+```
+
+And setup is done, so you can now run `phpinsights` with the following command:
+
+```bash
+php artisan insights
+```
+
+
 ## With Docker
 
 You can also use `phpinsights` via Docker:
@@ -59,6 +81,7 @@ For changing the output format you can add the `format` flag. The following form
 
 - console
 - json
+- checkstyle
 
 ```bash
 ./vendor/bin/phpinsights analyse --format=json
@@ -87,7 +110,7 @@ php -d memory_limit=2000M ./vendor/bin/phpinsights
 
 ## Display issues omitted
 
-PHP Insights console command have different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
+The PHP Insights console command has different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
 ```bash
 ./vendor/bin/phpinsights -v
 ```

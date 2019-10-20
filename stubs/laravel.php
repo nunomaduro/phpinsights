@@ -29,7 +29,25 @@ return [
     */
 
     'preset' => 'laravel',
+    /*
+    |--------------------------------------------------------------------------
+    | IDE
+    |--------------------------------------------------------------------------
+    |
+    | This options allow to add hyperlinks in your terminal to quickly open
+    | files in your favorite IDE while browsing your PhpInsights report.
+    |
+    | Supported: "textmate", "macvim", "emacs", "sublime", "phpstorm",
+    | "atom", "vscode".
+    |
+    | If you have another IDE that is not in this list but which provide an
+    | url-handler, you could fill this config with a pattern like this:
+    |
+    | myide://open?url=file://%f&line=%l
+    |
+    */
 
+    'ide' => null,
     /*
     |--------------------------------------------------------------------------
     | Configuration

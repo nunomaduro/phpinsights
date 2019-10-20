@@ -26,7 +26,9 @@ script:
       composer run phpunit:test
       composer run insights -- --disable-security-check
     fi
-
+  - rm -rf vendor/
+  - composer install --no-dev
+  - composer run insights -- --disable-security-check
 jobs:
   include:
     - stage: build docker image
@@ -34,8 +36,10 @@ jobs:
       php: 7.3
       env: COMPOSER_FLAGS=""
       script:
+        - rm -rf vendor/
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - export REPO=$DOCKER_USERNAME/phpinsights
         - docker build -f docker/Dockerfile -t $REPO:$TRAVIS_TAG .
         - docker tag $REPO:$TRAVIS_TAG $REPO:latest
-        - docker push $REPO
+        - docker push $REPO:$TRAVIS_TAG
+        - docker push $REPO:latest

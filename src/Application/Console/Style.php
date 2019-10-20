@@ -22,7 +22,7 @@ final class Style extends SymfonyStyle
     /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
-    public $output;
+    private $output;
 
     /**
      * Style constructor.
@@ -55,5 +55,13 @@ final class Style extends SymfonyStyle
         }
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Output\OutputInterface
+     */
+    public function getOutput(): OutputInterface
+    {
+        return $this->output;
     }
 }

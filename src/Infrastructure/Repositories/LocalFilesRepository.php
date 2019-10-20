@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\Finder;
+use Traversable;
 
 /**
  * @internal
@@ -26,9 +27,9 @@ final class LocalFilesRepository implements FilesRepository
     {
         $this->finder = $finder
             ->files()
-            ->name(['*.php',])
-            ->exclude(['vendor', 'tests', 'Tests', 'test', 'Test',])
-            ->notName(['*.blade.php',])
+            ->name(['*.php'])
+            ->exclude(['vendor', 'tests', 'Tests', 'test', 'Test'])
+            ->notName(['*.blade.php'])
             ->ignoreVCSIgnored(true)
             ->ignoreUnreadableDirs();
     }
@@ -44,7 +45,7 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * {@inheritdoc}
      */
-    public function getFiles(): iterable
+    public function getFiles(): Traversable
     {
         return $this->finder->getIterator();
     }
@@ -68,13 +69,5 @@ final class LocalFilesRepository implements FilesRepository
         }
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function find(array $source)
-    {
-        return $this->getFiles();
     }
 }

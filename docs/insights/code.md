@@ -1,6 +1,6 @@
 # Code
 
-The following insights are in organised in differents metrics :
+The following insights are organised in differents metrics :
 
 * `NunoMaduro\PhpInsights\Domain\Metrics\Code\Classes` <Badge text="Code\Classes" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Code\Code` <Badge text="Code\Code" type="warn" vertical="middle"/>
@@ -11,13 +11,13 @@ The following insights are in organised in differents metrics :
 
 ## Forbidden public property <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
 
-This sniff disallow public properties.
+This sniff disallows public properties.
 
 **Insight Class**: `ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff`
 
 ## Unused private elements <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
 
-This sniff detect unused private elements
+This sniff detects unused private elements
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff`
 
@@ -122,13 +122,13 @@ This sniff ensures all language constructs contain a single space between themse
 
 ## Eval <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff detects usage of `eval()` function.
+This sniff detects usage of the `eval()` function.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff`
 
 ## Array indent <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
 
-This sniff ensure array are correctly indented
+This sniff ensures arrays are correctly indented
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\ArrayIndentSniff`
 
@@ -146,8 +146,8 @@ This sniff ensure array are correctly indented
 
 Checks against empty PHP statements.
 
-- Check against two semi-colons with no executable code in between.
-- Check against an empty PHP open - close tag combination.
+- Checks against two semi-colons with no executable code in between.
+- Checks against an empty PHP open - close tag combination.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyPHPStatementSniff`
 
@@ -185,7 +185,7 @@ This sniff detects statement conditions that are only set to one of the constant
 
 ## Useless Overriding Method <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff  detects the use of methods that only call their parent classes's method with the same name and arguments.
+This sniff detects the use of methods that only call their parent classes's method with the same name and arguments.
 These methods are not required.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMethodSniff`
@@ -210,7 +210,7 @@ This sniff disallows the use of the backtick execution operator.
 
 ## Discourage GOTO <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff discourage the use of the PHP `goto` language construct
+This sniff discourages the use of the PHP `goto` language construct.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DiscourageGotoSniff`
 
@@ -240,13 +240,13 @@ This sniff disallows implicit array creation.
 
 ## Assignment in condition <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff disallows assignment in conditions
+This sniff disallows assignments in conditions.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff`
 
 ## Disallow continue without integer operand in switch <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff disallows use of `continue` without integer operand in switch because it emits a warning in PHP 7.3 and higher.
+This sniff disallows the use of `continue` without an integer operand in a switch because it emits a warning in PHP 7.3 and higher.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff`
 
@@ -258,7 +258,7 @@ This sniff disallows use of `empty()`.
 
 ## Disallow short ternary operator <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff disallows short ternary operator `?:`.
+This sniff disallows the short ternary operator `?:`.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff`
 
@@ -270,7 +270,7 @@ Yoda conditions decrease code comprehensibility and readability by switching ope
 
 ## Require Yoda Comparison <Badge text="^1.0"/> <Badge text="not enabled" type="error"/>
 
-This sniff enforces yoda comparison usage
+This sniff enforces yoda comparison usage.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\ControlStructures\RequireYodaComparisonSniff`
 
@@ -301,7 +301,7 @@ try {
 
 ## Unused Inherited variable passed to closure <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="Code\Functions" type="warn"/>
 
-This sniff looks for unused inherited variables passed to closure via `use`.
+This sniff looks for unused inherited variables passed to closures via `use`.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff`
 
@@ -319,7 +319,7 @@ This sniff prohibits uses from the same namespace.
 
 ## Useless Alias <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff looks for use alias that is same as unqualified name.
+This sniff looks for use alias that is the same as the unqualified name.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\UselessAliasSniff`
 
@@ -382,7 +382,7 @@ This sniff looks for duplicate assignments to a variable.
 
 ## Empty comment <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
-This sniff reports empty comment
+This sniff reports empty comments.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff`
 
@@ -451,7 +451,7 @@ This sniff disallows usage of array type hint syntax (eg. `int[]`, `bool[][]`) i
 
 ## Disallow mixed type hint <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
-This sniff disallow usage of "mixed" type hint in phpDocs.
+This sniff disallows usage of the "mixed" type hint in phpDocs.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff`
 
@@ -476,7 +476,7 @@ See the [official explanation](https://github.com/slevomat/coding-standard/#slev
 
 ## Useless constant type hint <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
-This sniff reports useless `@var` annotation (or whole documentation comment) for constants because the type of constant is always clear.
+This sniff reports useless `@var` annotation (or whole documentation comment) for constants because the type of the constant is always clear.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\UselessConstantTypeHintSniff`
 
@@ -512,13 +512,13 @@ This sniff verifies that nullable typehints are lacking superfluous whitespace (
 
 ## Static closure <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
 
-This sniff reports closures not using $this that are not declared static.
+This sniff reports closures not using `$this` that are not declared static.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff`
 
 ## Forbidden define functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
 
-This insight disallow define functions.
+This insight disallows define functions.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions`
 
@@ -534,11 +534,258 @@ This sniff disallow usage of `global`.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\GlobalKeywordSniff`
 
-## Forbiden Globals <Badge text="^1.0"/> <Badge text="Code\Globally" type="warn"/>
+## Forbidden Globals <Badge text="^1.0"/> <Badge text="Code\Globally" type="warn"/>
 
 This sniff detects globals accesses.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals`
+
+## Visibility Required <Badge text="^1.10"/> <Badge text="Code\Classes" type="warn"/> <Badge text="configurable"/>
+
+Visibility must be declared on all properties and methods. `abstract` and `final` must be declared before the visibility. `static` must be declared after the visibility.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer::class => [
+    'elements' => [
+        'property',
+        'method',
+    ],
+]
+```
+</details>
+
+## Ternary to Null Coalescing <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer enforces using the null coalescing operator `??` where possible.
+
+**Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer`
+
+## Combine nested dirname <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer replaces multiple nested calls of `dirname` with only one call with second `$level` parameter. 
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\CombineNestedDirnameFixer`
+
+## Declare Equal normalize <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+
+This fixer normalizes space around the equal sign in declare section. 
+
+**Insight Class**: `PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer::class => [
+    'space' => 'none', // possible values ['none', 'single']
+]
+```
+</details>
+
+## Explicit string variable <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer converts implicit variables into explicit ones in double-quoted strings or heredoc syntax.
+
+**Insight Class**: `PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer`
+
+## New with braces <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer asserts all instances created with new keyword must be followed by braces.
+
+**Insight Class**: `PhpCsFixer\Fixer\Operator\NewWithBracesFixer`
+
+## No alternative syntax <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer replaces control structure alternative syntax to use braces.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoAlternativeSyntaxFixer`
+
+## No mixed echo print <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+
+This fixer enforces either language construct print or echo should be used.
+
+**Insight Class**: `PhpCsFixer\Fixer\Alias\NoMixedEchoPrintFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Alias\NoMixedEchoPrintFixer::class => [
+    'use' => 'echo' // possibles values ['echo', 'print']
+]
+```
+</details>
+
+## No multiline whitespace around double arrow <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+The Operator `=>` should not be surrounded by multi-line whitespaces.
+
+**Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer`
+
+## No short bool cast <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer asserts short cast bool using double exclamation marks should not be used.
+
+**Insight Class**: `PhpCsFixer\Fixer\CastNotation\NoShortBoolCastFixer`
+
+## No superfluous Elseif <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer replaces superfluous `elseif` with `if`.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoSuperfluousElseifFixer`
+
+## No unneeded control parentheses <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+
+This fixer removes unneeded parentheses around control statements.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer::class => [
+    'statements' => [
+        'break',
+        'clone',
+        'continue',
+        'echo_print',
+        'return',
+        'switch_case',
+        'yield',
+    ],
+]
+```
+</details>
+
+## No useless Else <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer assert there should not be useless `else` cases.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer`
+
+## Normalize index brace <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+Array index should always be written by using square braces.
+
+**Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer`
+
+## Object operator without Whitespace <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+There should not be space before or after object `T_OBJECT_OPERATOR ->`.
+
+**Insight Class**: `PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer`
+
+## Short scalar cast <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+Cast `(boolean)` and `(integer)` should be written as `(bool)` and `(int)`, `(double)` and `(real)` as `(float)`, `(binary)` as `(string)`.
+
+**Insight Class**: `PhpCsFixer\Fixer\CastNotation\ShortScalarCastFixer`
+
+## Ternary operator spaces <Badge text="^1.10"/> <Badge text="Code\Code" type="warn"/>
+
+This fixer standardizes spaces around ternary operators.
+
+**Insight Class**: `PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer`
+
+## Multiline comment opening closing <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+DocBlocks must start with two asterisks, multiline comments must start with a single asterisk, after the opening slash. 
+Both must end with a single asterisk before the closing slash.
+
+**Insight Class**: `PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer`
+
+## No empty comment <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+There should not be any empty comments.
+
+**Insight Class**: `PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer`
+
+## No break comment <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
+
+There must be a comment when fall-through is intentional in a non-empty case body.
+
+**Insight Class**: `PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer::class => [
+    'comment_text' => 'no break',
+]
+```
+</details>
+
+## Phpdoc indent <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+Docblocks should have the same indentation as the documented subject.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer`
+
+## Phpdoc inline tag <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+This fixer fixes PHPDoc inline tags, make `@inheritdoc` always inline.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagFixer`
+
+## Phpdoc scalar <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
+
+Scalar types should always be written in the same form. 
+`int` not `integer`, `bool` not `boolean`, `float` not `real` or `double`.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer::class => [
+    'types' => [ 
+        'boolean',
+        'double',
+        'integer',
+        'real',
+        'str',
+    ]    
+]
+```
+</details>
+
+## Phpdoc separation <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+Annotations in PHPDoc should be grouped together so that annotations of the same type immediately follow each other, and annotations of a different type are separated by a single blank line.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer`
+
+## Phpdoc trim <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+PHPDoc should start and end with content, excluding the very first and last line of the docblocks.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer`
+
+## Phpdoc var annotation correct order <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+
+`@var` and `@type` annotations must have type and name in the correct order.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer`
+
+## No spaces after function name <Badge text="^1.10"/> <Badge text="Code\Functions" type="warn"/>
+
+When making a method or function call, there must not be a space between the method or function name and the opening parenthesis.
+
+**Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\NoSpacesAfterFunctionNameFixer`
+
+## Return assignment <Badge text="^1.10"/> <Badge text="Code\Functions" type="warn"/>
+
+Local, dynamic and directly referenced variables should not be assigned and directly returned by a function or method.
+
+**Insight Class**: `PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer`
 
 <!--
 Insight template

@@ -7,6 +7,7 @@ namespace Tests\Fakes;
 use ArrayIterator;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\SplFileInfo;
+use Traversable;
 
 final class FakeFileRepository implements FilesRepository
 {
@@ -27,34 +28,16 @@ final class FakeFileRepository implements FilesRepository
         }, $filePaths);
     }
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function find(array $source)
-    {
-        return $this->getFiles();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultDirectory(): string
     {
         return (string) getcwd();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFiles(): iterable
+    public function getFiles(): Traversable
     {
         return new ArrayIterator($this->files);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function within(string $dir, array $exclude): FilesRepository
     {
         return $this;

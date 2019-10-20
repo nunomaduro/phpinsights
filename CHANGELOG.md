@@ -4,15 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v1.8.0]
+## [Unreleased]
+### Added
+- Checkstyle formatter ([#271](https://github.com/nunomaduro/phpinsights/pull/271))
 
+## [v1.9.0]
+### Added
+- Better support to Laravel Lumen ([#247](https://github.com/nunomaduro/phpinsights/pull/247))
+
+### Fixed
+- Issue when internal insight code is an integer ([6c6650f](https://github.com/nunomaduro/phpinsights/commit/6c6650fec1101222e2a63e2736aaf07cd0b152be))
+
+## [v1.8.1]
+### Fixed
+- Throwable sniffs ([#249](https://github.com/nunomaduro/phpinsights/pull/249))
+
+## [v1.8.0]
 ### Added
 - Authorize analyse of one file or specific directory ([#195](https://github.com/nunomaduro/phpinsights/pull/195))
 - Configure search use in annotation ([#196](https://github.com/nunomaduro/phpinsights/pull/196))
 - Add changelog to website ([#204](https://github.com/nunomaduro/phpinsights/pull/204))
 - Json & Console formatters ([#201](https://github.com/nunomaduro/phpinsights/pull/201))
 
-## Fixed
+### Fixed
 - Merge config with default config ([#196](https://github.com/nunomaduro/phpinsights/pull/196))
 
 ## [v1.7.0]

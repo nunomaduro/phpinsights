@@ -18,7 +18,7 @@ final class Kernel
     /**
      * The app version.
      */
-    public const VERSION = 'v1.8.0';
+    public const VERSION = 'v1.9.0';
 
     /**
      * Bootstraps the usage of the package.
@@ -35,10 +35,14 @@ final class Kernel
             : __DIR__ . '/../../../../../vendor/squizlabs/php_codesniffer/autoload.php';
 
         /**
-         * Defines PHP Codesniffer's needed constants
+         * Defines PHP Codesniffer's needed constants.
          */
         if (! defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', false);
+        }
+
+        if (! defined('PHP_CODESNIFFER_VERBOSITY')) {
+            define('PHP_CODESNIFFER_VERBOSITY', 0);
         }
     }
 
