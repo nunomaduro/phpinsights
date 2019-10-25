@@ -53,7 +53,7 @@ This sniff disallows late static binding for constants.
 
 ## Modern ClassName reference  <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
 
-This sniff reports use of \_\_CLASS\_\_, get_parent_class(), get_called_class(), get_class() and get_class($this). Class names should be referenced via ::class constant when possible.
+This sniff reports use of `__CLASS__`, `get_parent_class()`, `get_called_class()`, `get_class()` and `get_class($this)`. Class names should be referenced via `::class` constant when possible.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff`
 
