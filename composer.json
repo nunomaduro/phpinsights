@@ -80,6 +80,10 @@
             "@phpunit:test",
             "@insights"
         ],
+        "fix": [
+            "@ecs:test --fix",
+            "@insights --fix --quiet"
+        ],
         "post-install-cmd": [
             "@website:copy-changelog",
             "@website:copy-logo"
@@ -96,6 +100,7 @@
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
         "insights": "Run the phpinsights tests",
-        "test": "Run all tests including phpstan, phpunit and ecs."
+        "test": "Run all tests including phpstan, phpunit and ecs.",
+        "fix": "Run ecs and phpinsights fixers."
     }
 }
