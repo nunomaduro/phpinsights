@@ -57,6 +57,8 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
      * @param int $stackPtr
      *
      * @return int|void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
      */
     public function process(File $file, $stackPtr)
     {
