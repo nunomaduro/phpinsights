@@ -24,6 +24,10 @@ final class File extends BaseFile
      * @var SplFileInfo
      */
     private $fileInfo;
+    /**
+     * @var bool
+     */
+    private $isFixable;
 
     /**
      * File constructor.
@@ -70,44 +74,20 @@ final class File extends BaseFile
                 }
             }
         }
-
-        $this->fixedCount += $this->fixer->getFixCount();
-    }
-
-    public function getErrorCount(): int
-    {
-        return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getErrors(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addFixableError($error,
-                                    $stackPtr,
-                                    $code,
-                                    $data = [],
-                                    $severity = 0): bool
-    {
-        return $this->addError($error, $stackPtr, $code, $data, $severity);
     }
 
     /**
      * @param array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>> $tokenListeners
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      */
-    public function processWithTokenListenersAndFileInfo(array $tokenListeners,
-                                                         SplFileInfo $fileInfo
+    public function processWithTokenListenersAndFileInfo(
+        array $tokenListeners,
+        SplFileInfo $fileInfo,
+        bool $isFixable
     ): void {
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
+        $this->isFixable = $isFixable;
         $this->process();
     }
 
@@ -134,7 +114,12 @@ final class File extends BaseFile
         $severity,
         $isFixable = false
     ): bool {
+        parent::addMessage($isError, $message, $line, $column, $sniffClassOrCode, $data, $severity, $isFixable);
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
+
+        if ($isFixable === true && $this->isFixable === true) {
+            return true;
+        }
 
         $this->activeSniff->addDetails(
             Details::make()

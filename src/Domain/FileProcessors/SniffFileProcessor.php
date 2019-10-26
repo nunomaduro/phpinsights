@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
@@ -24,6 +26,10 @@ final class SniffFileProcessor implements FileProcessor
      * @var \NunoMaduro\PhpInsights\Domain\FileFactory
      */
     private $fileFactory;
+    /**
+     * @var bool
+     */
+    private $fixEnabled;
 
     /**
      * FileProcessor constructor.
@@ -33,6 +39,7 @@ final class SniffFileProcessor implements FileProcessor
     public function __construct(FileFactory $fileFactory)
     {
         $this->fileFactory = $fileFactory;
+        $this->fixEnabled = Container::make()->get(Configuration::class)->isFix();
     }
 
     public function support(InsightContract $insight): bool
@@ -59,7 +66,13 @@ final class SniffFileProcessor implements FileProcessor
         $file = $this->fileFactory->createFromFileInfo($splFileInfo);
         $file->processWithTokenListenersAndFileInfo(
             $this->tokenListeners,
-            $splFileInfo
+            $splFileInfo,
+            $this->fixEnabled
         );
+
+        if ($file->getFixableCount() !== 0 && $this->fixEnabled === true) {
+            $file->fixer->fixFile();
+            file_put_contents($splFileInfo->getPathname(), $file->fixer->getContents());
+        }
     }
 }

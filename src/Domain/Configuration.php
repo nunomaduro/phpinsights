@@ -78,6 +78,10 @@ final class Configuration
      * @var FileLinkFormatterContract
      */
     private $fileLinkFormatter;
+    /**
+     * @var bool
+     */
+    private $fix;
 
     /**
      * Configuration constructor.
@@ -128,9 +132,6 @@ final class Configuration
         return $this->config[$insight] ?? [];
     }
 
-    /**
-     * @return string
-     */
     public function getDirectory(): string
     {
         return $this->directory;
@@ -152,20 +153,19 @@ final class Configuration
         return $this->remove;
     }
 
-    /**
-     * @return string
-     */
     public function getPreset(): string
     {
         return $this->preset;
     }
 
-    /**
-     * @return FileLinkFormatterContract
-     */
     public function getFileLinkFormatter(): FileLinkFormatterContract
     {
         return $this->fileLinkFormatter;
+    }
+
+    public function isFix(): bool
+    {
+        return $this->fix;
     }
 
     /**
@@ -181,6 +181,7 @@ final class Configuration
             'add' => [],
             'remove' => [],
             'config' => [],
+            'fix' => false,
         ]);
 
         $resolver->setDefined('ide');
@@ -197,6 +198,7 @@ final class Configuration
         $this->add = $config['add'];
         $this->remove = $config['remove'];
         $this->config = $config['config'];
+        $this->fix = $config['fix'];
 
         if (
             array_key_exists('ide', $config)

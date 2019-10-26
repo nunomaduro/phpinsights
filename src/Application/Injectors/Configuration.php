@@ -41,6 +41,8 @@ final class Configuration
                     $config = require $configPath;
                 }
 
+                $config['fix'] = (bool) $input->getOption('fix');
+
                 return ConfigResolver::resolve($config, DirectoryResolver::resolve($input));
             },
         ];

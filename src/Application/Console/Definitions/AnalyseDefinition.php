@@ -71,6 +71,12 @@ final class AnalyseDefinition
                 'Format to output the result in [console, json, checkstyle]',
                 'console'
             ),
+            new InputOption(
+                'fix',
+                null,
+                InputOption::VALUE_NONE,
+                'Enable auto-fix for insights fixables'
+            ),
         ]);
     }
 }
