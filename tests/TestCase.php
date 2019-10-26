@@ -6,6 +6,8 @@ namespace Tests;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Analyser as DomainAnalyser;
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
@@ -77,6 +79,12 @@ abstract class TestCase extends BaseTestCase
         string $dir = ''
     ) : InsightCollection {
         $config = ConfigResolver::resolve($config, $dir);
+
+        $container = Container::make();
+        \assert($container instanceof \League\Container\Container);
+
+        $configurationDefinition = $container->extend(Configuration::class);
+        $configurationDefinition->setConcrete($config);
 
         $analyser = new DomainAnalyser();
 
