@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * @internal
  */
-final class FilesFinder
+final class Files
 {
     /**
      * Return an array of files matching in list.

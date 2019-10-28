@@ -8,7 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\File as InsightFile;
-use NunoMaduro\PhpInsights\Domain\Helper\FilesFinder;
+use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
@@ -37,7 +37,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
         $this->sniff = $sniff;
         $this->excludedFiles = [];
         if (count($this->getIgnoredFilesPath()) > 0) {
-            $this->excludedFiles = FilesFinder::find(
+            $this->excludedFiles = Files::find(
                 $dir,
                 $this->getIgnoredFilesPath()
             );

@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
-use NunoMaduro\PhpInsights\Domain\Helper\FilesFinder;
+use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -43,7 +43,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $this->fixer = $fixer;
         $this->exclude = [];
         if (count($exclude) > 0) {
-            $this->exclude = FilesFinder::find($dir, $exclude);
+            $this->exclude = Files::find($dir, $exclude);
         }
     }
 

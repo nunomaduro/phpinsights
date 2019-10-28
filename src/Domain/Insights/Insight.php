@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
-use NunoMaduro\PhpInsights\Domain\Helper\FilesFinder;
+use NunoMaduro\PhpInsights\Domain\Helper\Files;
 
 abstract class Insight implements InsightContract
 {
@@ -40,7 +40,7 @@ abstract class Insight implements InsightContract
         /** @var array<string> $exclude */
         $exclude = $config['exclude'] ?? [];
         if (count($exclude) > 0) {
-            $this->excludedFiles = FilesFinder::find(
+            $this->excludedFiles = Files::find(
                 (string) getcwd(),
                 $exclude
             );
