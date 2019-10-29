@@ -136,10 +136,9 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
 
     private function skipFilesFromExcludedFiles(\SplFileInfo $file): bool
     {
-        return array_key_exists(
-            (string) $file->getRealPath(),
-            $this->exclude
-        );
+        $path = $file->getRealPath();
+
+        return $path !== false && isset($this->exclude[$path]);
     }
 
     private function processDiff(string $diff, string $file): void
