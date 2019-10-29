@@ -52,7 +52,7 @@ abstract class Insight implements InsightContract
         return static::class;
     }
 
-    public function shouldSkipFile(string $file): bool
+    protected function shouldSkipFile(string $file): bool
     {
         $filepath = $file;
         if (mb_strpos($this->collector->getDir(), $file) === false) {
@@ -60,5 +60,17 @@ abstract class Insight implements InsightContract
         }
 
         return array_key_exists($filepath, $this->excludedFiles);
+    }
+
+    /**
+     * @param array<string, string|int|float|array> $files File path must be in key.
+     *
+     * @return array<string, string|int|float|array>
+     */
+    protected function filterFilesWithoutExcluded(array $files): array
+    {
+        return array_filter($files, function ($file): bool {
+            return $this->shouldSkipFile($file) === false;
+        }, ARRAY_FILTER_USE_KEY);
     }
 }

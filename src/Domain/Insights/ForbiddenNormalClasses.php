@@ -24,12 +24,10 @@ final class ForbiddenNormalClasses extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $nonFinalClasses = array_filter(
-            $this->collector->getConcreteNonFinalClasses(),
-            function ($file) {
-                return $this->shouldSkipFile($file) === false;
-            }
-        );
+        $nonFinalClasses = $this->collector->getConcreteNonFinalClasses();
+        $nonFinalClasses = array_flip($this->filterFilesWithoutExcluded(
+            array_flip($nonFinalClasses)
+        ));
 
         return array_map(static function (string $file): Details {
             return Details::make()->setFile($file);
