@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Domain\Insights;
 
 use PHPUnit\Framework\TestCase;
