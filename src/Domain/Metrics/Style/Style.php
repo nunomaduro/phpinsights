@@ -17,7 +17,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\BacktickOperatorSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\CharacterBeforePHPOpeningTagSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DisallowAlternativePHPTagsSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DisallowShortOpenTagSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\LowerCaseConstantSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\LowerCaseKeywordSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\LowerCaseTypeSniff;
@@ -112,7 +111,6 @@ final class Style implements HasInsights
             BacktickOperatorSniff::class,
             DisallowAlternativePHPTagsSniff::class,
             DisallowShortOpenTagSniff::class,
-            ForbiddenFunctionsSniff::class,
             LowerCaseConstantSniff::class,
             LowerCaseKeywordSniff::class,
             LowerCaseTypeSniff::class,

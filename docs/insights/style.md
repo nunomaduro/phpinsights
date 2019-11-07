@@ -155,12 +155,6 @@ This sniff makes sure that shorthand PHP open tags are not used.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DisallowShortOpenTagSniff`
 
-## Forbidden functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
-
-This sniff discourages the use of alias functions.
-
-**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff`
-
 ## Lower case constant <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff checks that all uses of `true`, `false` and `null` are lowercase.
