@@ -30,7 +30,7 @@
     "require-dev": {
         "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
-        "localheinz/phpstan-rules": "^0.10.0",
+        "localheinz/phpstan-rules": "^0.13.0",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan-strict-rules": "^0.11",
         "phpunit/phpunit": "^8.0",
