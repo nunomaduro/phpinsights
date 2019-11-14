@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
+use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 
 /**
  * @internal
@@ -44,6 +45,9 @@ final class DefaultPreset implements PresetContract
                 ],
                 UnusedUsesSniff::class => [
                     'searchAnnotations' => true,
+                ],
+                UnusedVariableSniff::class => [
+                    'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
                 ],
             ],
         ];
