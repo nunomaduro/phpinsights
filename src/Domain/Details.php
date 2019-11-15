@@ -73,7 +73,7 @@ final class Details
 
     public function getLine(): int
     {
-        return $this->line;
+        return $this->line ?? 0;
     }
 
     public function hasLine(): bool

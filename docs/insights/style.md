@@ -155,12 +155,6 @@ This sniff makes sure that shorthand PHP open tags are not used.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DisallowShortOpenTagSniff`
 
-## Forbidden functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
-
-This sniff discourages the use of alias functions.
-
-**Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff`
-
 ## Lower case constant <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff checks that all uses of `true`, `false` and `null` are lowercase.
@@ -194,7 +188,7 @@ This sniff ensures PHP believes the syntax is clean.
 ## Trailing array comma <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff enforces trailing commas in multi-line arrays and requires short array syntax `[]`.
-Commas after last element in an array make adding a new element easier and result in a cleaner versioning diff.
+Commas after the last element in an array make adding a new element easier and result in a cleaner versioning diff.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff`
 
@@ -233,7 +227,7 @@ This sniff ensures method names are defined using camel case.
 
 ## Else If declaration <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
-This sniff verifies that there are no else if statements (elseif should be used instead).
+This sniff verifies that there are no `else if` statements (`elseif` should be used instead).
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\ElseIfDeclarationSniff`
 
@@ -315,7 +309,7 @@ This sniff disallows leading backslash in use statement.
 
 ## Use spacing sniff <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-This sniff enforces configurable number of lines before first use, after last use and between two use statements.
+This sniff enforces a configurable number of lines before first use, after last use and between two use statements.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff`
 
@@ -333,7 +327,7 @@ This sniff enforces configurable number of lines before first use, after last us
 
 ## Spread operator spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-This sniff enforces configurable number of spaces after the `...` operator.
+This sniff enforces a configurable number of spaces after the `...` operator.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Operators\SpreadOperatorSpacingSniff`
 
@@ -395,7 +389,7 @@ This sniff checks for unneeded whitespace.
 
 ## Doc comment spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-This sniff enforces configurable number of lines before first content (description or annotation), after last content (description or annotation), between description and annotations, between two different annotations types (eg. between `@param` and `@return`).
+This sniff enforces a configurable number of lines before first content (description or annotation), after last content (description or annotation), between description and annotations and between two different annotations types (eg. between `@param` and `@return`).
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff`
 
@@ -422,13 +416,13 @@ This sniff verifies that classes are instantiated with parentheses.
 
 ## No trailing comma in singleline array <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
-This fixer remove trailing commas in list function calls.
+This fixer removes trailing commas in list function calls.
 
 **Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer`
 
 ## No whitespace before comma in array <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-In array declaration, there MUST NOT be a whitespace before each comma.
+In array declarations, there MUST NOT be a whitespace before each comma.
 
 **Insight Class**: `PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer`
 
@@ -575,13 +569,13 @@ Spaces should be properly placed in a function declaration.
 
 ## Function typehint space <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
-This fixer add missing space between function's argument and its typehint.
+This fixer adds missing spaces between function's argument and its typehint.
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer`
 
 ## Binary operator space <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-Binary operators should be surrounded by space as configured.
+Binary operators should be surrounded by spaces as configured.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer`
 
@@ -599,7 +593,7 @@ Binary operators should be surrounded by space as configured.
 
 ## Standardize not equals <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
-This fixer replace all `<>` with `!=`.
+This fixer replaces all `<>` with `!=`.
 
 **Insight Class**: `PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer`
 

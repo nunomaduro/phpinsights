@@ -15,6 +15,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DeprecatedFunctionsSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions\NullableTypeDeclarationSniff;
 use PhpCsFixer\Fixer\FunctionNotation\NoSpacesAfterFunctionNameFixer;
+use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 use PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer;
 use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedInheritedVariablePassedToClosureSniff;
@@ -53,6 +54,7 @@ final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
             ForbiddenFunctionsSniff::class,
             NoSpacesAfterFunctionNameFixer::class,
             ReturnAssignmentFixer::class,
+            VoidReturnFixer::class,
         ];
     }
 }

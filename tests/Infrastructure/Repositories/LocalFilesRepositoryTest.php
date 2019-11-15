@@ -6,6 +6,7 @@ namespace Tests\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Tests\TestCase;
 
 final class LocalFilesRepositoryTest extends TestCase
@@ -74,10 +75,10 @@ final class LocalFilesRepositoryTest extends TestCase
 
         $repository = new LocalFilesRepository($finder);
         $repository->within(__DIR__ . '/Fixtures/FileToInspect.php');
-        $files = iterator_to_array($repository->getFiles());
+        $files = iterator_to_array($repository->getFiles(), false);
 
         self::assertCount(1, $files);
-        self::assertInstanceOf(\SplFileInfo::class, $files[0]);
+        self::assertInstanceOf(SplFileInfo::class, $files[0]);
         self::assertStringContainsString('/Fixtures/FileToInspect.php', $files[0]->getRealPath());
     }
 }

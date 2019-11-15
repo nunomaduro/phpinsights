@@ -9,14 +9,18 @@ use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
-use NunoMaduro\PhpInsights\Domain\Exceptions\PresetNotFound;
+use NunoMaduro\PhpInsights\Domain\Kernel;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * @internal
  */
 final class ConfigResolver
 {
+    private const CONFIG_FILENAME = 'phpinsights.php';
+
     /**
      * @var array<string>
      */
@@ -32,12 +36,12 @@ final class ConfigResolver
     /**
      * Merge the given config with the specified preset.
      *
-     * @param  array<string, string|int|array>  $config
+     * @param  array<string, string|array>  $config
      * @param  string  $directory
      *
-     * @return array<string, array>
+     * @return Configuration
      */
-    public static function resolve(array $config, string $directory): array
+    public static function resolve(array $config, string $directory): Configuration
     {
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($directory);
@@ -45,11 +49,39 @@ final class ConfigResolver
         /** @var Preset $presetClass */
         foreach (self::$presets as $presetClass) {
             if ($presetClass::getName() === $preset) {
-                return self::mergeConfig($presetClass::get(), $config);
+                $config = self::mergeConfig($presetClass::get(), $config);
+                break;
             }
         }
 
-        throw new PresetNotFound(sprintf('%s not found', $preset));
+        $isRootAnalyse = true;
+        foreach (Kernel::getRequiredFiles() as $file) {
+            if (! file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
+                $isRootAnalyse = false;
+                break;
+            }
+        }
+
+        if (! $isRootAnalyse) {
+            $config = self::excludeGlobalInsights($config);
+        }
+
+        if (! isset($config['directory'])) {
+            $config['directory'] = $directory;
+        }
+
+        return new Configuration($config);
+    }
+
+    public static function resolvePath(InputInterface $input): string
+    {
+        /** @var string|null $configPath */
+        $configPath = $input->getOption('config-path');
+        if ($configPath === null && file_exists(getcwd() . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME)) {
+            $configPath = getcwd() . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
+        }
+
+        return $configPath ?? '';
     }
 
     /**
@@ -108,5 +140,19 @@ final class ConfigResolver
         }
 
         return $base;
+    }
+
+    /**
+     * @param array<string, string|array> $config
+     *
+     * @return array<string, string|array>
+     */
+    private static function excludeGlobalInsights(array $config): array
+    {
+        foreach (Kernel::getGlobalInsights() as $insight) {
+            $config['remove'][] = $insight;
+        }
+
+        return $config;
     }
 }

@@ -6,10 +6,9 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor as FileProcessorContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
-use SplFileInfo;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\SplFileInfo as SymfonySplFileInfo;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -70,38 +69,70 @@ final class Runner
         }
 
         // Create progress bar
-        $progressBar = new ProgressBar($this->output, count($files));
+        $progressBar = $this->createProgressBar(count($files));
+        $progressBar->setMessage('');
         $progressBar->start();
 
         /** @var SplFileInfo $file */
         foreach ($files as $file) {
             // Output file name if verbose
             if ($this->output->isVerbose()) {
-                $this->output->writeln(" {$file->getRealPath()}");
+                $progressBar->setMessage(' - ' . $file->getRelativePathname());
             }
 
             $this->processFile($file);
             $progressBar->advance();
         }
+
+        if ($this->output->isVerbose()) {
+            $progressBar->setMessage(PHP_EOL . '<info>Analyse Completed !</info>');
+        }
+        $progressBar->finish();
     }
 
     private function processFile(SplFileInfo $file): void
     {
-        if (! ($file instanceof SymfonySplFileInfo)) {
-            $path = $file->getPath()
-                . DIRECTORY_SEPARATOR
-                . $file->getFilename();
-
-            $file = new SymfonySplFileInfo(
-                $path,
-                $file->getPath(),
-                $path
-            );
-        }
-
         /** @var FileProcessorContract $fileProcessor */
         foreach ($this->filesProcessors as $fileProcessor) {
             $fileProcessor->processFile($file);
+        }
+    }
+
+    private function createProgressBar(int $max = 0): ProgressBar
+    {
+        $progressBar = new ProgressBar($this->output, $max);
+
+        $emptyBarCharacter = '░'; // light shade character \u2591
+        $progressCharacter = '';
+        $barCharacter = '▓'; // dark shade character \u2593
+
+        $format = ProgressBar::getFormatDefinition($this->getProgressFormat());
+        $format .= PHP_EOL . '%message%';
+        ProgressBar::setFormatDefinition('phpinsight', $format);
+        $progressBar->setFormat('phpinsight');
+
+        if ('\\' !== \DIRECTORY_SEPARATOR
+            || 'Hyper' === getenv('TERM_PROGRAM')) {
+            $progressBar->setEmptyBarCharacter($emptyBarCharacter);
+            $progressBar->setProgressCharacter($progressCharacter);
+            $progressBar->setBarCharacter($barCharacter);
+        }
+
+        return $progressBar;
+    }
+
+    private function getProgressFormat(): string
+    {
+        switch ($this->output->getVerbosity()) {
+            // OutputInterface::VERBOSITY_QUIET: display is disabled anyway
+            case OutputInterface::VERBOSITY_VERBOSE:
+                return 'verbose';
+            case OutputInterface::VERBOSITY_VERY_VERBOSE:
+                return 'very_verbose';
+            case OutputInterface::VERBOSITY_DEBUG:
+                return 'debug';
+            default:
+                return 'normal';
         }
     }
 }

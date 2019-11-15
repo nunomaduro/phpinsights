@@ -118,7 +118,7 @@ php -d memory_limit=2000M ./vendor/bin/phpinsights
 
 ## Display issues omitted
 
-PHP Insights console command have different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
+The PHP Insights console command has different verbosity levels, which determine the quantity of issues displayed. By default, commands display only the 3 first issues per `Insight`, but you can display them all with the `-v` option:
 ```bash
 ./vendor/bin/phpinsights -v
 ```

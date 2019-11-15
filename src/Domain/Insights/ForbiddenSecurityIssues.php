@@ -17,6 +17,11 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
      */
     private static $result;
 
+    /**
+     * @var array<Details>
+     */
+    private static $details;
+
     public function hasIssue(): bool
     {
         return (bool) count($this->getDetails());
@@ -29,23 +34,33 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
 
     public function getDetails(): array
     {
-        $issues = json_decode((string) $this->getResult(), true);
+        if (self::$details !== null) {
+            return self::$details;
+        }
+
+        try {
+            $issues = json_decode((string) $this->getResult(), true);
+        } catch (InternetConnectionNotFound $exception) {
+            self::$details = [
+                Details::make()->setMessage($exception->getMessage()),
+            ];
+            return self::$details;
+        }
 
         if ($issues === null) {
             return [];
         }
 
-        $details = [];
-
+        self::$details = [];
         foreach ($issues as $packageName => $package) {
             foreach ($package['advisories'] as $advisory) {
-                $details[] = Details::make()->setMessage(
+                self::$details[] = Details::make()->setMessage(
                     "${packageName}@{$package['version']} {$advisory['title']} - {$advisory['link']}"
                 );
             }
         }
 
-        return $details;
+        return self::$details;
     }
 
     /**

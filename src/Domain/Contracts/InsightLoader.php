@@ -25,7 +25,7 @@ interface InsightLoader
      *
      * @param string $insightClass
      * @param string $dir
-     * @param array<string, string|array> $config Related to $insightClass
+     * @param array<string, int|string|array> $config Related to $insightClass
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight
      */

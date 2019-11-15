@@ -24,19 +24,11 @@ final class CyclomaticComplexityIsHighTest extends TestCase
 
     public function testClassHasToMuchCyclomaticComplexity(): void
     {
-        $analyser = new Analyser();
-
         $files = [
             __DIR__ . '/Fixtures/LittleToComplexClass.php',
             __DIR__ . '/Fixtures/VeryMuchToComplexClass.php',
         ];
 
-        $fileRepository = new FakeFileRepository($files);
-
-        $insightCollectionFactory = new InsightCollectionFactory(
-            $fileRepository,
-            $analyser
-        );
         $analyzer = new Analyser();
         $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
         $insight = new CyclomaticComplexityIsHigh($collector, []);
@@ -62,19 +54,11 @@ final class CyclomaticComplexityIsHighTest extends TestCase
 
     public function testClassWeCanConfigureTheMaxComplexity(): void
     {
-        $analyser = new Analyser();
-
         $files = [
             __DIR__ . '/Fixtures/LittleToComplexClass.php',
             __DIR__ . '/Fixtures/VeryMuchToComplexClass.php',
         ];
 
-        $fileRepository = new FakeFileRepository($files);
-
-        $insightCollectionFactory = new InsightCollectionFactory(
-            $fileRepository,
-            $analyser
-        );
         $analyzer = new Analyser();
         $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
         $insight = new CyclomaticComplexityIsHigh($collector, ['maxComplexity' => 10]);

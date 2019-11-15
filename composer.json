@@ -73,7 +73,7 @@
     ],
     "scripts": {
         "website:copy-changelog": "@php -r \"copy('CHANGELOG.md', 'docs/changelog.md');\"",
-        "website:copy-logo": "@php -r \"(is_dir('docs/.vuepress/public') || mkdir('docs/.vuepress/public')) && copy('art/logo_mixed.gif', 'docs/.vuepress/public/logo.gif');\"",
+        "website:copy-logo": "@php -r \"(is_dir('docs/.vuepress/public') || mkdir('docs/.vuepress/public')) && copy('art/logo_mixed.gif', 'docs/.vuepress/public/logo.gif') && copy('art/heart.svg', 'docs/.vuepress/public/heart.svg') && copy('art/heart.png', 'docs/.vuepress/public/heart.png');\"",
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
