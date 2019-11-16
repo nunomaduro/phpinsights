@@ -29,7 +29,8 @@ final class Files
                     $path = realpath($path);
                 }
                 return str_replace($basedir . DIRECTORY_SEPARATOR, '', $path);
-            }, $list));
+            }, $list))
+            ->files();
 
         return iterator_to_array($finder, true);
     }
