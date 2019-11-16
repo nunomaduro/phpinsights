@@ -4,9 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [v1.10.0]
 ### Added
 - Checkstyle formatter ([#271](https://github.com/nunomaduro/phpinsights/pull/271))
+- PHP CS Fixer Wrapper ([#219](https://github.com/nunomaduro/phpinsights/pull/219))
+- Responsive view in Console ([#273](https://github.com/nunomaduro/phpinsights/pull/273))
+- IDE Url handler ([#265](https://github.com/nunomaduro/phpinsights/pull/265))
+- Offline usage ([#292](https://github.com/nunomaduro/phpinsights/pull/292))
+- Directory exclusion in Insights config ([#293](https://github.com/nunomaduro/phpinsights/pull/293))
+- Favicon in website ([#281](https://github.com/nunomaduro/phpinsights/pull/281))
+
+### Changed 
+- Drop easy coding standard dependency ([#252](https://github.com/nunomaduro/phpinsights/pull/252))
+- Use a configuration class ([#283](https://github.com/nunomaduro/phpinsights/pull/283))
+- Improve verbose progress bar ([#291](https://github.com/nunomaduro/phpinsights/pull/291))
+
+### Fixed
+- Silence Warnings ([#253](https://github.com/nunomaduro/phpinsights/pull/253))
 
 ## [v1.9.0]
 ### Added
