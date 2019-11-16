@@ -24,8 +24,10 @@ final class ForbiddenTraits extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        return array_map(static function (string $name): Details {
+        $traits = $this->filterFilesWithoutExcluded($this->collector->getTraits());
+
+        return array_values(array_map(static function (string $name): Details {
             return Details::make()->setFile($name);
-        }, $this->collector->getTraits());
+        }, $traits));
     }
 }

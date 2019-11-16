@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
-use NunoMaduro\PhpInsights\Domain\Helper\Paths;
+use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -23,13 +23,9 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      */
     private $fixer;
     /**
-     * @var string
+     * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
-    private $dir;
-    /**
-     * @var array
-     */
-    private $excludedFiles;
+    private $exclude;
     /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
@@ -40,13 +36,15 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      *
      * @param \PhpCsFixer\Fixer\FixerInterface $fixer
      * @param string $dir
-     * @param array<string> $excludedFiles
+     * @param array<string> $exclude
      */
-    public function __construct(FixerInterface $fixer, string $dir, array $excludedFiles)
+    public function __construct(FixerInterface $fixer, string $dir, array $exclude)
     {
         $this->fixer = $fixer;
-        $this->dir = $dir;
-        $this->excludedFiles = $excludedFiles;
+        $this->exclude = [];
+        if (count($exclude) > 0) {
+            $this->exclude = Files::find($dir, $exclude);
+        }
     }
 
     public function isCandidate(Tokens $tokens): bool
@@ -138,17 +136,9 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
 
     private function skipFilesFromExcludedFiles(\SplFileInfo $file): bool
     {
-        $path = $file->getFileInfo()->getRealPath();
-        if ($path === false) {
-            return false;
-        }
-        foreach ($this->excludedFiles as $excludedFile) {
-            if (Paths::areEqual($this->dir . DIRECTORY_SEPARATOR . $excludedFile, $path)) {
-                return true;
-            }
-        }
+        $path = $file->getRealPath();
 
-        return false;
+        return $path !== false && isset($this->exclude[$path]);
     }
 
     private function processDiff(string $diff, string $file): void

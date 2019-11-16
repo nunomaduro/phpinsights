@@ -94,4 +94,35 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(1, $orderedImportErrors);
     }
+
+    public function testConfigExcludeDirectory(): void
+    {
+        $collection = $this->runAnalyserOnConfig(
+            [
+                'config' => [
+                    OrderedImportsFixer::class => [
+                        'exclude' => ['Domain/Fixer'],
+                    ],
+                ],
+            ],
+            [
+                __DIR__ . '/../../Fixtures/' . self::$fileToTest,
+            ],
+            __DIR__ . '/../../Fixtures/'
+        );
+        $orderedImportErrors = 0;
+
+        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
+        foreach ($collection->allFrom(new Classes) as $insight) {
+            if (
+                $insight->hasIssue()
+                && $insight->getInsightClass() === OrderedImportsFixer::class
+            ) {
+                $orderedImportErrors++;
+            }
+        }
+
+        // No errors of this type as we are ignoring the file.
+        self::assertEquals(0, $orderedImportErrors);
+    }
 }
