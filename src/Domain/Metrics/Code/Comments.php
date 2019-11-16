@@ -13,7 +13,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff;
