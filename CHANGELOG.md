@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.10.1]
+### Changed
+- Reorganize place of some Insights ([#313](https://github.com/nunomaduro/phpinsights/pull/313))
+
+### Fixed 
+- Duplicate empty comment Insight ([#311](https://github.com/nunomaduro/phpinsights/pull/311))
+- Remove VoidReturnFixer in laravel Preset ([#312](https://github.com/nunomaduro/phpinsights/pull/312))
+
 ## [v1.10.0]
 ### Added
 - Checkstyle formatter ([#271](https://github.com/nunomaduro/phpinsights/pull/271))
