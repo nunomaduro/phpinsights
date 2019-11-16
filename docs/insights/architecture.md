@@ -190,12 +190,6 @@ This sniff reports use of superfluous prefix or suffix "Trait" for traits.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff`
 
-## Protected to private <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/>
-
-This fixer converts `protected` variables and methods to `private` where possible.
-
-**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer`
-
 ## Method argument space <Badge text="^1.10"/> <Badge text="Architecture\Functions" type="warn"/> <Badge text="configurable"/>
 
 In method arguments and method calls, there must not be a space before each comma and there must be one space after each comma. 

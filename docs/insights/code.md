@@ -63,6 +63,12 @@ This sniff reports useless late static binding.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff`
 
+## Protected to private <Badge text="^1.10"/> <Badge text="Architecture\Classes" type="warn"/>
+
+This fixer converts `protected` variables and methods to `private` where possible.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer`
+
 ## Unused variable  <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
 This sniff detects unused variables.

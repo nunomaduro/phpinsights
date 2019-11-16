@@ -780,25 +780,25 @@ There must be one `use` keyword per declaration.
 
 **Insight Class**: `PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer`
 
-## Phpdoc trim <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc trim <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
 PHPDoc should start and end with content, excluding the very first and last line of the docblocks.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer`
 
-## Phpdoc var annotation correct order <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc var annotation correct order <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
 `@var` and `@type` annotations must have type and name in the correct order.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer`
 
-## Phpdoc indent <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc indent <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
 Docblocks should have the same indentation as the documented subject.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer`
 
-## Phpdoc inline tag <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/>
+## Phpdoc inline tag <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
 This fixer fixes PHPDoc inline tags, make `@inheritdoc` always inline.
 
