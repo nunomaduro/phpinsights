@@ -41,7 +41,7 @@ abstract class Insight implements InsightContract
         $exclude = $config['exclude'] ?? [];
         if (count($exclude) > 0) {
             $this->excludedFiles = Files::find(
-                (string) getcwd(),
+                (string) (getcwd() ?? $collector->getDir()),
                 $exclude
             );
         }
