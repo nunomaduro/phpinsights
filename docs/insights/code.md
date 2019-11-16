@@ -380,12 +380,6 @@ This sniff looks for duplicate assignments to a variable.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Variables\DuplicateAssignmentToVariableSniff`
 
-## Empty comment <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
-
-This sniff reports empty comments.
-
-**Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff`
-
 ## Nullable type for null default value <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
 This sniff checks whether the nullablity `?` symbol is present before each nullable and optional parameter (which are marked as `= null`)
