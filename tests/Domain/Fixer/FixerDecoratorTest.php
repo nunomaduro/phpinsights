@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Fixer;
 
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
+use NunoMaduro\PhpInsights\Domain\Metrics\Style\Style;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use Tests\TestCase;
 
@@ -32,7 +32,7 @@ final class FixerDecoratorTest extends TestCase
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Classes) as $insight) {
+        foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
@@ -63,7 +63,7 @@ final class FixerDecoratorTest extends TestCase
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Classes) as $insight) {
+        foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
@@ -82,7 +82,7 @@ final class FixerDecoratorTest extends TestCase
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Classes) as $insight) {
+        foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
@@ -113,7 +113,7 @@ final class FixerDecoratorTest extends TestCase
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Classes) as $insight) {
+        foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class

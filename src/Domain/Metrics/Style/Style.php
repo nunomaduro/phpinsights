@@ -50,14 +50,22 @@ use PhpCsFixer\Fixer\Casing\NativeFunctionTypeDeclarationCasingFixer;
 use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
 use PhpCsFixer\Fixer\ClassNotation\ClassDefinitionFixer;
 use PhpCsFixer\Fixer\ClassNotation\NoBlankLinesAfterClassOpeningFixer;
+use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
+use PhpCsFixer\Fixer\ClassNotation\SingleClassElementPerStatementFixer;
 use PhpCsFixer\Fixer\Comment\NoTrailingWhitespaceInCommentFixer;
 use PhpCsFixer\Fixer\ControlStructure\SwitchCaseSemicolonToColonFixer;
 use PhpCsFixer\Fixer\ControlStructure\SwitchCaseSpaceFixer;
 use PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer;
 use PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer;
+use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
+use PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer;
 use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer;
 use PhpCsFixer\Fixer\Phpdoc\AlignMultilineCommentFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer;
 use PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer;
 use PhpCsFixer\Fixer\Semicolon\NoSinglelineWhitespaceBeforeSemicolonsFixer;
 use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
@@ -172,6 +180,14 @@ final class Style implements HasInsights
             NoWhitespaceInBlankLineFixer::class,
             SingleQuoteFixer::class,
             StandardizeNotEqualsFixer::class,
+            PhpdocIndentFixer::class,
+            PhpdocInlineTagFixer::class,
+            PhpdocTrimFixer::class,
+            PhpdocVarAnnotationCorrectOrderFixer::class,
+            SingleClassElementPerStatementFixer::class,
+            SingleImportPerStatementFixer::class,
+            OrderedClassElementsFixer::class,
+            OrderedImportsFixer::class,
         ];
     }
 }
