@@ -13,8 +13,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff;
 use PhpCsFixer\Fixer\Comment\MultilineCommentOpeningClosingFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoBreakCommentFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer;
-use SlevomatCodingStandard\Sniffs\Commenting\EmptyCommentSniff;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer;
 use SlevomatCodingStandard\Sniffs\Commenting\ForbiddenCommentsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff;
@@ -44,7 +43,6 @@ final class Comments implements HasValue, HasPercentage, HasInsights
     public function getInsights(): array
     {
         return [
-            EmptyCommentSniff::class,
             // FullyQualifiedClassNameInAnnotationSniff::class,
             NullableTypeForNullDefaultValueSniff::class,
             FixmeSniff::class,

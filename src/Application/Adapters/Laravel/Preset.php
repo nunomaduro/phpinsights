@@ -11,6 +11,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 use PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer;
+use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 
 /**
  * @internal
@@ -43,7 +44,7 @@ final class Preset implements PresetContract
             ],
             'remove' => [
                 ProtectedToPrivateFixer::class,
-                // ...
+                VoidReturnFixer::class,
             ],
             'config' => [
                 ForbiddenDefineGlobalConstants::class => [
