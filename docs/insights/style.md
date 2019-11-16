@@ -705,6 +705,105 @@ A PHP file without end tag must always end with a single empty line feed.
 
 **Insight Class**: `PhpCsFixer\Fixer\Whitespace\SingleBlankLineAtEofFixer`
 
+
+## Ordered class elements <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+This sniff orders the elements of classes/interfaces/traits.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer::class => [
+    'order' => [ // List of strings defining order of elements.
+        'use_trait',
+        'constant_public',
+        'constant_protected',
+        'constant_private',
+        'property_public',
+        'property_protected',
+        'property_private',
+        'construct',
+        'destruct',
+        'magic',
+        'phpunit',
+        'method_public',
+        'method_protected',
+        'method_private',  
+    ],
+    'sortAlgorithm' => 'none' // possible values ['none', 'alpha']
+]
+```
+</details>
+
+## Single class element per statement <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+There must not be more than one property or constant declared per statement.
+
+**Insight Class**: `PhpCsFixer\Fixer\ClassNotation\SingleClassElementPerStatementFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\ClassNotation\SingleClassElementPerStatementFixer::class => [
+    'elements' => [
+        'const',
+        'property',
+    ],
+]
+```
+</details>
+
+## Ordered imports <Badge text="^1.10"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
+
+This sniff orders `use` statements (import of classes).
+
+**Insight Class**: `PhpCsFixer\Fixer\Import\OrderedImportsFixer`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
+    'import_order' => ['class', 'const', 'function'],
+    'sort_algorithm' => 'alpha', // possible values ['alpha', 'length', 'none']
+]
+```
+</details>
+
+## Single import pert statement <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+There must be one `use` keyword per declaration.
+
+**Insight Class**: `PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer`
+
+## Phpdoc trim <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+PHPDoc should start and end with content, excluding the very first and last line of the docblocks.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer`
+
+## Phpdoc var annotation correct order <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+`@var` and `@type` annotations must have type and name in the correct order.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer`
+
+## Phpdoc indent <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+Docblocks should have the same indentation as the documented subject.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer`
+
+## Phpdoc inline tag <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+
+This fixer fixes PHPDoc inline tags, make `@inheritdoc` always inline.
+
+**Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagFixer`
+
 <!--
 Insight template
 ##  <Badge text="^1.0"/> <Badge text="Style" type="warn"/>

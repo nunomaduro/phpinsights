@@ -14,10 +14,6 @@ use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
-use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
-use PhpCsFixer\Fixer\ClassNotation\SingleClassElementPerStatementFixer;
-use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
-use PhpCsFixer\Fixer\Import\SingleImportPerStatementFixer;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 
@@ -43,10 +39,6 @@ final class Classes implements HasValue, HasInsights
             OneClassPerFileSniff::class,
             SuperfluousInterfaceNamingSniff::class,
             SuperfluousAbstractClassNamingSniff::class,
-            SingleClassElementPerStatementFixer::class,
-            SingleImportPerStatementFixer::class,
-            OrderedClassElementsFixer::class,
-            OrderedImportsFixer::class,
         ];
     }
 
