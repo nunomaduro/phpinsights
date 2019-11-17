@@ -11,7 +11,7 @@ final class ForbiddenTraits extends Insight implements HasDetails
 {
     public function hasIssue(): bool
     {
-        return count($this->collector->getTraits()) > 0;
+        return count($this->getDetails()) > 0;
     }
 
     public function getTitle(): string
@@ -24,7 +24,8 @@ final class ForbiddenTraits extends Insight implements HasDetails
      */
     public function getDetails(): array
     {
-        $traits = $this->filterFilesWithoutExcluded($this->collector->getTraits());
+        $traits = $this->collector->getTraits();
+        $traits = array_flip($this->filterFilesWithoutExcluded(array_flip($traits)));
 
         return array_values(array_map(static function (string $name): Details {
             return Details::make()->setFile($name);
