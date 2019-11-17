@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.10.2]
+### Fixed
+- Exclusion in ForbiddenTraits Insight ([#316](https://github.com/nunomaduro/phpinsights/pull/316))
+
 ## [v1.10.1]
 ### Changed
 - Reorganize place of some Insights ([#313](https://github.com/nunomaduro/phpinsights/pull/313))
