@@ -82,7 +82,7 @@ final class Configuration
     /**
      * Configuration constructor.
      *
-     * @param array<string, string|array> $config
+     * @param array<string, string|array|null> $config
      */
     public function __construct(array $config)
     {
@@ -169,7 +169,7 @@ final class Configuration
     }
 
     /**
-     * @param array<string, string|array> $config
+     * @param array<string, string|array|null> $config
      */
     private function resolveConfig(array $config): void
     {
@@ -198,8 +198,12 @@ final class Configuration
         $this->remove = $config['remove'];
         $this->config = $config['config'];
 
-        if (array_key_exists('ide', $config)) {
-            $this->fileLinkFormatter = $this->resolveIde($config['ide']);
+        if (
+            array_key_exists('ide', $config)
+            && is_string($config['ide'])
+            && $config['ide'] !== ''
+        ) {
+            $this->fileLinkFormatter = $this->resolveIde((string) $config['ide']);
         }
     }
 
@@ -249,6 +253,7 @@ final class Configuration
             return true;
         };
     }
+
     private function resolveIde(string $ide): FileLinkFormatterContract
     {
         $links = [
