@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.11.0]
+### Added
+- Support to Symfony 5 ([#324](https://github.com/nunomaduro/phpinsights/pull/324))
+
 ## [v1.10.3]
 ### Fixed
 - Assert IDE is defined before resolving it ([#319](https://github.com/nunomaduro/phpinsights/pull/319))
