@@ -32,6 +32,11 @@ final class ForbiddenFinalClassTest extends TestCase
 
         $collection = $this->runAnalyserOnConfig(
             [
+                'add' => [
+                    Classes::class => [
+                        ForbiddenFinalClasses::class,
+                    ],
+                ],
                 'config' => [
                     ForbiddenFinalClasses::class => [
                         'exclude' => [$fileLocation],
