@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.11.1]
+### Fixed
+- Exclusion in ForbiddenFinalClasses Insight ([#326](https://github.com/nunomaduro/phpinsights/pull/326))
+
 ## [v1.11.0]
 ### Added
 - Support to Symfony 5 ([#324](https://github.com/nunomaduro/phpinsights/pull/324))
