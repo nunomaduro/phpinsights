@@ -57,6 +57,6 @@ final class ForbiddenFinalClassTest extends TestCase
             }
         }
 
-        self::assertEquals(1, $classErrors);
+        self::assertEquals(0, $classErrors);
     }
 }

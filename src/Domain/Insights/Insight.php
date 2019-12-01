@@ -55,7 +55,7 @@ abstract class Insight implements InsightContract
     protected function shouldSkipFile(string $file): bool
     {
         $filepath = $file;
-        if (mb_strpos($this->collector->getDir(), $file) === false) {
+        if (mb_strpos($file, $this->collector->getDir()) === false) {
             $filepath = $this->collector->getDir() . DIRECTORY_SEPARATOR . $file;
         }
 
