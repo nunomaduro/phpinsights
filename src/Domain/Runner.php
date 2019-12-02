@@ -85,7 +85,7 @@ final class Runner
         }
 
         if ($this->output->isVerbose()) {
-            $progressBar->setMessage(PHP_EOL . '<info>Analyse Completed !</info>');
+            $progressBar->setMessage(PHP_EOL . '<info>Analysis Completed !</info>');
         }
         $progressBar->finish();
     }
