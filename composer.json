@@ -15,7 +15,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
-        "composer/composer": "^1.7",
+        "composer/composer": "^1.7|^2.0",
         "friendsofphp/php-cs-fixer": "^2.15",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
@@ -47,7 +47,8 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "NunoMaduro\\PhpInsights\\": "src"
