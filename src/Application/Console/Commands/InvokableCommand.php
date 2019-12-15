@@ -34,6 +34,9 @@ final class InvokableCommand extends BaseCommand
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        return call_user_func($this->callable, $input, $output);
+        $result = call_user_func($this->callable, $input, $output);
+
+        $output->writeln('✨ See something that needs to be improved? <options=bold>Create an issue</> or send us a <options=bold>pull request</>: <fg=cyan;options=bold>https://github.com/nunomaduro/phpinsights</>');
+        return $result;
     }
 }
