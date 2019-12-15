@@ -12,14 +12,14 @@ use Symfony\Component\Finder\SplFileInfo;
 
 final class File extends BaseFile
 {
-    /** @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator */
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator
+     */
     private $activeSniff;
-
     /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
     private $tokenListeners = [];
-
     /**
      * @var SplFileInfo
      */
@@ -28,6 +28,10 @@ final class File extends BaseFile
      * @var bool
      */
     private $isFixable;
+    /**
+     * @var bool
+     */
+    private $fixEnabled = false;
 
     /**
      * File constructor.
@@ -66,7 +70,6 @@ final class File extends BaseFile
             /** @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator $sniff */
             foreach ($this->tokenListeners[$token['code']] as $sniff) {
                 $this->activeSniff = $sniff;
-
                 try {
                     @$sniff->process($this, $stackPtr);
                 } catch (\Throwable $e) {
@@ -79,6 +82,7 @@ final class File extends BaseFile
     /**
      * @param array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>> $tokenListeners
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     * @param bool $isFixable
      */
     public function processWithTokenListenersAndFileInfo(
         array $tokenListeners,
@@ -102,6 +106,20 @@ final class File extends BaseFile
     }
 
     /**
+     * Active fix mode. It's used to prevent report twice
+     * details because fixer relaunch process method.
+     */
+    public function activeFix(): void
+    {
+        $this->fixEnabled = true;
+    }
+
+    public function disableFix(): void
+    {
+        $this->fixEnabled = false;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function addMessage(
@@ -118,6 +136,15 @@ final class File extends BaseFile
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
         if ($isFixable === true && $this->isFixable === true) {
+            if ($this->fixEnabled === true) {
+                $this->activeSniff->addFileFixed($this->fileInfo->getRelativePathname());
+            }
+
+            return true;
+        }
+
+        if ($this->fixEnabled === true) {
+            // detail already added
             return true;
         }
 

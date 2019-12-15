@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter;
+use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
@@ -59,6 +60,10 @@ final class Console implements Formatter
      * @var bool
      */
     private $supportHyperLinks;
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Configuration
+     */
+    private $config;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -67,9 +72,9 @@ final class Console implements Formatter
 
         $outputFormatterStyle = new OutputFormatterStyle();
         /** @var Configuration $config */
-        $config = Container::make()->get(Configuration::class);
+        $this->config = Container::make()->get(Configuration::class);
 
-        $this->fileLinkFormatter = $config->getFileLinkFormatter();
+        $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
         $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
     }
 
@@ -94,6 +99,82 @@ final class Console implements Formatter
             ->miscellaneous($results);
 
         $this->issues($insightCollection, $metrics, $dir);
+        if ($this->config->isFix()) {
+            $this->formatFix($insightCollection, $dir, $metrics);
+        }
+    }
+
+    /**
+     * Format the result of fixes to the desired format.
+     *
+     * @param InsightCollection $insightCollection
+     * @param string $dir
+     * @param array<string> $metrics
+     */
+    public function formatFix(
+        InsightCollection $insightCollection,
+        string $dir,
+        array $metrics
+    ): void {
+        $results = $insightCollection->results();
+        $this->style->newLine(1);
+
+        $totalFix = $results->getTotalFix();
+        $totalIssues = $results->getTotalIssues();
+        if ($totalFix === 0 && $totalIssues === 0) {
+            $this->style->success('Nothing to do. Your code is really clean.');
+
+            return;
+        }
+
+        if ($totalFix === 0) {
+            $this->style->warning(sprintf(
+                'No more issue can be fixed automatically. %s issues remaining',
+                $totalIssues
+            ));
+
+            return;
+        }
+
+        $message = 'issues fixed';
+        if ($totalFix === 1) {
+            $message = 'issue fixed';
+        }
+
+        $this->style->success(sprintf('🧙 ️Congrats ! %s %s', $totalFix, $message));
+        $this->style->writeln(sprintf('<fg=yellow;options=bold>⚠ %s issues remaining</>', $totalIssues));
+        $this->style->newLine();
+
+        if (! $this->style->isVerbose()) {
+            return;
+        }
+
+        foreach ($metrics as $metricClass) {
+            $category = explode('\\', $metricClass);
+            $category = $category[count($category) - 2];
+
+            foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
+                if (! $insight instanceof Fixable || $insight->getTotalFix() === 0) {
+                    continue;
+                }
+
+                $fix = "<fg=green>• [${category}] </><bold>{$insight->getTitle()}</bold>:";
+
+                $details = $insight->getFixPerFile();
+                /** @var Details $detail */
+                foreach ($details as $detail) {
+                    $detailString = $this->formatFileLine($detail, $dir);
+                    if ($detail->hasMessage()) {
+                        $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
+                    }
+
+                    $fix .= "\n  ${detailString}";
+                }
+
+                $this->style->writeln($fix);
+            }
+        }
+        $this->style->newLine();
     }
 
     /**

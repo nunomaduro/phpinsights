@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -17,7 +18,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * @internal
  */
-final class SniffDecorator implements Sniff, Insight, HasDetails
+final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 {
     /**
      * @var \PHP_CodeSniffer\Sniffs\Sniff
@@ -26,6 +27,15 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
 
     /** @var array<\NunoMaduro\PhpInsights\Domain\Details> */
     private $errors = [];
+
+    /**
+     * @var int
+     */
+    private $fixedCount = 0;
+    /**
+     * @var array<string, int>
+     */
+    private $fixPerFile = [];
 
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
@@ -129,6 +139,46 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
     public function addDetails(Details $details): void
     {
         $this->errors[] = $details;
+    }
+
+    public function incrementFix(): void
+    {
+        $this->fixedCount++;
+    }
+
+    public function addFileFixed(string $file): void
+    {
+        if (! \array_key_exists($file, $this->fixPerFile)) {
+            $this->fixPerFile[$file] = 0;
+        }
+
+        $this->fixPerFile[$file] = ++$this->fixPerFile[$file];
+        $this->incrementFix();
+    }
+
+    public function getTotalFix(): int
+    {
+        return $this->fixedCount;
+    }
+
+    /**
+     * @return array<Details>
+     */
+    public function getFixPerFile(): array
+    {
+        $details = [];
+        foreach ($this->fixPerFile as $file => $count) {
+            $message = 'issues fixed';
+            if ($count === 1) {
+                $message = 'issue fixed';
+            }
+
+            $details[] = (new Details())
+                ->setMessage(sprintf('%s %s', $count, $message))
+                ->setFile($file);
+        }
+
+        return $details;
     }
 
     private function skipFilesFromIgnoreFiles(InsightFile $file): bool
