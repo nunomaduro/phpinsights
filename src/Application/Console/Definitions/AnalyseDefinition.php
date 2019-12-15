@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Definitions;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -13,23 +12,9 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final class AnalyseDefinition
 {
-    /**
-     * @return InputDefinition
-     */
     public static function get(): InputDefinition
     {
-        return new InputDefinition([
-            new InputArgument(
-                'directory',
-                InputArgument::OPTIONAL,
-                'The directory to analyse'
-            ),
-            new InputOption(
-                'config-path',
-                'c',
-                InputOption::VALUE_OPTIONAL,
-                'The configuration file path'
-            ),
+        $definition = new InputDefinition([
             new InputOption(
                 'min-quality',
                 null,
@@ -78,5 +63,10 @@ final class AnalyseDefinition
                 'Enable auto-fix for insights fixables'
             ),
         ]);
+
+        $definition->addOptions(DefaultDefinition::get()->getOptions());
+        $definition->addArguments(DefaultDefinition::get()->getArguments());
+
+        return $definition;
     }
 }
