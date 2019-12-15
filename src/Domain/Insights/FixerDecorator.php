@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Decorates original php-cs-fixers with additional behavior.
  *
  * @internal
  */
-final class FixerDecorator implements FixerInterface, InsightContract, HasDetails
+final class FixerDecorator implements FixerInterface, InsightContract, HasDetails, Fixable
 {
     /**
      * @var \PhpCsFixer\Fixer\FixerInterface
@@ -30,6 +32,14 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
     private $errors = [];
+    /**
+     * @var int
+     */
+    private $totalFixed = 0;
+    /**
+     * @var array<string, int>
+     */
+    private $fixPerFile = [];
 
     /**
      * FixerDecorator constructor.
@@ -134,6 +144,47 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $this->processDiff($diff, $file);
     }
 
+    public function registerFixedDiff(SplFileInfo $fileInfo, string $diff): void
+    {
+        $parsedDiff = $this->splitStringByLines($diff);
+        // Get first line number & Remove headers of diff
+        $parsedDiff = array_slice($parsedDiff, 3);
+
+        foreach ($parsedDiff as $diffLine) {
+            if (mb_strpos($diffLine, '@@ ') === 0) {
+                $this->addFileFixed($fileInfo->getRelativePathname());
+                continue;
+            }
+        }
+
+        $this->addFileFixed($fileInfo->getRelativePathname());
+    }
+
+    public function getTotalFix(): int
+    {
+        return $this->totalFixed;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFixPerFile(): array
+    {
+        $details = [];
+        foreach ($this->fixPerFile as $file => $count) {
+            $message = 'issues fixed';
+            if ($count === 1) {
+                $message = 'issue fixed';
+            }
+
+            $details[] = (new Details())
+                ->setMessage(sprintf('%s %s', $count, $message))
+                ->setFile($file);
+        }
+
+        return $details;
+    }
+
     private function skipFilesFromExcludedFiles(\SplFileInfo $file): bool
     {
         $path = $file->getRealPath();
@@ -206,5 +257,15 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         preg_match($pattern, $diffLine, $matches);
 
         return (int) $matches[1];
+    }
+
+    private function addFileFixed(string $file): void
+    {
+        if (! \array_key_exists($file, $this->fixPerFile)) {
+            $this->fixPerFile[$file] = 0;
+        }
+
+        $this->fixPerFile[$file] = ++$this->fixPerFile[$file];
+        $this->totalFixed++;
     }
 }

@@ -65,8 +65,8 @@ final class FixerFileProcessor implements FileProcessor
         }
 
         $oldContent = $splFileInfo->getContents();
-
         $tokens = Tokens::fromCode($oldContent);
+        $needFix = false;
         /** @var FixerDecorator $fixer */
         foreach ($this->fixers as $fixer) {
             $fixer->fix($splFileInfo, $tokens);
@@ -75,17 +75,29 @@ final class FixerFileProcessor implements FileProcessor
             }
 
             if ($this->fixEnabled === true) {
-                continue;
+                $needFix = true;
+                // Register diff will be applied
+                $fixer->registerFixedDiff($splFileInfo, $this->differ->diff($oldContent, $tokens->generateCode()));
             }
 
-            $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
+            if ($this->fixEnabled === false) {
+                $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
+            }
             // Tokens has changed, so we need to clear cache
             Tokens::clearCache();
             $tokens = Tokens::fromCode($oldContent);
         }
 
-        if ($this->fixEnabled === true && $tokens->isChanged() === true) {
-            file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
+        if ($this->fixEnabled === false || $needFix === false) {
+            return;
         }
+
+        $tokens = Tokens::fromCode($oldContent);
+        // Reloop on fixer to get full tokens to change
+        foreach ($this->fixers as $fixer) {
+            $fixer->fix($splFileInfo, $tokens);
+        }
+
+        file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
     }
 }
