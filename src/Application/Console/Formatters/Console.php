@@ -326,7 +326,7 @@ final class Console implements Formatter
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = $this->formatFileLine($detail, $dir);
+                    $detailString = $this->formatFileLine($detail, $dir, $category);
 
                     if ($detail->hasFunction()) {
                         $detailString .= ($detailString !== '' ? ':' : '') . $detail->getFunction();
@@ -541,7 +541,20 @@ EOD;
         return $this->fileLinkFormatter;
     }
 
-    private function formatFileLine(Details $detail, string $directory): string
+    private function getCategoryColor(string $category): string
+    {
+        //black, red, green, yellow, blue, magenta, cyan, white, default
+        $categoryColor = [
+            'Code' => 'cyan',
+            'Complexity' => 'green',
+            'Architecture' => 'blue',
+            'Style' => 'yellow',
+            'Security' => 'red',
+        ];
+        return $categoryColor[$category] ?? '';
+    }
+
+    private function formatFileLine(Details $detail, string $directory, string $category): string
     {
         $detailString = '';
         $basePath = realpath($directory) . DIRECTORY_SEPARATOR;
@@ -562,6 +575,9 @@ EOD;
         if ($file !== null) {
             $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine());
         }
+
+        $color = $this->getCategoryColor($category);
+        $detailString = sprintf('<fg=%s>%s</>', $color, $detailString);
 
         if (
             $this->supportHyperLinks &&
