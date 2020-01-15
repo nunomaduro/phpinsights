@@ -19,7 +19,7 @@ final class Interfaces implements HasValue, HasPercentage, HasInsights
 
     public function getPercentage(Collector $collector): float
     {
-        return count($collector->getFiles()) > 0 ? ($collector->getInterfaces() / count($collector->getFiles())) * 100 : 0;
+        return count($collector->getFiles()) > 0 ? $collector->getInterfaces() / count($collector->getFiles()) * 100 : 0;
     }
 
     /**

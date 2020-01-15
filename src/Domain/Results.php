@@ -55,7 +55,7 @@ final class Results
         $avg = $this->collector->getAverageComplexityPerMethod() - 1.0;
 
         return (float) number_format(
-            100.0 - max(min(($avg * 100.0) / 3.0, 100.0), 0.0),
+            100.0 - max(min($avg * 100.0 / 3.0, 100.0), 0.0),
             1,
             '.',
             ''
@@ -135,7 +135,7 @@ final class Results
             }
         }
 
-        $percentage = (bool) $issuesNotFound ? (($issuesNotFound * 100.0) / $total) : 100.0;
+        $percentage = (bool) $issuesNotFound ? $issuesNotFound * 100.0 / $total : 100.0;
 
         return (float) number_format($percentage, 1, '.', '');
     }
