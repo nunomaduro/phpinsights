@@ -16,9 +16,6 @@ final class Container
      */
     private static $container;
 
-    /**
-     * @return \Psr\Container\ContainerInterface
-     */
     public static function make(): ContainerInterface
     {
         if (self::$container === null) {

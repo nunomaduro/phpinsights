@@ -20,10 +20,10 @@ final class InsightLoaders
     public function __invoke(): array
     {
         return [
-            SniffLoader::class => static function () {
+            SniffLoader::class => static function (): SniffLoader {
                 return new SniffLoader();
             },
-            FixerLoader::class => static function () {
+            FixerLoader::class => static function (): FixerLoader {
                 return new FixerLoader();
             },
         ];

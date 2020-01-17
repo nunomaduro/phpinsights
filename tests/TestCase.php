@@ -23,7 +23,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Call protected/private method of a class.
      *
-     * @param  string  $class Instantiated object that we will run method on
+     * @param  class-string  $class Instantiated object that we will run method on
      * @param  string  $methodName Method name to call
      * @param  array<int, mixed>  $parameters Array of parameters to pass into method
      *
@@ -31,7 +31,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @throws ReflectionException
      */
-    public function invokeStaticMethod(
+    public final function invokeStaticMethod(
         string $class,
         string $methodName,
         array $parameters
@@ -51,7 +51,7 @@ abstract class TestCase extends BaseTestCase
      * @param string $dir
      * @return InsightCollection
      */
-    public function runAnalyserOnPreset(
+    public final function runAnalyserOnPreset(
         string $preset,
         array $filePaths,
         string $dir = ''
@@ -71,7 +71,7 @@ abstract class TestCase extends BaseTestCase
      * @param string        $dir
      * @return InsightCollection
      */
-    public function runAnalyserOnConfig(
+    public final function runAnalyserOnConfig(
         array $config,
         array $filePaths,
         string $dir = ''
@@ -98,13 +98,13 @@ abstract class TestCase extends BaseTestCase
      * Prepares a supplied fixture for a supplied sniffer class with the
      * supplied properties.
      *
-     * @param string                              $sniffClassName
+     * @param class-string                        $sniffClassName
      * @param string                              $fixtureFile
      * @param array<string, string|array<string>> $properties
      * @return LocalFile
      * @throws ReflectionException
      */
-    public static function prepareFixtureWithSniff(
+    public static final function prepareFixtureWithSniff(
         string $sniffClassName,
         string $fixtureFile,
         array $properties = []
@@ -134,7 +134,12 @@ abstract class TestCase extends BaseTestCase
         return new LocalFile($fixtureFile, $ruleset, $config);
     }
 
-    public static function getFilePathFromClass(string $className) : string
+    /**
+     * @param class-string $className
+     * @return string
+     * @throws \ReflectionException
+     */
+    public static final function getFilePathFromClass(string $className) : string
     {
         $reflector = new ReflectionClass($className);
 
