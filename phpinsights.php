@@ -87,6 +87,6 @@ return [
         ],
         PropertyTypeHintSniff::class => [
             'enableNativeTypeHint' => false,
-        ]
+        ],
     ],
 ];
