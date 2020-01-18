@@ -551,7 +551,7 @@ EOD;
             'Style' => 'yellow',
             'Security' => 'red',
         ];
-        return $categoryColor[$category] ?? '';
+        return $categoryColor[$category] ?? 'blue';
     }
 
     private function formatFileLine(Details $detail, string $directory, string $category): string
