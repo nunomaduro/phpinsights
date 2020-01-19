@@ -192,7 +192,9 @@ final class Configuration
         $config = $resolver->resolve($config);
 
         $this->preset = $config['preset'];
-        $this->directory = $config['directory'];
+
+        // resolve symbolic link, /./, /../
+        $this->directory = realpath($config['directory']) ?: $config['directory'];
         $this->exclude = $config['exclude'];
         $this->add = $config['add'];
         $this->remove = $config['remove'];
