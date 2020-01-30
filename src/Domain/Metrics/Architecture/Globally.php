@@ -13,6 +13,6 @@ final class Globally implements HasPercentage
     {
         $value = count($collector->getFiles()) - $collector->getClasses() - $collector->getInterfaces() - count($collector->getTraits());
 
-        return count($collector->getFiles()) > 0 ? ($value / count($collector->getFiles())) * 100 : 0;
+        return count($collector->getFiles()) > 0 ? $value / count($collector->getFiles()) * 100 : 0;
     }
 }

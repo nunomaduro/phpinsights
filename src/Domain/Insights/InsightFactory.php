@@ -87,9 +87,6 @@ final class InsightFactory
         throw new RuntimeException(sprintf('Insight `%s` is not instantiable.', $errorClass));
     }
 
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $consoleOutput
-     */
     private function runInsightCollector(OutputInterface $consoleOutput): void
     {
         if ($this->ran === true) {

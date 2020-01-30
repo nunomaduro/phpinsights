@@ -11,7 +11,7 @@ use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
 
-return (static function () {
+return (static function (): Container {
     $injectors = [
         Configuration::class,
         Repositories::class,

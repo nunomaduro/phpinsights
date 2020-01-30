@@ -23,7 +23,7 @@ final class Configuration
     public function __invoke(): array
     {
         return [
-            \NunoMaduro\PhpInsights\Domain\Configuration::class => static function () {
+            \NunoMaduro\PhpInsights\Domain\Configuration::class => static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
                 $input = new ArgvInput();
                 // merge application default definition with analyse definition.
                 $definition = (new Application())->getDefinition();

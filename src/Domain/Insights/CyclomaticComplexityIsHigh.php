@@ -37,7 +37,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         $complexityLimit = $this->getMaxComplexity();
         $classesComplexity = array_filter(
             $this->collector->getClassComplexity(),
-            static function ($complexity) use ($complexityLimit) {
+            static function ($complexity) use ($complexityLimit): bool {
                 return $complexity > $complexityLimit;
             }
         );
