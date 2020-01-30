@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.12.0]
+### Added
+- Text coloring per section ([#339](https://github.com/nunomaduro/phpinsights/pull/339))
+- Support to slevomat coding standard 6 ([#342](https://github.com/nunomaduro/phpinsights/pull/342))
+
 ## [v1.11.1]
 ### Fixed
 - Exclusion in ForbiddenFinalClasses Insight ([#326](https://github.com/nunomaduro/phpinsights/pull/326))
