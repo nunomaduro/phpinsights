@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+/**
+ * @internal
+ */
 final class DetailsComparator
 {
     public function __invoke(Details $first, Details $second): int
