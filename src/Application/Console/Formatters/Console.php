@@ -11,6 +11,7 @@ use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
+use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
@@ -285,6 +286,7 @@ final class Console implements Formatter
         string $dir
     ): self {
         $previousCategory = null;
+        $detailsComparator = new DetailsComparator();
 
         foreach ($metrics as $metricClass) {
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
@@ -318,6 +320,7 @@ final class Console implements Formatter
                 }
 
                 $details = $insight->getDetails();
+                usort($details, $detailsComparator);
                 $totalDetails = count($details);
 
                 if (! $this->style->getOutput()->isVerbose()) {
