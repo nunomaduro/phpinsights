@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
+use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
@@ -23,7 +24,7 @@ final class Preset implements PresetContract
         return 'laravel';
     }
 
-    public static function get(): array
+    public static function get(?Composer $composer): array
     {
         $config = [
             'exclude' => [
@@ -64,13 +65,12 @@ final class Preset implements PresetContract
             ],
         ];
 
-        return ConfigResolver::mergeConfig(DefaultPreset::get(), $config);
+        return ConfigResolver::mergeConfig(DefaultPreset::get($composer), $config);
     }
 
-    public static function shouldBeApplied(array $composer): bool
+    public static function shouldBeApplied(Composer $composer): bool
     {
-        /** @var array<string> $requirements */
-        $requirements = $composer['require'] ?? [];
+        $requirements = $composer->getRequirements();
 
         foreach (array_keys($requirements) as $requirement) {
             $requirement = (string) $requirement;
@@ -80,6 +80,6 @@ final class Preset implements PresetContract
             }
         }
 
-        return array_key_exists('name', $composer) && $composer['name'] === 'laravel/framework';
+        return $composer->getName() === 'laravel/framework';
     }
 }

@@ -21,8 +21,10 @@ final class ConfigResolver
 {
     private const CONFIG_FILENAME = 'phpinsights.php';
 
+    private const DEFAULT_PRESET = 'default';
+
     /**
-     * @var array<string>
+     * @var array<class-string<Preset>>
      */
     private static $presets = [
         DrupalPreset::class,
@@ -43,13 +45,15 @@ final class ConfigResolver
      */
     public static function resolve(array $config, string $directory): Configuration
     {
+        $composer = self::getComposer($directory);
+
         /** @var string $preset */
-        $preset = $config['preset'] ?? self::guess($directory);
+        $preset = $config['preset'] ?? self::guess($composer);
 
         /** @var Preset $presetClass */
         foreach (self::$presets as $presetClass) {
             if ($presetClass::getName() === $preset) {
-                $config = self::mergeConfig($presetClass::get(), $config);
+                $config = self::mergeConfig($presetClass::get($composer), $config);
                 break;
             }
         }
@@ -84,33 +88,34 @@ final class ConfigResolver
         return $configPath ?? '';
     }
 
-    /**
-     * Guesses the preset based in information from the directory.
-     *
-     * @param  string  $directory
-     *
-     * @return string
-     */
-    public static function guess(string $directory): string
+    private static function getComposer(string $directory): ?Composer
     {
-        $preset = 'default';
-
         $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
 
         if (! file_exists($composerPath)) {
-            return $preset;
+            return null;
         }
 
-        $composer = json_decode((string) file_get_contents($composerPath), true);
+        return Composer::fromPath($composerPath);
+    }
 
-        foreach (self::$presets as $presetClass) {
-            if ($presetClass::shouldBeApplied($composer)) {
-                $preset = $presetClass::getName();
-                break;
+    /**
+     * Guesses the preset based in information from composer.
+     *
+     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
+     * @return string
+     */
+    public static function guess(?Composer $composer): string
+    {
+        if ($composer !== null) {
+            foreach (self::$presets as $presetClass) {
+                if ($presetClass::shouldBeApplied($composer)) {
+                    return $presetClass::getName();
+                }
             }
         }
 
-        return $preset;
+        return self::DEFAULT_PRESET;
     }
 
     /**
