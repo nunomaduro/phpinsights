@@ -70,6 +70,7 @@ abstract class TestCase extends BaseTestCase
      * @param array<string, mixed> $config
      * @param array<string>        $filePaths
      * @param string               $dir
+     *
      * @return InsightCollection
      */
     final public function runAnalyserOnConfig(

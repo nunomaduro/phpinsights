@@ -50,14 +50,16 @@ final class ConfigResolver
         foreach (self::$presets as $presetClass) {
             if ($presetClass::getName() === $preset) {
                 $config = self::mergeConfig($presetClass::get(), $config);
+
                 break;
             }
         }
 
         $isRootAnalyse = true;
         foreach (Kernel::getRequiredFiles() as $file) {
-            if (!file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
+            if (!file_exists($directory.DIRECTORY_SEPARATOR . $file)) {
                 $isRootAnalyse = false;
+
                 break;
             }
         }
@@ -106,6 +108,7 @@ final class ConfigResolver
         foreach (self::$presets as $presetClass) {
             if ($presetClass::shouldBeApplied($composer)) {
                 $preset = $presetClass::getName();
+
                 break;
             }
         }
@@ -124,8 +127,9 @@ final class ConfigResolver
     public static function mergeConfig(array $base, array $replacement): array
     {
         foreach ($replacement as $key => $value) {
-            if (!array_key_exists($key, $base) && ! is_numeric($key)) {
+            if (!array_key_exists($key, $base) && !is_numeric($key)) {
                 $base[$key] = $replacement[$key];
+
                 continue;
             }
             if (is_array($value) || (array_key_exists($key, $base) && is_array($base[$key]))) {

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Tests\Domain\Sniffs\ForbiddenSetterMethods;
 
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;

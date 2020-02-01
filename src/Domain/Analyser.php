@@ -73,13 +73,12 @@ final class Analyser
 
         return $collector;
     }
+
     /**
      * Processes a single file.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Collector $collector
      * @param string                                   $filename
-     *
-     * @return void
      */
     private function analyseFile(Collector $collector, string $filename): void
     {

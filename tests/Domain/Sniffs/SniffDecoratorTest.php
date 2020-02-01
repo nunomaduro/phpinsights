@@ -37,8 +37,8 @@ final class SniffDecoratorTest extends TestCase
             }
         }
 
-       // No errors of this type as we are ignoring the file.
-       self::assertEquals(0, $oneClassPerFileSniffErrors);
+        // No errors of this type as we are ignoring the file.
+        self::assertEquals(0, $oneClassPerFileSniffErrors);
     }
 
     public function testCanIgnoreFileInSniffWithRelativePath(): void

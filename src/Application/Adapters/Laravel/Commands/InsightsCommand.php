@@ -33,6 +33,7 @@ final class InsightsCommand extends Command
 
         if (!file_exists($configPath)) {
             $this->output->error('First, publish the configuration using: php artisan vendor:publish');
+
             return 1;
         }
 
@@ -50,6 +51,7 @@ final class InsightsCommand extends Command
         $analyseCommand = $container->get(AnalyseCommand::class);
 
         $output = (new Reflection($this->output))->get('output');
+
         return $analyseCommand->__invoke($this->input, $output);
     }
 

@@ -18,6 +18,7 @@ final class LocalFilesRepositoryTest extends TestCase
 
     /**
      * @dataProvider provider
+     *
      * @param int           $expected
      * @param array<string> $exclude
      */

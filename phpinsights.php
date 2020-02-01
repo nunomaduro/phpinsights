@@ -11,7 +11,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Preset

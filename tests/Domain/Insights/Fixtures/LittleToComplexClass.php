@@ -4,7 +4,6 @@ namespace Tests\Domain\Insights\Fixtures;
 
 class LittleToComplexClass
 {
-
     public function first(int $first, int $second)
     {
         if ($first >= $second) {
