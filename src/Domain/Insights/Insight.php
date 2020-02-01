@@ -56,7 +56,7 @@ abstract class Insight implements InsightContract
     {
         $filepath = $file;
         if (mb_strpos($file, $this->collector->getDir()) === false) {
-            $filepath = $this->collector->getDir() . DIRECTORY_SEPARATOR . $file;
+            $filepath = $this->collector->getDir().DIRECTORY_SEPARATOR . $file;
         }
 
         return array_key_exists($filepath, $this->excludedFiles);

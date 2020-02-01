@@ -57,7 +57,7 @@ final class ConfigResolver
 
         $isRootAnalyse = true;
         foreach (Kernel::getRequiredFiles() as $file) {
-            if (!file_exists($directory.DIRECTORY_SEPARATOR . $file)) {
+            if (!file_exists($directory.DIRECTORY_SEPARATOR.$file)) {
                 $isRootAnalyse = false;
 
                 break;

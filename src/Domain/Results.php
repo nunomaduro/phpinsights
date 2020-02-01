@@ -133,7 +133,7 @@ final class Results
         $issuesNotFound = 0;
 
         foreach ($insights as $insight) {
-            if (! $insight->hasIssue()) {
+            if (!$insight->hasIssue()) {
                 $issuesNotFound++;
             }
         }

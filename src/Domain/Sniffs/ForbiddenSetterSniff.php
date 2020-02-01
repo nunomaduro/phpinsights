@@ -69,7 +69,7 @@ EOD;
         $classTokenPosition = $file->findNext(T_CLASS, 0);
 
         // anonymous class
-        if (!is_integer($classTokenPosition)) {
+        if (!is_int($classTokenPosition)) {
             return 'anonymous';
         }
 

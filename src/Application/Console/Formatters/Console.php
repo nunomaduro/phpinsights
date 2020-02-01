@@ -560,6 +560,7 @@ EOD;
             'Style' => 'yellow',
             'Security' => 'red',
         ];
+
         return $categoryColor[$category] ?? 'blue';
     }
 

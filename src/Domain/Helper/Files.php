@@ -32,6 +32,7 @@ final class Files
                         $path = $realPath;
                     }
                 }
+
                 return str_replace($basedir.DIRECTORY_SEPARATOR, '', $path);
             }, $list))
             ->files();
