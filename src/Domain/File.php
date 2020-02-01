@@ -103,7 +103,7 @@ final class File extends BaseFile
 
     /**
      * @param array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>> $tokenListeners
-     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     * @param \Symfony\Component\Finder\SplFileInfo                                $fileInfo
      */
     public function processWithTokenListenersAndFileInfo(array $tokenListeners,
                                                          SplFileInfo $fileInfo

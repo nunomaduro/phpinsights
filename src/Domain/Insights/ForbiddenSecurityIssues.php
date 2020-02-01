@@ -44,6 +44,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
             self::$details = [
                 Details::make()->setMessage($exception->getMessage()),
             ];
+
             return self::$details;
         }
 
@@ -73,11 +74,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
                     '%s/composer.lock', $this->collector->getDir()
                 ));
             } catch (\Throwable $e) {
-                throw new InternetConnectionNotFound(
-                    'PHP Insights needs an internet connection to inspect security issues.',
-                    1,
-                    $e
-                );
+                throw new InternetConnectionNotFound('PHP Insights needs an internet connection to inspect security issues.', 1, $e);
             }
         }
 

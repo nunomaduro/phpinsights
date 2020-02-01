@@ -215,7 +215,7 @@ final class Collector
     /**
      * Creates a new instance of the Collector.
      *
-     * @param  string  $dir
+     * @param string $dir
      */
     public function __construct(string $dir)
     {
@@ -224,7 +224,7 @@ final class Collector
 
     public function addFile(string $filename): void
     {
-        $filename = str_replace($this->dir . '/', '', $filename);
+        $filename = str_replace($this->dir.'/', '', $filename);
 
         $this->files[$filename] = $filename;
         $this->directories[] = \dirname($filename);
@@ -283,7 +283,7 @@ final class Collector
     public function currentMethodStop(string $name): void
     {
         $this->methodComplexity[] = $this->currentMethodComplexity;
-        $this->methodLines[$this->currentFilename . ':' . $name] = $this->currentMethodLines;
+        $this->methodLines[$this->currentFilename.':'.$name] = $this->currentMethodLines;
     }
 
     public function incrementFunctionLines(): void
@@ -306,17 +306,17 @@ final class Collector
 
     public function addGlobalFunctions(int $line, string $name): void
     {
-        $this->globalFunctions[$this->currentFilename . ':' . $line] = $name;
+        $this->globalFunctions[$this->currentFilename.':'.$line] = $name;
     }
 
     public function addGlobalVariableAccesses(int $line, string $name): void
     {
-        $this->globalVariableAccesses[$this->currentFilename . ':' . $line] = $name;
+        $this->globalVariableAccesses[$this->currentFilename.':'.$line] = $name;
     }
 
     public function addSuperGlobalVariableAccesses(int $line, string $name): void
     {
-        $this->superGlobalVariableAccesses[$this->currentFilename . ':' . $line] = $name;
+        $this->superGlobalVariableAccesses[$this->currentFilename.':'.$line] = $name;
     }
 
     public function incrementNonStaticAttributeAccesses(): void
@@ -416,7 +416,7 @@ final class Collector
 
     public function addNamedFunctions(string $name): void
     {
-        if (! array_key_exists($this->currentFilename, $this->namedFunctions)) {
+        if (!array_key_exists($this->currentFilename, $this->namedFunctions)) {
             $this->namedFunctions[$this->currentFilename] = [];
         }
 
@@ -829,7 +829,7 @@ final class Collector
     }
 
     /**
-     * @param  array<float>  $array
+     * @param array<float> $array
      *
      * @return float
      */
@@ -839,7 +839,7 @@ final class Collector
     }
 
     /**
-     * @param  array<string, float|int>  $array
+     * @param array<string, float|int> $array
      *
      * @return int
      */
@@ -851,7 +851,7 @@ final class Collector
     /**
      * Returns the sum value from the given array.
      *
-     * @param  array<string, float|int>  $array
+     * @param array<string, float|int> $array
      *
      * @return int|float
      */
@@ -863,7 +863,7 @@ final class Collector
     /**
      * Returns the maximum value from the given array.
      *
-     * @param  array<string, float|int>  $array
+     * @param array<string, float|int> $array
      *
      * @return int|float
      */

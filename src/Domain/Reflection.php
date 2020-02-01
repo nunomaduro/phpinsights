@@ -37,7 +37,7 @@ final class Reflection
      * Sets an private attribute value on the given instance.
      *
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return \NunoMaduro\PhpInsights\Domain\Reflection
      */
@@ -71,9 +71,9 @@ final class Reflection
 
     /**
      * @param ReflectionClass $class
-     * @param mixed $instance
-     * @param string $attribute
-     * @param mixed $value
+     * @param mixed           $instance
+     * @param string          $attribute
+     * @param mixed           $value
      *
      * @throws ReflectionException
      */

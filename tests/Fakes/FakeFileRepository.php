@@ -23,7 +23,7 @@ final class FakeFileRepository implements FilesRepository
      */
     public function __construct(array $filePaths)
     {
-        $this->files = array_map(function (string $filePath) : SplFileInfo {
+        $this->files = array_map(function (string $filePath): SplFileInfo {
             return new SplFileInfo($filePath, $filePath, $filePath);
         }, $filePaths);
     }

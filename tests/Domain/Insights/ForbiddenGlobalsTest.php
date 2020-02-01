@@ -10,15 +10,15 @@ use NunoMaduro\PhpInsights\Domain\Analyser;
 
 final class ForbiddenGlobalsTest extends TestCase
 {
-    public function testFileHasNoGlobals() : void
+    public function testFileHasNoGlobals(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/LittleToComplexClass.php',
-            __DIR__ . '/Fixtures/VeryMuchToComplexClass.php',
+            __DIR__.'/Fixtures/LittleToComplexClass.php',
+            __DIR__.'/Fixtures/VeryMuchToComplexClass.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new ForbiddenGlobals($collector, []);
 
         self::assertFalse($insight->hasIssue());
@@ -26,14 +26,14 @@ final class ForbiddenGlobalsTest extends TestCase
         self::assertEmpty($insight->getDetails());
     }
 
-    public function testHasOneGlobalUsage() : void
+    public function testHasOneGlobalUsage(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/FileWithGlobals.php',
+            __DIR__.'/Fixtures/FileWithGlobals.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new ForbiddenGlobals($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -48,14 +48,14 @@ final class ForbiddenGlobalsTest extends TestCase
         self::assertEquals('FileWithGlobals.php:3', $file);
     }
 
-    public function testHasMultipleGlobalsUsage() : void
+    public function testHasMultipleGlobalsUsage(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/FileWithMultipleGlobals.php',
+            __DIR__.'/Fixtures/FileWithMultipleGlobals.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new ForbiddenGlobals($collector, []);
 
         self::assertTrue($insight->hasIssue());

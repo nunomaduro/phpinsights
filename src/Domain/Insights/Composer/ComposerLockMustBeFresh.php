@@ -17,7 +17,7 @@ final class ComposerLockMustBeFresh extends Insight implements HasDetails
         try {
             $composer = ComposerLoader::getInstance($this->collector);
 
-            return ! $composer->getLocker()->isFresh();
+            return !$composer->getLocker()->isFresh();
         } catch (ComposerNotFound $exception) {
             return true;
         }

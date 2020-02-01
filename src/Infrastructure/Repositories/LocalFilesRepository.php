@@ -21,7 +21,7 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * LocalFilesRepository constructor.
      *
-     * @param \Symfony\Component\Finder\Finder  $finder
+     * @param \Symfony\Component\Finder\Finder $finder
      */
     public function __construct(Finder $finder)
     {
@@ -55,7 +55,7 @@ final class LocalFilesRepository implements FilesRepository
      */
     public function within(string $path, array $exclude = []): FilesRepository
     {
-        if (! is_dir($path) && is_file($path)) {
+        if (!is_dir($path) && is_file($path)) {
             $pathInfo = pathinfo($path);
             $this->finder = Finder::create()
                 ->in($pathInfo['dirname'])

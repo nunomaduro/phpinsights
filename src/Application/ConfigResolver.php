@@ -36,8 +36,8 @@ final class ConfigResolver
     /**
      * Merge the given config with the specified preset.
      *
-     * @param  array<string, string|array>  $config
-     * @param  string  $directory
+     * @param array<string, string|array> $config
+     * @param string                      $directory
      *
      * @return Configuration
      */
@@ -56,17 +56,17 @@ final class ConfigResolver
 
         $isRootAnalyse = true;
         foreach (Kernel::getRequiredFiles() as $file) {
-            if (! file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
+            if (!file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
                 $isRootAnalyse = false;
                 break;
             }
         }
 
-        if (! $isRootAnalyse) {
+        if (!$isRootAnalyse) {
             $config = self::excludeGlobalInsights($config);
         }
 
-        if (! isset($config['directory'])) {
+        if (!isset($config['directory'])) {
             $config['directory'] = $directory;
         }
 
@@ -87,7 +87,7 @@ final class ConfigResolver
     /**
      * Guesses the preset based in information from the directory.
      *
-     * @param  string  $directory
+     * @param string $directory
      *
      * @return string
      */
@@ -95,9 +95,9 @@ final class ConfigResolver
     {
         $preset = 'default';
 
-        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
+        $composerPath = $directory.DIRECTORY_SEPARATOR.'composer.json';
 
-        if (! file_exists($composerPath)) {
+        if (!file_exists($composerPath)) {
             return $preset;
         }
 
@@ -124,14 +124,14 @@ final class ConfigResolver
     public static function mergeConfig(array $base, array $replacement): array
     {
         foreach ($replacement as $key => $value) {
-            if (! array_key_exists($key, $base) && ! is_numeric($key)) {
+            if (!array_key_exists($key, $base) && ! is_numeric($key)) {
                 $base[$key] = $replacement[$key];
                 continue;
             }
             if (is_array($value) || (array_key_exists($key, $base) && is_array($base[$key]))) {
                 $base[$key] = self::mergeConfig($base[$key], $replacement[$key]);
             } elseif (is_numeric($key)) {
-                if (! in_array($value, $base, true)) {
+                if (!in_array($value, $base, true)) {
                     $base[] = $value;
                 }
             } else {

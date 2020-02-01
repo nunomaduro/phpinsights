@@ -14,11 +14,11 @@ final class LocalFilesRepositoryTest extends TestCase
     /**
      * @var string
      */
-    private $base = __DIR__ . '/../../Fixtures/Tree';
+    private $base = __DIR__.'/../../Fixtures/Tree';
 
     /**
      * @dataProvider provider
-     * @param int $expected
+     * @param int           $expected
      * @param array<string> $exclude
      */
     public function testItExcludesFilesGivenAPath(int $expected, array $exclude): void
@@ -44,7 +44,7 @@ final class LocalFilesRepositoryTest extends TestCase
             [3, ['FolderA/SubFolderA']],
             [3, ['FolderA/SubFolderA/ClassC.php']],
             [2, ['/(\w).*(A.php)$/']],
-            [2, ['/((\w).*)?(FolderA\/)(\w).*/']]
+            [2, ['/((\w).*)?(FolderA\/)(\w).*/']],
         ];
     }
 
@@ -74,7 +74,7 @@ final class LocalFilesRepositoryTest extends TestCase
         $finder = new Finder();
 
         $repository = new LocalFilesRepository($finder);
-        $repository->within(__DIR__ . '/Fixtures/FileToInspect.php');
+        $repository->within(__DIR__.'/Fixtures/FileToInspect.php');
         $files = iterator_to_array($repository->getFiles(), false);
 
         self::assertCount(1, $files);

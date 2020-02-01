@@ -31,7 +31,7 @@ final class InsightsCommand extends Command
 
         $configPath = ConfigResolver::resolvePath($this->input);
 
-        if (! file_exists($configPath)) {
+        if (!file_exists($configPath)) {
             $this->output->error('First, publish the configuration using: php artisan vendor:publish');
             return 1;
         }
@@ -40,7 +40,7 @@ final class InsightsCommand extends Command
         $configuration = ConfigResolver::resolve($configuration, DirectoryResolver::resolve($this->input));
 
         $container = Container::make();
-        if (! $container instanceof \League\Container\Container) {
+        if (!$container instanceof \League\Container\Container) {
             throw new \RuntimeException('Container should be League Container instance');
         }
 

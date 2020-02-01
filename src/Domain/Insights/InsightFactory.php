@@ -50,8 +50,8 @@ final class InsightFactory
      * Creates a new instance of Insight Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
-     * @param array<string> $insightsClasses
-     * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
+     * @param array<string>                                                         $insightsClasses
+     * @param \NunoMaduro\PhpInsights\Domain\Configuration                          $config
      */
     public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config)
     {
@@ -64,7 +64,7 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param string $errorClass
+     * @param string          $errorClass
      * @param OutputInterface $consoleOutput
      *
      * @return InsightContract

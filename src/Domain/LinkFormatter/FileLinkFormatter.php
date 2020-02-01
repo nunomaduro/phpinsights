@@ -22,7 +22,7 @@ final class FileLinkFormatter implements FileLinkFormatterContract
         if (mb_strpos($pattern, '%f') === false ||
             mb_strpos($pattern, '%l') === false
         ) {
-            throw new InvalidConfiguration('Unparsable pattern "' . $pattern . '" to handle hyperlinks');
+            throw new InvalidConfiguration('Unparsable pattern "'.$pattern.'" to handle hyperlinks');
         }
 
         $this->pattern = $pattern;

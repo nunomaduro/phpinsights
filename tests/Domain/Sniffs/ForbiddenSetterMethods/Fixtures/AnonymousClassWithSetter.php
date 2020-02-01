@@ -2,10 +2,8 @@
 
 namespace Tests\Domain\Insights\ForbiddenSetterMethods\Fixtures;
 
-new class
-{
+new class() {
     public function setStatus(int $status)
     {
-
     }
 };

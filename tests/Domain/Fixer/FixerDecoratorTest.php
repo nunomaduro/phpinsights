@@ -17,7 +17,7 @@ final class FixerDecoratorTest extends TestCase
 
     public function testCanIgnoreFileInFixerWithFullPath(): void
     {
-        $fileLocation = __DIR__ . '/../../Fixtures/' . self::$fileToTest;
+        $fileLocation = __DIR__.'/../../Fixtures/'.self::$fileToTest;
         $collection = $this->runAnalyserOnConfig(
             [
                 'config' => [
@@ -32,7 +32,7 @@ final class FixerDecoratorTest extends TestCase
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Style) as $insight) {
+        foreach ($collection->allFrom(new Style()) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
@@ -56,14 +56,14 @@ final class FixerDecoratorTest extends TestCase
                 ],
             ],
             [
-                __DIR__ . '/../../Fixtures/' . self::$fileToTest,
+                __DIR__.'/../../Fixtures/'.self::$fileToTest,
             ],
-            __DIR__ . '/../../Fixtures/'
+            __DIR__.'/../../Fixtures/'
         );
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Style) as $insight) {
+        foreach ($collection->allFrom(new Style()) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
@@ -78,11 +78,11 @@ final class FixerDecoratorTest extends TestCase
 
     public function testHasErrorWithNoConfig(): void
     {
-        $collection = $this->runAnalyserOnConfig([], [__DIR__ . '/../../Fixtures/' . self::$fileToTest]);
+        $collection = $this->runAnalyserOnConfig([], [__DIR__.'/../../Fixtures/'.self::$fileToTest]);
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Style) as $insight) {
+        foreach ($collection->allFrom(new Style()) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
@@ -106,14 +106,14 @@ final class FixerDecoratorTest extends TestCase
                 ],
             ],
             [
-                __DIR__ . '/../../Fixtures/' . self::$fileToTest,
+                __DIR__.'/../../Fixtures/'.self::$fileToTest,
             ],
-            __DIR__ . '/../../Fixtures/'
+            __DIR__.'/../../Fixtures/'
         );
         $orderedImportErrors = 0;
 
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
-        foreach ($collection->allFrom(new Style) as $insight) {
+        foreach ($collection->allFrom(new Style()) as $insight) {
             if (
                 $insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class

@@ -6,6 +6,5 @@ class ClassWithSetter
 {
     public function setName($name)
     {
-
     }
 }

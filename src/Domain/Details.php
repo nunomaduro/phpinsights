@@ -15,7 +15,7 @@ final class Details
     /** @var int */
     private $line;
 
-    /** @var string  */
+    /** @var string */
     private $function;
 
     /** @var string */
@@ -29,6 +29,7 @@ final class Details
     public function setFile(string $file): Details
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -40,24 +41,28 @@ final class Details
     public function setOriginal($original): Details
     {
         $this->original = $original;
+
         return $this;
     }
 
     public function setLine(int $line): Details
     {
         $this->line = $line;
+
         return $this;
     }
 
     public function setMessage(string $message): Details
     {
         $this->message = $message;
+
         return $this;
     }
 
     public function setFunction(string $function): Details
     {
         $this->function = $function;
+
         return $this;
     }
 

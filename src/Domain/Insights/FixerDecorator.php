@@ -22,10 +22,12 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      * @var \PhpCsFixer\Fixer\FixerInterface
      */
     private $fixer;
+
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
     private $exclude;
+
     /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
@@ -35,8 +37,8 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      * FixerDecorator constructor.
      *
      * @param \PhpCsFixer\Fixer\FixerInterface $fixer
-     * @param string $dir
-     * @param array<string> $exclude
+     * @param string                           $dir
+     * @param array<string>                    $exclude
      */
     public function __construct(FixerInterface $fixer, string $dir, array $exclude)
     {
@@ -106,6 +108,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $path = explode('\\', $fixerClass);
         $name = (string) array_pop($path);
         $name = str_replace('Fixer', '', $name);
+
         return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
     }
 
@@ -161,6 +164,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
                 $this->errors[] = clone $currentDetail;
                 $currentDetail->setLine($this->parseLineNumber($diffLine));
                 $currentMessage = $headerMessage;
+
                 continue;
             }
 
@@ -193,7 +197,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $result = \preg_split('/(.*\R)/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         if ($result === false) {
-            throw new \RuntimeException('Unable to split ' . $input);
+            throw new \RuntimeException('Unable to split '.$input);
         }
 
         return $result;

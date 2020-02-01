@@ -43,10 +43,7 @@ final class SniffFileProcessor implements FileProcessor
     public function addChecker(InsightContract $insight): void
     {
         if (! $insight instanceof SniffDecorator) {
-            throw new \RuntimeException(sprintf(
-                'Unable to add %s, not an Sniff instance',
-                get_class($insight)
-            ));
+            throw new \RuntimeException(sprintf('Unable to add %s, not an Sniff instance', get_class($insight)));
         }
 
         foreach ($insight->register() as $token) {

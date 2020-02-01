@@ -14,11 +14,11 @@ final class ForbiddenTraitsTest extends TestCase
     public function testHasIssue(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/MyTrait.php',
+            __DIR__.'/Fixtures/MyTrait.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new ForbiddenTraits($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -28,7 +28,7 @@ final class ForbiddenTraitsTest extends TestCase
 
     public function testSkipFile(): void
     {
-        $fileLocation = __DIR__ . '/Fixtures/MyTrait.php';
+        $fileLocation = __DIR__.'/Fixtures/MyTrait.php';
 
         $collection = $this->runAnalyserOnConfig(
             [

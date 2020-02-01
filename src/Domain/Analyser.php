@@ -40,7 +40,7 @@ final class Analyser
     ];
 
     /**
-     * @param string $method
+     * @param string                                                      $method
      * @param array<(int|float|array<string>), (int|float|array<string>)> $args
      *
      * @return int|float|array<string>
@@ -56,7 +56,7 @@ final class Analyser
     /**
      * Processes a set of files.
      *
-     * @param  string  $dir
+     * @param string        $dir
      * @param array<string> $files
      *
      * @return \NunoMaduro\PhpInsights\Domain\Collector
@@ -76,8 +76,8 @@ final class Analyser
     /**
      * Processes a single file.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  string  $filename
+     * @param \NunoMaduro\PhpInsights\Domain\Collector $collector
+     * @param string                                   $filename
      *
      * @return void
      */
@@ -170,7 +170,7 @@ final class Analyser
                 case \T_CLASS:
                 case \T_INTERFACE:
                 case \T_TRAIT:
-                    if (! $this->isClassDeclaration($tokens, $i)) {
+                    if (!$this->isClassDeclaration($tokens, $i)) {
                         break;
                     }
 
@@ -211,7 +211,7 @@ final class Analyser
 
                     $next = $this->getNextNonWhitespaceTokenPos($tokens, $i);
 
-                    if (! \is_array($tokens[$next]) && $tokens[$next] === '&') {
+                    if (!\is_array($tokens[$next]) && $tokens[$next] === '&') {
                         $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
                     }
 
@@ -266,7 +266,7 @@ final class Analyser
                             $isInMethod = true;
                             $collector->currentMethodStart();
 
-                            if (! $static) {
+                            if (!$static) {
                                 $collector->incrementNonStaticMethods();
                             } else {
                                 $collector->incrementStaticMethods();
@@ -376,7 +376,7 @@ final class Analyser
                     break;
 
                 case \T_GLOBAL:
-                    $collector->addGlobalVariableAccesses($tokens[$i][2], '"' .$tokens[$i][1] .'" keyword');
+                    $collector->addGlobalVariableAccesses($tokens[$i][2], '"'.$tokens[$i][1].'" keyword');
 
                     break;
 

@@ -14,11 +14,11 @@ final class ForbiddenFinalClassTest extends TestCase
     public function testHasIssue(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/ForbiddenFinalClass.php',
+            __DIR__.'/Fixtures/ForbiddenFinalClass.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new ForbiddenFinalClasses($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -28,7 +28,7 @@ final class ForbiddenFinalClassTest extends TestCase
 
     public function testSkipFile(): void
     {
-        $fileLocation = __DIR__ . '/Fixtures/ForbiddenFinalClass.php';
+        $fileLocation = __DIR__.'/Fixtures/ForbiddenFinalClass.php';
 
         $collection = $this->runAnalyserOnConfig(
             [

@@ -17,7 +17,6 @@ use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Preset
@@ -32,6 +31,7 @@ return [
     */
 
     'preset' => 'laravel',
+
     /*
     |--------------------------------------------------------------------------
     | IDE
@@ -51,6 +51,7 @@ return [
     */
 
     'ide' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Configuration
@@ -90,5 +91,4 @@ return [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
         ],
     ],
-
 ];

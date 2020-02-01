@@ -54,7 +54,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
 
     /**
      * @param \PHP_CodeSniffer\Files\File $file
-     * @param int $stackPtr
+     * @param int                         $stackPtr
      *
      * @return int|void
      */

@@ -20,7 +20,7 @@ final class ResultsTest extends TestCase
     {
         parent::setUp();
 
-        $this->baseFixturePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Fixtures';
+        $this->baseFixturePath = dirname(__DIR__).DIRECTORY_SEPARATOR.'Fixtures';
     }
 
     public function testGetTotalSecurityIssuesReturnZeroWhenForbiddenInsightNotLoaded(): void
@@ -33,7 +33,7 @@ final class ResultsTest extends TestCase
 
     public function testGetTotalSecurityIssuesOnCompromisedCompose(): void
     {
-        $collector = new Collector($this->baseFixturePath . '/Domain/Results/SecurityIssueComposer');
+        $collector = new Collector($this->baseFixturePath.'/Domain/Results/SecurityIssueComposer');
         $categories = [
             'Security' => [new ForbiddenSecurityIssues($collector, [])],
         ];
@@ -58,7 +58,7 @@ final class ResultsTest extends TestCase
     {
         $collector = new Collector($this->baseFixturePath);
         $categories = [
-            'Security' => [new ForbiddenSecurityIssues($collector, [])]
+            'Security' => [new ForbiddenSecurityIssues($collector, [])],
         ];
         $result = new Results($collector, $categories);
         self::assertTrue($result->hasInsightInCategory(

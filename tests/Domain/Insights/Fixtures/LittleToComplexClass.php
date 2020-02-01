@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Tests\Domain\Insights\Fixtures;
-
 
 class LittleToComplexClass
 {
@@ -16,8 +14,10 @@ class LittleToComplexClass
             if ($first > 1) {
                 return $first;
             }
+
             return 1;
         }
+
         return $second;
     }
 
@@ -27,8 +27,10 @@ class LittleToComplexClass
             if ($second == $first) {
                 return $first;
             }
+
             return $second;
         }
+
         return 1;
     }
 }

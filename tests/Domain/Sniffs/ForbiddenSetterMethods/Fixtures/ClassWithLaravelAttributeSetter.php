@@ -6,6 +6,5 @@ class ClassWithLaravelAttributeSetter
 {
     public function setNameAttribute(string $name)
     {
-
     }
 }

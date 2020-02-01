@@ -30,15 +30,13 @@ final class FormatResolver
     ): Formatter {
         $requestedFormat = $input->getOption('format');
 
-        if (! is_string($requestedFormat)) {
-            throw new InvalidArgumentException(
-                'Format has to be a string.'
-            );
+        if (!is_string($requestedFormat)) {
+            throw new InvalidArgumentException('Format has to be a string.');
         }
 
         $requestedFormat = strtolower($requestedFormat);
 
-        if (! array_key_exists($requestedFormat, self::$formatters)) {
+        if (!array_key_exists($requestedFormat, self::$formatters)) {
             $consoleOutput->writeln("<fg=red>Could not find requested format [${requestedFormat}], using fallback [console] instead.</>");
         }
 

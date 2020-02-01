@@ -7,15 +7,13 @@ namespace Tests\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
-use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use PHPUnit\Framework\TestCase;
-use Tests\Fakes\FakeFileRepository;
 
 final class CyclomaticComplexityIsHighTest extends TestCase
 {
     public function testClassHasNoCyclomaticComplexity(): void
     {
-        $collector = new Collector(__DIR__ . '/Fixtures/');
+        $collector = new Collector(__DIR__.'/Fixtures/');
         $insight = new CyclomaticComplexityIsHigh($collector, []);
 
         self::assertFalse($insight->hasIssue());
@@ -25,12 +23,12 @@ final class CyclomaticComplexityIsHighTest extends TestCase
     public function testClassHasToMuchCyclomaticComplexity(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/LittleToComplexClass.php',
-            __DIR__ . '/Fixtures/VeryMuchToComplexClass.php',
+            __DIR__.'/Fixtures/LittleToComplexClass.php',
+            __DIR__.'/Fixtures/VeryMuchToComplexClass.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new CyclomaticComplexityIsHigh($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -55,12 +53,12 @@ final class CyclomaticComplexityIsHighTest extends TestCase
     public function testClassWeCanConfigureTheMaxComplexity(): void
     {
         $files = [
-            __DIR__ . '/Fixtures/LittleToComplexClass.php',
-            __DIR__ . '/Fixtures/VeryMuchToComplexClass.php',
+            __DIR__.'/Fixtures/LittleToComplexClass.php',
+            __DIR__.'/Fixtures/VeryMuchToComplexClass.php',
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse(__DIR__.'/Fixtures/', $files);
         $insight = new CyclomaticComplexityIsHigh($collector, ['maxComplexity' => 10]);
 
         self::assertTrue($insight->hasIssue());

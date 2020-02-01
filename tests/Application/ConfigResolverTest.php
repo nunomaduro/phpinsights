@@ -24,7 +24,7 @@ final class ConfigResolverTest extends TestCase
     {
         parent::setUp();
 
-        $this->baseFixturePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'ConfigResolver' . DIRECTORY_SEPARATOR;
+        $this->baseFixturePath = dirname(__DIR__).DIRECTORY_SEPARATOR.'Fixtures'.DIRECTORY_SEPARATOR.'ConfigResolver'.DIRECTORY_SEPARATOR;
     }
 
     public function testGuessDirectoryWithoutComposer(): void
@@ -35,37 +35,37 @@ final class ConfigResolverTest extends TestCase
 
     public function testGuessComposerWithoutRequire(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerWithoutRequire');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerWithoutRequire');
         self::assertSame('default', $preset);
     }
 
     public function testGuessSymfony(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerSymfony');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerSymfony');
         self::assertSame('symfony', $preset);
     }
 
     public function testGuessLaravel(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerLaravel');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerLaravel');
         self::assertSame('laravel', $preset);
     }
 
     public function testGuessYii(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerYii');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerYii');
         self::assertSame('yii', $preset);
     }
 
     public function testGuessMagento2(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerMagento2');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerMagento2');
         self::assertSame('magento2', $preset);
     }
 
     public function testGuessDrupal(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerDrupal');
+        $preset = ConfigResolver::guess($this->baseFixturePath.'ComposerDrupal');
         self::assertSame('drupal', $preset);
     }
 
@@ -77,12 +77,12 @@ final class ConfigResolverTest extends TestCase
             ],
             'config' => [
                 DocCommentSpacingSniff::class => [
-                    'linesCountBetweenDifferentAnnotationsTypes' => 2
-                ]
-            ]
+                    'linesCountBetweenDifferentAnnotationsTypes' => 2,
+                ],
+            ],
         ];
 
-        $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath.'ComposerWithoutRequire');
 
         self::assertContains('my/path', $finalConfig->getExcludes());
         // assert we don't replace the first value
@@ -101,7 +101,7 @@ final class ConfigResolverTest extends TestCase
 
         $config = ['preset' => 'UnknownPreset'];
 
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve($config, $this->baseFixturePath.'ComposerWithoutRequire');
     }
 
     public function testUnknowMetricAddedThrowException(): void
@@ -110,16 +110,16 @@ final class ConfigResolverTest extends TestCase
         self::expectExceptionMessage('Unable to use "say" class as metric in section add.');
 
         $config = ['add' => ['say' => 'hello']];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve($config, $this->baseFixturePath.'ComposerWithoutRequire');
     }
 
     public function testKnownMetricAddedWithNonArrayValueThrowException(): void
     {
         self::expectException(InvalidConfiguration::class);
-        self::expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
+        self::expectExceptionMessage('Added insights for metric "'.Classes::class.'" should be in an array.');
 
         $config = ['add' => [Classes::class => 'hello']];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve($config, $this->baseFixturePath.'ComposerWithoutRequire');
     }
 
     public function testAddUnknowClassThrowException(): void
@@ -128,7 +128,7 @@ final class ConfigResolverTest extends TestCase
         self::expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');
 
         $config = ['add' => [Classes::class => ['hello']]];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve($config, $this->baseFixturePath.'ComposerWithoutRequire');
     }
 
     /**
@@ -144,7 +144,7 @@ final class ConfigResolverTest extends TestCase
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
 
-    public function testResolveWithoutIde():void
+    public function testResolveWithoutIde(): void
     {
         $config = [];
 

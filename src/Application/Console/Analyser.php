@@ -30,7 +30,7 @@ final class Analyser
      * Analyser constructor.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory $insightCollectionFactory
-     * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
+     * @param \NunoMaduro\PhpInsights\Domain\Configuration                     $config
      */
     public function __construct(
         InsightCollectionFactory $insightCollectionFactory,
@@ -43,10 +43,10 @@ final class Analyser
     /**
      * Analyse the given dirs.
      *
-     * @param Formatter $formatter
+     * @param Formatter       $formatter
      * @param OutputInterface $consoleOutput
      *
-     * @return  \NunoMaduro\PhpInsights\Domain\Results
+     * @return \NunoMaduro\PhpInsights\Domain\Results
      */
     public function analyse(
         Formatter $formatter,

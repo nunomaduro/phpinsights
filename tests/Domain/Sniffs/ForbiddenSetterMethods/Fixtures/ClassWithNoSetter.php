@@ -6,6 +6,5 @@ class ClassWithNoSetter
 {
     public function changeName(string $newName)
     {
-
     }
 }

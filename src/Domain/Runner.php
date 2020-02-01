@@ -27,7 +27,7 @@ final class Runner
     /**
      * InsightContainer constructor.
      *
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Symfony\Component\Console\Output\OutputInterface                     $output
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      */
     public function __construct(
@@ -77,7 +77,7 @@ final class Runner
         foreach ($files as $file) {
             // Output file name if verbose
             if ($this->output->isVerbose()) {
-                $progressBar->setMessage(' - ' . $file->getRelativePathname());
+                $progressBar->setMessage(' - '.$file->getRelativePathname());
             }
 
             $this->processFile($file);
@@ -85,7 +85,7 @@ final class Runner
         }
 
         if ($this->output->isVerbose()) {
-            $progressBar->setMessage(PHP_EOL . '<info>Analysis Completed !</info>');
+            $progressBar->setMessage(PHP_EOL.'<info>Analysis Completed !</info>');
         }
         $progressBar->finish();
     }
@@ -107,7 +107,7 @@ final class Runner
         $barCharacter = '▓'; // dark shade character \u2593
 
         $format = ProgressBar::getFormatDefinition($this->getProgressFormat());
-        $format .= PHP_EOL . '%message%';
+        $format .= PHP_EOL.'%message%';
         ProgressBar::setFormatDefinition('phpinsight', $format);
         $progressBar->setFormat('phpinsight');
 
@@ -133,6 +133,7 @@ final class Runner
         if ($verbosity === OutputInterface::VERBOSITY_DEBUG) {
             return 'debug';
         }
+
         return 'normal';
     }
 }

@@ -16,6 +16,7 @@ final class ComposerLoader
     public static function getInstance(Collector $collector): Composer
     {
         $io = new NullIO();
+
         return Factory::create($io, ComposerFinder::getPath($collector));
     }
 }

@@ -28,7 +28,7 @@ interface FilesRepository
     /**
      * Sets the current files directories.
      *
-     * @param  string  $path
+     * @param string        $path
      * @param array<string> $exclude
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository

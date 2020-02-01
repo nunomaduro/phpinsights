@@ -39,14 +39,11 @@ final class FixerFileProcessor implements FileProcessor
 
     public function addChecker(InsightContract $insight): void
     {
-        if (! $insight instanceof FixerDecorator) {
-            throw new \RuntimeException(sprintf(
-                'Unable to add %s, not a Fixer instance',
-                get_class($insight)
-            ));
+        if (!$insight instanceof FixerDecorator) {
+            throw new \RuntimeException(sprintf('Unable to add %s, not a Fixer instance', get_class($insight)));
         }
 
-        /** @var FixerDecorator $insight */
+        /* @var FixerDecorator $insight */
         $this->fixers[] = $insight;
     }
 
@@ -54,7 +51,7 @@ final class FixerFileProcessor implements FileProcessor
     {
         $filePath = $splFileInfo->getRealPath();
         if ($filePath === false) {
-            throw new \LogicException('Unable to found file ' . $splFileInfo->getFilename());
+            throw new \LogicException('Unable to found file '.$splFileInfo->getFilename());
         }
 
         $oldContent = $splFileInfo->getContents();
@@ -63,7 +60,7 @@ final class FixerFileProcessor implements FileProcessor
         /** @var FixerDecorator $fixer */
         foreach ($this->fixers as $fixer) {
             $fixer->fix($splFileInfo, $tokens);
-            if (! $tokens->isChanged()) {
+            if (!$tokens->isChanged()) {
                 continue;
             }
 

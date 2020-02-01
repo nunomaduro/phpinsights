@@ -37,7 +37,7 @@ final class AnalyseCommand
     /**
      * Handle the given input.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int
@@ -82,7 +82,7 @@ final class AnalyseCommand
             $hasError = true;
         }
 
-        if (! (bool) $input->getOption('disable-security-check') && $results->getTotalSecurityIssues() > 0) {
+        if (!(bool) $input->getOption('disable-security-check') && $results->getTotalSecurityIssues() > 0) {
             $hasError = true;
         }
 

@@ -34,14 +34,14 @@ final class Kernel
             ? __DIR__ . '/../../vendor/squizlabs/php_codesniffer/autoload.php'
             : __DIR__ . '/../../../../../vendor/squizlabs/php_codesniffer/autoload.php';
 
-        /**
+        /*
          * Defines PHP Codesniffer's needed constants.
          */
-        if (! defined('PHP_CODESNIFFER_CBF')) {
+        if (!defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', false);
         }
 
-        if (! defined('PHP_CODESNIFFER_VERBOSITY')) {
+        if (!defined('PHP_CODESNIFFER_VERBOSITY')) {
             define('PHP_CODESNIFFER_VERBOSITY', 0);
         }
     }

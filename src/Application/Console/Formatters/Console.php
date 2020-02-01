@@ -38,23 +38,30 @@ use Symfony\Component\Console\Terminal;
 final class Console implements Formatter
 {
     private const BLOCK_SIZE = 9;
+
     private const ALL_BLOCKS_IN_ROW = 4;
+
     private const TWO_BLOCKS_IN_ROW = 2;
+
     private const MIN_SPACEWIDTH = 5;
+
     private const MAX_SPACEWIDTH = 15;
 
     /**
      * @var Style
      */
     private $style;
+
     /**
      * @var int
      */
     private $totalWidth;
+
     /**
      * @var FileLinkFormatter
      */
     private $fileLinkFormatter;
+
     /**
      * @var bool
      */
@@ -77,8 +84,8 @@ final class Console implements Formatter
      * Format the result to the desired format.
      *
      * @param InsightCollection $insightCollection
-     * @param string $dir
-     * @param array<string> $metrics
+     * @param string            $dir
+     * @param array<string>     $metrics
      */
     public function format(
         InsightCollection $insightCollection,
@@ -100,7 +107,7 @@ final class Console implements Formatter
      * Outputs the summary according to the format.
      *
      * @param Results $results
-     * @param string $dir
+     * @param string  $dir
      *
      * @return self
      */
@@ -151,7 +158,7 @@ final class Console implements Formatter
      * Outputs the code errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param Results $results
+     * @param Results           $results
      *
      * @return self
      */
@@ -186,7 +193,7 @@ final class Console implements Formatter
      * Outputs the complexity errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param Results $results
+     * @param Results           $results
      *
      * @return self
      */
@@ -208,7 +215,7 @@ final class Console implements Formatter
      * Outputs the architecture errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param Results $results
+     * @param Results           $results
      *
      * @return self
      */
@@ -274,8 +281,8 @@ final class Console implements Formatter
      * Outputs the issues errors according to the format.
      *
      * @param InsightCollection $insightCollection
-     * @param array<string> $metrics
-     * @param string $dir
+     * @param array<string>     $metrics
+     * @param string            $dir
      *
      * @return self
      */
@@ -288,7 +295,7 @@ final class Console implements Formatter
 
         foreach ($metrics as $metricClass) {
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
-                if (! $insight->hasIssue()) {
+                if (!$insight->hasIssue()) {
                     continue;
                 }
 
@@ -303,8 +310,9 @@ final class Console implements Formatter
 
                 $issue = "\n<fg=red>•</> [${category}] <bold>{$insight->getTitle()}</bold>";
 
-                if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
+                if (!$insight instanceof HasDetails && !$this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
+
                     continue;
                 }
                 $issue .= ':';
@@ -312,15 +320,16 @@ final class Console implements Formatter
                     $issue .= " ({$insight->getInsightClass()})";
                 }
 
-                if (! $insight instanceof HasDetails) {
+                if (!$insight instanceof HasDetails) {
                     $this->style->writeln($issue);
+
                     continue;
                 }
 
                 $details = $insight->getDetails();
                 $totalDetails = count($details);
 
-                if (! $this->style->getOutput()->isVerbose()) {
+                if (!$this->style->getOutput()->isVerbose()) {
                     $details = array_slice($details, -3, 3, true);
                 }
 
@@ -329,17 +338,17 @@ final class Console implements Formatter
                     $detailString = $this->formatFileLine($detail, $dir, $category);
 
                     if ($detail->hasFunction()) {
-                        $detailString .= ($detailString !== '' ? ':' : '') . $detail->getFunction();
+                        $detailString .= ($detailString !== '' ? ':' : '').$detail->getFunction();
                     }
 
                     if ($detail->hasMessage()) {
-                        $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
+                        $detailString .= ($detailString !== '' ? ': ' : '').$detail->getMessage();
                     }
 
                     $issue .= "\n  ${detailString}";
                 }
 
-                if (! $this->style->getOutput()->isVerbose() && $totalDetails > 3) {
+                if (!$this->style->getOutput()->isVerbose() && $totalDetails > 3) {
                     $totalRemainDetails = $totalDetails - 3;
 
                     $issue .= "\n  <fg=red>+{$totalRemainDetails} issues omitted</>";
@@ -397,7 +406,7 @@ final class Console implements Formatter
 
         foreach ($lines as $name => $percentage) {
             $percentage = number_format((float) $percentage, 1, '.', '');
-            $takenSize = strlen($name . $percentage) + 4; // adding 3 space and percent sign
+            $takenSize = strlen($name.$percentage) + 4; // adding 3 space and percent sign
 
             $this->style->writeln(sprintf('%s %s %s %%',
                 $name,
@@ -425,22 +434,22 @@ final class Console implements Formatter
             '%block_size%' => str_pad('', $blockSize),
         ]);
 
-        $quality = <<<EOD
+        $quality = <<<'EOD'
 <%quality_color%>%block_size%</>
 <fg=black;options=bold;%quality_color%>  %quality%  </>
 <%quality_color%>%block_size%</>
 EOD;
-        $complexity = <<<EOD
+        $complexity = <<<'EOD'
 <%complexity_color%>%block_size%</>
 <fg=black;options=bold;%complexity_color%>  %complexity%  </>
 <%complexity_color%>%block_size%</>
 EOD;
-        $structure = <<<EOD
+        $structure = <<<'EOD'
 <%structure_color%>%block_size%</>
 <fg=black;options=bold;%structure_color%>  %structure%  </>
 <%structure_color%>%block_size%</>
 EOD;
-        $style = <<<EOD
+        $style = <<<'EOD'
 <%style_color%>%block_size%</>
 <fg=black;options=bold;%style_color%>  %style%  </>
 <%style_color%>%block_size%</>
@@ -557,7 +566,7 @@ EOD;
     private function formatFileLine(Details $detail, string $directory, string $category): string
     {
         $detailString = '';
-        $basePath = realpath($directory) . DIRECTORY_SEPARATOR;
+        $basePath = realpath($directory).DIRECTORY_SEPARATOR;
         $file = null;
 
         if ($detail->hasFile()) {
@@ -568,7 +577,7 @@ EOD;
         }
 
         if ($detail->hasLine()) {
-            $detailString .= ($detailString !== '' ? ':' : '') . $detail->getLine();
+            $detailString .= ($detailString !== '' ? ':' : '').$detail->getLine();
         }
 
         $formattedLink = null;

@@ -30,15 +30,15 @@ final class Checkstyle implements Formatter
      * Format the result to the desired format.
      *
      * @param InsightCollection $insightCollection
-     * @param string $dir
-     * @param array<string> $metrics
+     * @param string            $dir
+     * @param array<string>     $metrics
      */
     public function format(
         InsightCollection $insightCollection,
         string $dir,
         array $metrics
     ): void {
-        if (! extension_loaded('simplexml')) {
+        if (!extension_loaded('simplexml')) {
             throw new RuntimeException('To use checkstyle format install simplexml extension.');
         }
         $checkstyle = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><checkstyle/>');
@@ -46,7 +46,7 @@ final class Checkstyle implements Formatter
         foreach ($metrics as $metricClass) {
             /** @var Insight $insight */
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
-                if (! $insight instanceof HasDetails || ! $insight->hasIssue()) {
+                if (!$insight instanceof HasDetails || ! $insight->hasIssue()) {
                     continue;
                 }
 
@@ -76,9 +76,10 @@ final class Checkstyle implements Formatter
     private function getFileName(Details $detail, string $dir): string
     {
         if ($detail->hasFile()) {
-            /** replacement is necessary because relative paths are needed */
-            return str_replace($dir . '/', '', $detail->getFile());
+            /* replacement is necessary because relative paths are needed */
+            return str_replace($dir.'/', '', $detail->getFile());
         }
+
         return '';
     }
 }

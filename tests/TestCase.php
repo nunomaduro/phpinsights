@@ -23,9 +23,9 @@ abstract class TestCase extends BaseTestCase
     /**
      * Call protected/private method of a class.
      *
-     * @param  class-string  $class Instantiated object that we will run method on
-     * @param  string  $methodName Method name to call
-     * @param  array<int, mixed>  $parameters Array of parameters to pass into method
+     * @param class-string      $class      Instantiated object that we will run method on
+     * @param string            $methodName Method name to call
+     * @param array<int, mixed> $parameters Array of parameters to pass into method
      *
      * @return mixed Method result
      *
@@ -46,16 +46,17 @@ abstract class TestCase extends BaseTestCase
     /**
      * Runs the whole analyser on the specified files only.
      *
-     * @param string $preset
-     * @param array<string>  $filePaths
-     * @param string $dir
+     * @param string        $preset
+     * @param array<string> $filePaths
+     * @param string        $dir
+     *
      * @return InsightCollection
      */
     final public function runAnalyserOnPreset(
         string $preset,
         array $filePaths,
         string $dir = ''
-    ) : InsightCollection {
+    ): InsightCollection {
         return $this->runAnalyserOnConfig(
             ['preset' => $preset],
             $filePaths,
@@ -67,15 +68,15 @@ abstract class TestCase extends BaseTestCase
      * Runs the whole analyser on the specified files only.
      *
      * @param array<string, mixed> $config
-     * @param array<string> $filePaths
-     * @param string        $dir
+     * @param array<string>        $filePaths
+     * @param string               $dir
      * @return InsightCollection
      */
     final public function runAnalyserOnConfig(
         array $config,
         array $filePaths,
         string $dir = ''
-    ) : InsightCollection {
+    ): InsightCollection {
         $config = ConfigResolver::resolve($config, $dir);
 
         $analyser = new DomainAnalyser();
@@ -90,7 +91,7 @@ abstract class TestCase extends BaseTestCase
 
         return $insightCollectionFactory->get(
             MetricsFinder::find(),
-            new NullOutput
+            new NullOutput()
         );
     }
 
@@ -101,7 +102,9 @@ abstract class TestCase extends BaseTestCase
      * @param class-string                        $sniffClassName
      * @param string                              $fixtureFile
      * @param array<string, string|array<string>> $properties
+     *
      * @return LocalFile
+     *
      * @throws ReflectionException
      */
     final public static function prepareFixtureWithSniff(
@@ -126,20 +129,23 @@ abstract class TestCase extends BaseTestCase
         $ruleset->ruleset = [
             "PhpInsights.Sniffs.{$ruleName}" => [
                 'properties' => $properties,
-            ]
+            ],
         ];
 
         $ruleset->registerSniffs($sniffs, [], []);
         $ruleset->populateTokenListeners();
+
         return new LocalFile($fixtureFile, $ruleset, $config);
     }
 
     /**
      * @param class-string $className
+     *
      * @return string
+     *
      * @throws \ReflectionException
      */
-    final public static function getFilePathFromClass(string $className) : string
+    final public static function getFilePathFromClass(string $className): string
     {
         $reflector = new ReflectionClass($className);
 

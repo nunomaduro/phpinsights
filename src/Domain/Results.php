@@ -26,8 +26,8 @@ final class Results
     /**
      * Creates a new instance of results.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
+     * @param \NunoMaduro\PhpInsights\Domain\Collector                               $collector
+     * @param array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>> $perCategoryInsights
      */
     public function __construct(\NunoMaduro\PhpInsights\Domain\Collector $collector, array $perCategoryInsights)
     {
@@ -102,6 +102,7 @@ final class Results
         try {
             /** @var ForbiddenSecurityIssues $insight */
             $insight = $this->getInsightByCategory(ForbiddenSecurityIssues::class, 'Security');
+
             return count($insight->getDetails());
         } catch (InsightClassNotFound $exception) {
             return 0;
@@ -112,15 +113,17 @@ final class Results
     {
         try {
             $this->getInsightByCategory($insightClass, $category);
+
             return true;
         } catch (InsightClassNotFound $exception) {
             return false;
         }
     }
+
     /**
      * Returns the percentage of the given category.
      *
-     * @param  string  $category
+     * @param string $category
      *
      * @return float
      */

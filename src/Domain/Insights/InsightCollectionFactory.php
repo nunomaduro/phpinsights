@@ -36,8 +36,8 @@ final class InsightCollectionFactory
      * Creates a new instance of InsightCollection Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
-     * @param \NunoMaduro\PhpInsights\Domain\Analyser $analyser
-     * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
+     * @param \NunoMaduro\PhpInsights\Domain\Analyser                               $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Configuration                          $config
      */
     public function __construct(
         FilesRepository $filesRepository,
@@ -50,7 +50,7 @@ final class InsightCollectionFactory
     }
 
     /**
-     * @param array<string> $metrics
+     * @param array<string>   $metrics
      * @param OutputInterface $consoleOutput
      *
      * @return \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection
@@ -80,7 +80,7 @@ final class InsightCollectionFactory
         $insightsForCollection = [];
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(function (string $insightClass) use ($insightFactory, $collector, $consoleOutput) {
-                if (! array_key_exists(Insight::class, class_implements($insightClass))) {
+                if (!array_key_exists(Insight::class, class_implements($insightClass))) {
                     return $insightFactory->makeFrom(
                         $insightClass,
                         $consoleOutput

@@ -17,10 +17,12 @@ final class ComposerMustBeValid extends Insight implements HasDetails
      * @var array<string>
      */
     private $errors;
+
     /**
      * @var array<string>
      */
     private $publishErrors;
+
     /**
      * @var array<string>
      */

@@ -13,6 +13,7 @@ abstract class UnorderedUse
      * @var \NunoMaduro\PhpInsights\Domain\Analyser
      */
     protected $analyser;
+
     /**
      * @var \NunoMaduro\PhpInsights\Application\ConfigResolver
      */

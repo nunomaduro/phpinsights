@@ -2,10 +2,8 @@
 
 namespace Tests\Domain\Insights\Fixtures;
 
-
 class VeryMuchToComplexClass
 {
-
     public function first(int $first, int $second)
     {
         if ($first >= $second) {
@@ -15,11 +13,13 @@ class VeryMuchToComplexClass
             if ($first > 1) {
                 return $first;
             }
+
             return 1;
         }
         if ($second > 1) {
             return $second;
         }
+
         return $this->second($first, $second);
     }
 
@@ -32,11 +32,13 @@ class VeryMuchToComplexClass
             if ($second > 1) {
                 return $second;
             }
+
             return 1;
         }
         if ($first > 1) {
             return $first;
         }
+
         return 1;
     }
 
@@ -49,11 +51,13 @@ class VeryMuchToComplexClass
             if ($second > 1) {
                 return $second;
             }
+
             return 1;
         }
         if ($first > 1) {
             return $first;
         }
+
         return $this->third($first, $second);
     }
 }

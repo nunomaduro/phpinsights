@@ -28,8 +28,8 @@ abstract class Insight implements InsightContract
     /**
      * Creates an new instance of the Insight.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  array<string, string|int>  $config
+     * @param \NunoMaduro\PhpInsights\Domain\Collector $collector
+     * @param array<string, string|int>                $config
      */
     final public function __construct(Collector $collector, array $config)
     {
@@ -63,7 +63,7 @@ abstract class Insight implements InsightContract
     }
 
     /**
-     * @param array<string, string|int|float|array> $files File path must be in key.
+     * @param array<string, string|int|float|array> $files File path must be in key
      *
      * @return array<string, string|int|float|array>
      */

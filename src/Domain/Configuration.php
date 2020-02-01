@@ -211,30 +211,22 @@ final class Configuration
     {
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
-                if (! class_exists($metric) ||
-                    ! in_array(Metric::class, class_implements($metric), true)
+                if (!class_exists($metric) ||
+                    !in_array(Metric::class, class_implements($metric), true)
                 ) {
-                    throw new InvalidConfiguration(sprintf(
-                        'Unable to use "%s" class as metric in section add.',
-                        $metric
-                    ));
+                    throw new InvalidConfiguration(sprintf('Unable to use "%s" class as metric in section add.', $metric));
                 }
-                if (! is_array($insights)) {
-                    throw new InvalidConfiguration(sprintf(
-                        'Added insights for metric "%s" should be in an array.',
-                        $metric
-                    ));
+                if (!is_array($insights)) {
+                    throw new InvalidConfiguration(sprintf('Added insights for metric "%s" should be in an array.', $metric));
                 }
 
                 foreach ($insights as $insight) {
-                    if (! class_exists($insight)) {
-                        throw new InvalidConfiguration(sprintf(
-                            'Unable to add "%s" insight, class doesn\'t exists.',
-                            $insight
-                        ));
+                    if (!class_exists($insight)) {
+                        throw new InvalidConfiguration(sprintf('Unable to add "%s" insight, class doesn\'t exists.', $insight));
                     }
                 }
             }
+
             return true;
         };
     }
@@ -243,13 +235,11 @@ final class Configuration
     {
         return static function ($values): bool {
             foreach (array_keys($values) as $insight) {
-                if (! class_exists((string) $insight)) {
-                    throw new InvalidConfiguration(sprintf(
-                        'Unable to config "%s" insight, class doesn\'t exists.',
-                        $insight
-                    ));
+                if (!class_exists((string) $insight)) {
+                    throw new InvalidConfiguration(sprintf('Unable to config "%s" insight, class doesn\'t exists.', $insight));
                 }
             }
+
             return true;
         };
     }
@@ -268,11 +258,7 @@ final class Configuration
 
         if (isset($links[$ide]) === false &&
             mb_strpos((string) $ide, '://') === false) {
-            throw new InvalidConfiguration(sprintf(
-                'Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler',
-                $ide,
-                implode(', ', array_keys($links))
-            ));
+            throw new InvalidConfiguration(sprintf('Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler', $ide, implode(', ', array_keys($links))));
         }
 
         $fileFormatterPattern = $links[$ide] ?? $ide;
