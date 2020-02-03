@@ -10,11 +10,11 @@ use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
 /**
  * Code originally taken from {SebastianBergmann\PHPLOC\Analyser}.
  *
- * @method string    getNamespaceName(array $tokens, int $i)
- * @method bool      isClassDeclaration(array $tokens, int $i)
- * @method int|bool  getPreviousNonWhitespaceTokenPos(array $tokens, $start)
- * @method int|bool  getNextNonWhitespaceTokenPos(array $tokens, $start)
- * @method string    getClassName(string $namespace, array $tokens, int $i)
+ * @method string|false getNamespaceName(array $tokens, int $i)
+ * @method bool         isClassDeclaration(array $tokens, int $i)
+ * @method int|bool     getPreviousNonWhitespaceTokenPos(array $tokens, $start)
+ * @method int|bool     getNextNonWhitespaceTokenPos(array $tokens, $start)
+ * @method string       getClassName(string $namespace, array $tokens, int $i)
  *
  * @internal
  */
