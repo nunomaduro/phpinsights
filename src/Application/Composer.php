@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application;
 
-use Composer\Semver\Comparator;
-use Composer\Semver\Constraint\Constraint;
-use Composer\Semver\Constraint\MultiConstraint;
 use Composer\Semver\Semver;
-use Composer\Semver\VersionParser;
-use Illuminate\Support\Str;
 
 /**
  * @internal
@@ -67,7 +62,7 @@ final class Composer
         if ($composerVersion === null) {
             return null;
         }
-        $composerVersion = Str::after($composerVersion, '^');
+        $composerVersion = str_replace('^', '', $composerVersion);
 
         return Semver::satisfies($composerVersion, $version);
     }
