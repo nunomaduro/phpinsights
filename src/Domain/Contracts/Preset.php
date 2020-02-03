@@ -21,10 +21,11 @@ interface Preset
     /**
      * Returns the configuration preset.
      *
-     * @param \NunoMaduro\PhpInsights\Application\Composer|null $composer
+     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
+     *
      * @return array<string, string|int|array>
      */
-    public static function get(?Composer $composer): array;
+    public static function get(Composer $composer): array;
 
     /**
      * Determinates if the preset should be applied.

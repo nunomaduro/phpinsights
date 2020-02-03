@@ -19,7 +19,7 @@ final class Preset implements PresetContract
         return 'magento2';
     }
 
-    public static function get(?Composer $composer): array
+    public static function get(Composer $composer): array
     {
         $config = [
             'exclude' => [

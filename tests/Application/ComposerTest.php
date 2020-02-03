@@ -17,7 +17,7 @@ final class ComposerTest extends TestCase
             ],
         ]);
 
-        $this->assertFalse($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
+        self::assertFalse($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
     }
 
     public function testPhpVersion70IsNotLowerThen71AndUp(): void
@@ -28,7 +28,7 @@ final class ComposerTest extends TestCase
             ],
         ]);
 
-        $this->assertFalse($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.0'));
+        self::assertFalse($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.0'));
     }
 
 
@@ -40,7 +40,7 @@ final class ComposerTest extends TestCase
             ],
         ]);
 
-        $this->assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
+        self::assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
     }
 
     public function testPhpVersion74Matches74AndUp(): void
@@ -51,6 +51,6 @@ final class ComposerTest extends TestCase
             ],
         ]);
 
-        $this->assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
+        self::assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
     }
 }

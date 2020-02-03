@@ -30,7 +30,7 @@ final class ConfigResolverTest extends TestCase
 
     public function testGuessDirectoryWithoutComposer(): void
     {
-        $preset = ConfigResolver::guess(null);
+        $preset = ConfigResolver::guess(new Composer([]));
         self::assertSame('default', $preset);
     }
 

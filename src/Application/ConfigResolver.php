@@ -39,7 +39,6 @@ final class ConfigResolver
      * Merge the given config with the specified preset.
      *
      * @param  array<string, string|array>  $config
-     * @param  string  $directory
      *
      * @return Configuration
      */
@@ -88,30 +87,16 @@ final class ConfigResolver
         return $configPath ?? '';
     }
 
-    private static function getComposer(string $directory): ?Composer
-    {
-        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
-
-        if (! file_exists($composerPath)) {
-            return null;
-        }
-
-        return Composer::fromPath($composerPath);
-    }
-
     /**
      * Guesses the preset based in information from composer.
      *
-     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
      * @return string
      */
-    public static function guess(?Composer $composer): string
+    public static function guess(Composer $composer): string
     {
-        if ($composer !== null) {
-            foreach (self::$presets as $presetClass) {
-                if ($presetClass::shouldBeApplied($composer)) {
-                    return $presetClass::getName();
-                }
+        foreach (self::$presets as $presetClass) {
+            if ($presetClass::shouldBeApplied($composer)) {
+                return $presetClass::getName();
             }
         }
 
@@ -145,6 +130,17 @@ final class ConfigResolver
         }
 
         return $base;
+    }
+
+    private static function getComposer(string $directory): Composer
+    {
+        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
+
+        if (! file_exists($composerPath)) {
+            return new Composer([]);
+        }
+
+        return Composer::fromPath($composerPath);
     }
 
     /**

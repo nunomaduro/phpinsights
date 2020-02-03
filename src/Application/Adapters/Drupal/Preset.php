@@ -20,7 +20,7 @@ final class Preset implements PresetContract
         return 'drupal';
     }
 
-    public static function get(?Composer $composer): array
+    public static function get(Composer $composer): array
     {
         $config = [
             'exclude' => [

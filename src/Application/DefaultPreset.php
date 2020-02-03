@@ -21,7 +21,7 @@ final class DefaultPreset implements PresetContract
         return 'default';
     }
 
-    public static function get(?Composer $composer): array
+    public static function get(Composer $composer): array
     {
         $config = [
             'exclude' => [
@@ -51,8 +51,8 @@ final class DefaultPreset implements PresetContract
                     'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
                 ],
                 PropertyTypeHintSniff::class => [
-                    'enableNativeTypeHint' => $composer !== null ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4') === true : null,
-                ]
+                    'enableNativeTypeHint' => $composer->hasPhpVersion() ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4') === true : null,
+                ],
             ],
         ];
 

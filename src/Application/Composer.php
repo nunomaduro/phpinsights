@@ -11,13 +11,13 @@ use Composer\Semver\Semver;
  */
 final class Composer
 {
-    /** @var array<string, string|int|array> */
+    /** @var array<string, mixed> */
     private $config;
 
     /**
      * Composer constructor.
      *
-     * @param array<string, string|int|array> $data
+     * @param array<string, mixed> $data
      */
     public function __construct(array $data)
     {
@@ -45,23 +45,24 @@ final class Composer
         return $this->config['replace'] ?? [];
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
-        return $this->config['name'] ?? null;
+        return $this->config['name'] ?? '';
     }
 
-    public function getPhpVersion(): ?string
+    public function getPhpVersion(): string
     {
-        return $this->getRequirements()['php'] ?? null;
+        return $this->getRequirements()['php'];
     }
 
-    public function lowestPhpVersionIsGreaterThenOrEqualTo(string $version): ?bool
+    public function hasPhpVersion(): bool
+    {
+        return isset($this->getRequirements()['php']);
+    }
+
+    public function lowestPhpVersionIsGreaterThenOrEqualTo(string $version): bool
     {
         $composerVersion = $this->getPhpVersion();
-
-        if ($composerVersion === null) {
-            return null;
-        }
         $composerVersion = str_replace('^', '', $composerVersion);
 
         return Semver::satisfies($composerVersion, $version);
