@@ -163,7 +163,10 @@ final class Analyser
             switch ($token) {
                 case \T_NAMESPACE:
                     $namespace = $this->getNamespaceName($tokens, $i);
-                    $collector->addNamespace($namespace);
+
+                    if ($namespace !== false) {
+                        $collector->addNamespace($namespace);
+                    }
 
                     break;
 
