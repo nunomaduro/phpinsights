@@ -63,7 +63,8 @@ final class Composer
     public function lowestPhpVersionIsGreaterThenOrEqualTo(string $version): bool
     {
         $composerVersion = $this->getPhpVersion();
-        $composerVersion = str_replace('^', '', $composerVersion);
+        preg_match("/\d+(\.\d+)/", $composerVersion, $matches);
+        $composerVersion = $matches[0];
 
         return Semver::satisfies($composerVersion, $version);
     }

@@ -53,4 +53,26 @@ final class ComposerTest extends TestCase
 
         self::assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
     }
+
+    public function testPhpVersion74Matches74tilde(): void
+    {
+        $composer = new Composer([
+            'require' => [
+                'php' => '~7.4',
+            ],
+        ]);
+
+        self::assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
+    }
+
+    public function testPhpVersion74Matches74star(): void
+    {
+        $composer = new Composer([
+            'require' => [
+                'php' => '7.4*',
+            ],
+        ]);
+
+        self::assertTrue($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4'));
+    }
 }
