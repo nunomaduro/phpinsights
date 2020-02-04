@@ -97,7 +97,7 @@ final class ConfigResolverTest extends TestCase
 
     public function testUnknownPresetThrowException(): void
     {
-        self::expectException(InvalidOptionsException::class);
+        $this->expectException(InvalidOptionsException::class);
 
         $config = ['preset' => 'UnknownPreset'];
 
@@ -106,8 +106,8 @@ final class ConfigResolverTest extends TestCase
 
     public function testUnknowMetricAddedThrowException(): void
     {
-        self::expectException(InvalidConfiguration::class);
-        self::expectExceptionMessage('Unable to use "say" class as metric in section add.');
+        $this->expectException(InvalidConfiguration::class);
+        $this->expectExceptionMessage('Unable to use "say" class as metric in section add.');
 
         $config = ['add' => ['say' => 'hello']];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
@@ -115,8 +115,8 @@ final class ConfigResolverTest extends TestCase
 
     public function testKnownMetricAddedWithNonArrayValueThrowException(): void
     {
-        self::expectException(InvalidConfiguration::class);
-        self::expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
+        $this->expectException(InvalidConfiguration::class);
+        $this->expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
 
         $config = ['add' => [Classes::class => 'hello']];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
@@ -124,8 +124,8 @@ final class ConfigResolverTest extends TestCase
 
     public function testAddUnknowClassThrowException(): void
     {
-        self::expectException(InvalidConfiguration::class);
-        self::expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');
+        $this->expectException(InvalidConfiguration::class);
+        $this->expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');
 
         $config = ['add' => [Classes::class => ['hello']]];
         ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
