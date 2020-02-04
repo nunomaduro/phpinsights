@@ -80,7 +80,9 @@ final class File extends BaseFile
     }
 
     /**
-     * {@inheritdoc}
+     * Disabling the errors functionality.
+     *
+     * @return array<string>
      */
     public function getErrors(): array
     {

@@ -24,9 +24,13 @@ final class Files
         $finder = Finder::create();
         $finder
             ->in($basedir)
-            ->path(array_map(static function ($path) use ($basedir) {
+            ->path(array_map(static function (string $path) use ($basedir): string {
                 if (is_file($path)) {
-                    $path = realpath($path);
+                    $realPath = realpath($path);
+
+                    if ($realPath !== false) {
+                        $path = $realPath;
+                    }
                 }
                 return str_replace($basedir . DIRECTORY_SEPARATOR, '', $path);
             }, $list))

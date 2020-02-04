@@ -13,9 +13,6 @@ use Symfony\Component\Console\Input\InputOption;
  */
 final class AnalyseDefinition
 {
-    /**
-     * @return InputDefinition
-     */
     public static function get(): InputDefinition
     {
         return new InputDefinition([

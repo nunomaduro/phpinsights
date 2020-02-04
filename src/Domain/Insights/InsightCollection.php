@@ -35,9 +35,6 @@ final class InsightCollection
         $this->insightsPerMetric = $insightsPerMetric;
     }
 
-    /**
-     * @return \NunoMaduro\PhpInsights\Domain\Collector
-     */
     public function getCollector(): Collector
     {
         return $this->collector;

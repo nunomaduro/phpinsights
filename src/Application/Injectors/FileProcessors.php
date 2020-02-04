@@ -22,12 +22,12 @@ final class FileProcessors
     public function __invoke(): array
     {
         return [
-            SniffFileProcessor::class => static function () {
+            SniffFileProcessor::class => static function (): SniffFileProcessor {
                 return new SniffFileProcessor(
                     new FileFactory()
                 );
             },
-            FixerFileProcessor::class => static function () {
+            FixerFileProcessor::class => static function (): FixerFileProcessor {
                 return new FixerFileProcessor(
                     new Differ()
                 );

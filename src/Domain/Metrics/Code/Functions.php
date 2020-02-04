@@ -30,7 +30,7 @@ final class Functions implements HasValue, HasPercentage, HasAvg, HasInsights
 
     public function getPercentage(Collector $collector): float
     {
-        return $collector->getLines() > 0 ? ($collector->getFunctionLines() / $collector->getLines()) * 100 : 0;
+        return $collector->getLines() > 0 ? $collector->getFunctionLines() / $collector->getLines() * 100 : 0;
     }
 
     public function getAvg(Collector $collector): string

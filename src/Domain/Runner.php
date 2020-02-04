@@ -111,8 +111,8 @@ final class Runner
         ProgressBar::setFormatDefinition('phpinsight', $format);
         $progressBar->setFormat('phpinsight');
 
-        if ('\\' !== \DIRECTORY_SEPARATOR
-            || 'Hyper' === getenv('TERM_PROGRAM')) {
+        if (\DIRECTORY_SEPARATOR !== '\\'
+            || getenv('TERM_PROGRAM') === 'Hyper') {
             $progressBar->setEmptyBarCharacter($emptyBarCharacter);
             $progressBar->setProgressCharacter($progressCharacter);
             $progressBar->setBarCharacter($barCharacter);
@@ -123,16 +123,16 @@ final class Runner
 
     private function getProgressFormat(): string
     {
-        switch ($this->output->getVerbosity()) {
-            // OutputInterface::VERBOSITY_QUIET: display is disabled anyway
-            case OutputInterface::VERBOSITY_VERBOSE:
-                return 'verbose';
-            case OutputInterface::VERBOSITY_VERY_VERBOSE:
-                return 'very_verbose';
-            case OutputInterface::VERBOSITY_DEBUG:
-                return 'debug';
-            default:
-                return 'normal';
+        $verbosity = $this->output->getVerbosity();
+        if ($verbosity === OutputInterface::VERBOSITY_VERBOSE) {
+            return 'verbose';
         }
+        if ($verbosity === OutputInterface::VERBOSITY_VERY_VERBOSE) {
+            return 'very_verbose';
+        }
+        if ($verbosity === OutputInterface::VERBOSITY_DEBUG) {
+            return 'debug';
+        }
+        return 'normal';
     }
 }
