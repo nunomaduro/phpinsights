@@ -194,7 +194,9 @@ final class Configuration
         $this->preset = $config['preset'];
 
         // resolve symbolic link, /./, /../
-        $this->directory = realpath($config['directory']) ?: $config['directory'];
+        $this->directory = realpath($config['directory'])
+            ? realpath($config['directory'])
+            : $config['directory'];
         $this->exclude = $config['exclude'];
         $this->add = $config['add'];
         $this->remove = $config['remove'];

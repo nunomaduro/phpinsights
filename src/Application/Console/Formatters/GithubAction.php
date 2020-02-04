@@ -23,10 +23,12 @@ final class GithubAction implements Formatter
      * @var \NunoMaduro\PhpInsights\Application\Console\Formatters\Console
      */
     private $decorated;
+
     /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
     private $output;
+
     /**
      * @var string
      */
@@ -40,7 +42,9 @@ final class GithubAction implements Formatter
     }
 
     /**
-     * {@inheritdoc}
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param string $dir
+     * @param array<int, string> $metrics
      */
     public function format(InsightCollection $insightCollection, string $dir, array $metrics): void
     {
@@ -69,7 +73,7 @@ final class GithubAction implements Formatter
                 $message = $this->formatMessage($detail, $insight);
                 // replace line 0 to line 1
                 // github action write it at line 1 otherwise
-                $line = $detail->getLine() ?: 1;
+                $line = $detail->hasLine() ? $detail->getLine() : 1;
 
                 if (! array_key_exists($line, $errors[$file])) {
                     $errors[$file][$line] = $message;
