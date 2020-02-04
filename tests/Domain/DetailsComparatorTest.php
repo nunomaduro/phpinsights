@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -17,21 +19,21 @@ final class DetailsComparatorTest extends TestCase
         $this->comparator = new DetailsComparator();
     }
 
-    public function testComparisonWithEmptyDetails()
+    public function testComparisonWithEmptyDetails(): void
     {
-        $this->assertEquals(0, ($this->comparator)(new Details(), new Details()));
+        self::assertEquals(0, ($this->comparator)(new Details(), new Details()));
     }
 
-    public function testComparisonWithDifferentFileNames()
+    public function testComparisonWithDifferentFileNames(): void
     {
         $first = (new Details())->setFile('src/First.php');
         $second = (new Details())->setFile('src/Second.php');
 
-        $this->assertEquals(-1, ($this->comparator)($first, $second));
-        $this->assertEquals(1, ($this->comparator)($second, $first));
+        self::assertEquals(-1, ($this->comparator)($first, $second));
+        self::assertEquals(1, ($this->comparator)($second, $first));
     }
 
-    public function testComparisonWithSameFileName()
+    public function testComparisonWithSameFileName(): void
     {
         $first = (new Details())
             ->setFile('src/Foo.php')
@@ -41,7 +43,7 @@ final class DetailsComparatorTest extends TestCase
             ->setFile('src/Foo.php')
             ->setLine(20);
 
-        $this->assertEquals(-1, ($this->comparator)($first, $second));
-        $this->assertEquals(1, ($this->comparator)($second, $first));
+        self::assertEquals(-1, ($this->comparator)($first, $second));
+        self::assertEquals(1, ($this->comparator)($second, $first));
     }
 }

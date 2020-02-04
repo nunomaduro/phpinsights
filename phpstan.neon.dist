@@ -34,7 +34,7 @@ parameters:
             message: '#Control structures using switch should not be used.#'
             path: src/Domain/Analyser.php
         -
-            message: '#does not exist on SimpleXMLElement|null.#'
+            message: '#does not exist on SimpleXMLElement\|null.#'
             path: src/Application/Console/Formatters/Checkstyle.php
         -
             message: '#generic class ReflectionClass#'
