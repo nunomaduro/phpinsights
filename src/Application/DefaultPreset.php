@@ -23,7 +23,7 @@ final class DefaultPreset implements PresetContract
 
     public static function get(Composer $composer): array
     {
-        $config = [
+        return [
             'exclude' => [
                 'bower_components',
                 'node_modules',
@@ -51,12 +51,10 @@ final class DefaultPreset implements PresetContract
                     'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
                 ],
                 PropertyTypeHintSniff::class => [
-                    'enableNativeTypeHint' => $composer->hasPhpVersion() ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4') === true : null,
+                    'enableNativeTypeHint' => $composer->hasPhpVersion() ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4') === true : PHP_VERSION_ID >= 70400,
                 ],
             ],
         ];
-
-        return array_filter($config);
     }
 
     public static function shouldBeApplied(Composer $composer): bool
