@@ -27,3 +27,30 @@ As `phpinsights` returns an exit error code if security issues are found, you ca
 ```
 
 **Note** : For a project inspection, you **should** never use this option to keep your project safe.
+
+## Github Action <Badge text="^1.12"/>
+
+If you use Github Action, you can launch PHP Insights with `--format=github-action` option.
+With that, annotations with issues will be added in Pull request.
+
+
+```yaml
+#.github/workflows/pr.yml
+name: CI
+on:
+    - pull_request
+
+jobs:
+    phpinsights:
+        runs-on: ubuntu-latest
+        name: PHP Insights checks
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v1
+              with:
+                  php-version: 7.3
+            - run: composer install --prefer-dist --no-progress --no-suggest
+            - run: vendor/bin/phpinsights -n --ansi --format=github-action
+```
+
+![example with github action](./github-action.png)

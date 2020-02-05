@@ -67,4 +67,13 @@ final class ConfigurationTest extends TestCase
 
         new Configuration($config);
     }
+
+    public function testResolveDirectoryPath(): void
+    {
+        $config = ['directory' => 'tests/..'];
+        $configuration = new Configuration($config);
+
+        self::assertSame(getcwd(), $configuration->getDirectory());
+        self::assertStringNotContainsString('..', $configuration->getDirectory());
+    }
 }
