@@ -31,7 +31,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @throws ReflectionException
      */
-    final static public function invokeStaticMethod(
+    final public static function invokeStaticMethod(
         string $class,
         string $methodName,
         array $parameters
