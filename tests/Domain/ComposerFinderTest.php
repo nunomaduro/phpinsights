@@ -24,7 +24,7 @@ final class ComposerFinderTest extends TestCase
 
     public function testGetComposerPathThrowExceptionIfNoComposerJsonExist(): void
     {
-        self::expectException(ComposerNotFound::class);
+        $this->expectException(ComposerNotFound::class);
 
         $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures');
         ComposerFinder::getPath($collector);

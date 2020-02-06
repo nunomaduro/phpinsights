@@ -21,6 +21,7 @@ final class FormatResolver
         'console' => Console::class,
         'json' => Json::class,
         'checkstyle' => Checkstyle::class,
+        'github-action' => GithubAction::class,
     ];
 
     public static function resolve(
