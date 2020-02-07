@@ -109,6 +109,7 @@ final class Json implements Formatter
                         'line' => $detail->hasLine() ? $detail->getLine() : null,
                         'function' => $detail->hasFunction() ? $detail->getFunction() : null,
                         'message' => $detail->hasMessage() ? $detail->getMessage() : null,
+                        'diff' => $detail->hasDiff() ? $detail->getDiff() : null,
                     ]);
                 }
             }

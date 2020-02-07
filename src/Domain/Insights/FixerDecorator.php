@@ -152,8 +152,8 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $currentDetail = Details::make();
         $currentDetail->setFile($file);
         $currentDetail->setLine($currentLineNumber);
+        $currentDetail->setDiff($diff);
         $currentMessage = $headerMessage;
-        $hasColor = false;
 
         foreach ($parsedDiff as $diffLine) {
             if (mb_strpos($diffLine, '@@ ') === 0) {
@@ -163,20 +163,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
                 $currentMessage = $headerMessage;
                 continue;
             }
-
-            if (mb_strpos($diffLine, '-') === 0) {
-                $hasColor = true;
-                $currentMessage .= '<fg=red>';
-            }
-            if (mb_strpos($diffLine, '+') === 0) {
-                $hasColor = true;
-                $currentMessage .= '<fg=green>';
-            }
             $currentMessage .= $diffLine;
-            if ($hasColor) {
-                $hasColor = false;
-                $currentMessage .= '</>';
-            }
         }
 
         $currentDetail->setMessage($currentMessage);

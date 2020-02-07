@@ -333,7 +333,26 @@ final class Console implements Formatter
                     }
 
                     if ($detail->hasMessage()) {
-                        $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
+                        if ($detail->hasDiff()) {
+                            $hasColor = false;
+                            foreach (explode(PHP_EOL, $detail->getMessage()) as $line) {
+                                if (mb_strpos($line, '-') === 0) {
+                                    $hasColor = true;
+                                    $detailString .= '<fg=red>';
+                                }
+                                if (mb_strpos($line, '+') === 0) {
+                                    $hasColor = true;
+                                    $detailString .= '<fg=green>';
+                                }
+                                $detailString .= $line . PHP_EOL;
+                                if ($hasColor) {
+                                    $hasColor = false;
+                                    $detailString .= '</>';
+                                }
+                            }
+                        } else {
+                            $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
+                        }
                     }
 
                     $issue .= "\n  ${detailString}";
