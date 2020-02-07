@@ -34,25 +34,16 @@ final class LocalFilesRepository implements FilesRepository
             ->ignoreUnreadableDirs();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultDirectory(): string
     {
         return (string) getcwd();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFiles(): Traversable
     {
         return $this->finder->getIterator();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function within(string $path, array $exclude = []): FilesRepository
     {
         if (! is_dir($path) && is_file($path)) {
