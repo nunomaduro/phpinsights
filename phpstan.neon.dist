@@ -40,6 +40,7 @@ parameters:
             message: '#generic class ReflectionClass#'
             path: src/Domain/Reflection.php
         - '#NunoMaduro\\PhpInsights\\Domain\\File::addFixableError#'
+        - '#iterable type PhpCsFixer\\Tokenizer\\Tokens#'
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

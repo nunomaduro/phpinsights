@@ -22,7 +22,7 @@ final class ComposerLoaderTest extends TestCase
 
     public function testGetExceptionOnFolderWithoutComposerJson(): void
     {
-        self::expectException(ComposerNotFound::class);
+        $this->expectException(ComposerNotFound::class);
 
         $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures');
         ComposerLoader::getInstance($collector);

@@ -58,13 +58,22 @@ final class ConfigurationTest extends TestCase
 
     public function testWithUnknowIde(): void
     {
-        self::expectException(InvalidConfiguration::class);
-        self::expectExceptionMessage('Unknow IDE "notepad++"');
+        $this->expectException(InvalidConfiguration::class);
+        $this->expectExceptionMessage('Unknow IDE "notepad++"');
 
         $config = [
             'ide' => 'notepad++',
         ];
 
         new Configuration($config);
+    }
+
+    public function testResolveDirectoryPath(): void
+    {
+        $config = ['directory' => 'tests/..'];
+        $configuration = new Configuration($config);
+
+        self::assertSame(getcwd(), $configuration->getDirectory());
+        self::assertStringNotContainsString('..', $configuration->getDirectory());
     }
 }
