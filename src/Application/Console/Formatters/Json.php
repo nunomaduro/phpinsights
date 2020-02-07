@@ -8,6 +8,7 @@ use Exception;
 use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use Symfony\Component\Console\Input\InputInterface;
@@ -75,6 +76,7 @@ final class Json implements Formatter
         array $metrics
     ): array {
         $data = [];
+        $detailsComparator = new DetailsComparator();
 
         foreach ($metrics as $metricClass) {
             $category = explode('\\', $metricClass);
@@ -100,8 +102,11 @@ final class Json implements Formatter
                     continue;
                 }
 
+                $details = $insight->getDetails();
+                usort($details, $detailsComparator);
+
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
-                foreach ($insight->getDetails() as $detail) {
+                foreach ($details as $detail) {
                     $current[] = array_filter([
                         'title' => $insight->getTitle(),
                         'insightClass' => $insight->getInsightClass(),
