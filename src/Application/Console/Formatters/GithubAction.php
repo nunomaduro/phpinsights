@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
+use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,6 +52,7 @@ final class GithubAction implements Formatter
         // Call The Console Formatter to get summary and recap,
         // not issues by passing an empty array for metrics.
         $this->decorated->format($insightCollection, $dir, []);
+        $detailsComparator = new DetailsComparator();
 
         $errors = [];
 
@@ -59,8 +61,11 @@ final class GithubAction implements Formatter
                 continue;
             }
 
+            $details = $insight->getDetails();
+            usort($details, $detailsComparator);
+
             /** @var Details $detail */
-            foreach ($insight->getDetails() as $detail) {
+            foreach ($details as $detail) {
                 if (! $detail->hasFile()) {
                     continue;
                 }
