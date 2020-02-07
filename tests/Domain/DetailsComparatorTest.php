@@ -46,4 +46,27 @@ final class DetailsComparatorTest extends TestCase
         self::assertEquals(-1, ($this->comparator)($first, $second));
         self::assertEquals(1, ($this->comparator)($second, $first));
     }
+
+    public function testSortWithComparator(): void
+    {
+        $a = $this->makeDetails('app/App/Admin/Filters/ByRuleTemplate.php', 25, 'Unused parameter $request.');
+        $b = $this->makeDetails('app/App/Dashboard/Controllers/UserController.php', 54, 'Unused parameter $user');
+        $c = $this->makeDetails('app/Support/Rules/HexColor.php', 9, 'Unused parameter $attribute.');
+        $d = $this->makeDetails('app/Support/Rules/DomainName.php', 27, 'Unused parameter $values.');
+        $e = $this->makeDetails('app/Support/Rules/DomainName.php', 17, 'Unused parameter $attribute.');
+        $f = $this->makeDetails('app/Domain/User/Policies/UserPolicy.php', 14, 'Unused parameter $admin.');
+
+        $array = [$a, $b, $c, $d, $e, $f];
+        usort($array, $this->comparator);
+
+        self::assertEquals([$a, $b, $f, $e, $d, $c], $array);
+    }
+
+    private function makeDetails(string $file, int $line, string $message): Details
+    {
+        return (new Details())
+            ->setFile($file)
+            ->setLine($line)
+            ->setMessage($message);
+    }
 }
