@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
-use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,21 +30,20 @@ final class FormatResolver
     ): Formatter {
         $requestedFormats = $input->getOption('format');
 
+        if (! is_array($requestedFormats)) {
+            $consoleOutput->writeln('<fg=red>Could not understand requested format, using fallback [console] instead.</>');
+            $requestedFormats = ['console'];
+        }
+
         $formatters = [];
         foreach ($requestedFormats as $requestedFormat) {
-            if (! is_string($requestedFormat)) {
-                throw new InvalidArgumentException(
-                    'Format has to be a string.'
-                );
-            }
-
             if (class_exists($requestedFormat)) {
                 $formatter = $requestedFormat;
             } else {
                 $requestedFormat = strtolower($requestedFormat);
 
-                if ( ! array_key_exists($requestedFormat, self::$formatters)) {
-                    $consoleOutput->writeln("<fg=red>Could not find requested format [${$requestedFormat}], using fallback [console] instead.</>");
+                if (! array_key_exists($requestedFormat, self::$formatters)) {
+                    $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}], using fallback [console] instead.</>");
                 }
                 $formatter = self::$formatters[$requestedFormat] ?? Console::class;
             }

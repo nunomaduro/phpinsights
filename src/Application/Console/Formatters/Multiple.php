@@ -12,13 +12,14 @@ final class Multiple implements Formatter
     /** @var array<Formatter> */
     private $formatters;
 
-    public function __construct(array $formatters) {
+    /**
+     * @param array<Formatter> $formatters
+     */
+    public function __construct(array $formatters)
+    {
         $this->formatters = $formatters;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function format(InsightCollection $insightCollection, string $dir, array $metrics): void
     {
         /** @var Formatter $formatter */

@@ -45,8 +45,10 @@ final class AnalyseCommand
     public function __invoke(InputInterface $input, OutputInterface $output): int
     {
         $consoleOutput = $output;
+        $format = $input->getOption('format');
         if ($consoleOutput instanceof ConsoleOutputInterface
-            && !in_array('console', $input->getOption('format'))) {
+            && is_array($format)
+            && ! in_array('console', $format, true)) {
             $consoleOutput = $consoleOutput->getErrorOutput();
             $consoleOutput->setDecorated($output->isDecorated());
         }
