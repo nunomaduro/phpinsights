@@ -64,9 +64,9 @@ final class AnalyseDefinition
             new InputOption(
               'format',
               null,
-              InputOption::VALUE_REQUIRED,
+              InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
                 'Format to output the result in [console, json, checkstyle]',
-                'console'
+                ['console']
             ),
         ]);
     }

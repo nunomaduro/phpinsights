@@ -29,22 +29,29 @@ final class FormatResolver
         OutputInterface $output,
         OutputInterface $consoleOutput
     ): Formatter {
-        $requestedFormat = $input->getOption('format');
+        $requestedFormats = $input->getOption('format');
 
-        if (! is_string($requestedFormat)) {
-            throw new InvalidArgumentException(
-                'Format has to be a string.'
-            );
+        $formatters = [];
+        foreach ($requestedFormats as $requestedFormat) {
+            if (! is_string($requestedFormat)) {
+                throw new InvalidArgumentException(
+                    'Format has to be a string.'
+                );
+            }
+
+            if (class_exists($requestedFormat)) {
+                $formatter = $requestedFormat;
+            } else {
+                $requestedFormat = strtolower($requestedFormat);
+
+                if ( ! array_key_exists($requestedFormat, self::$formatters)) {
+                    $consoleOutput->writeln("<fg=red>Could not find requested format [${$requestedFormat}], using fallback [console] instead.</>");
+                }
+                $formatter = self::$formatters[$requestedFormat] ?? Console::class;
+            }
+
+            $formatters[] = new $formatter($input, $output);
         }
-
-        $requestedFormat = strtolower($requestedFormat);
-
-        if (! array_key_exists($requestedFormat, self::$formatters)) {
-            $consoleOutput->writeln("<fg=red>Could not find requested format [${requestedFormat}], using fallback [console] instead.</>");
-        }
-
-        $formatter = self::$formatters[$requestedFormat] ?? Console::class;
-
-        return new $formatter($input, $output);
+        return new Multiple($formatters);
     }
 }

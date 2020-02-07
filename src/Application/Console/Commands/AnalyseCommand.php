@@ -46,7 +46,7 @@ final class AnalyseCommand
     {
         $consoleOutput = $output;
         if ($consoleOutput instanceof ConsoleOutputInterface
-            && $input->getOption('format') !== 'console') {
+            && !in_array('console', $input->getOption('format'))) {
             $consoleOutput = $consoleOutput->getErrorOutput();
             $consoleOutput->setDecorated($output->isDecorated());
         }
