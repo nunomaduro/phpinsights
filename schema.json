@@ -39,6 +39,9 @@
                 },
                 "message": {
                     "type": "string"
+                },
+                "diff": {
+                    "type": "string"
                 }
             }
         }
