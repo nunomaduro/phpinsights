@@ -75,6 +75,25 @@ In laravel, launch command as usual with your path:
 php artisan insights path/to/analyse
 ```
 
+## Fixing errors automatically <Badge text="^1.13"/>
+
+Some Insights support automatic fixing. 
+To fix your code automatically, two way are possibles: 
+
+* Add `--fix` option to your command. The output will be the classical output, with a resume of all issues fixed.
+* Or launch `phpinsights fix [directory]`
+
+```bash
+# Classical command with --fix option
+vendor/bin/phpinsights analyse path/to/analyse --fix
+
+# In laravel
+php artisan insights path/to/analyse --fix
+
+# Just fix
+vendor/bin/phpinsights fix path/to/analyse
+```
+
 ## Formatting the output
 
 For changing the output format you can add the `format` flag. The following formats are supported:
