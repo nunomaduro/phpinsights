@@ -146,10 +146,6 @@ final class Console implements Formatter
         $this->style->writeln(sprintf('<fg=yellow;options=bold>%s issues remaining</>', $totalIssues));
         $this->style->newLine();
 
-        if (! $this->style->isVerbose()) {
-            return;
-        }
-
         foreach ($metrics as $metricClass) {
             $category = explode('\\', $metricClass);
             $category = $category[count($category) - 2];
@@ -173,6 +169,7 @@ final class Console implements Formatter
                 }
 
                 $this->style->writeln($fix);
+                $this->style->newLine();
             }
         }
         $this->style->newLine();
