@@ -68,7 +68,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
      *
      * @return int|void
      *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function process(File $file, $stackPtr)
     {
@@ -152,7 +152,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
             $this->fixPerFile[$file] = 0;
         }
 
-        $this->fixPerFile[$file] = ++$this->fixPerFile[$file];
+        $this->fixPerFile[$file]++;
         $this->incrementFix();
     }
 
