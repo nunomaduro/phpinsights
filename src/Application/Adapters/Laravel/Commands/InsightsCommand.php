@@ -13,6 +13,7 @@ use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use NunoMaduro\PhpInsights\Domain\Reflection;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 /**
  * @internal
@@ -37,6 +38,7 @@ final class InsightsCommand extends Command
         }
 
         $configuration = require $configPath;
+        $configuration['fix'] = $this->input->hasOption('fix') && (bool) $this->input->getOption('fix') === true;
         $configuration = ConfigResolver::resolve($configuration, DirectoryResolver::resolve($this->input));
 
         $container = Container::make();
@@ -50,7 +52,14 @@ final class InsightsCommand extends Command
         $analyseCommand = $container->get(AnalyseCommand::class);
 
         $output = (new Reflection($this->output))->get('output');
-        return $analyseCommand->__invoke($this->input, $output);
+
+        $result = $analyseCommand->__invoke($this->input, $output);
+
+        if ($output instanceof ConsoleOutputInterface) {
+            $output->getErrorOutput()->writeln('✨ See something that needs to be improved? <options=bold>Create an issue</> or send us a <options=bold>pull request</>: <fg=cyan;options=bold>https://github.com/nunomaduro/phpinsights</>');
+        }
+
+        return $result;
     }
 
     public function configure(): void
