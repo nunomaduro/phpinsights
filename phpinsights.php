@@ -9,6 +9,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 
 return [
 
@@ -90,6 +91,9 @@ return [
             'exclude' => [
                 'src/Domain/LinkFormatter/NullFileLinkFormatter.php',
             ],
+        ],
+        PropertyTypeHintSniff::class => [
+            'enableNativeTypeHint' => false,
         ],
     ],
 ];

@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
+use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use RuntimeException;
@@ -42,6 +43,7 @@ final class Checkstyle implements Formatter
             throw new RuntimeException('To use checkstyle format install simplexml extension.');
         }
         $checkstyle = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><checkstyle/>');
+        $detailsComparator = new DetailsComparator();
 
         foreach ($metrics as $metricClass) {
             /** @var Insight $insight */
@@ -50,8 +52,11 @@ final class Checkstyle implements Formatter
                     continue;
                 }
 
+                $details = $insight->getDetails();
+                usort($details, $detailsComparator);
+
                 /** @var Details $detail */
-                foreach ($insight->getDetails() as $detail) {
+                foreach ($details as $detail) {
                     $fileName = $this->getFileName($detail, $dir);
 
                     if (isset($checkstyle->file) && (string) $checkstyle->file->attributes()['name'] === $fileName) {

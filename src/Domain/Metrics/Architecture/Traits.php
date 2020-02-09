@@ -20,7 +20,7 @@ final class Traits implements HasValue, HasInsights
 
     public function getPercentage(Collector $collector): float
     {
-        return count($collector->getFiles()) > 0 ? (count($collector->getTraits()) / count($collector->getFiles())) * 100 : 0;
+        return count($collector->getFiles()) > 0 ? count($collector->getTraits()) / count($collector->getFiles()) * 100 : 0;
     }
 
     /**

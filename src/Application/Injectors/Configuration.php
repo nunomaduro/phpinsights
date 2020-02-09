@@ -24,7 +24,7 @@ final class Configuration
     public function __invoke(): array
     {
         return [
-            \NunoMaduro\PhpInsights\Domain\Configuration::class => static function () {
+            \NunoMaduro\PhpInsights\Domain\Configuration::class => static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
                 $input = new ArgvInput();
                 // merge application default definition with current command definition.
                 $definition = (new Application())->getDefinition();

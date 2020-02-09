@@ -193,7 +193,11 @@ final class Configuration
         $config = $resolver->resolve($config);
 
         $this->preset = $config['preset'];
-        $this->directory = $config['directory'];
+
+        // resolve symbolic link, /./, /../
+        $this->directory = realpath($config['directory']) !== false
+            ? realpath($config['directory'])
+            : $config['directory'];
         $this->exclude = $config['exclude'];
         $this->add = $config['add'];
         $this->remove = $config['remove'];
@@ -211,7 +215,7 @@ final class Configuration
 
     private function validateAddedInsight(): \Closure
     {
-        return static function ($values) {
+        return static function ($values): bool {
             foreach ($values as $metric => $insights) {
                 if (! class_exists($metric) ||
                     ! in_array(Metric::class, class_implements($metric), true)
@@ -243,7 +247,7 @@ final class Configuration
 
     private function validateConfigInsights(): \Closure
     {
-        return static function ($values) {
+        return static function ($values): bool {
             foreach (array_keys($values) as $insight) {
                 if (! class_exists((string) $insight)) {
                     throw new InvalidConfiguration(sprintf(

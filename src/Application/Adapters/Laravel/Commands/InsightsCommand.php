@@ -19,8 +19,10 @@ use NunoMaduro\PhpInsights\Domain\Reflection;
  */
 final class InsightsCommand extends Command
 {
+    /** @var string */
     protected $name = 'insights';
 
+    /** @var string */
     protected $description = 'Analyze the code quality';
 
     public function handle(): int

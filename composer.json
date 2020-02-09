@@ -17,12 +17,13 @@
         "ext-tokenizer": "*",
         "composer/composer": "^1.7",
         "friendsofphp/php-cs-fixer": "^2.15",
+        "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
-        "object-calisthenics/phpcs-calisthenics-rules": "^3.5",
+        "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
         "phploc/phploc": "^5.0",
         "psr/container": "^1.0",
         "sensiolabs/security-checker": "^6.0",
-        "slevomat/coding-standard": "^5.0",
+        "slevomat/coding-standard": "^6.0",
         "squizlabs/php_codesniffer": "^3.4",
         "symfony/console": "^4.2|^5.0",
         "symfony/finder": "^4.2|^5.0"
@@ -30,14 +31,13 @@
     "require-dev": {
         "illuminate/console": "^5.8",
         "illuminate/support": "^5.8",
-        "localheinz/phpstan-rules": "^0.10.0",
+        "ergebnis/phpstan-rules": "^0.14.0",
         "mockery/mockery": "^1.0",
-        "phpstan/phpstan-strict-rules": "^0.11",
+        "phpstan/phpstan-strict-rules": "^0.12",
         "phpunit/phpunit": "^8.0",
-        "roave/no-floaters": "^1.1",
         "symfony/var-dumper": "^4.2|^5.0",
-        "symplify/easy-coding-standard": "^6.0",
-        "thecodingmachine/phpstan-strict-rules": "^0.11.0"
+        "symplify/easy-coding-standard": "^7.1",
+        "thecodingmachine/phpstan-strict-rules": "^0.12.0"
     },
     "suggest": {
         "ext-simplexml": "It is needed for the checkstyle formatter"

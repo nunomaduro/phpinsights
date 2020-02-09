@@ -63,9 +63,6 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
         return self::$details;
     }
 
-    /**
-     * @return \SensioLabs\Security\Result
-     */
     private function getResult(): Result
     {
         if (self::$result === null) {

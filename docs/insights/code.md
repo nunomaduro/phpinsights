@@ -466,6 +466,24 @@ This sniff reports invalid inline phpDocs with `@var`.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff`
 
+## Useless Function doc comment <Badge text="^1.12"/> <Badge text="Code\Comments" type="warn"/>
+
+This sniff disallows useless doc comments. If the native method declaration contains everything and the phpDoc does not add anything useful, it's reported as useless.
+
+Some typehints can be enforced to be specified with a contained type, with `traversableTypeHints`. See the [official explanation](https://github.com/slevomat/coding-standard#slevomatcodingstandardcommentinguselessfunctiondoccomment-)
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff::class => [
+    'traversableTypeHints' => []
+]
+```
+</details>
+
 ## Disallow Array type hint syntax <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
 This sniff disallows usage of array type hint syntax (eg. `int[]`, `bool[][]`) in phpDocs in favour of generic type hint syntax (eg. `array<int>`, `array<array<bool>>`).
@@ -491,11 +509,29 @@ This sniff enforces `null` type hint on last position in annotations.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\NullTypeHintOnLastPositionSniff`
 
-## Type hint declaration <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
+## Type hint declaration <Badge text=">=1.0 <1.12"/> <Badge text="Code\Comments" type="warn"/>
 
-See the [official explanation](https://github.com/slevomat/coding-standard/#slevomatcodingstandardtypehintstypehintdeclaration-)
+See the [official explanation](https://github.com/slevomat/coding-standard/tree/5.0.4#slevomatcodingstandardtypehintstypehintdeclaration-)
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff`
+
+## Parameter Type hint <Badge text="^1.12"/> <Badge text="Code\Comments" type="warn"/>
+
+See the [official explanation](https://github.com/slevomat/coding-standard#slevomatcodingstandardtypehintsparametertypehint-)
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff`
+
+## Property Type hint <Badge text="^1.12"/> <Badge text="Code\Comments" type="warn"/>
+
+See the [official explanation](https://github.com/slevomat/coding-standard#slevomatcodingstandardtypehintspropertytypehint-)
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff`
+
+## Return Type hint <Badge text="^1.12"/> <Badge text="Code\Comments" type="warn"/>
+
+See the [official explanation](https://github.com/slevomat/coding-standard#slevomatcodingstandardtypehintsreturntypehint-)
+
+**Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff`
 
 ## Useless constant type hint <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
