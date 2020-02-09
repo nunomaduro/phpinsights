@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Definitions;
 
-use Symfony\Component\Console\Input\InputDefinition;
-
 /**
  * @internal
  */
-final class FixDefinition
+final class FixDefinition extends BaseDefinition
 {
-    public static function get(): InputDefinition
-    {
-        return DefaultDefinition::get();
-    }
 }

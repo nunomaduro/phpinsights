@@ -118,7 +118,7 @@ final class Console implements Formatter
         array $metrics
     ): void {
         $results = $insightCollection->results();
-        $this->style->newLine(1);
+        $this->style->newLine();
 
         $totalFix = $results->getTotalFix();
         $totalIssues = $results->getTotalIssues();
@@ -143,7 +143,7 @@ final class Console implements Formatter
         }
 
         $this->style->success(sprintf('🧙 ️Congrats ! %s %s', $totalFix, $message));
-        $this->style->writeln(sprintf('<fg=yellow;options=bold>⚠ %s issues remaining</>', $totalIssues));
+        $this->style->writeln(sprintf('<fg=yellow;options=bold>%s issues remaining</>', $totalIssues));
         $this->style->newLine();
 
         if (! $this->style->isVerbose()) {
@@ -169,7 +169,7 @@ final class Console implements Formatter
                         $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
                     }
 
-                    $fix .= "\n  ${detailString}";
+                    $fix .= PHP_EOL . ' ' . $detailString;
                 }
 
                 $this->style->writeln($fix);
@@ -627,7 +627,6 @@ EOD;
 
     private function getCategoryColor(string $category): string
     {
-        //black, red, green, yellow, blue, magenta, cyan, white, default
         $categoryColor = [
             'Code' => 'cyan',
             'Complexity' => 'green',

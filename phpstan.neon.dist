@@ -41,6 +41,7 @@ parameters:
             path: src/Domain/Reflection.php
         - '#NunoMaduro\\PhpInsights\\Domain\\File::addFixableError#'
         - '#iterable type PhpCsFixer\\Tokenizer\\Tokens#'
+        - '#Method NunoMaduro\\PhpInsights\\Application\\Console\\Definitions\\BaseDefinition::get\(\) is not final#'
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

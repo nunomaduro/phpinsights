@@ -10,11 +10,12 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * @internal
  */
-final class AnalyseDefinition
+final class AnalyseDefinition extends BaseDefinition
 {
     public static function get(): InputDefinition
     {
-        $definition = new InputDefinition([
+        $definition = parent::get();
+        $definition->addOptions([
             new InputOption(
                 'min-quality',
                 null,
@@ -63,9 +64,6 @@ final class AnalyseDefinition
                 'Enable auto-fix for insights fixables'
             ),
         ]);
-
-        $definition->addOptions(DefaultDefinition::get()->getOptions());
-        $definition->addArguments(DefaultDefinition::get()->getArguments());
 
         return $definition;
     }

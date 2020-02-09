@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
  *
  * @internal
  */
-final class DefaultDefinition
+abstract class BaseDefinition
 {
     public static function get(): InputDefinition
     {
