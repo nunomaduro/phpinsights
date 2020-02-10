@@ -61,7 +61,7 @@ final class AnalyseDefinition extends BaseDefinition
                 'fix',
                 null,
                 InputOption::VALUE_NONE,
-                'Enable auto-fix for insights fixables'
+                'Enable auto-fix for fixable insights'
             ),
         ]);
 
