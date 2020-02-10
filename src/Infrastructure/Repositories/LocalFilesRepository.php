@@ -18,11 +18,6 @@ final class LocalFilesRepository implements FilesRepository
      */
     private $finder;
 
-    /**
-     * LocalFilesRepository constructor.
-     *
-     * @param \Symfony\Component\Finder\Finder  $finder
-     */
     public function __construct(Finder $finder)
     {
         $this->finder = $finder
@@ -34,25 +29,16 @@ final class LocalFilesRepository implements FilesRepository
             ->ignoreUnreadableDirs();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultDirectory(): string
     {
         return (string) getcwd();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFiles(): Traversable
     {
         return $this->finder->getIterator();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function within(string $path, array $exclude = []): FilesRepository
     {
         if (! is_dir($path) && is_file($path)) {
