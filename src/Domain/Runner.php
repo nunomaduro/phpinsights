@@ -26,9 +26,6 @@ final class Runner
 
     /**
      * InsightContainer constructor.
-     *
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      */
     public function __construct(
         OutputInterface $output,
