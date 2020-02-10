@@ -18,11 +18,6 @@ final class LocalFilesRepository implements FilesRepository
      */
     private $finder;
 
-    /**
-     * LocalFilesRepository constructor.
-     *
-     * @param \Symfony\Component\Finder\Finder  $finder
-     */
     public function __construct(Finder $finder)
     {
         $this->finder = $finder

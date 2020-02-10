@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Application;
 
+use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
@@ -29,43 +30,55 @@ final class ConfigResolverTest extends TestCase
 
     public function testGuessDirectoryWithoutComposer(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath);
+        $preset = ConfigResolver::guess(new Composer([]));
         self::assertSame('default', $preset);
     }
 
     public function testGuessComposerWithoutRequire(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerWithoutRequire');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath("{$this->baseFixturePath}ComposerWithoutRequire" . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('default', $preset);
     }
 
     public function testGuessSymfony(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerSymfony');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerSymfony' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('symfony', $preset);
     }
 
     public function testGuessLaravel(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerLaravel');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerLaravel' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('laravel', $preset);
     }
 
     public function testGuessYii(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerYii');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerYii' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('yii', $preset);
     }
 
     public function testGuessMagento2(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerMagento2');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerMagento2' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('magento2', $preset);
     }
 
     public function testGuessDrupal(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerDrupal');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerDrupal' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('drupal', $preset);
     }
 
