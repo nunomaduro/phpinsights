@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
+use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,35 +38,39 @@ final class FormatResolver
 
         $formatters = [];
         foreach ($requestedFormats as $requestedFormat) {
-            $formatters[] = self::stringToFormatter(
-                $requestedFormat,
-                $input,
-                $output,
-                $consoleOutput
-            );
+            try {
+                $formatter = self::stringToFormatterClass($requestedFormat);
+
+                $instance = new $formatter($input, $output);
+
+                if (! ($instance instanceof Formatter)) {
+                    $consoleOutput->writeln("<fg=red>The formatter [{$formatter}] is not implementing the interface.</>");
+                    continue;
+                }
+                $formatters[] = $instance;
+            } catch (InvalidArgumentException $exception) {
+                $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}].</>");
+            }
         }
+
+        if ($formatters === []) {
+            $consoleOutput->writeln('<fg=red>No requested formats were found, using fallback [console] instead.</>');
+            return new Console($input, $output);
+        }
+
         return new Multiple($formatters);
     }
 
-    private static function stringToFormatter(
-        string $requestedFormat,
-        InputInterface $input,
-        OutputInterface $output,
-        OutputInterface $consoleOutput
-    ): Formatter {
+    private static function stringToFormatterClass(string $requestedFormat): string
+    {
         if (class_exists($requestedFormat)) {
-            $class = $requestedFormat;
+            return $requestedFormat;
         }
 
         if (array_key_exists($requestedFormat, self::$formatters)) {
-            $class = self::$formatters[strtolower($requestedFormat)];
+            return self::$formatters[strtolower($requestedFormat)];
         }
 
-        if (!isset($class) || !($class instanceof Formatter)) {
-            $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}], using fallback [console] instead.</>");
-            $class = Console::class;
-        }
-
-        return $class($input, $output);
+        throw new InvalidArgumentException('Could not find a formatter from string.');
     }
 }
