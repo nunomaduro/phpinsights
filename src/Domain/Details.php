@@ -21,6 +21,9 @@ final class Details
     /** @var string */
     private $message;
 
+    /** @var string */
+    private $diff;
+
     public static function make(): Details
     {
         return new self();
@@ -58,6 +61,12 @@ final class Details
     public function setFunction(string $function): Details
     {
         $this->function = $function;
+        return $this;
+    }
+
+    public function setDiff(string $diff): Details
+    {
+        $this->diff = $diff;
         return $this;
     }
 
@@ -112,5 +121,15 @@ final class Details
     public function hasOriginal(): bool
     {
         return $this->original !== null;
+    }
+
+    public function getDiff(): string
+    {
+        return $this->diff;
+    }
+
+    public function hasDiff(): bool
+    {
+        return $this->diff !== null;
     }
 }

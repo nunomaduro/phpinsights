@@ -123,9 +123,6 @@ final class GithubAction implements Formatter
         $templates = [
             "\r" => '%0D',
             "\n" => '%0A',
-            '<fg=red>' => '',
-            '<fg=green>' => '',
-            '</>' => '',
         ];
 
         return strtr($data, $templates);
