@@ -38,16 +38,17 @@ final class FormatResolver
         $formatters = [];
         foreach ($requestedFormats as $requestedFormat) {
             if (class_exists($requestedFormat)) {
-                $formatter = $requestedFormat;
-            } else {
-                $requestedFormat = strtolower($requestedFormat);
-
-                if (! array_key_exists($requestedFormat, self::$formatters)) {
-                    $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}], using fallback [console] instead.</>");
-                }
-                $formatter = self::$formatters[$requestedFormat] ?? Console::class;
+                $formatters[] = new $requestedFormat($input, $output);
+                continue;
             }
 
+            $requestedFormat = strtolower($requestedFormat);
+
+            if (! array_key_exists($requestedFormat, self::$formatters)) {
+                $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}], using fallback [console] instead.</>");
+            }
+
+            $formatter = self::$formatters[$requestedFormat] ?? Console::class;
             $formatters[] = new $formatter($input, $output);
         }
         return new Multiple($formatters);
