@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 
-use _HumbugBox3ab8cff0fda0\___PHPSTORM_HELPERS\this;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Differ;
