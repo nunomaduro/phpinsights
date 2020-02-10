@@ -336,7 +336,7 @@ final class Console implements Formatter
                     }
 
                     if ($detail->hasMessage()) {
-                        $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
+                        $detailString .= ($detailString !== '' ? ': ' : '') . $this->parseDetailMessage($detail);
                     }
 
                     $issue .= "\n  ${detailString}";
@@ -595,5 +595,32 @@ EOD;
         }
 
         return $detailString;
+    }
+
+    private function parseDetailMessage(Details $detail): string
+    {
+        if ($detail->hasDiff()) {
+            $hasColor = false;
+            $detailString = '';
+            foreach (explode(PHP_EOL, $detail->getMessage()) as $line) {
+                if (mb_strpos($line, '-') === 0) {
+                    $hasColor = true;
+                    $detailString .= '<fg=red>';
+                }
+                if (mb_strpos($line, '+') === 0) {
+                    $hasColor = true;
+                    $detailString .= '<fg=green>';
+                }
+                $detailString .= $line . PHP_EOL;
+                if ($hasColor) {
+                    $hasColor = false;
+                    $detailString .= '</>';
+                }
+            }
+
+            return $detailString;
+        }
+
+        return $detail->getMessage();
     }
 }
