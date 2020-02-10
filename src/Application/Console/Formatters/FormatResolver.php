@@ -37,20 +37,35 @@ final class FormatResolver
 
         $formatters = [];
         foreach ($requestedFormats as $requestedFormat) {
-            if (class_exists($requestedFormat)) {
-                $formatters[] = new $requestedFormat($input, $output);
-                continue;
-            }
-
-            $requestedFormat = strtolower($requestedFormat);
-
-            if (! array_key_exists($requestedFormat, self::$formatters)) {
-                $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}], using fallback [console] instead.</>");
-            }
-
-            $formatter = self::$formatters[$requestedFormat] ?? Console::class;
-            $formatters[] = new $formatter($input, $output);
+            $formatters[] = self::stringToFormatter(
+                $requestedFormat,
+                $input,
+                $output,
+                $consoleOutput
+            );
         }
         return new Multiple($formatters);
+    }
+
+    private static function stringToFormatter(
+        string $requestedFormat,
+        InputInterface $input,
+        OutputInterface $output,
+        OutputInterface $consoleOutput
+    ): Formatter {
+        if (class_exists($requestedFormat)) {
+            $class = $requestedFormat;
+        }
+
+        if (array_key_exists($requestedFormat, self::$formatters)) {
+            $class = self::$formatters[strtolower($requestedFormat)];
+        }
+
+        if (!isset($class) || !($class instanceof Formatter)) {
+            $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}], using fallback [console] instead.</>");
+            $class = Console::class;
+        }
+
+        return $class($input, $output);
     }
 }
