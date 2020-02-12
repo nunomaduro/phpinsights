@@ -28,7 +28,7 @@ As `phpinsights` returns an exit error code if security issues are found, you ca
 
 **Note** : For a project inspection, you **should** never use this option to keep your project safe.
 
-## Github Action <Badge text="^1.12"/>
+## Github Action <Badge text="^1.13"/>
 
 If you use Github Action, you can launch PHP Insights with `--format=github-action` option.
 With that, annotations with issues will be added in Pull request.
