@@ -68,6 +68,13 @@ final class Configuration
     private $remove;
 
     /**
+     * List of requirements.
+     *
+     * @var array<string>
+     */
+    private $requirements;
+
+    /**
      * List of custom configuration by insight.
      *
      * @var array<string, array<string, string|int|array>>
@@ -161,6 +168,46 @@ final class Configuration
     }
 
     /**
+     * @return float
+     */
+    public function getMinQuality(): float
+    {
+        return (float) ($this->requirements['min-quality'] ?? 0);
+    }
+
+    /**
+     * @return float
+     */
+    public function getMinComplexity(): float
+    {
+        return (float) ($this->requirements['min-complexity'] ?? 0);
+    }
+
+    /**
+     * @return float
+     */
+    public function getMinArchitecture(): float
+    {
+        return (float) ($this->requirements['min-architecture'] ?? 0);
+    }
+
+    /**
+     * @return float
+     */
+    public function getMinStyle(): float
+    {
+        return (float) ($this->requirements['min-style'] ?? 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisableSecurityCheck(): bool
+    {
+        return (bool) $this->requirements['disable-security-check'] ?? false;
+    }
+
+    /**
      * @return FileLinkFormatterContract
      */
     public function getFileLinkFormatter(): FileLinkFormatterContract
@@ -179,6 +226,7 @@ final class Configuration
             'directory' => (string) getcwd(),
             'exclude' => [],
             'add' => [],
+            'requirements' => [],
             'remove' => [],
             'config' => [],
         ]);
@@ -201,6 +249,7 @@ final class Configuration
         $this->add = $config['add'];
         $this->remove = $config['remove'];
         $this->config = $config['config'];
+        $this->requirements = $config['requirements'];
 
         if (
             array_key_exists('ide', $config)

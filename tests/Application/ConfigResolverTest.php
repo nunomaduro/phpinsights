@@ -12,6 +12,9 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 final class ConfigResolverTest extends TestCase
@@ -174,6 +177,28 @@ final class ConfigResolverTest extends TestCase
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
+    }
+
+    public function testMergeInputRequirements(): void
+    {
+        $input = new ArrayInput([
+                '--not-whitelisted' => 1,
+                '--min-complexity' => 1,
+            ],
+            new InputDefinition([
+                new InputOption('min-complexity'),
+                new InputOption('disable-security-check'),
+                new InputOption('not-whitelisted'),
+            ])
+        );
+
+        $config = ConfigResolver::mergeInputRequirements([], $input);
+
+        self::assertEquals([
+            'requirements' => [
+                'min-complexity' => 1,
+            ]
+        ], $config);
     }
 
     /**

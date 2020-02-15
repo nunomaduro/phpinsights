@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Application\Console\Analyser;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,13 +26,20 @@ final class AnalyseCommand
     private $analyser;
 
     /**
+     * @var \NunoMaduro\PhpInsights\Domain\Configuration
+     */
+    private $configuration;
+
+    /**
      * Creates a new instance of the Analyse Command.
      *
      * @param \NunoMaduro\PhpInsights\Application\Console\Analyser $analyser
+     * @param \NunoMaduro\PhpInsights\Domain\Configuration         $configuration
      */
-    public function __construct(Analyser $analyser)
+    public function __construct(Analyser $analyser, Configuration $configuration)
     {
         $this->analyser = $analyser;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -64,27 +72,27 @@ final class AnalyseCommand
         );
 
         $hasError = false;
-        if ($input->getOption('min-quality') > $results->getCodeQuality()) {
+        if ($this->configuration->getMinQuality() > $results->getCodeQuality()) {
             $consoleStyle->error('The code quality score is too low');
             $hasError = true;
         }
 
-        if ($input->getOption('min-complexity') > $results->getComplexity()) {
+        if ($this->configuration->getMinComplexity() > $results->getComplexity()) {
             $consoleStyle->error('The complexity score is too low');
             $hasError = true;
         }
 
-        if ($input->getOption('min-architecture') > $results->getStructure()) {
+        if ($this->configuration->getMinArchitecture() > $results->getStructure()) {
             $consoleStyle->error('The architecture score is too low');
             $hasError = true;
         }
 
-        if ($input->getOption('min-style') > $results->getStyle()) {
+        if ($this->configuration->getMinStyle() > $results->getStyle()) {
             $consoleStyle->error('The style score is too low');
             $hasError = true;
         }
 
-        if (! (bool) $input->getOption('disable-security-check') && $results->getTotalSecurityIssues() > 0) {
+        if (! $this->configuration->getDisableSecurityCheck() && $results->getTotalSecurityIssues() > 0) {
             $hasError = true;
         }
 

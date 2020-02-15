@@ -41,6 +41,7 @@ final class Configuration
                     $config = require $configPath;
                 }
 
+                $config = ConfigResolver::mergeInputRequirements($config, $input);
                 return ConfigResolver::resolve($config, DirectoryResolver::resolve($input));
             },
         ];
