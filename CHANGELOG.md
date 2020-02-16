@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.13.0]
+### Added
+- Sort issues by file, line, function and lastly message ([#348](https://github.com/nunomaduro/phpinsights/pull/348))
+- Support multiple formatters ([#357](https://github.com/nunomaduro/phpinsights/pull/357))
+- Support custom class formatters ([#357](https://github.com/nunomaduro/phpinsights/pull/357))
+- Added diff from fixer to JSON formatter ([#356](https://github.com/nunomaduro/phpinsights/pull/356))
+- Check PHP version from composer to determine native type hint ([#347](https://github.com/nunomaduro/phpinsights/pull/347))
+- Added GitHub Action formatter ([#344](https://github.com/nunomaduro/phpinsights/pull/344))
+
+### Fixed
+- Prevent failing on empty namespace ([#352](https://github.com/nunomaduro/phpinsights/pull/352))
+
 ## [v1.12.0]
 ### Added
 - Text coloring per section ([#339](https://github.com/nunomaduro/phpinsights/pull/339))
