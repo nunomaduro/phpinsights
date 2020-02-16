@@ -105,6 +105,14 @@ final class Analyser
 
                 if ($token === ';') {
                     if ($className !== null) {
+                        $blackList = ['{', '}'];
+                        for ($z = $i + 1; $z < $numTokens; $z++) {
+                            if (in_array($tokens[$z], $blackList, true))
+                            {
+                                $collector->addBadClass($filename);
+                            }
+                        }
+
                         $collector->currentClassIncrementLines();
 
                         if ($functionName !== null) {

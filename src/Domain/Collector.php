@@ -50,6 +50,11 @@ final class Collector
     /**
      * @var array<string>
      */
+    private $badClasses = [];
+
+    /**
+     * @var array<string>
+     */
     private $concreteFinalClasses = [];
 
     /**
@@ -374,6 +379,11 @@ final class Collector
         $this->concreteNonFinalClasses[] = $name;
     }
 
+    public function addBadClass(string $name): void
+    {
+        $this->badClasses[] = $name;
+    }
+
     /**
      * Increment if method.
      */
@@ -656,6 +666,14 @@ final class Collector
     public function getConcreteFinalClasses(): array
     {
         return $this->concreteFinalClasses;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getBadClasses(): array
+    {
+        return $this->badClasses;
     }
 
     /**
