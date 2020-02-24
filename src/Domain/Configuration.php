@@ -204,7 +204,7 @@ final class Configuration
      */
     public function getDisableSecurityCheck(): bool
     {
-        return (bool) $this->requirements['disable-security-check'] ?? false;
+        return (bool) ($this->requirements['disable-security-check'] ?? false);
     }
 
     /**

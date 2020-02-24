@@ -70,6 +70,17 @@ return [
         //  ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Requirements
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define a level you want to reach per `Insights` category. If
+    | the minimum level defined is not reached, the console will return an exit
+    | error code. All of them are optional and may be individually configured.
+    |
+    */
+
     'requirements' => [
 //        'min-quality' => 0,
 //        'min-complexity' => 0,

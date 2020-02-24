@@ -85,4 +85,21 @@ return [
             ],
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Requirements
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define a level you want to reach per `Insights` category. If
+    | the minimum level defined is not reached, the console will return an exit
+    | error code. All of them are optional and may be individually configured.
+    |
+    */
+
+    'requirements' => [
+        'min-quality' => 90.0,
+        'min-architecture' => 80.0,
+        'min-style' => 97.8,
+    ],
 ];

@@ -6,6 +6,7 @@ namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
@@ -13,9 +14,11 @@ use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Tests\Fakes\FakeInput;
 
 final class ConfigResolverTest extends TestCase
 {
@@ -98,7 +101,10 @@ final class ConfigResolverTest extends TestCase
             ]
         ];
 
-        $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        $finalConfig = ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
 
         self::assertContains('my/path', $finalConfig->getExcludes());
         // assert we don't replace the first value
@@ -117,7 +123,10 @@ final class ConfigResolverTest extends TestCase
 
         $config = ['preset' => 'UnknownPreset'];
 
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     public function testUnknowMetricAddedThrowException(): void
@@ -126,7 +135,10 @@ final class ConfigResolverTest extends TestCase
         $this->expectExceptionMessage('Unable to use "say" class as metric in section add.');
 
         $config = ['add' => ['say' => 'hello']];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     public function testKnownMetricAddedWithNonArrayValueThrowException(): void
@@ -135,7 +147,10 @@ final class ConfigResolverTest extends TestCase
         $this->expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
 
         $config = ['add' => [Classes::class => 'hello']];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     public function testAddUnknowClassThrowException(): void
@@ -144,7 +159,10 @@ final class ConfigResolverTest extends TestCase
         $this->expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');
 
         $config = ['add' => [Classes::class => ['hello']]];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     /**
@@ -154,7 +172,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = ['ide' => $ide];
 
-        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($this->baseFixturePath));
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
@@ -164,7 +182,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = [];
 
-        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($this->baseFixturePath));
 
         self::assertInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
@@ -173,7 +191,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = ['ide' => 'myide://file=%f&line=%l'];
 
-        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($this->baseFixturePath));
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
@@ -184,21 +202,19 @@ final class ConfigResolverTest extends TestCase
         $input = new ArrayInput([
                 '--not-whitelisted' => 1,
                 '--min-complexity' => 1,
+                '--directory=.'
             ],
             new InputDefinition([
+                new InputArgument('directory'),
                 new InputOption('min-complexity'),
                 new InputOption('disable-security-check'),
                 new InputOption('not-whitelisted'),
             ])
         );
 
-        $config = ConfigResolver::mergeInputRequirements([], $input);
+        $config = ConfigResolver::resolve([], $input);
 
-        self::assertEquals([
-            'requirements' => [
-                'min-complexity' => 1,
-            ]
-        ], $config);
+        self::assertEquals($config->getMinComplexity(), 1);
     }
 
     /**
