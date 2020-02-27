@@ -55,6 +55,8 @@ final class Preset implements PresetContract
                     'forbiddenFunctions' => [
                         'dd' => null,
                         'dump' => null,
+                        'ddd' => null,
+                        'tinker' => null,
                     ],
                 ],
                 ForbiddenSetterSniff::class => [
