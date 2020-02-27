@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Domain\InsightLoader\FixerLoader;
+use NunoMaduro\PhpInsights\Domain\InsightLoader\PhpStanRuleLoader;
 use NunoMaduro\PhpInsights\Domain\InsightLoader\SniffLoader;
 
 /**
@@ -26,6 +27,9 @@ final class InsightLoaders
             FixerLoader::class => static function (): FixerLoader {
                 return new FixerLoader();
             },
+            PhpStanRuleLoader::class => static function (): PhpStanRuleLoader {
+                return new PhpStanRuleLoader();
+            }
         ];
     }
 }
