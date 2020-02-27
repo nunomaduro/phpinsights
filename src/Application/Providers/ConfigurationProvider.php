@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Application\Injectors;
+namespace NunoMaduro\PhpInsights\Application\Providers;
 
+use League\Container\ServiceProvider\AbstractServiceProvider;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Application\DirectoryResolver;
@@ -13,17 +14,17 @@ use Symfony\Component\Console\Input\ArgvInput;
 /**
  * @internal
  */
-final class Configuration
+final class ConfigurationProvider extends AbstractServiceProvider
 {
-    /**
-     * Inject Configuration resolved into the container definitions.
-     *
-     * @return array<string, callable>
-     */
-    public function __invoke(): array
+    protected $provides = [
+        \NunoMaduro\PhpInsights\Domain\Configuration::class,
+    ];
+
+    public function register()
     {
-        return [
-            \NunoMaduro\PhpInsights\Domain\Configuration::class => static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
+        $this->getContainer()->add(
+            \NunoMaduro\PhpInsights\Domain\Configuration::class,
+            static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
                 $input = new ArgvInput();
                 // merge application default definition with analyse definition.
                 $definition = (new Application())->getDefinition();
@@ -42,7 +43,7 @@ final class Configuration
                 }
 
                 return ConfigResolver::resolve($config, DirectoryResolver::resolve($input));
-            },
-        ];
+            }
+        );
     }
 }

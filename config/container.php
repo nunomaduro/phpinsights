@@ -4,37 +4,41 @@ declare(strict_types=1);
 
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-use NunoMaduro\PhpInsights\Application\Injectors\Configuration;
-use NunoMaduro\PhpInsights\Application\Injectors\FileProcessors;
-use NunoMaduro\PhpInsights\Application\Injectors\InsightLoaders;
-use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
-use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
-use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
+use NunoMaduro\PhpInsights\Application\Providers\ConfigurationProvider;
+use NunoMaduro\PhpInsights\Application\Providers\FileProcessorsProvider;
+use NunoMaduro\PhpInsights\Application\Providers\InsightLoadersProvider;
+use NunoMaduro\PhpInsights\Application\Providers\RepositoriesProvider;
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\PhpStanContainer;
+use PHPStan\DependencyInjection\ContainerFactory;
 
 return (static function (): Container {
-    $injectors = [
-        Configuration::class,
-        Repositories::class,
-        FileProcessors::class,
-        InsightLoaders::class,
+    $serviceProviders = [
+        ConfigurationProvider::class,
+        RepositoriesProvider::class,
+        InsightLoadersProvider::class,
+        FileProcessorsProvider::class,
     ];
 
-    $tagsDefinition = [
-        FileProcessors::class => FileProcessor::FILE_PROCESSOR_TAG,
-        InsightLoaders::class => InsightLoader::INSIGHT_LOADER_TAG,
-    ];
+    $container = (new Container());
 
-    $container = (new Container())->delegate(new ReflectionContainer());
-
-    foreach ($injectors as $injector) {
-        foreach ((new $injector())() as $id => $concrete) {
-            $definition = $container->add($id, $concrete);
-
-            if (isset($tagsDefinition[$injector])) {
-                $definition->addTag($tagsDefinition[$injector]);
-            }
-        }
+    foreach ($serviceProviders as $provider) {
+        $container->addServiceProvider($provider);
     }
+
+    $container->delegate(new PhpStanContainer(
+        (new ContainerFactory($container->get(Configuration::class)->getDirectory()))->create(
+            sys_get_temp_dir() . '/phpstan',
+            [
+                file_exists(__DIR__ . '/../vendor/phpstan/phpstan-strict-rules/rules.neon')
+                    ? __DIR__ . '/../vendor/phpstan/phpstan-strict-rules/rules.neon'
+                    : __DIR__ . '/../../../../vendor/phpstan/phpstan-strict-rules/rules.neon',
+            ],
+            []
+        )
+    ));
+
+    $container->delegate(new ReflectionContainer());
 
     return $container;
 })();

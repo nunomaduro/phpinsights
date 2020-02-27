@@ -6,7 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Commands\InsightsCommand;
-use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
+use NunoMaduro\PhpInsights\Application\Providers\RepositoriesProvider;
 
 /**
  * @internal
@@ -15,7 +15,7 @@ final class InsightsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        foreach ($this->app->make(Repositories::class)->__invoke() as $abstract => $concrete) {
+        foreach ($this->app->make(RepositoriesProvider::class)->__invoke() as $abstract => $concrete) {
             $this->app->bind($abstract, $concrete);
         }
     }

@@ -44,6 +44,12 @@ final class ConfigResolver
      */
     public static function resolve(array $config, string $directory): Configuration
     {
+
+        foreach ($config['autoloaders'] ?? [] as $autoloader) {
+            require_once $autoloader;
+        }
+        unset($config['autoloaders']);
+
         $composer = self::getComposer($directory);
 
         /** @var string $preset */
