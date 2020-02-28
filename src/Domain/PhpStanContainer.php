@@ -3,6 +3,7 @@
 namespace NunoMaduro\PhpInsights\Domain;
 
 use _HumbugBox075db77467cb\Nette\DI\MissingServiceException;
+use PHPStan\Rules\Rule;
 use Psr\Container\ContainerInterface;
 
 class PhpStanContainer implements ContainerInterface
@@ -33,5 +34,15 @@ class PhpStanContainer implements ContainerInterface
         } catch (MissingServiceException $exception) {
             return false;
         }
+    }
+
+    public function getParameter(string $parameterName)
+    {
+        return $this->container->getParameter($parameterName);
+    }
+
+    public function createRuleWithArgs(string $ruleClass, array $args): Rule
+    {
+
     }
 }

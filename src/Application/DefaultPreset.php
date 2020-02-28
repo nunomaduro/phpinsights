@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
+use PHPStan\Rules\Cast\UselessCastRule;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
@@ -52,6 +53,9 @@ final class DefaultPreset implements PresetContract
                 ],
                 PropertyTypeHintSniff::class => [
                     'enableNativeTypeHint' => $composer->hasPhpVersion() ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4') === true : PHP_VERSION_ID >= 70400,
+                ],
+                UselessCastRule::class => [
+                    'treatPhpDocTypesAsCertain' => true,
                 ],
             ],
         ];

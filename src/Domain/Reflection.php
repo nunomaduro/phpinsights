@@ -133,7 +133,7 @@ final class Reflection
                 throw $exception;
             }
 
-            self::getProperty(
+            return self::getProperty(
                 $parentClass,
                 $instance,
                 $attribute

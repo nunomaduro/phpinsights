@@ -26,7 +26,7 @@ return (static function (): Container {
         $container->addServiceProvider($provider);
     }
 
-    $container->delegate(new PhpStanContainer(
+    $container->delegate($phpStan = new PhpStanContainer(
         (new ContainerFactory($container->get(Configuration::class)->getDirectory()))->create(
             sys_get_temp_dir() . '/phpstan',
             [
@@ -37,6 +37,7 @@ return (static function (): Container {
             []
         )
     ));
+    $container->add(PhpStanContainer::class, $phpStan);
 
     $container->delegate(new ReflectionContainer());
 
