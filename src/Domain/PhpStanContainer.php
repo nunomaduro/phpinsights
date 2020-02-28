@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain;
 
 use _HumbugBox075db77467cb\Nette\DI\MissingServiceException;
 use Psr\Container\ContainerInterface;
 
-class PhpStanContainer implements ContainerInterface
+final class PhpStanContainer implements ContainerInterface
 {
     /** @var \PHPStan\DependencyInjection\Container */
     private $container;
@@ -35,6 +37,9 @@ class PhpStanContainer implements ContainerInterface
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getParameter(string $parameterName)
     {
         return $this->container->getParameter($parameterName);

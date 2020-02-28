@@ -23,7 +23,7 @@ interface InsightLoader
     /**
      * Create a new instance of insight.
      *
-     * @param string $insightClass
+     * @param class-string $insightClass
      * @param string $dir
      * @param array<string, int|string|array> $config Related to $insightClass
      *

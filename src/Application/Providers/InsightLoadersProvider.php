@@ -15,6 +15,7 @@ use NunoMaduro\PhpInsights\Domain\InsightLoader\SniffLoader;
  */
 final class InsightLoadersProvider extends AbstractServiceProvider
 {
+    /** @var array<class-string|string> */
     protected $provides = [
         SniffLoader::class,
         FixerLoader::class,
@@ -24,14 +25,14 @@ final class InsightLoadersProvider extends AbstractServiceProvider
 
     public function register()
     {
-        $this->getContainer()->add(SniffLoader::class)
+        $this->getLeagueContainer()->add(SniffLoader::class)
             ->addTag(InsightLoader::INSIGHT_LOADER_TAG);
 
-        $this->getContainer()->add(PhpStanRuleLoader::class)
+        $this->getLeagueContainer()->add(PhpStanRuleLoader::class)
             ->addArgument($this->getContainer())
             ->addTag(InsightLoader::INSIGHT_LOADER_TAG);
 
-        $this->getContainer()->add(FixerLoader::class)
+        $this->getLeagueContainer()->add(FixerLoader::class)
             ->addTag(InsightLoader::INSIGHT_LOADER_TAG);
     }
 }

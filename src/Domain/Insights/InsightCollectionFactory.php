@@ -99,7 +99,7 @@ final class InsightCollectionFactory
      *
      * @param string $metricClass
      *
-     * @return array<string>
+     * @return array<class-string>
      */
     private function getInsights(string $metricClass): array
     {

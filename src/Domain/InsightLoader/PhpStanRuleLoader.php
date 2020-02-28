@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 
 use League\Container\Container;
@@ -65,6 +67,9 @@ final class PhpStanRuleLoader implements InsightLoader
     }
 
     /**
+     * @param array<\ReflectionParameter> $constructorParameters
+     * @param array<string, int|string|array> $config
+     *
      * @return array<mixed>
      */
     private function ResolveParameters(
@@ -75,11 +80,12 @@ final class PhpStanRuleLoader implements InsightLoader
     ): array {
         $parameters = [];
 
+        /** @var \ReflectionParameter $constructorParameter */
         foreach ($constructorParameters as $constructorParameter) {
             $name = $constructorParameter->getName();
 
             // Get the parameter from config
-            if (in_array($name, $config)) {
+            if (in_array($name, $config, true)) {
                 $parameters[] = $config[$name];
                 continue;
             }
@@ -88,12 +94,18 @@ final class PhpStanRuleLoader implements InsightLoader
             try {
                 $parameters[] = $phpStanContainer->getParameter($name);
             } catch (ParameterNotFoundException $exception) {
-                if ($constructorParameter->getType()->isBuiltin()) {
-                    throw PhpStanRuleUnresolvable::argument($insightClass, $name);
+                $type = $constructorParameter->getType();
+
+                if ($type === null || $type->isBuiltin()) {
+                    throw PhpStanRuleUnresolvable::argument(
+                        $insightClass,
+                        $name,
+                        $exception
+                    );
                 }
 
                 $parameters[] = $this->container->get(
-                    $constructorParameter->getType()->getName()
+                    $type->getName()
                 );
             }
         }

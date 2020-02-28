@@ -12,7 +12,7 @@ interface HasInsights extends Metric
     /**
      * Returns the insights classes applied on the metric.
      *
-     * @return array<string>
+     * @return array<class-string>
      */
     public function getInsights(): array;
 }

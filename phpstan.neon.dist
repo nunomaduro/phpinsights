@@ -41,6 +41,15 @@ parameters:
             path: src/Domain/Reflection.php
         - '#NunoMaduro\\PhpInsights\\Domain\\File::addFixableError#'
         - '#iterable type PhpCsFixer\\Tokenizer\\Tokens#'
+        -
+            message: '#generic interface PHPStan\\Rules\\Rule#'
+            path: src/Domain/Insights/PhpStanRuleDecorator.php
+        -
+            message: '#containers should not be injected.#'
+            path: src/Domain/InsightLoader/PhpStanRuleLoader.php
+        -
+            message: '#Call to an undefined method ReflectionType::getName#'
+            path: src/Domain/InsightLoader/PhpStanRuleLoader.php
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

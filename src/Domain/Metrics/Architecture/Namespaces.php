@@ -21,7 +21,7 @@ final class Namespaces implements HasValue, HasInsights
     /**
      * Returns the insights classes applied on the metric.
      *
-     * @return array<string>
+     * @return array<class-string>
      */
     public function getInsights(): array
     {

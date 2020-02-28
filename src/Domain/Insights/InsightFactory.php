@@ -24,7 +24,7 @@ final class InsightFactory
     private $filesRepository;
 
     /**
-     * @var array<string>
+     * @var array<class-string>
      */
     private $insightsClasses;
 
@@ -50,7 +50,7 @@ final class InsightFactory
      * Creates a new instance of Insight Factory.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
-     * @param array<string> $insightsClasses
+     * @param array<class-string> $insightsClasses
      * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
      */
     public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config)
@@ -111,7 +111,7 @@ final class InsightFactory
     /**
      * Return instancied insights.
      *
-     * @param array<string> $insights
+     * @param array<class-string> $insights
      *
      * @return array<InsightContract>
      */

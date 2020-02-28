@@ -56,14 +56,14 @@ final class Configuration
     /**
      * List of insights added by metrics.
      *
-     * @var array<string, array<string>>
+     * @var array<string, array<class-string>>
      */
     private $add;
 
     /**
      * List of insights class to remove.
      *
-     * @var array<string>
+     * @var array<class-string>
      */
     private $remove;
 
@@ -101,7 +101,7 @@ final class Configuration
     /**
      * @param string $metric
      *
-     * @return array<string>
+     * @return array<class-string>
      */
     public function getAddedInsightsByMetric(string $metric): array
     {
@@ -145,7 +145,7 @@ final class Configuration
     }
 
     /**
-     * @return array<string>
+     * @return array<class-string>
      */
     public function getRemoves(): array
     {

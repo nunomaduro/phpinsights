@@ -14,13 +14,16 @@ use Symfony\Component\Finder\Finder;
  */
 final class RepositoriesProvider extends AbstractServiceProvider
 {
+    /**
+     * @var array<class-string>
+     */
     protected $provides = [
         FilesRepository::class,
     ];
 
     public function register()
     {
-        $this->getContainer()->add(
+        $this->getLeagueContainer()->add(
             FilesRepository::class, LocalFilesRepository::class
         )->addArgument(Finder::create());
     }

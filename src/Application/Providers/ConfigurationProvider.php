@@ -8,6 +8,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Application\DirectoryResolver;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -16,15 +17,16 @@ use Symfony\Component\Console\Input\ArgvInput;
  */
 final class ConfigurationProvider extends AbstractServiceProvider
 {
+    /** @var array<class-string> */
     protected $provides = [
-        \NunoMaduro\PhpInsights\Domain\Configuration::class,
+        Configuration::class,
     ];
 
     public function register()
     {
-        $this->getContainer()->add(
-            \NunoMaduro\PhpInsights\Domain\Configuration::class,
-            static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
+        $this->getLeagueContainer()->add(
+            Configuration::class,
+            static function (): Configuration {
                 $input = new ArgvInput();
                 // merge application default definition with analyse definition.
                 $definition = (new Application())->getDefinition();
@@ -42,7 +44,10 @@ final class ConfigurationProvider extends AbstractServiceProvider
                     $config = require $configPath;
                 }
 
-                return ConfigResolver::resolve($config, DirectoryResolver::resolve($input));
+                return ConfigResolver::resolve(
+                    $config,
+                    DirectoryResolver::resolve($input)
+                );
             }
         );
     }

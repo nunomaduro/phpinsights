@@ -20,6 +20,7 @@ use PHPStan\Parser\Parser;
  */
 final class FileProcessorsProvider extends AbstractServiceProvider
 {
+    /** @var array<class-string|string> */
     protected $provides = [
         SniffFileProcessor::class,
         FixerFileProcessor::class,
@@ -29,15 +30,15 @@ final class FileProcessorsProvider extends AbstractServiceProvider
 
     public function register()
     {
-        $this->getContainer()->add(SniffFileProcessor::class)
+        $this->getLeagueContainer()->add(SniffFileProcessor::class)
             ->addArgument(FileFactory::class)
             ->addTag(FileProcessor::FILE_PROCESSOR_TAG);
 
-        $this->getContainer()->add(FixerFileProcessor::class)
+        $this->getLeagueContainer()->add(FixerFileProcessor::class)
             ->addArgument(Differ::class)
             ->addTag(FileProcessor::FILE_PROCESSOR_TAG);
 
-        $this->getContainer()->add(PhpStanRuleFileProcessor::class)
+        $this->getLeagueContainer()->add(PhpStanRuleFileProcessor::class)
             ->addArgument(ScopeFactory::class)
             ->addArgument(Parser::class)
             ->addArgument(NodeScopeResolver::class)

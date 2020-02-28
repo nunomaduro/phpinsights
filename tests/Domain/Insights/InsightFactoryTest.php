@@ -22,7 +22,7 @@ use Tests\Fakes\FakeFileRepository;
 final class InsightFactoryTest extends TestCase
 {
     /**
-     * @var array<string>
+     * @var array<class-string>
      */
     private static $usedInsights = [
         BacktickToShellExecFixer::class,
