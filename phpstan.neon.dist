@@ -27,7 +27,6 @@ parameters:
         - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Checkstyle has an unused parameter \$input#'
         - '#In method "NunoMaduro\\PhpInsights\\Domain\\File::process", caught "Throwable" must be rethrown#'
         - '#In method "NunoMaduro\\PhpInsights\\Domain\\FileProcessors\\FixerFileProcessor::processFile", caught "Throwable" must be rethrown#'
-        - '#In method "Tests\\Domain\\Insights\\InvalidPhpCodeTest::testNotFailingOnSemiColonAfterExtendClass", caught "Throwable" must be rethrown#'
         - '#Casting to string something that#'
         - '#Instanceof between Illuminate\\Contracts\\Foundation\\Application and#'
         - '#Call to function method_exists\(\) with Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle and #'
