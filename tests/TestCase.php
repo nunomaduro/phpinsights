@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Domain\Analyser as DomainAnalyser;
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
@@ -15,11 +17,35 @@ use PHP_CodeSniffer\Ruleset;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
 
 abstract class TestCase extends BaseTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var \League\Container\Container $container */
+        $container = Container::make();
+
+        $container->add(InputInterface::class, function () {
+            $input = new ArrayInput([]);
+            // merge application default definition with analyse definition.
+            $definition = (new Application())->getDefinition();
+            $analyseDefinition = AnalyseDefinition::get();
+
+            $definition->addArguments($analyseDefinition->getArguments());
+            $definition->addOptions($analyseDefinition->getOptions());
+
+            $input->bind($definition);
+            return $input;
+        });
+    }
+
     /**
      * Call protected/private method of a class.
      *

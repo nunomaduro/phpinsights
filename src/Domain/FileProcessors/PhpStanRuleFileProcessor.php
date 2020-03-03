@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\PhpStanRuleDecorator;
 use PHPStan\Analyser\FileAnalyser;
+use PHPStan\DependencyInjection\Container as PhpStanContainer;
 use PHPStan\Rules\Registry;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
@@ -23,9 +24,9 @@ final class PhpStanRuleFileProcessor implements FileProcessor
     /** @var \PHPStan\Analyser\FileAnalyser */
     private $analyser;
 
-    public function __construct(FileAnalyser $analyser)
+    public function __construct(PhpStanContainer $container)
     {
-        $this->analyser = $analyser;
+        $this->analyser = $container->getByType(FileAnalyser::class);
     }
 
     public function support(Insight $insight): bool

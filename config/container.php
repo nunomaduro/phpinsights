@@ -7,6 +7,7 @@ use League\Container\ReflectionContainer;
 use NunoMaduro\PhpInsights\Application\Providers\ConfigurationProvider;
 use NunoMaduro\PhpInsights\Application\Providers\FileProcessorsProvider;
 use NunoMaduro\PhpInsights\Application\Providers\InsightLoadersProvider;
+use NunoMaduro\PhpInsights\Application\Providers\IOProvider;
 use NunoMaduro\PhpInsights\Application\Providers\RepositoriesProvider;
 
 return (static function (): Container {
@@ -15,6 +16,7 @@ return (static function (): Container {
         RepositoriesProvider::class,
         InsightLoadersProvider::class,
         FileProcessorsProvider::class,
+        IOProvider::class,
     ];
 
     $container = (new Container());

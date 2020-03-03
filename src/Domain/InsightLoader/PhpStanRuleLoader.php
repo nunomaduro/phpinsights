@@ -64,6 +64,7 @@ final class PhpStanRuleLoader implements InsightLoader
             ],
             []
         );
+        $this->container->add(\PHPStan\DependencyInjection\Container::class, $phpStan);
 
         $wrapped = [];
         foreach ($phpStan->getServicesByTag(RegistryFactory::RULE_TAG) as $rule) {

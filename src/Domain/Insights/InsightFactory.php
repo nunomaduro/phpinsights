@@ -93,14 +93,15 @@ final class InsightFactory
             return;
         }
 
+        $insights = $this->loadInsights($this->insightsClasses);
+        $this->insights = $insights;
+
         $runner = new Runner(
             $consoleOutput,
             $this->filesRepository
         );
 
         // Add insights
-        $insights = $this->loadInsights($this->insightsClasses);
-        $this->insights = $insights;
         $runner->addInsights($insights);
 
         // Run it.
