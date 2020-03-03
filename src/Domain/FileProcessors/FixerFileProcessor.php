@@ -37,6 +37,9 @@ final class FixerFileProcessor implements FileProcessor
         return $insight instanceof FixerDecorator;
     }
 
+    /**
+     * @param InsightContract|FixerDecorator $insight
+     */
     public function addChecker(InsightContract $insight): void
     {
         if (! $insight instanceof FixerDecorator) {
@@ -46,7 +49,6 @@ final class FixerFileProcessor implements FileProcessor
             ));
         }
 
-        /** @var FixerDecorator $insight */
         $this->fixers[] = $insight;
     }
 

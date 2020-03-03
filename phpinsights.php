@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
+use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
@@ -82,6 +83,15 @@ return [
         UnusedParameterSniff::class => [
             'exclude' => [
                 'src/Domain/LinkFormatter/NullFileLinkFormatter.php',
+            ],
+        ],
+        FunctionLengthSniff::class => [
+            'exclude' => [
+                'src/Application/Adapters/Laravel/Preset.php',
+                'src/Application/Adapters/Symfony/Preset.php',
+                'src/Application/Adapters/Magento2/Preset.php',
+                'src/Application/Adapters/Yii/Preset.php',
+                'src/Application/Adapters/Drupal/Preset.php',
             ],
         ],
     ],

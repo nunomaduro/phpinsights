@@ -17,7 +17,7 @@ final class PhpStanRuleLoader implements InsightLoader
     /** @var Container */
     private $container;
 
-    /** @var array<class-string, array> */
+    /** @var array<class-string, array<string, int|string|array>> */
     private $rules = [];
 
     public function __construct(Container $container)
@@ -30,12 +30,36 @@ final class PhpStanRuleLoader implements InsightLoader
         return array_key_exists(Rule::class, class_implements($insightClass));
     }
 
+    /**
+     * Loads a insight.
+     *
+     * @param class-string $insightClass
+     * @param array<string, int|string|array> $config Related to $insightClass
+     */
     public function load(string $insightClass, string $dir, array $config): void
     {
         $this->rules[$insightClass] = $config;
     }
 
+    /**
+     * Get all loaded insights.
+     *
+     * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
+     */
     public function getLoadedInsights(): array
+    {
+        $phpStan = $this->createContainer();
+        $this->container->add(\PHPStan\DependencyInjection\Container::class, $phpStan);
+
+        $wrapped = [];
+        foreach ($phpStan->getServicesByTag(RegistryFactory::RULE_TAG) as $rule) {
+            $wrapped[] = new PhpStanRuleDecorator($rule);
+        }
+
+        return $wrapped;
+    }
+
+    private function createContainer(): \PHPStan\DependencyInjection\Container
     {
         $phpStanConfig = [
             'parameters' => [
@@ -57,20 +81,12 @@ final class PhpStanRuleLoader implements InsightLoader
             ];
         }
 
-        $phpStan = (new ContainerFactory($this->container->get(Configuration::class)->getDirectory()))->create(
+        return (new ContainerFactory($this->container->get(Configuration::class)->getDirectory()))->create(
             sys_get_temp_dir() . '/phpstan',
             [
-                $phpStanConfig
+                $phpStanConfig,
             ],
             []
         );
-        $this->container->add(\PHPStan\DependencyInjection\Container::class, $phpStan);
-
-        $wrapped = [];
-        foreach ($phpStan->getServicesByTag(RegistryFactory::RULE_TAG) as $rule) {
-            $wrapped[] = new PhpStanRuleDecorator($rule);
-        }
-
-        return $wrapped;
     }
 }

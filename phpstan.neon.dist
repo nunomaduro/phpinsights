@@ -30,6 +30,7 @@ parameters:
         - '#Instanceof between Illuminate\\Contracts\\Foundation\\Application and#'
         - '#Call to function method_exists\(\) with Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle and #'
         - '#Error suppression via "@" should not be used.#'
+        - '#Method Tests\\TestCase::setUp\(\) is not final#'
         -
             message: '#Control structures using switch should not be used.#'
             path: src/Domain/Analyser.php

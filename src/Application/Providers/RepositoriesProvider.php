@@ -21,7 +21,7 @@ final class RepositoriesProvider extends AbstractServiceProvider
         FilesRepository::class,
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->getLeagueContainer()->add(
             FilesRepository::class, LocalFilesRepository::class

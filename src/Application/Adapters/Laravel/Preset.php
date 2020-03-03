@@ -75,7 +75,6 @@ final class Preset implements PresetContract
         $requirements = $composer->getRequirements();
 
         foreach (array_keys($requirements) as $requirement) {
-            $requirement = (string) $requirement;
             if (strpos($requirement, 'laravel/framework') !== false
                 || strpos($requirement, 'illuminate/') !== false) {
                 return true;

@@ -32,18 +32,21 @@ abstract class TestCase extends BaseTestCase
         /** @var \League\Container\Container $container */
         $container = Container::make();
 
-        $container->add(InputInterface::class, function () {
-            $input = new ArrayInput([]);
-            // merge application default definition with analyse definition.
-            $definition = (new Application())->getDefinition();
-            $analyseDefinition = AnalyseDefinition::get();
+        $container->add(
+            InputInterface::class,
+            static function (): InputInterface {
+                $input = new ArrayInput([]);
+                // merge application default definition with analyse definition.
+                $definition = (new Application())->getDefinition();
+                $analyseDefinition = AnalyseDefinition::get();
 
-            $definition->addArguments($analyseDefinition->getArguments());
-            $definition->addOptions($analyseDefinition->getOptions());
+                $definition->addArguments($analyseDefinition->getArguments());
+                $definition->addOptions($analyseDefinition->getOptions());
 
-            $input->bind($definition);
-            return $input;
-        });
+                $input->bind($definition);
+                return $input;
+            }
+        );
     }
 
     /**

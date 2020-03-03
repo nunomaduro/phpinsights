@@ -15,7 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 final class PhpStanRuleFileProcessor implements FileProcessor
 {
-    /** @var PhpStanRuleDecorator[] */
+    /** @var array<PhpStanRuleDecorator> */
     private $insights = [];
 
     /** @var \PHPStan\Rules\Registry */

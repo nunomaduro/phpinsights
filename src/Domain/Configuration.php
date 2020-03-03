@@ -119,8 +119,6 @@ final class Configuration
     }
 
     /**
-     * @param string $insight
-     *
      * @return array<string, string|int|array>
      */
     public function getConfigForInsight(string $insight): array
@@ -128,9 +126,6 @@ final class Configuration
         return $this->config[$insight] ?? [];
     }
 
-    /**
-     * @return string
-     */
     public function getDirectory(): string
     {
         return $this->directory;
@@ -152,17 +147,11 @@ final class Configuration
         return $this->remove;
     }
 
-    /**
-     * @return string
-     */
     public function getPreset(): string
     {
         return $this->preset;
     }
 
-    /**
-     * @return FileLinkFormatterContract
-     */
     public function getFileLinkFormatter(): FileLinkFormatterContract
     {
         return $this->fileLinkFormatter;
@@ -207,7 +196,7 @@ final class Configuration
             && is_string($config['ide'])
             && $config['ide'] !== ''
         ) {
-            $this->fileLinkFormatter = $this->resolveIde((string) $config['ide']);
+            $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
     }
 
@@ -271,7 +260,7 @@ final class Configuration
         ];
 
         if (isset($links[$ide]) === false &&
-            mb_strpos((string) $ide, '://') === false) {
+            mb_strpos($ide, '://') === false) {
             throw new InvalidConfiguration(sprintf(
                 'Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler',
                 $ide,

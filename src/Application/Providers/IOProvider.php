@@ -17,14 +17,14 @@ final class IOProvider extends AbstractServiceProvider
 {
     /** @var array<class-string> */
     protected $provides = [
-        InputInterface::class
+        InputInterface::class,
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->getLeagueContainer()->add(
             InputInterface::class,
-            function () {
+            static function (): InputInterface {
                 $input = new ArgvInput();
                 // merge application default definition with analyse definition.
                 $definition = (new Application())->getDefinition();

@@ -20,13 +20,11 @@ final class ConfigurationProvider extends AbstractServiceProvider
         Configuration::class,
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->getLeagueContainer()->add(
             Configuration::class,
             static function (InputInterface $input): Configuration {
-
-
                 $configPath = ConfigResolver::resolvePath($input);
                 $config = [];
 

@@ -23,7 +23,7 @@ final class InsightLoadersProvider extends AbstractServiceProvider
         InsightLoader::INSIGHT_LOADER_TAG,
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->getLeagueContainer()->add(SniffLoader::class)
             ->addTag(InsightLoader::INSIGHT_LOADER_TAG);
@@ -36,4 +36,3 @@ final class InsightLoadersProvider extends AbstractServiceProvider
             ->addTag(InsightLoader::INSIGHT_LOADER_TAG);
     }
 }
-

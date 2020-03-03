@@ -23,10 +23,10 @@ final class FileProcessorsProvider extends AbstractServiceProvider
         SniffFileProcessor::class,
         FixerFileProcessor::class,
         PhpStanRuleFileProcessor::class,
-        FileProcessor::FILE_PROCESSOR_TAG
+        FileProcessor::FILE_PROCESSOR_TAG,
     ];
 
-    public function register()
+    public function register(): void
     {
         $this->getLeagueContainer()->add(SniffFileProcessor::class)
             ->addArgument(FileFactory::class)

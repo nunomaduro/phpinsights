@@ -37,50 +37,7 @@ final class PhpStanRuleDecorator implements Rule, Insight, HasDetails
     }
 
     /**
-     * Convert a error to a detail
-     *
-     * @param \PhpParser\Node $node
-     * @param \PHPStan\Analyser\Scope $scope
-     * @param \PHPStan\Rules\RuleError|string $error
-     *
-     * @return \NunoMaduro\PhpInsights\Domain\Details
-     *
-     */
-    private static function errorToDetail(Node $node,
-                                          Scope $scope,
-                                          $error): Details
-    {
-        $line = $node->getLine();
-        $fileName = $scope->getFileDescription();
-        if (is_string($error)) {
-            $message = $error;
-        } else {
-            $message = $error->getMessage();
-            if (
-                $error instanceof LineRuleError
-                && $error->getLine() !== -1
-            ) {
-                $line = $error->getLine();
-            }
-            if (
-                $error instanceof FileRuleError
-                && $error->getFile() !== ''
-            ) {
-                $fileName = $error->getFile();
-            }
-        }
-
-        return Details::make()
-            ->setLine($line)
-            ->setFile($fileName)
-            ->setMessage($message)
-            ->setOriginal($error);
-    }
-
-    /**
      * Checks if the insight detects an issue.
-     *
-     * @return bool
      */
     public function hasIssue(): bool
     {
@@ -119,19 +76,56 @@ final class PhpStanRuleDecorator implements Rule, Insight, HasDetails
         return $this->rule->getNodeType();
     }
 
-    public function processNode(Node $node, Scope $scope) : array
+    /**
+     * @return string[]|\PHPStan\Rules\RuleError[]
+     */
+    public function processNode(Node $node, Scope $scope): array
     {
         $ruleErrors = $this->rule->processNode($node, $scope);
 
         $errors = [];
-
         /** @var \PHPStan\Rules\RuleError|string $error */
         foreach ($ruleErrors as $error) {
-
             $errors[] = self::errorToDetail($node, $scope, $error);
         }
         $this->errors = array_merge($this->errors, $errors);
 
         return $ruleErrors;
+    }
+
+    /**
+     * Convert a error to a detail
+     *
+     * @param \PHPStan\Rules\RuleError|string $error
+     */
+    private static function errorToDetail(Node $node,
+                                          Scope $scope,
+                                          $error): Details
+    {
+        $line = $node->getLine();
+        $fileName = $scope->getFileDescription();
+        if (is_string($error)) {
+            $message = $error;
+        } else {
+            $message = $error->getMessage();
+            if (
+                $error instanceof LineRuleError
+                && $error->getLine() !== -1
+            ) {
+                $line = $error->getLine();
+            }
+            if (
+                $error instanceof FileRuleError
+                && $error->getFile() !== ''
+            ) {
+                $fileName = $error->getFile();
+            }
+        }
+
+        return Details::make()
+            ->setLine($line)
+            ->setFile($fileName)
+            ->setMessage($message)
+            ->setOriginal($error);
     }
 }
