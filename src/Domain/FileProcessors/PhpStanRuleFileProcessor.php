@@ -60,6 +60,7 @@ final class PhpStanRuleFileProcessor implements FileProcessor
 
         $this->analyser->analyseFile(
             $path,
+            [],
             $this->registry,
             null
         );

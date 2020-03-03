@@ -22,6 +22,7 @@
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
         "phploc/phploc": "^5.0",
+        "phpstan/phpstan": "^0.12.14",
         "phpstan/phpstan-strict-rules": "^0.12.2",
         "psr/container": "^1.0",
         "sensiolabs/security-checker": "^6.0",
