@@ -7,46 +7,25 @@ namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\PhpStanRuleDecorator;
-use NunoMaduro\PhpInsights\Domain\PhpStanRulesRegistry;
-use PhpParser\Node;
-use PHPStan\Analyser\NodeScopeResolver;
-use PHPStan\Analyser\Scope;
-use PHPStan\Analyser\ScopeContext;
-use PHPStan\Analyser\ScopeFactory;
-use PHPStan\Node\FileNode;
-use PHPStan\Parser\Parser;
+use PHPStan\Analyser\FileAnalyser;
+use PHPStan\Rules\Registry;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 
 final class PhpStanRuleFileProcessor implements FileProcessor
 {
-    /** @var \PHPStan\Analyser\ScopeFactory */
-    private $scopeFactory;
+    /** @var PhpStanRuleDecorator[] */
+    private $insights = [];
 
-    /** @var \NunoMaduro\PhpInsights\Domain\PhpStanRulesRegistry */
-    private $registry;
+    /** @var \PHPStan\Rules\Registry */
+    private $registry = null;
 
-    /** @var \PHPStan\Parser\Parser */
-    private $parser;
+    /** @var \PHPStan\Analyser\FileAnalyser */
+    private $analyser;
 
-    /** @var NodeScopeResolver */
-    private $nodeScopeResolver;
-
-    /**
-     * PhpStanFileProcessor constructor.
-     *
-     * @param \PHPStan\Analyser\ScopeFactory $scopeFactory
-     * @param \PHPStan\Parser\Parser $parser
-     * @param \PHPStan\Analyser\NodeScopeResolver $nodeScopeResolver
-     */
-    public function __construct(ScopeFactory $scopeFactory,
-                                Parser $parser,
-                                NodeScopeResolver $nodeScopeResolver)
+    public function __construct(FileAnalyser $analyser)
     {
-        $this->scopeFactory = $scopeFactory;
-        $this->parser = $parser;
-        $this->nodeScopeResolver = $nodeScopeResolver;
-        $this->registry = new PhpStanRulesRegistry([]);
+        $this->analyser = $analyser;
     }
 
     public function support(Insight $insight): bool
@@ -63,35 +42,25 @@ final class PhpStanRuleFileProcessor implements FileProcessor
             ));
         }
 
-        $this->registry->addRules([$insight]);
+        $this->insights[] = $insight;
     }
 
     public function processFile(SplFileInfo $splFileInfo): void
     {
+        if ($this->registry === null) {
+            $this->registry = new Registry($this->insights);
+        }
+
         $path = $splFileInfo->getRealPath();
 
         if ($path === false) {
             return;
         }
 
-        $scope = $this->scopeFactory->create(ScopeContext::create($path));
-        $node = $this->parser->parseFile($path);
-
-        $this->processNode(new FileNode($node), $scope);
-
-        $this->nodeScopeResolver->processNodes(
-            $node,
-            $scope,
-            function (Node $node, Scope $scope): void {
-                $this->processNode($node, $scope);
-            }
+        $this->analyser->analyseFile(
+            $path,
+            $this->registry,
+            null
         );
-    }
-
-    private function processNode(Node $node, Scope $scope): void
-    {
-        foreach ($this->registry->getRules(get_class($node)) as $insight) {
-            $insight->processNode($node, $scope);
-        }
     }
 }

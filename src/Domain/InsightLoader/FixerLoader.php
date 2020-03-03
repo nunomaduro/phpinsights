@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 
-use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
@@ -15,12 +14,15 @@ use PhpCsFixer\Fixer\FixerInterface;
  */
 final class FixerLoader implements InsightLoader
 {
+    /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight[] */
+    private $loaded = [];
+
     public function support(string $insightClass): bool
     {
         return array_key_exists(FixerInterface::class, class_implements($insightClass));
     }
 
-    public function load(string $insightClass, string $dir, array $config): Insight
+    public function load(string $insightClass, string $dir, array $config): void
     {
         $fixer = new $insightClass();
 
@@ -36,6 +38,11 @@ final class FixerLoader implements InsightLoader
             $fixer->configure($config);
         }
 
-        return new FixerDecorator($fixer, $dir, $excludeConfig);
+        $this->loaded[] = new FixerDecorator($fixer, $dir, $excludeConfig);
+    }
+
+    public function getLoadedInsights(): array
+    {
+        return $this->loaded;
     }
 }

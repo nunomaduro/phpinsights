@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 
 use League\Container\Container;
-use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
-use NunoMaduro\PhpInsights\Domain\Exceptions\PhpStanRuleUnresolvable;
 use NunoMaduro\PhpInsights\Domain\Insights\PhpStanRuleDecorator;
-use NunoMaduro\PhpInsights\Domain\PhpStanContainer;
-use PHPStan\DependencyInjection\ParameterNotFoundException;
+use PHPStan\DependencyInjection\ContainerFactory;
+use PHPStan\Rules\RegistryFactory;
 use PHPStan\Rules\Rule;
-use ReflectionClass;
 
 final class PhpStanRuleLoader implements InsightLoader
 {
     /** @var Container */
     private $container;
+
+    /** @var array<class-string, array> */
+    private $rules = [];
 
     public function __construct(Container $container)
     {
@@ -29,86 +30,46 @@ final class PhpStanRuleLoader implements InsightLoader
         return array_key_exists(Rule::class, class_implements($insightClass));
     }
 
-    public function load(string $insightClass, string $dir, array $config): Insight
+    public function load(string $insightClass, string $dir, array $config): void
     {
-        /** @var PhpStanContainer $phpStanContainer */
-        $phpStanContainer = $this->container->get(PhpStanContainer::class);
-
-        $constructor = (new ReflectionClass($insightClass))->getConstructor();
-
-        // Star by checking if we even have a constructor
-        if ($constructor === null) {
-            return new PhpStanRuleDecorator(
-                $this->container->get($insightClass)
-            );
-        }
-
-        $constructorParameters = $constructor->getParameters();
-
-        // And if the constructor has parameters.
-        if ($constructorParameters === []) {
-            return new PhpStanRuleDecorator(
-                $this->container->get($insightClass)
-            );
-        }
-
-        $parameters = $this->ResolveParameters(
-            $constructorParameters,
-            $config,
-            $phpStanContainer,
-            $insightClass
-        );
-
-        return new PhpStanRuleDecorator(
-            new $insightClass(
-                ...$parameters
-            )
-        );
+        $this->rules[$insightClass] = $config;
     }
 
-    /**
-     * @param array<\ReflectionParameter> $constructorParameters
-     * @param array<string, int|string|array> $config
-     *
-     * @return array<mixed>
-     */
-    private function ResolveParameters(
-        array $constructorParameters,
-        array $config,
-        PhpStanContainer $phpStanContainer,
-        string $insightClass
-    ): array {
-        $parameters = [];
+    public function getLoadedInsights(): array
+    {
+        $phpStanConfig = [
+            'parameters' => [
+                'customRulesetUsed' => true,
+            ],
+        ];
 
-        /** @var \ReflectionParameter $constructorParameter */
-        foreach ($constructorParameters as $constructorParameter) {
-            $name = $constructorParameter->getName();
-
-            // Get the parameter from config
-            if (in_array($name, $config, true)) {
-                $parameters[] = $config[$name];
+        foreach ($this->rules as $rule => $config) {
+            // If not parameters, then just pass to rules array in phpStan.
+            if ($config === []) {
+                $phpStanConfig['rules'][] = $rule;
                 continue;
             }
 
-            // Try to resolve the parameter from the containers.
-            try {
-                $parameters[] = $phpStanContainer->getParameter($name);
-            } catch (ParameterNotFoundException $exception) {
-                $type = $constructorParameter->getType();
-
-                if ($type === null || $type->isBuiltin()) {
-                    throw PhpStanRuleUnresolvable::argument(
-                        $insightClass,
-                        $name,
-                        $exception
-                    );
-                }
-
-                $parameters[] = $this->container->get(
-                    $type->getName()
-                );
-            }
+            $phpStanConfig['services'][] = [
+                'class' => $rule,
+                'tags' => [RegistryFactory::RULE_TAG],
+                'arguments' => $config,
+            ];
         }
-        return $parameters;
+
+        $phpStan = (new ContainerFactory($this->container->get(Configuration::class)->getDirectory()))->create(
+            sys_get_temp_dir() . '/phpstan',
+            [
+                $phpStanConfig
+            ],
+            []
+        );
+
+        $wrapped = [];
+        foreach ($phpStan->getServicesByTag(RegistryFactory::RULE_TAG) as $rule) {
+            $wrapped[] = new PhpStanRuleDecorator($rule);
+        }
+
+        return $wrapped;
     }
 }

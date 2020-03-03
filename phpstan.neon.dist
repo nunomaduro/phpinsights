@@ -50,6 +50,10 @@ parameters:
         -
             message: '#Call to an undefined method ReflectionType::getName#'
             path: src/Domain/InsightLoader/PhpStanRuleLoader.php
+        -
+            message: '#Parameter \#2 \$additionalConfigFiles#'
+            path: src/Domain/InsightLoader/PhpStanRuleLoader.php
+
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

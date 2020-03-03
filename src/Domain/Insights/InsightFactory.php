@@ -124,13 +124,21 @@ final class InsightFactory
             /** @var InsightLoader $loader */
             foreach ($this->insightLoaders as $loader) {
                 if ($loader->support($insight)) {
-                    $insightsAdded[] = $loader->load(
+                    $loader->load(
                         $insight,
                         (string) $cwd,
                         $this->config->getConfigForInsight($insight)
                     );
                 }
             }
+        }
+
+        /** @var InsightLoader $loader */
+        foreach ($this->insightLoaders as $loader) {
+            $insightsAdded = array_merge(
+                $insightsAdded,
+                $loader->getLoadedInsights()
+            );
         }
 
         return $insightsAdded;

@@ -11,9 +11,7 @@ use NunoMaduro\PhpInsights\Domain\FileFactory;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\PhpStanRuleFileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\SniffFileProcessor;
-use PHPStan\Analyser\NodeScopeResolver;
-use PHPStan\Analyser\ScopeFactory;
-use PHPStan\Parser\Parser;
+use PHPStan\Analyser\FileAnalyser;
 
 /**
  * @internal
@@ -39,9 +37,7 @@ final class FileProcessorsProvider extends AbstractServiceProvider
             ->addTag(FileProcessor::FILE_PROCESSOR_TAG);
 
         $this->getLeagueContainer()->add(PhpStanRuleFileProcessor::class)
-            ->addArgument(ScopeFactory::class)
-            ->addArgument(Parser::class)
-            ->addArgument(NodeScopeResolver::class)
+            ->addArgument(FileAnalyser::class)
             ->addTag(FileProcessor::FILE_PROCESSOR_TAG);
     }
 }
