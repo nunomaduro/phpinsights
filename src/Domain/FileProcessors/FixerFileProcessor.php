@@ -68,8 +68,10 @@ final class FixerFileProcessor implements FileProcessor
                     continue;
                 }
 
-                $fixer->addDiff($filePath,
-                    $this->differ->diff($oldContent, $tokens->generateCode()));
+                $fixer->addDiff(
+                    $filePath,
+                    $this->differ->diff($oldContent, $tokens->generateCode())
+                );
                 // Tokens has changed, so we need to clear cache
                 Tokens::clearCache();
                 $tokens = Tokens::fromCode($oldContent);
