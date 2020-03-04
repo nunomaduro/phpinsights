@@ -20,7 +20,7 @@
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
-        "phploc/phploc": "^5.0",
+        "phploc/phploc": "^5.0|^6.0",
         "psr/container": "^1.0",
         "sensiolabs/security-checker": "^6.0",
         "slevomat/coding-standard": "^6.0",
@@ -29,12 +29,12 @@
         "symfony/finder": "^4.2|^5.0"
     },
     "require-dev": {
-        "illuminate/console": "^5.8",
-        "illuminate/support": "^5.8",
+        "illuminate/console": "^7.0",
+        "illuminate/support": "^7.0",
         "ergebnis/phpstan-rules": "^0.14.0",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan-strict-rules": "^0.12",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^8.5|^9.0",
         "symfony/var-dumper": "^4.2|^5.0",
         "symplify/easy-coding-standard": "^7.1",
         "thecodingmachine/phpstan-strict-rules": "^0.12.0"
@@ -47,7 +47,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "RC",
     "autoload": {
         "psr-4": {
             "NunoMaduro\\PhpInsights\\": "src"
