@@ -45,7 +45,7 @@ final class PhpStanRuleLoader implements InsightLoader
     /**
      * Get all loaded insights.
      *
-     * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
+     * @return array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
      */
     public function getLoadedInsights(): array
     {

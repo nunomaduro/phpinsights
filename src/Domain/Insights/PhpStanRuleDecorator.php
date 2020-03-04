@@ -77,7 +77,7 @@ final class PhpStanRuleDecorator implements Rule, Insight, HasDetails
     }
 
     /**
-     * @return string[]|\PHPStan\Rules\RuleError[]
+     * @return array<string|\PHPStan\Rules\RuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -94,7 +94,7 @@ final class PhpStanRuleDecorator implements Rule, Insight, HasDetails
     }
 
     /**
-     * Convert a error to a detail
+     * Convert a error to a detail.
      *
      * @param \PHPStan\Rules\RuleError|string $error
      */

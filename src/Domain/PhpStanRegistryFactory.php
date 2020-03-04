@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Insights\PhpStanRuleDecorator;
@@ -7,7 +9,7 @@ use PHPStan\DependencyInjection\Container;
 use PHPStan\Rules\Registry;
 use PHPStan\Rules\RegistryFactory;
 
-class PhpStanRegistryFactory
+final class PhpStanRegistryFactory
 {
     /** @var array<PhpStanRuleDecorator> */
     private $rules = [];
@@ -19,7 +21,7 @@ class PhpStanRegistryFactory
         }
     }
 
-    public function create() : Registry
+    public function create(): Registry
     {
         return new Registry($this->rules);
     }
