@@ -7,26 +7,19 @@ namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\PhpStanRuleDecorator;
-use PHPStan\Analyser\FileAnalyser;
+use PHPStan\Analyser\Analyser;
 use PHPStan\DependencyInjection\Container as PhpStanContainer;
-use PHPStan\Rules\Registry;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 
 final class PhpStanRuleFileProcessor implements FileProcessor
 {
-    /** @var array<PhpStanRuleDecorator> */
-    private $insights = [];
-
-    /** @var \PHPStan\Rules\Registry */
-    private $registry = null;
-
-    /** @var \PHPStan\Analyser\FileAnalyser */
+    /** @var Analyser */
     private $analyser;
 
     public function __construct(PhpStanContainer $container)
     {
-        $this->analyser = $container->getByType(FileAnalyser::class);
+        $this->analyser = $container->getByType(Analyser::class);
     }
 
     public function support(Insight $insight): bool
@@ -42,27 +35,19 @@ final class PhpStanRuleFileProcessor implements FileProcessor
                 get_class($insight)
             ));
         }
-
-        $this->insights[] = $insight;
     }
 
     public function processFile(SplFileInfo $splFileInfo): void
     {
-        if ($this->registry === null) {
-            $this->registry = new Registry($this->insights);
-        }
-
         $path = $splFileInfo->getRealPath();
 
         if ($path === false) {
             return;
         }
 
-        $this->analyser->analyseFile(
-            $path,
-            [],
-            $this->registry,
-            null
+        $this->analyser->analyse(
+            [$path],
+            false
         );
     }
 }

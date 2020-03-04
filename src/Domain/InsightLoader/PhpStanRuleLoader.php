@@ -7,8 +7,9 @@ namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 use League\Container\Container;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
-use NunoMaduro\PhpInsights\Domain\Insights\PhpStanRuleDecorator;
+use NunoMaduro\PhpInsights\Domain\PhpStanRegistryFactory;
 use PHPStan\DependencyInjection\ContainerFactory;
+use PHPStan\Rules\Registry;
 use PHPStan\Rules\RegistryFactory;
 use PHPStan\Rules\Rule;
 
@@ -51,12 +52,7 @@ final class PhpStanRuleLoader implements InsightLoader
         $phpStan = $this->createContainer();
         $this->container->add(\PHPStan\DependencyInjection\Container::class, $phpStan);
 
-        $wrapped = [];
-        foreach ($phpStan->getServicesByTag(RegistryFactory::RULE_TAG) as $rule) {
-            $wrapped[] = new PhpStanRuleDecorator($rule);
-        }
-
-        return $wrapped;
+        return $phpStan->getByType(PhpStanRegistryFactory::class)->getRules();
     }
 
     private function createContainer(): \PHPStan\DependencyInjection\Container
@@ -64,6 +60,15 @@ final class PhpStanRuleLoader implements InsightLoader
         $phpStanConfig = [
             'parameters' => [
                 'customRulesetUsed' => true,
+            ],
+            'services' => [
+                'registry' => [
+                    'class' => Registry::class,
+                    'factory' => '@registryFactory::create',
+                ],
+                'registryFactory' => [
+                    'class' => PhpStanRegistryFactory::class,
+                ],
             ],
         ];
 

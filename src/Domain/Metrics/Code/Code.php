@@ -46,6 +46,7 @@ use PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer;
 use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use PHPStan\Rules\Cast\UselessCastRule;
 use PHPStan\Rules\DisallowedConstructs\DisallowedEmptyRule;
+use PHPStan\Rules\VariableVariables\VariableVariablesRule;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
@@ -147,6 +148,7 @@ final class Code implements HasValue, HasInsights
             TernaryOperatorSpacesFixer::class,
             DisallowedEmptyRule::class,
             UselessCastRule::class,
+            VariableVariablesRule::class,
         ];
     }
 }

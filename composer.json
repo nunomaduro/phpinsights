@@ -19,7 +19,7 @@
         "ergebnis/phpstan-rules": "^0.14.3",
         "friendsofphp/php-cs-fixer": "^2.15",
         "justinrainbow/json-schema": "^5.1",
-        "league/container": "^3.2",
+        "league/container": "^3.3",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
         "phploc/phploc": "^5.0",
         "phpstan/phpstan": "^0.12.14",
