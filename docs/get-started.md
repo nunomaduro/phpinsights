@@ -28,6 +28,8 @@ Then, use the `insights` Artisan command:
 php artisan insights
 ```
 
+> Note for Laravel 7 users : phpinsights requires [PHP 7.3+](https://php.net/releases/)
+
 ## Within Lumen
 
 Because we cannot use Artisan's publish command within a Lumen project you must manually copy the config file into your project:
