@@ -21,6 +21,6 @@ final class InvalidPhpCodeTest extends TestCase
 
         $fixerFileProcessor->processFile($file);
 
-        self::assertTrue(true);
+        self::expectNotToPerformAssertions(true);
     }
 }
