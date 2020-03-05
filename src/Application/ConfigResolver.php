@@ -38,12 +38,15 @@ final class ConfigResolver
     /**
      * Merge the given config with the specified preset.
      *
-     * @param  array<string, string|array>  $config
+     * @param array<string, string|array> $config
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return Configuration
      */
-    public static function resolve(array $config, string $directory): Configuration
+    public static function resolve(array $config, InputInterface $input): Configuration
     {
+        $directory = DirectoryResolver::resolve($input);
+        $config = ConfigResolver::mergeInputRequirements($config, $input);
         $composer = self::getComposer($directory);
 
         /** @var string $preset */
@@ -130,6 +133,25 @@ final class ConfigResolver
         }
 
         return $base;
+    }
+
+    /**
+     * Merge requirements config from console input.
+     *
+     * @param array<string, string|array> $config
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array<string, string|array>
+     */
+    private static function mergeInputRequirements(array $config, InputInterface $input): array
+    {
+        $requirements = Configuration::getAcceptedRequirements();
+        foreach ($requirements as $requirement) {
+            if ($input->hasParameterOption('--'.$requirement)) {
+                $config['requirements'][$requirement] = $input->getOption($requirement);
+            }
+        }
+        return $config;
     }
 
     private static function getComposer(string $directory): Composer

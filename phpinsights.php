@@ -85,4 +85,21 @@ return [
             ],
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Requirements
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define a level you want to reach per `Insights` category.
+    | When a score is lower than the minimum level defined, then an error
+    | code will be returned. This is optional and individually defined.
+    |
+    */
+
+    'requirements' => [
+        'min-quality' => 90.0,
+        'min-architecture' => 80.0,
+        'min-style' => 97.8,
+    ],
 ];
