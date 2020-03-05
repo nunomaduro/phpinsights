@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
-use NunoMaduro\PhpInsights\Application\DirectoryResolver;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -41,7 +40,7 @@ final class Configuration
                     $config = require $configPath;
                 }
 
-                return ConfigResolver::resolve($config, DirectoryResolver::resolve($input));
+                return ConfigResolver::resolve($config, $input);
             },
         ];
     }

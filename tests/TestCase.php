@@ -17,6 +17,7 @@ use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
+use Tests\Fakes\FakeInput;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -76,7 +77,7 @@ abstract class TestCase extends BaseTestCase
         array $filePaths,
         string $dir = ''
     ) : InsightCollection {
-        $config = ConfigResolver::resolve($config, $dir);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($dir));
 
         $analyser = new DomainAnalyser();
 

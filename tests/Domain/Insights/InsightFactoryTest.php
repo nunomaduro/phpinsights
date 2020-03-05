@@ -18,6 +18,7 @@ use PhpCsFixer\Fixer\FixerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
+use Tests\Fakes\FakeInput;
 
 final class InsightFactoryTest extends TestCase
 {
@@ -39,7 +40,7 @@ final class InsightFactoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = ConfigResolver::resolve([], '.');
+        $config = ConfigResolver::resolve([], FakeInput::directory('.'));
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::$usedInsights,
@@ -80,7 +81,7 @@ final class InsightFactoryTest extends TestCase
                 ],
             ],
         ];
-        $configuration = ConfigResolver::resolve($config, '.');
+        $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
         $insightFactory = new InsightFactory(new FakeFileRepository([]),
             static::$usedInsights,
             $configuration
@@ -104,7 +105,7 @@ final class InsightFactoryTest extends TestCase
             ],
         ];
 
-        $configuration = ConfigResolver::resolve($config, '.');
+        $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
         $insightFactory = new InsightFactory(new FakeFileRepository([]),
             static::$usedInsights,
             $configuration
