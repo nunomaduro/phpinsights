@@ -11,6 +11,9 @@ If the minimum level defined is not reached, the console will return an exit err
 php artisan insights --no-interaction --min-quality=80 --min-complexity=90 --min-architecture=75 --min-style=95
 ```
 
+These options can also be found in the configuration file, so no arguments needs to be passed when calling the command.  
+Command arguments has higher priority than configuration values.
+
 **Note**: The `--no-interaction` option is mandatory when it's launched in CI to avoid prompts.
 
 All others are optional, so if you want to focus only on style, add the `--min-style` and forget others.

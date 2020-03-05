@@ -92,7 +92,7 @@ final class AnalyseCommand
             $hasError = true;
         }
 
-        if (! $this->configuration->getDisableSecurityCheck() && $results->getTotalSecurityIssues() > 0) {
+        if (! $this->configuration->isSecurityCheckDisabled() && $results->getTotalSecurityIssues() > 0) {
             $hasError = true;
         }
 

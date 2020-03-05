@@ -220,7 +220,7 @@ final class Configuration
     /**
      * @return bool
      */
-    public function getDisableSecurityCheck(): bool
+    public function isSecurityCheckDisabled(): bool
     {
         return (bool) ($this->requirements['disable-security-check'] ?? false);
     }
