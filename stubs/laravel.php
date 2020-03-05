@@ -96,9 +96,9 @@ return [
     | Requirements
     |--------------------------------------------------------------------------
     |
-    | Here you may define a level you want to reach per `Insights` category. If
-    | the minimum level defined is not reached, the console will return an exit
-    | error code. All of them are optional and may be individually configured.
+    | Here you may define a level you want to reach per `Insights` category.
+    | When a score is lower than the minimum level defined, then an error
+    | code will be returned. This is optional and individually defined.
     |
     */
 

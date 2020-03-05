@@ -138,20 +138,14 @@ final class ConfigResolver
     /**
      * Merge requirements config from console input.
      *
-     * @param array<string, string|array>                     $config
+     * @param array<string, string|array> $config
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return array<string, string|array>
      */
     private static function mergeInputRequirements(array $config, InputInterface $input): array
     {
-        $requirements = [
-            'min-quality',
-            'min-complexity',
-            'min-architecture',
-            'min-style',
-            'disable-security-check',
-        ];
+        $requirements = Configuration::getAcceptedRequirements();
         foreach ($requirements as $requirement) {
             if ($input->hasParameterOption('--'.$requirement)) {
                 $config['requirements'][$requirement] = $input->getOption($requirement);
