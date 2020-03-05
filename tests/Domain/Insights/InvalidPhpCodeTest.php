@@ -30,6 +30,6 @@ final class InvalidPhpCodeTest extends TestCase
             [$path]
         );
 
-        self::expectNotToPerformAssertions();
+        $this->expectNotToPerformAssertions();
     }
 }

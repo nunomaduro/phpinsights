@@ -61,8 +61,8 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
     public function process(File $file, $stackPtr)
     {
         set_error_handler(static function (): bool {
-            throw new \NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPhpCode();
-        });
+            throw new \RuntimeException();
+        }, E_NOTICE);
 
         if ($file instanceof InsightFile && $this->skipFilesFromIgnoreFiles($file)) {
             return;
