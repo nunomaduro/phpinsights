@@ -68,4 +68,23 @@ return [
         //  ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Requirements
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define a level you want to reach per `Insights` category.
+    | When a score is lower than the minimum level defined, then an error
+    | code will be returned. This is optional and individually defined.
+    |
+    */
+
+    'requirements' => [
+//        'min-quality' => 0,
+//        'min-complexity' => 0,
+//        'min-architecture' => 0,
+//        'min-style' => 0,
+//        'disable-security-check' => false,
+    ],
+
 ];
