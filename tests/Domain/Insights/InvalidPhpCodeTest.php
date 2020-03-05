@@ -9,7 +9,7 @@ use Tests\TestCase;
 final class InvalidPhpCodeTest extends TestCase
 {
     /**
-     * @return array<string>
+     * @return array<string, array<string>>
      */
     public static function invalidCodeProvider(): array
     {
