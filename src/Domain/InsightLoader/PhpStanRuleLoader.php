@@ -86,11 +86,14 @@ final class PhpStanRuleLoader implements InsightLoader
             ];
         }
 
-        return (new ContainerFactory($this->container->get(Configuration::class)->getDirectory()))->create(
+        /** @var Configuration $configuration */
+        $configuration = $this->container->get(Configuration::class);
+        return (new ContainerFactory($configuration->getDirectory()))->create(
             sys_get_temp_dir() . '/phpstan',
-            [
-                $phpStanConfig,
-            ],
+            array_merge(
+                [$phpStanConfig],
+                $configuration->getNeonFiles()
+            ),
             []
         );
     }

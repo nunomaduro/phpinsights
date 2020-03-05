@@ -80,6 +80,11 @@ final class Configuration
     private $fileLinkFormatter;
 
     /**
+     * @var array<string>
+     */
+    private $neonFiles;
+
+    /**
      * Configuration constructor.
      *
      * @param array<string, string|array|null> $config
@@ -158,6 +163,14 @@ final class Configuration
     }
 
     /**
+     * @return array<string>
+     */
+    public function getNeonFiles(): array
+    {
+        return $this->neonFiles;
+    }
+
+    /**
      * @param array<string, string|array|null> $config
      */
     private function resolveConfig(array $config): void
@@ -170,6 +183,8 @@ final class Configuration
             'add' => [],
             'remove' => [],
             'config' => [],
+            'auto-loaders' => [],
+            'neon-files' => [],
         ]);
 
         $resolver->setDefined('ide');
@@ -178,6 +193,8 @@ final class Configuration
         }, self::$presets));
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
+        $resolver->setAllowedTypes('auto-loaders', 'string[]');
+        $resolver->setAllowedTypes('neon-files', 'string[]');
         $config = $resolver->resolve($config);
 
         $this->preset = $config['preset'];
@@ -190,6 +207,7 @@ final class Configuration
         $this->add = $config['add'];
         $this->remove = $config['remove'];
         $this->config = $config['config'];
+        $this->neonFiles = $config['neon-files'];
 
         if (
             array_key_exists('ide', $config)
