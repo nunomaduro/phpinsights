@@ -4,23 +4,32 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights;
 
-use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;
-use NunoMaduro\PhpInsights\Domain\Differ;
-use Symfony\Component\Finder\SplFileInfo;
 use Tests\TestCase;
 
 final class InvalidPhpCodeTest extends TestCase
 {
-    public function testNotFailingOnSemiColonAfterExtendClass(): void
+    /**
+     * @return array<string>
+     */
+    public static function invalidCodeProvider(): array
     {
-        $path = __DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php';
+        return [
+            'Semi colon after extend class' => [
+                __DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php',
+            ],
+        ];
+    }
 
-        $file = new SplFileInfo($path, $path, $path);
+    /**
+     * @dataProvider invalidCodeProvider
+     */
+    public function testNotFailingOnSemiColonAfterExtendClass(string $path): void
+    {
+        $this->runAnalyserOnPreset(
+            'default',
+            [$path]
+        );
 
-        $fixerFileProcessor = new FixerFileProcessor(new Differ());
-
-        $fixerFileProcessor->processFile($file);
-
-        self::expectNotToPerformAssertions(true);
+        self::expectNotToPerformAssertions();
     }
 }
