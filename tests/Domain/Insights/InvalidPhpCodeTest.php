@@ -17,6 +17,9 @@ final class InvalidPhpCodeTest extends TestCase
             'Semi colon after extend class' => [
                 __DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php',
             ],
+            'Unclosed comment' => [
+                __DIR__ . '/Fixtures/InvalidPhpCode/UnclosedComment.php',
+            ]
         ];
     }
 
