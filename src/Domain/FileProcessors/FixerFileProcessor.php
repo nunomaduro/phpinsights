@@ -46,7 +46,6 @@ final class FixerFileProcessor implements FileProcessor
             ));
         }
 
-        /** @var FixerDecorator $insight */
         $this->fixers[] = $insight;
     }
 
