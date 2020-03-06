@@ -60,7 +60,7 @@ final class FixerFileProcessor implements FileProcessor
         $oldContent = $splFileInfo->getContents();
 
         try {
-            $tokens = Tokens::fromCode($oldContent);
+            $tokens = @Tokens::fromCode($oldContent);
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
                 $fixer->fix($splFileInfo, $tokens);
@@ -74,7 +74,7 @@ final class FixerFileProcessor implements FileProcessor
                 );
                 // Tokens has changed, so we need to clear cache
                 Tokens::clearCache();
-                $tokens = Tokens::fromCode($oldContent);
+                $tokens = @Tokens::fromCode($oldContent);
             }
         } catch (\Throwable $e) {
             // @ignoreException
