@@ -46,7 +46,6 @@ final class FixerFileProcessor implements FileProcessor
             ));
         }
 
-        /** @var FixerDecorator $insight */
         $this->fixers[] = $insight;
     }
 
@@ -59,18 +58,25 @@ final class FixerFileProcessor implements FileProcessor
 
         $oldContent = $splFileInfo->getContents();
 
-        $tokens = Tokens::fromCode($oldContent);
-        /** @var FixerDecorator $fixer */
-        foreach ($this->fixers as $fixer) {
-            $fixer->fix($splFileInfo, $tokens);
-            if (! $tokens->isChanged()) {
-                continue;
-            }
+        try {
+            $tokens = @Tokens::fromCode($oldContent);
+            /** @var FixerDecorator $fixer */
+            foreach ($this->fixers as $fixer) {
+                $fixer->fix($splFileInfo, $tokens);
+                if (! $tokens->isChanged()) {
+                    continue;
+                }
 
-            $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
-            // Tokens has changed, so we need to clear cache
-            Tokens::clearCache();
-            $tokens = Tokens::fromCode($oldContent);
+                $fixer->addDiff(
+                    $filePath,
+                    $this->differ->diff($oldContent, $tokens->generateCode())
+                );
+                // Tokens has changed, so we need to clear cache
+                Tokens::clearCache();
+                $tokens = @Tokens::fromCode($oldContent);
+            }
+        } catch (\Throwable $e) {
+            // @ignoreException
         }
     }
 }

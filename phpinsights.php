@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
@@ -70,7 +71,7 @@ return [
         NoSilencedErrorsSniff::class => [
             'exclude' => [
                 'src/Domain/Analyser.php',
-                'src/Domain/File.php',
+                'src/Domain/FileProcessors/FixerFileProcessor.php',
             ],
         ],
         ForbiddenDefineGlobalConstants::class => [
@@ -82,6 +83,11 @@ return [
         UnusedParameterSniff::class => [
             'exclude' => [
                 'src/Domain/LinkFormatter/NullFileLinkFormatter.php',
+            ],
+        ],
+        EmptyStatementSniff::class => [
+            'exclude' => [
+                'src/Domain/FileProcessors/FixerFileProcessor.php',
             ],
         ],
     ],
