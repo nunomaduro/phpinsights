@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Tests\Domain\Sniffs\ForbiddenSetterMethods;
 
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
@@ -15,7 +14,7 @@ final class ForbiddenSetterMethodsTest extends TestCase
         // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__ . "/Fixtures/ClassWithSetter.php"
+            __DIR__ . '/Fixtures/ClassWithSetter.php'
         );
 
         // Run the sniff
@@ -29,7 +28,7 @@ final class ForbiddenSetterMethodsTest extends TestCase
         // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__ . "/Fixtures/ClassWithNoSetter.php"
+            __DIR__ . '/Fixtures/ClassWithNoSetter.php'
         );
 
         // Run the sniff
@@ -43,7 +42,7 @@ final class ForbiddenSetterMethodsTest extends TestCase
         // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__ . "/Fixtures/ClassWithLaravelAttributeSetter.php",
+            __DIR__ . '/Fixtures/ClassWithLaravelAttributeSetter.php',
             [
                 'allowedMethodRegex' => [
 
@@ -62,7 +61,7 @@ final class ForbiddenSetterMethodsTest extends TestCase
         // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__ . "/Fixtures/ClassWithLaravelAttributeSetter.php",
+            __DIR__ . '/Fixtures/ClassWithLaravelAttributeSetter.php',
             [
                 'allowedMethodRegex' => [
                     '/^set.*?Attribute$/',
@@ -81,7 +80,7 @@ final class ForbiddenSetterMethodsTest extends TestCase
         // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
-            __DIR__ . "/Fixtures/AnonymousClassWithSetter.php"
+            __DIR__ . '/Fixtures/AnonymousClassWithSetter.php'
         );
 
         // Run the sniff

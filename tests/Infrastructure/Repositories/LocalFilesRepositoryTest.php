@@ -82,7 +82,7 @@ final class LocalFilesRepositoryTest extends TestCase
         $path = $files[0]->getRealPath();
 
         if ($path === false) {
-            self::fail("Path cannot be false.");
+            self::fail('Path cannot be false.');
             return;
         }
         self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
