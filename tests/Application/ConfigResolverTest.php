@@ -6,7 +6,6 @@ namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
-use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;

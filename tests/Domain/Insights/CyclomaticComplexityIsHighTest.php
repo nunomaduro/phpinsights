@@ -7,9 +7,7 @@ namespace Tests\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
-use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use PHPUnit\Framework\TestCase;
-use Tests\Fakes\FakeFileRepository;
 
 final class CyclomaticComplexityIsHighTest extends TestCase
 {
