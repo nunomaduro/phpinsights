@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor as FileProcessorContract;
+use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +24,11 @@ final class Runner
 
     /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository */
     private $filesRepository;
+
+    /**
+     * @var array<\NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight|\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
+     */
+    private $globalInsights = [];
 
     /**
      * InsightContainer constructor.
@@ -44,9 +50,16 @@ final class Runner
      */
     public function addInsights(array $insights): void
     {
-        /** @var FileProcessorContract $fileProcessor */
-        foreach ($this->filesProcessors as $fileProcessor) {
-            foreach ($insights as $insight) {
+        foreach ($insights as $insight) {
+            if (in_array(GlobalInsight::class, class_implements($insight), true)) {
+                assert($insight instanceof GlobalInsight);
+                /** @var GlobalInsight $insight */
+                $this->globalInsights[] = $insight;
+                continue;
+            }
+
+            /** @var FileProcessorContract $fileProcessor */
+            foreach ($this->filesProcessors as $fileProcessor) {
                 if ($fileProcessor->support($insight)) {
                     $fileProcessor->addChecker($insight);
                 }
@@ -66,9 +79,20 @@ final class Runner
         }
 
         // Create progress bar
-        $progressBar = $this->createProgressBar(count($files));
+        $progressBar = $this->createProgressBar(count($files) + count($this->globalInsights));
         $progressBar->setMessage('');
         $progressBar->start();
+
+        /** @var GlobalInsight $insight */
+        foreach ($this->globalInsights as $insight) {
+            if ($this->output->isVerbose()) {
+                $progressBar->setMessage(' - Global: ' . $insight->getTitle());
+                $progressBar->display();
+            }
+
+            $insight->process();
+            $progressBar->advance();
+        }
 
         /** @var SplFileInfo $file */
         foreach ($files as $file) {

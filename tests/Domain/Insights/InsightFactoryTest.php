@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightFactory;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
@@ -44,7 +45,8 @@ final class InsightFactoryTest extends TestCase
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::$usedInsights,
-            $config
+            $config,
+            new Collector($config->getDirectory())
         );
     }
 
@@ -82,9 +84,11 @@ final class InsightFactoryTest extends TestCase
             ],
         ];
         $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
-        $insightFactory = new InsightFactory(new FakeFileRepository([]),
+        $insightFactory = new InsightFactory(
+            new FakeFileRepository([]),
             static::$usedInsights,
-            $configuration
+            $configuration,
+            new Collector($configuration->getDirectory())
         );
 
         $sniff = $insightFactory->makeFrom(LineLengthSniff::class, new NullOutput());
@@ -106,9 +110,11 @@ final class InsightFactoryTest extends TestCase
         ];
 
         $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
-        $insightFactory = new InsightFactory(new FakeFileRepository([]),
+        $insightFactory = new InsightFactory(
+            new FakeFileRepository([]),
             static::$usedInsights,
-            $configuration
+            $configuration,
+            new Collector($configuration->getDirectory())
         );
 
         $fixer = $insightFactory->makeFrom(YodaStyleFixer::class, new NullOutput());

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 use PHP_CodeSniffer\Config;
@@ -12,12 +13,8 @@ use Symfony\Component\Process\Process;
 /**
  * @internal
  */
-final class Syntax extends Insight implements HasDetails
+final class Syntax extends Insight implements HasDetails, GlobalInsight
 {
-    /**
-     * @var bool
-     */
-    private $analysed = false;
     /**
      * @var array<Details>
      */
@@ -30,10 +27,16 @@ final class Syntax extends Insight implements HasDetails
 
     public function hasIssue(): bool
     {
-        if ($this->analysed === true) {
-            return count($this->details) > 0;
-        }
+        return count($this->details) > 0;
+    }
 
+    public function getDetails(): array
+    {
+        return $this->details;
+    }
+
+    public function process(): void
+    {
         $cmdLine = '';
         $phpPath = Config::getExecutablePath('php');
         $isAnalyseDir = is_dir($this->collector->getDir());
@@ -64,13 +67,5 @@ final class Syntax extends Insight implements HasDetails
                     ->setLine((int) $matches[3]);
             }
         }
-        $this->analysed = true;
-
-        return count($this->details) > 0;
-    }
-
-    public function getDetails(): array
-    {
-        return $this->details;
     }
 }

@@ -20,9 +20,6 @@ final class InsightLoader implements LoaderContract
 
     public function load(string $insightClass, string $dir, array $config, Collector $collector): Insight
     {
-        /** @var Insight $sniff */
-        $insight = new $insightClass($collector, $config);
-
-        return $insight;
+        return new $insightClass($collector, $config);
     }
 }
