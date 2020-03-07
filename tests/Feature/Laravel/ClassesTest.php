@@ -17,15 +17,15 @@ final class ClassesTest extends TestCase
     public function testCanAllowAttributeSetters() : void
     {
         $collection = $this->runAnalyserOnPreset(
-            "laravel",
+            'laravel',
             [
-                __DIR__."/Fixtures/ModelWithAttributeSetter.php"
+                __DIR__. '/Fixtures/ModelWithAttributeSetter.php'
             ],
-            __DIR__."/Fixtures"
+            __DIR__. '/Fixtures'
         );
 
         foreach ($collection->allFrom(new Classes) as $insight) {
             self::assertFalse($insight->hasIssue());
-        };
+        }
     }
 }
