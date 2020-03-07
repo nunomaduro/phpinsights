@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Contracts;
 
+use NunoMaduro\PhpInsights\Domain\Collector;
+
 /**
  * @internal
  */
@@ -26,8 +28,9 @@ interface InsightLoader
      * @param string $insightClass
      * @param string $dir
      * @param array<string, int|string|array> $config Related to $insightClass
+     * @param \NunoMaduro\PhpInsights\Domain\Collector $collector
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight
      */
-    public function load(string $insightClass, string $dir, array $config): Insight;
+    public function load(string $insightClass, string $dir, array $config, Collector $collector): Insight;
 }

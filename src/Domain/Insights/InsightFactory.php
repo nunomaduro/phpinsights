@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
@@ -43,6 +44,11 @@ final class InsightFactory
      */
     private $config;
 
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Collector
+     */
+    private $collector;
+
     /** @var bool */
     private $ran = false;
 
@@ -53,12 +59,13 @@ final class InsightFactory
      * @param array<string> $insightsClasses
      * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
      */
-    public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config)
+    public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config, Collector $collector)
     {
         $this->filesRepository = $filesRepository;
         $this->insightsClasses = $insightsClasses;
         $this->insightLoaders = Container::make()->get(InsightLoader::INSIGHT_LOADER_TAG);
         $this->config = $config;
+        $this->collector = $collector;
     }
 
     /**
@@ -127,7 +134,8 @@ final class InsightFactory
                     $insightsAdded[] = $loader->load(
                         $insight,
                         (string) $cwd,
-                        $this->config->getConfigForInsight($insight)
+                        $this->config->getConfigForInsight($insight),
+                        $this->collector
                     );
                 }
             }
