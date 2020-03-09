@@ -64,7 +64,7 @@ final class InsightCollectionFactory
         try {
             $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();
-            }, iterator_to_array($this->filesRepository->within($dir, $this->config->getExcludes())->getFiles()));
+            }, $this->filesRepository->within($dir, $this->config->getExcludes())->getFiles());
         } catch (\InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }

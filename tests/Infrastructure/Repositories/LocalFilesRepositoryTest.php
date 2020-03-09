@@ -64,7 +64,7 @@ final class LocalFilesRepositoryTest extends TestCase
         $repository = new LocalFilesRepository($finder);
         $repository->within(__DIR__.'/Fixtures/FolderWithBladeFile');
 
-        $files = iterator_to_array($repository->getFiles());
+        $files = $repository->getFiles();
 
         self::assertEmpty($files);
     }
@@ -75,11 +75,11 @@ final class LocalFilesRepositoryTest extends TestCase
 
         $repository = new LocalFilesRepository($finder);
         $repository->within(__DIR__ . '/Fixtures/FileToInspect.php');
-        $files = iterator_to_array($repository->getFiles(), false);
+        $files = $repository->getFiles();
 
         self::assertCount(1, $files);
-        self::assertInstanceOf(SplFileInfo::class, $files[0]);
-        $path = $files[0]->getRealPath();
+        self::assertInstanceOf(SplFileInfo::class, $files[__DIR__ . '/Fixtures/FileToInspect.php']);
+        $path = $files[__DIR__ . '/Fixtures/FileToInspect.php']->getRealPath();
 
         if ($path === false) {
             self::fail('Path cannot be false.');
