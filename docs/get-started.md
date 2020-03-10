@@ -28,7 +28,7 @@ Then, use the `insights` Artisan command:
 php artisan insights
 ```
 
-> Note for Laravel 7 users : phpinsights requires [PHP 7.3+](https://php.net/releases/)
+> Note for Laravel 7 users : phpinsights requires [PHP 7.3+](https://php.net/releases/), and `PHPUnit 9.0+`.
 
 ## Within Lumen
 
@@ -91,7 +91,7 @@ For changing the output format you can add the `format` flag. The following form
 
 ## Saving output to file
 
-You can pipe the result to a file or to anywhere you like. 
+You can pipe the result to a file or to anywhere you like.
 A common use case is parsing the output formatted as json to a json file.
 
 ```bash
