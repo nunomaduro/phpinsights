@@ -47,7 +47,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "RC",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "NunoMaduro\\PhpInsights\\": "src"
