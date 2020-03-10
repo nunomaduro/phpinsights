@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - `ddd` & `tinker` as forbidden method names Laravel ([#364](https://github.com/nunomaduro/phpinsights/pull/364))
 - Support to Laravel 7 ([#369](https://github.com/nunomaduro/phpinsights/pull/369))
-- `min-requirements configurable through file ([#362](https://github.com/nunomaduro/phpinsights/pull/362))
+- `min-requirements` configurable through file ([#362](https://github.com/nunomaduro/phpinsights/pull/362))
 
 ### Fixed
 - Hanging on invalid php code ([#358](https://github.com/nunomaduro/phpinsights/pull/358))
+- Aggregates diffs in the same error ([#377](https://github.com/nunomaduro/phpinsights/pull/377))
 
 ### Changed
 - Removed Static closure advice on Laravel ([e9d2a62](https://github.com/nunomaduro/phpinsights/commit/e9d2a62bb97468f2886622f54be10de1bc3eeb24))
