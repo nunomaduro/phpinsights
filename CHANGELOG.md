@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [v1.14.0]
 ### Added
 - `ddd` & `tinker` as forbidden method names Laravel ([#364](https://github.com/nunomaduro/phpinsights/pull/364))
 - Support to Laravel 7 ([#369](https://github.com/nunomaduro/phpinsights/pull/369))
