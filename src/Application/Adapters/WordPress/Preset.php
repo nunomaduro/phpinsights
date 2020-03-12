@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Application\Adapters\Symfony;
+namespace NunoMaduro\PhpInsights\Application\Adapters\WordPress;
 
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
