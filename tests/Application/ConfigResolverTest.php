@@ -87,6 +87,14 @@ final class ConfigResolverTest extends TestCase
         self::assertSame('drupal', $preset);
     }
 
+    public function testGuessWordPress(): void
+    {
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerWordPress' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
+        self::assertSame('wordpress', $preset);
+    }
+
     public function testResolvedConfigIsCorrectlyMerged(): void
     {
         $config = [
