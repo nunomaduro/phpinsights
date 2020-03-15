@@ -132,12 +132,13 @@ final class File extends BaseFile
         $severity,
         $isFixable = false
     ): bool {
-        parent::addMessage($isError, $message, $line, $column, $sniffClassOrCode, $data, $severity, $isFixable);
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
         if ($isFixable === true && $this->isFixable === true) {
             if ($this->fixEnabled === true) {
                 $this->activeSniff->addFileFixed($this->fileInfo->getRelativePathname());
+            } else {
+                $this->fixableCount++;
             }
 
             return true;
