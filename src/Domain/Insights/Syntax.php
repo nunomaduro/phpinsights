@@ -38,7 +38,7 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
     public function process(): void
     {
         $cmdLine = '';
-        $phpPath = Config::getExecutablePath('php');
+        $phpPath = (string) Config::getExecutablePath('php');
         $isAnalyseDir = is_dir($this->collector->getDir());
 
         foreach ($this->collector->getFiles() as $filename) {

@@ -10,7 +10,7 @@ namespace NunoMaduro\PhpInsights\Domain\Contracts;
 interface GlobalInsight extends Insight
 {
     /**
-     * Launch Insight inspection
+     * Launch Insight inspection.
      */
     public function process(): void;
 }
