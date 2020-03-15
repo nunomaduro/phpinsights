@@ -51,9 +51,7 @@ final class Runner
     public function addInsights(array $insights): void
     {
         foreach ($insights as $insight) {
-            if (in_array(GlobalInsight::class, class_implements($insight), true)) {
-                assert($insight instanceof GlobalInsight);
-                /** @var GlobalInsight $insight */
+            if ($insight instanceof GlobalInsight) {
                 $this->globalInsights[] = $insight;
                 continue;
             }
