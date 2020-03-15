@@ -42,10 +42,17 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
         $isAnalyseDir = is_dir($this->collector->getDir());
 
         foreach ($this->collector->getFiles() as $filename) {
+            if ($this->shouldSkipFile($filename)) {
+                continue;
+            }
             if ($isAnalyseDir === true) {
                 $filename = $this->collector->getDir() . DIRECTORY_SEPARATOR . $filename;
             }
-            $cmdLine .= sprintf('%s -l -d display_errors=1 -d error_prepend_string="" %s;', $phpPath, escapeshellarg($filename));
+            $cmdLine .= sprintf(
+                '%s -l -d display_errors=1 -d error_prepend_string="" %s;',
+                escapeshellcmd($phpPath),
+                escapeshellarg($filename)
+            );
         }
 
         $process = Process::fromShellCommandline($cmdLine);
