@@ -37,6 +37,18 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
 
     public function process(): void
     {
+        if (class_exists(\JakubOnderka\PhpParallelLint\Application::class) &&
+            file_exists(getcwd() . '/vendor/bin/parallel-lint')) {
+            $this->processParallelLint();
+
+            return;
+        }
+
+        $this->processLint();
+    }
+
+    private function processLint(): void
+    {
         $cmdLine = '';
         $phpPath = (string) Config::getExecutablePath('php');
         $isAnalyseDir = is_dir($this->collector->getDir());
@@ -72,6 +84,49 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
                     ->setMessage('PHP syntax error: ' . trim($matches[1]))
                     ->setFile($filename)
                     ->setLine((int) $matches[3]);
+            }
+        }
+    }
+
+    private function processParallelLint(): void
+    {
+        $phpPath = (string) Config::getExecutablePath('php');
+        $isAnalyseDir = is_dir($this->collector->getDir());
+        $dir = $this->collector->getDir();
+
+        $filesToAnalyse = array_map(static function (string $file) use ($dir, $isAnalyseDir): string {
+            if ($isAnalyseDir === true) {
+                $file = $dir . DIRECTORY_SEPARATOR . $file;
+            }
+
+            return escapeshellarg($file);
+        }, $this->filterFilesWithoutExcluded($this->collector->getFiles()));
+
+        $cmdLine = sprintf(
+            '%s %s --no-colors --no-progress --json %s',
+            escapeshellcmd($phpPath),
+            escapeshellarg(getcwd() . '/vendor/bin/parallel-lint'),
+            implode(' ', $filesToAnalyse)
+        );
+
+        $process = Process::fromShellCommandline($cmdLine);
+        $process->run();
+        $output = json_decode($process->getOutput(), true);
+        $errors = $output['results']['errors'] ?? [];
+
+        foreach ($errors as $error) {
+            if (preg_match('/^.*error:(.*) in .* on line [\d]+/m', $error['message'], $matches) === 1) {
+                $file = $error['file'];
+                if ($isAnalyseDir === true) {
+                    $file = str_replace($this->collector->getDir() . DIRECTORY_SEPARATOR, '', $file);
+                } elseif ($file === $this->collector->getDir()) {
+                    $file = basename($file);
+                }
+
+                $this->details[] = Details::make()
+                    ->setFile($file)
+                    ->setLine($error['line'])
+                    ->setMessage('PHP syntax error: ' . trim($matches[1]));
             }
         }
     }

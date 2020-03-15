@@ -193,6 +193,14 @@ This Insight process lint on all PHP files via `php -l`
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Syntax`
 
+::: tip
+To speed up the lint, you can use [PHP Parallel lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint)
+
+```bash
+composer require --dev php-parallel-lint/php-parallel-lint
+```
+:::
+
 ## Trailing array comma <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff enforces trailing commas in multi-line arrays and requires short array syntax `[]`.
