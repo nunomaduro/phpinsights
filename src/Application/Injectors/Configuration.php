@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\DefinitionBinder;
-use NunoMaduro\PhpInsights\Application\DirectoryResolver;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**
@@ -37,7 +36,7 @@ final class Configuration
 
                 $config['fix'] = $fixOption || $input->getFirstArgument() === 'fix';
 
-                return ConfigResolver::resolve($config, DirectoryResolver::resolve($input));
+                return ConfigResolver::resolve($config, $input);
             },
         ];
     }

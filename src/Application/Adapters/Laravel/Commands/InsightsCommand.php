@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Commands\AnalyseCommand;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
-use NunoMaduro\PhpInsights\Application\DirectoryResolver;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Kernel;
@@ -39,7 +38,7 @@ final class InsightsCommand extends Command
 
         $configuration = require $configPath;
         $configuration['fix'] = $this->input->hasOption('fix') && (bool) $this->input->getOption('fix') === true;
-        $configuration = ConfigResolver::resolve($configuration, DirectoryResolver::resolve($this->input));
+        $configuration = ConfigResolver::resolve($configuration, $this->input);
 
         $container = Container::make();
         if (! $container instanceof \League\Container\Container) {

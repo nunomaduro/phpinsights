@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use Closure;
 use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
@@ -32,6 +33,15 @@ final class Configuration
         YiiPreset::class,
         Magento2Preset::class,
         DefaultPreset::class,
+    ];
+
+    /** @var array<string> */
+    private static $acceptedRequirements = [
+        'min-quality',
+        'min-complexity',
+        'min-architecture',
+        'min-style',
+        'disable-security-check',
     ];
 
     /**
@@ -68,6 +78,13 @@ final class Configuration
     private $remove;
 
     /**
+     * List of requirements.
+     *
+     * @var array<string>
+     */
+    private $requirements;
+
+    /**
      * List of custom configuration by insight.
      *
      * @var array<string, array<string, string|int|array>>
@@ -92,6 +109,14 @@ final class Configuration
     {
         $this->fileLinkFormatter = new NullFileLinkFormatter();
         $this->resolveConfig($config);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public static function getAcceptedRequirements(): array
+    {
+        return self::$acceptedRequirements;
     }
 
     /**
@@ -158,6 +183,49 @@ final class Configuration
         return $this->preset;
     }
 
+    /**
+     * @return float
+     */
+    public function getMinQuality(): float
+    {
+        return (float) ($this->requirements['min-quality'] ?? 0);
+    }
+
+    /**
+     * @return float
+     */
+    public function getMinComplexity(): float
+    {
+        return (float) ($this->requirements['min-complexity'] ?? 0);
+    }
+
+    /**
+     * @return float
+     */
+    public function getMinArchitecture(): float
+    {
+        return (float) ($this->requirements['min-architecture'] ?? 0);
+    }
+
+    /**
+     * @return float
+     */
+    public function getMinStyle(): float
+    {
+        return (float) ($this->requirements['min-style'] ?? 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSecurityCheckDisabled(): bool
+    {
+        return (bool) ($this->requirements['disable-security-check'] ?? false);
+    }
+
+    /**
+     * @return FileLinkFormatterContract
+     */
     public function getFileLinkFormatter(): FileLinkFormatterContract
     {
         return $this->fileLinkFormatter;
@@ -179,6 +247,7 @@ final class Configuration
             'directory' => (string) getcwd(),
             'exclude' => [],
             'add' => [],
+            'requirements' => [],
             'remove' => [],
             'config' => [],
             'fix' => false,
@@ -190,6 +259,7 @@ final class Configuration
         }, self::$presets));
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
+        $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $config = $resolver->resolve($config);
 
         $this->preset = $config['preset'];
@@ -202,6 +272,7 @@ final class Configuration
         $this->add = $config['add'];
         $this->remove = $config['remove'];
         $this->config = $config['config'];
+        $this->requirements = $config['requirements'];
         $this->fix = $config['fix'];
 
         if (
@@ -284,5 +355,23 @@ final class Configuration
         $fileFormatterPattern = $links[$ide] ?? $ide;
 
         return new FileLinkFormatter($fileFormatterPattern);
+    }
+
+    private function validateRequirements(): Closure
+    {
+        return static function ($values): bool {
+            $invalidValues = array_diff(
+                array_keys($values),
+                self::getAcceptedRequirements()
+            );
+            if ($invalidValues !== []) {
+                throw new InvalidConfiguration(sprintf(
+                    'Unknown requirements [%s], valid values are [%s].',
+                    implode(', ', $invalidValues),
+                    implode(', ', self::getAcceptedRequirements())
+                ));
+            }
+            return true;
+        };
     }
 }

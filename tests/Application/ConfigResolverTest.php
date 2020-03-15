@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Application;
 
+use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
@@ -11,7 +12,12 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Tests\Fakes\FakeInput;
 
 final class ConfigResolverTest extends TestCase
 {
@@ -29,43 +35,55 @@ final class ConfigResolverTest extends TestCase
 
     public function testGuessDirectoryWithoutComposer(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath);
+        $preset = ConfigResolver::guess(new Composer([]));
         self::assertSame('default', $preset);
     }
 
     public function testGuessComposerWithoutRequire(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerWithoutRequire');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath("{$this->baseFixturePath}ComposerWithoutRequire" . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('default', $preset);
     }
 
     public function testGuessSymfony(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerSymfony');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerSymfony' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('symfony', $preset);
     }
 
     public function testGuessLaravel(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerLaravel');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerLaravel' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('laravel', $preset);
     }
 
     public function testGuessYii(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerYii');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerYii' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('yii', $preset);
     }
 
     public function testGuessMagento2(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerMagento2');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerMagento2' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('magento2', $preset);
     }
 
     public function testGuessDrupal(): void
     {
-        $preset = ConfigResolver::guess($this->baseFixturePath . 'ComposerDrupal');
+        $preset = ConfigResolver::guess(
+            Composer::fromPath($this->baseFixturePath . 'ComposerDrupal' . DIRECTORY_SEPARATOR . 'composer.json')
+        );
         self::assertSame('drupal', $preset);
     }
 
@@ -82,7 +100,10 @@ final class ConfigResolverTest extends TestCase
             ]
         ];
 
-        $finalConfig = ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        $finalConfig = ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
 
         self::assertContains('my/path', $finalConfig->getExcludes());
         // assert we don't replace the first value
@@ -101,7 +122,10 @@ final class ConfigResolverTest extends TestCase
 
         $config = ['preset' => 'UnknownPreset'];
 
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     public function testUnknowMetricAddedThrowException(): void
@@ -110,7 +134,10 @@ final class ConfigResolverTest extends TestCase
         $this->expectExceptionMessage('Unable to use "say" class as metric in section add.');
 
         $config = ['add' => ['say' => 'hello']];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     public function testKnownMetricAddedWithNonArrayValueThrowException(): void
@@ -119,7 +146,10 @@ final class ConfigResolverTest extends TestCase
         $this->expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
 
         $config = ['add' => [Classes::class => 'hello']];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     public function testAddUnknowClassThrowException(): void
@@ -128,7 +158,10 @@ final class ConfigResolverTest extends TestCase
         $this->expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');
 
         $config = ['add' => [Classes::class => ['hello']]];
-        ConfigResolver::resolve($config, $this->baseFixturePath . 'ComposerWithoutRequire');
+        ConfigResolver::resolve(
+            $config,
+            FakeInput::directory($this->baseFixturePath . 'ComposerWithoutRequire')
+        );
     }
 
     /**
@@ -138,7 +171,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = ['ide' => $ide];
 
-        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($this->baseFixturePath));
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
@@ -148,7 +181,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = [];
 
-        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($this->baseFixturePath));
 
         self::assertInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
@@ -157,10 +190,30 @@ final class ConfigResolverTest extends TestCase
     {
         $config = ['ide' => 'myide://file=%f&line=%l'];
 
-        $config = ConfigResolver::resolve($config, $this->baseFixturePath);
+        $config = ConfigResolver::resolve($config, FakeInput::directory($this->baseFixturePath));
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
+    }
+
+    public function testMergeInputRequirements(): void
+    {
+        $input = new ArrayInput([
+                '--not-whitelisted' => 1,
+                '--min-complexity' => 1,
+                '--directory=.'
+            ],
+            new InputDefinition([
+                new InputArgument('directory'),
+                new InputOption('min-complexity'),
+                new InputOption('disable-security-check'),
+                new InputOption('not-whitelisted'),
+            ])
+        );
+
+        $config = ConfigResolver::resolve([], $input);
+
+        self::assertEquals($config->getMinComplexity(), 1);
     }
 
     /**

@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v1.14.0]
+### Added
+- `ddd` & `tinker` as forbidden method names Laravel ([#364](https://github.com/nunomaduro/phpinsights/pull/364))
+- Support to Laravel 7 ([#369](https://github.com/nunomaduro/phpinsights/pull/369))
+- `min-requirements` configurable through file ([#362](https://github.com/nunomaduro/phpinsights/pull/362))
+
+### Fixed
+- Hanging on invalid php code ([#358](https://github.com/nunomaduro/phpinsights/pull/358))
+- Aggregates diffs in the same error ([#377](https://github.com/nunomaduro/phpinsights/pull/377))
+
+### Changed
+- Removed Static closure advice on Laravel ([e9d2a62](https://github.com/nunomaduro/phpinsights/commit/e9d2a62bb97468f2886622f54be10de1bc3eeb24))
+
+## [v1.13.0]
+### Added
+- Sort issues by file, line, function and lastly message ([#348](https://github.com/nunomaduro/phpinsights/pull/348))
+- Support multiple formatters ([#357](https://github.com/nunomaduro/phpinsights/pull/357))
+- Support custom class formatters ([#357](https://github.com/nunomaduro/phpinsights/pull/357))
+- Added diff from fixer to JSON formatter ([#356](https://github.com/nunomaduro/phpinsights/pull/356))
+- Check PHP version from composer to determine native type hint ([#347](https://github.com/nunomaduro/phpinsights/pull/347))
+- Added GitHub Action formatter ([#344](https://github.com/nunomaduro/phpinsights/pull/344))
+
+### Fixed
+- Prevent failing on empty namespace ([#352](https://github.com/nunomaduro/phpinsights/pull/352))
+
 ## [v1.12.0]
 ### Added
 - Text coloring per section ([#339](https://github.com/nunomaduro/phpinsights/pull/339))
@@ -29,7 +54,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Reorganize place of some Insights ([#313](https://github.com/nunomaduro/phpinsights/pull/313))
 
-### Fixed 
+### Fixed
 - Duplicate empty comment Insight ([#311](https://github.com/nunomaduro/phpinsights/pull/311))
 - Remove VoidReturnFixer in laravel Preset ([#312](https://github.com/nunomaduro/phpinsights/pull/312))
 
@@ -43,7 +68,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Directory exclusion in Insights config ([#293](https://github.com/nunomaduro/phpinsights/pull/293))
 - Favicon in website ([#281](https://github.com/nunomaduro/phpinsights/pull/281))
 
-### Changed 
+### Changed
 - Drop easy coding standard dependency ([#252](https://github.com/nunomaduro/phpinsights/pull/252))
 - Use a configuration class ([#283](https://github.com/nunomaduro/phpinsights/pull/283))
 - Improve verbose progress bar ([#291](https://github.com/nunomaduro/phpinsights/pull/291))

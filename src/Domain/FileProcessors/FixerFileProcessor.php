@@ -53,7 +53,6 @@ final class FixerFileProcessor implements FileProcessor
             ));
         }
 
-        /** @var FixerDecorator $insight */
         $this->fixers[] = $insight;
     }
 
@@ -65,39 +64,45 @@ final class FixerFileProcessor implements FileProcessor
         }
 
         $oldContent = $splFileInfo->getContents();
-        $tokens = Tokens::fromCode($oldContent);
         $needFix = false;
-        /** @var FixerDecorator $fixer */
-        foreach ($this->fixers as $fixer) {
-            $fixer->fix($splFileInfo, $tokens);
-            if (! $tokens->isChanged()) {
-                continue;
-            }
+        try {
+            $tokens = @Tokens::fromCode($oldContent);
+            /** @var FixerDecorator $fixer */
+            foreach ($this->fixers as $index => $fixer) {
+                $fixer->fix($splFileInfo, $tokens);
+                if (! $tokens->isChanged()) {
+                    continue;
+                }
 
-            if ($this->fixEnabled === true) {
-                $needFix = true;
-                // Register diff will be applied
-                $fixer->registerFixedDiff($splFileInfo, $this->differ->diff($oldContent, $tokens->generateCode()));
-            }
+                if ($this->fixEnabled === true) {
+                    $needFix = true;
+                    // Register diff will be applied
+                    $fixer->addFileFixed($splFileInfo);
+                    // Tokens has changed, so we need to clear cache
+                    @Tokens::clearCache();
+                    $tokens = @Tokens::fromCode($oldContent);
+                    continue;
+                }
 
-            if ($this->fixEnabled === false) {
                 $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
+                // Tokens has changed, so we need to clear cache
+                Tokens::clearCache();
+                $tokens = @Tokens::fromCode($oldContent);
             }
-            // Tokens has changed, so we need to clear cache
-            Tokens::clearCache();
-            $tokens = Tokens::fromCode($oldContent);
-        }
 
-        if ($this->fixEnabled === false || $needFix === false) {
-            return;
-        }
+            if ($this->fixEnabled === false || $needFix === false) {
+                return;
+            }
 
-        $tokens = Tokens::fromCode($oldContent);
-        // Reloop on fixer to get full tokens to change
-        foreach ($this->fixers as $fixer) {
-            $fixer->fix($splFileInfo, $tokens);
-        }
+            $tokens = @Tokens::fromCode($oldContent);
+            // Reloop on fixer to get full tokens to change
+            foreach ($this->fixers as $fixer) {
+                $fixer->fix($splFileInfo, $tokens);
+            }
 
-        file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
+            file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
+        } catch (\Throwable $e) {
+            // @ignoreException
+        }
     }
 }

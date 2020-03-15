@@ -141,23 +141,20 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
 
     public function addDiff(string $file, string $diff): void
     {
-        $this->processDiff($diff, $file);
+        $diff = substr($diff, 8);
+
+        $this->errors[] = Details::make()->setFile($file)->setDiff($diff)->setMessage($diff);
     }
 
-    public function registerFixedDiff(SplFileInfo $fileInfo, string $diff): void
+    public function addFileFixed(SplFileInfo $fileInfo): void
     {
-        $parsedDiff = $this->splitStringByLines($diff);
-        // Get first line number & Remove headers of diff
-        $parsedDiff = array_slice($parsedDiff, 3);
-
-        foreach ($parsedDiff as $diffLine) {
-            if (mb_strpos($diffLine, '@@ ') === 0) {
-                $this->addFileFixed($fileInfo->getRelativePathname());
-                continue;
-            }
+        $file = $fileInfo->getRelativePathname();
+        if (! \array_key_exists($file, $this->fixPerFile)) {
+            $this->fixPerFile[$file] = 0;
         }
 
-        $this->addFileFixed($fileInfo->getRelativePathname());
+        $this->fixPerFile[$file] = ++$this->fixPerFile[$file];
+        $this->totalFixed++;
     }
 
     public function getTotalFix(): int
@@ -190,82 +187,5 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $path = $file->getRealPath();
 
         return $path !== false && isset($this->exclude[$path]);
-    }
-
-    private function processDiff(string $diff, string $file): void
-    {
-        $parsedDiff = $this->splitStringByLines($diff);
-        // Get first line number & Remove headers of diff
-        $currentLineNumber = $this->parseLineNumber($parsedDiff[2]);
-        $parsedDiff = array_slice($parsedDiff, 3);
-        $headerMessage = "You should change the following \n";
-
-        $currentDetail = Details::make();
-        $currentDetail->setFile($file);
-        $currentDetail->setLine($currentLineNumber);
-        $currentMessage = $headerMessage;
-        $hasColor = false;
-
-        foreach ($parsedDiff as $diffLine) {
-            if (mb_strpos($diffLine, '@@ ') === 0) {
-                $currentDetail->setMessage($currentMessage);
-                $this->errors[] = clone $currentDetail;
-                $currentDetail->setLine($this->parseLineNumber($diffLine));
-                $currentMessage = $headerMessage;
-                continue;
-            }
-
-            if (mb_strpos($diffLine, '-') === 0) {
-                $hasColor = true;
-                $currentMessage .= '<fg=red>';
-            }
-            if (mb_strpos($diffLine, '+') === 0) {
-                $hasColor = true;
-                $currentMessage .= '<fg=green>';
-            }
-            $currentMessage .= $diffLine;
-            if ($hasColor) {
-                $hasColor = false;
-                $currentMessage .= '</>';
-            }
-        }
-
-        $currentDetail->setMessage($currentMessage);
-        $this->errors[] = $currentDetail;
-    }
-
-    /**
-     * @param string $input
-     *
-     * @return array<int, string>
-     */
-    private function splitStringByLines(string $input): array
-    {
-        $result = \preg_split('/(.*\R)/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-
-        if ($result === false) {
-            throw new \RuntimeException('Unable to split ' . $input);
-        }
-
-        return $result;
-    }
-
-    private function parseLineNumber(string $diffLine): int
-    {
-        $pattern = '@^(?:\@\@ -)?([^,]+)@i';
-        $matches = null;
-        preg_match($pattern, $diffLine, $matches);
-
-        return (int) $matches[1];
-    }
-
-    private function addFileFixed(string $file): void
-    {
-        if (! \array_key_exists($file, $this->fixPerFile)) {
-            $this->fixPerFile[$file] = 0;
-        }
-
-        $this->fixPerFile[$file] = ++$this->fixPerFile[$file];
-        $this->totalFixed++;
     }
 }

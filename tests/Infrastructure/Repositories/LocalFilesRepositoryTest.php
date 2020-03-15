@@ -79,6 +79,12 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertCount(1, $files);
         self::assertInstanceOf(SplFileInfo::class, $files[0]);
-        self::assertStringContainsString('/Fixtures/FileToInspect.php', $files[0]->getRealPath());
+        $path = $files[0]->getRealPath();
+
+        if ($path === false) {
+            self::fail('Path cannot be false.');
+            return;
+        }
+        self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
     }
 }
