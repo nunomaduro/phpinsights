@@ -77,7 +77,7 @@ final class FixerFileProcessor implements FileProcessor
                 if ($this->fixEnabled === true) {
                     $needFix = true;
                     // Register diff will be applied
-                    $fixer->addFileFixed($splFileInfo);
+                    $fixer->addFileFixed($splFileInfo->getRelativePathname());
                     // Tokens has changed, so we need to clear cache
                     @Tokens::clearCache();
                     $tokens = @Tokens::fromCode($oldContent);

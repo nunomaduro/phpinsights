@@ -11,7 +11,6 @@ use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Decorates original php-cs-fixers with additional behavior.
@@ -20,6 +19,8 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class FixerDecorator implements FixerInterface, InsightContract, HasDetails, Fixable
 {
+    use FixPerFileCollector;
+
     /**
      * @var \PhpCsFixer\Fixer\FixerInterface
      */
@@ -32,14 +33,6 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
     private $errors = [];
-    /**
-     * @var int
-     */
-    private $totalFixed = 0;
-    /**
-     * @var array<string, int>
-     */
-    private $fixPerFile = [];
 
     /**
      * FixerDecorator constructor.
@@ -144,42 +137,6 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $diff = substr($diff, 8);
 
         $this->errors[] = Details::make()->setFile($file)->setDiff($diff)->setMessage($diff);
-    }
-
-    public function addFileFixed(SplFileInfo $fileInfo): void
-    {
-        $file = $fileInfo->getRelativePathname();
-        if (! \array_key_exists($file, $this->fixPerFile)) {
-            $this->fixPerFile[$file] = 0;
-        }
-
-        $this->fixPerFile[$file] = ++$this->fixPerFile[$file];
-        $this->totalFixed++;
-    }
-
-    public function getTotalFix(): int
-    {
-        return $this->totalFixed;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFixPerFile(): array
-    {
-        $details = [];
-        foreach ($this->fixPerFile as $file => $count) {
-            $message = 'issues fixed';
-            if ($count === 1) {
-                $message = 'issue fixed';
-            }
-
-            $details[] = (new Details())
-                ->setMessage(sprintf('%s %s', $count, $message))
-                ->setFile($file);
-        }
-
-        return $details;
     }
 
     private function skipFilesFromExcludedFiles(\SplFileInfo $file): bool
