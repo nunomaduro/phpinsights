@@ -100,7 +100,7 @@ final class Console implements Formatter
             ->miscellaneous($results);
 
         $this->issues($insightCollection, $metrics, $dir);
-        if ($this->config->isFix()) {
+        if ($this->config->hasFixEnabled()) {
             $this->formatFix($insightCollection, $dir, $metrics);
         }
     }

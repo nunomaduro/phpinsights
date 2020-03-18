@@ -231,7 +231,7 @@ final class Configuration
         return $this->fileLinkFormatter;
     }
 
-    public function isFix(): bool
+    public function hasFixEnabled(): bool
     {
         return $this->fix;
     }

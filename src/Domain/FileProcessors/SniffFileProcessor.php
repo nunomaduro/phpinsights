@@ -39,7 +39,7 @@ final class SniffFileProcessor implements FileProcessor
     public function __construct(FileFactory $fileFactory)
     {
         $this->fileFactory = $fileFactory;
-        $this->fixEnabled = Container::make()->get(Configuration::class)->isFix();
+        $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
     }
 
     public function support(InsightContract $insight): bool

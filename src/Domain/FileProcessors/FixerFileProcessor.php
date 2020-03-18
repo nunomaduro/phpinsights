@@ -36,7 +36,7 @@ final class FixerFileProcessor implements FileProcessor
         Differ $differ
     ) {
         $this->differ = $differ;
-        $this->fixEnabled = Container::make()->get(Configuration::class)->isFix();
+        $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
     }
 
     public function support(InsightContract $insight): bool
