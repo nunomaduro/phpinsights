@@ -82,23 +82,24 @@ final class InsightCollection
      */
     public function results(): Results
     {
-        if (null === $this->results) {
-            $perCategory = [];
-
-            foreach ($this->insightsPerMetric as $metric => $insights) {
-                $category = explode('\\', $metric);
-                $category = $category[count($category) - 2];
-
-                if (! array_key_exists($category, $perCategory)) {
-                    $perCategory[$category] = [];
-                }
-
-                $perCategory[$category] = array_merge(
-                    $perCategory[$category], $insights
-                );
-            }
-            $this->results = new Results($this->collector, $perCategory);
+        if (null !== $this->results) {
+            return $this->results;
         }
+
+        $perCategory = [];
+        foreach ($this->insightsPerMetric as $metric => $insights) {
+            $category = explode('\\', $metric);
+            $category = $category[count($category) - 2];
+
+            if (! array_key_exists($category, $perCategory)) {
+                $perCategory[$category] = [];
+            }
+
+            $perCategory[$category] = array_merge(
+                $perCategory[$category], $insights
+            );
+        }
+        $this->results = new Results($this->collector, $perCategory);
 
         return $this->results;
     }
