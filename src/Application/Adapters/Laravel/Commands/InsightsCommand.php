@@ -37,7 +37,7 @@ final class InsightsCommand extends Command
         }
 
         $configuration = require $configPath;
-        $configuration['fix'] = $this->input->hasOption('fix') && (bool) $this->input->getOption('fix') === true;
+        $configuration['fix'] = $this->hasOption('fix') && (bool) $this->option('fix') === true;
         $configuration = ConfigResolver::resolve($configuration, $this->input);
 
         $container = Container::make();
