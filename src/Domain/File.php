@@ -106,10 +106,10 @@ final class File extends BaseFile
     }
 
     /**
-     * Active fix mode. It's used to prevent report twice
+     * Enable fix mode. It's used to prevent report twice
      * details because fixer relaunch process method.
      */
-    public function activeFix(): void
+    public function enableFix(): void
     {
         $this->fixEnabled = true;
     }

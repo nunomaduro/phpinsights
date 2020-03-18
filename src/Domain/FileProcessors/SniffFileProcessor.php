@@ -71,7 +71,7 @@ final class SniffFileProcessor implements FileProcessor
         );
 
         if ($this->fixEnabled === true && $file->getFixableCount() !== 0) {
-            $file->activeFix();
+            $file->enableFix();
             $file->fixer->fixFile();
             file_put_contents($splFileInfo->getPathname(), $file->fixer->getContents());
             $file->disableFix();
