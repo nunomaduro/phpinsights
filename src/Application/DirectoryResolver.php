@@ -11,15 +11,27 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 final class DirectoryResolver
 {
-    public static function resolve(InputInterface $input): string
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array<string>
+     */
+    public static function resolve(InputInterface $input): array
     {
-        /** @var string $directory */
-        $directory = $input->getArgument('directory') ?? (string) getcwd();
+        /** @var array<string> $directories */
+        $directories = $input->getArgument('directory');
 
-        if (isset($directory[0]) && $directory[0] !== DIRECTORY_SEPARATOR && preg_match('~\A[A-Z]:(?![^/\\\\])~i', $directory) === 0) {
-            $directory = (string) getcwd() . DIRECTORY_SEPARATOR . $directory;
+        if ($directories === [] || $directories == null) {
+            $directories = [(string) getcwd()];
         }
 
-        return $directory;
+        $directoryList = [];
+        foreach ($directories as $directory) {
+            $directory[0] !== DIRECTORY_SEPARATOR && preg_match('~\A[A-Z]:(?![^/\\\\])~i', $directory) === 0
+                ? $directoryList[] = getcwd() . DIRECTORY_SEPARATOR . $directory
+                : $directoryList[] = $directory;
+        }
+
+        return $directoryList;
     }
 }

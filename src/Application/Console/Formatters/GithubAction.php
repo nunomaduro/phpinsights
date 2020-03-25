@@ -44,11 +44,14 @@ final class GithubAction implements Formatter
 
     /**
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
-     * @param string $dir
+     * @param array<string> $dir
      * @param array<int, string> $metrics
      */
-    public function format(InsightCollection $insightCollection, string $dir, array $metrics): void
-    {
+    public function format(
+        InsightCollection $insightCollection,
+        array $dir,
+        array $metrics
+    ): void {
         // Call The Console Formatter to get summary and recap,
         // not issues by passing an empty array for metrics.
         $this->decorated->format($insightCollection, $dir, []);

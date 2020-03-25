@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Fakes;
 
-use ArrayIterator;
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\SplFileInfo;
-use Traversable;
 
 final class FakeFileRepository implements FilesRepository
 {
@@ -33,12 +31,12 @@ final class FakeFileRepository implements FilesRepository
         return (string) getcwd();
     }
 
-    public function getFiles(): Traversable
+    public function getFiles(): array
     {
-        return new ArrayIterator($this->files);
+        return $this->files;
     }
 
-    public function within(string $dir, array $exclude): FilesRepository
+    public function within(array $dir, array $exclude): FilesRepository
     {
         return $this;
     }

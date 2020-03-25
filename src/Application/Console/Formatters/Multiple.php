@@ -20,7 +20,12 @@ final class Multiple implements Formatter
         $this->formatters = $formatters;
     }
 
-    public function format(InsightCollection $insightCollection, string $dir, array $metrics): void
+    /**
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param array<string> $dir
+     * @param array<int, string> $metrics
+     */
+    public function format(InsightCollection $insightCollection, array $dir, array $metrics): void
     {
         /** @var Formatter $formatter */
         foreach ($this->formatters as $formatter) {

@@ -56,7 +56,9 @@ final class SniffDecoratorTest extends TestCase
             [
                 __DIR__ . '/../../Fixtures/Domain/Sniffs/SniffWrapper/FileWithTwoClasses.php'
             ],
-            __DIR__ . '/../../Fixtures/'
+            [
+                __DIR__ . '/../../Fixtures/'
+            ]
         );
         $oneClassPerFileSniffErrors = 0;
 
@@ -112,7 +114,9 @@ final class SniffDecoratorTest extends TestCase
             [
                 __DIR__ . '/../../Fixtures/Domain/Sniffs/SniffWrapper/FileWithTwoClasses.php'
             ],
-            __DIR__ . '/../../Fixtures/'
+            [
+                __DIR__ . '/../../Fixtures/'
+            ]
         );
         $oneClassPerFileSniffErrors = 0;
 

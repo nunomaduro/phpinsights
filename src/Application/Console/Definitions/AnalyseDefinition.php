@@ -18,7 +18,7 @@ final class AnalyseDefinition
         return new InputDefinition([
             new InputArgument(
                 'directory',
-                InputArgument::OPTIONAL,
+                InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
                 'The directory to analyse'
             ),
             new InputOption(

@@ -30,13 +30,15 @@ final class Json implements Formatter
     /**
      * Format the result to the desired format.
      *
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param array<string> $dir
      * @param array<string> $metrics
      *
      * @throws Exception
      */
     public function format(
         InsightCollection $insightCollection,
-        string $dir,
+        array $dir,
         array $metrics
     ): void {
         $results = $insightCollection->results();
@@ -64,6 +66,7 @@ final class Json implements Formatter
     /**
      * Outputs the issues errors according to the format.
      *
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<string> $metrics
      *
      * @return array<string, array<int, array<string, int|string>>|null>

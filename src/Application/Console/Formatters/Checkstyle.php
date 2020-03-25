@@ -31,12 +31,12 @@ final class Checkstyle implements Formatter
      * Format the result to the desired format.
      *
      * @param InsightCollection $insightCollection
-     * @param string $dir
+     * @param array<string> $dir
      * @param array<string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
-        string $dir,
+        array $dir,
         array $metrics
     ): void {
         if (! extension_loaded('simplexml')) {
@@ -57,7 +57,7 @@ final class Checkstyle implements Formatter
 
                 /** @var Details $detail */
                 foreach ($details as $detail) {
-                    $fileName = $this->getFileName($detail, $dir);
+                    $fileName = $this->getFileName($detail, $dir[0]);
 
                     if (isset($checkstyle->file) && (string) $checkstyle->file->attributes()['name'] === $fileName) {
                         $file = $checkstyle->file;

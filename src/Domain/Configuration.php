@@ -50,9 +50,9 @@ final class Configuration
     private $preset = 'default';
 
     /**
-     * Directory to analyse.
+     * List of directories to analyse.
      *
-     * @var string
+     * @var array<string>
      */
     private $directory;
 
@@ -154,9 +154,9 @@ final class Configuration
     }
 
     /**
-     * @return string
+     * @return array<string>
      */
-    public function getDirectory(): string
+    public function getDirectory(): array
     {
         return $this->directory;
     }
@@ -260,10 +260,13 @@ final class Configuration
 
         $this->preset = $config['preset'];
 
-        // resolve symbolic link, /./, /../
-        $this->directory = realpath($config['directory']) !== false
-            ? realpath($config['directory'])
-            : $config['directory'];
+        foreach ((array) $config['directory'] as $directory) {
+            // resolve symbolic link, /./, /../
+            $this->directory[] = realpath($directory) !== false
+                ? realpath($directory)
+                : $directory;
+        }
+
         $this->exclude = $config['exclude'];
         $this->add = $config['add'];
         $this->remove = $config['remove'];

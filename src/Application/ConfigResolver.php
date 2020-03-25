@@ -46,8 +46,8 @@ final class ConfigResolver
     public static function resolve(array $config, InputInterface $input): Configuration
     {
         $directory = DirectoryResolver::resolve($input);
-        $config = ConfigResolver::mergeInputRequirements($config, $input);
-        $composer = self::getComposer($directory);
+        $config = self::mergeInputRequirements($config, $input);
+        $composer = self::getComposer($directory[0]);
 
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($composer);
@@ -62,7 +62,7 @@ final class ConfigResolver
 
         $isRootAnalyse = true;
         foreach (Kernel::getRequiredFiles() as $file) {
-            if (! file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
+            if (! file_exists($directory[0] . DIRECTORY_SEPARATOR . $file)) {
                 $isRootAnalyse = false;
                 break;
             }
