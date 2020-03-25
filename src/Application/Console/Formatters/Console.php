@@ -75,9 +75,11 @@ final class Console implements Formatter
     }
 
     /**
+     * Format the result to the desired format.
+     *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<string> $dir
-     * @param array<int, string> $metrics
+     * @param array<string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
