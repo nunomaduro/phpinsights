@@ -24,17 +24,17 @@ final class Multiple implements Formatter
      * Format the result to the desired format.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
-     * @param array<string> $dir
-     * @param array<string> $metrics
+     * @param array<string> $directories
+     * @param array<int, string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
-        array $dir,
+        array $directories,
         array $metrics
     ): void {
         /** @var Formatter $formatter */
         foreach ($this->formatters as $formatter) {
-            $formatter->format($insightCollection, $dir, $metrics);
+            $formatter->format($insightCollection, $directories, $metrics);
         }
     }
 }

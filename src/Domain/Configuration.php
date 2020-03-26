@@ -54,7 +54,7 @@ final class Configuration
      *
      * @var array<string>
      */
-    private $directory;
+    private $directories;
 
     /**
      * List of folder to exclude from analyse.
@@ -156,9 +156,9 @@ final class Configuration
     /**
      * @return array<string>
      */
-    public function getDirectory(): array
+    public function getDirectories(): array
     {
-        return $this->directory;
+        return $this->directories;
     }
 
     /**
@@ -262,7 +262,7 @@ final class Configuration
 
         foreach ((array) $config['directory'] as $directory) {
             // resolve symbolic link, /./, /../
-            $this->directory[] = realpath($directory) !== false
+            $this->directories[] = realpath($directory) !== false
                 ? realpath($directory)
                 : $directory;
         }

@@ -78,38 +78,38 @@ final class Console implements Formatter
      * Format the result to the desired format.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
-     * @param array<string> $dir
-     * @param array<string> $metrics
+     * @param array<string> $directories
+     * @param array<int, string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
-        array $dir,
+        array $directories,
         array $metrics
     ): void {
         $results = $insightCollection->results();
 
-        $this->summary($results, $dir)
+        $this->summary($results, $directories)
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
             ->architecture($insightCollection, $results)
             ->miscellaneous($results);
 
-        $this->issues($insightCollection, $metrics, $dir);
+        $this->issues($insightCollection, $metrics, $directories);
     }
 
     /**
      * Outputs the summary according to the format.
      *
      * @param Results $results
-     * @param array<string> $dir
+     * @param array<string> $directories
      *
      * @return self
      */
-    private function summary(Results $results, array $dir): self
+    private function summary(Results $results, array $directories): self
     {
         $this->style->newLine(2);
 
-        foreach ($dir as $path) {
+        foreach ($directories as $path) {
             $this->style->writeln(
                 sprintf(
                     '<fg=yellow>[%s]</> `%s`',
@@ -278,14 +278,14 @@ final class Console implements Formatter
      *
      * @param InsightCollection $insightCollection
      * @param array<string> $metrics
-     * @param array<string> $dir
+     * @param array<string> $directories
      *
      * @return self
      */
     private function issues(
         InsightCollection $insightCollection,
         array $metrics,
-        array $dir
+        array $directories
     ): self {
         $previousCategory = null;
         $detailsComparator = new DetailsComparator();
@@ -331,7 +331,7 @@ final class Console implements Formatter
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = $this->formatFileLine($detail, '', $category);
+                    $detailString = $this->formatFileLine($detail, $directories[0], $category);
 
                     if ($detail->hasFunction()) {
                         $detailString .= ($detailString !== '' ? ':' : '') . $detail->getFunction();

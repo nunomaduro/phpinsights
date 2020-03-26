@@ -30,13 +30,13 @@ final class Checkstyle implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param InsightCollection $insightCollection
-     * @param array<string> $dir
-     * @param array<string> $metrics
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param array<string> $directories
+     * @param array<int, string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
-        array $dir,
+        array $directories,
         array $metrics
     ): void {
         if (! extension_loaded('simplexml')) {
@@ -57,7 +57,7 @@ final class Checkstyle implements Formatter
 
                 /** @var Details $detail */
                 foreach ($details as $detail) {
-                    $fileName = $this->getFileName($detail, $dir[0]);
+                    $fileName = $this->getFileName($detail, $directories[0]);
 
                     if (isset($checkstyle->file) && (string) $checkstyle->file->attributes()['name'] === $fileName) {
                         $file = $checkstyle->file;
@@ -78,12 +78,13 @@ final class Checkstyle implements Formatter
         $this->output->write((string) $checkstyle->asXML());
     }
 
-    private function getFileName(Details $detail, string $dir): string
+    private function getFileName(Details $detail, string $directory): string
     {
         if ($detail->hasFile()) {
-            /** replacement is necessary because relative paths are needed */
-            return str_replace($dir . '/', '', $detail->getFile());
+            /* replacement is necessary because relative paths are needed */
+            return str_replace($directory . '/', '', $detail->getFile());
         }
+
         return '';
     }
 }

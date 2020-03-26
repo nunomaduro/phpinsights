@@ -57,7 +57,7 @@ final class Analyser
         $insightCollection = $this->insightCollectionFactory
             ->get($metrics, $consoleOutput);
 
-        $formatter->format($insightCollection, $this->config->getDirectory(), $metrics);
+        $formatter->format($insightCollection, $this->config->getDirectories(), $metrics);
 
         return $insightCollection->results();
     }

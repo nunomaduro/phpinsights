@@ -31,14 +31,14 @@ final class Json implements Formatter
      * Format the result to the desired format.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
-     * @param array<string> $dir
-     * @param array<string> $metrics
+     * @param array<string> $directories
+     * @param array<int, string> $metrics
      *
      * @throws Exception
      */
     public function format(
         InsightCollection $insightCollection,
-        array $dir,
+        array $directories,
         array $metrics
     ): void {
         $results = $insightCollection->results();
