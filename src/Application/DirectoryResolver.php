@@ -27,9 +27,9 @@ final class DirectoryResolver
 
         $directoryList = [];
         foreach ($directories as $directory) {
-            $directory[0] !== DIRECTORY_SEPARATOR && preg_match('~\A[A-Z]:(?![^/\\\\])~i', $directory) === 0
-                ? $directoryList[] = getcwd() . DIRECTORY_SEPARATOR . $directory
-                : $directoryList[] = $directory;
+            $directoryList[] = $directory[0] !== DIRECTORY_SEPARATOR && preg_match('~\A[A-Z]:(?![^/\\\\])~i', $directory) === 0
+                ? getcwd() . DIRECTORY_SEPARATOR . $directory
+                : $directory;
         }
 
         return $directoryList;

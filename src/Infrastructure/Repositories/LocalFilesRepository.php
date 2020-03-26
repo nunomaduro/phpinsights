@@ -25,12 +25,12 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * @var array<mixed>
      */
-    private $fileList = [];
+    private $fileList;
 
     /**
      * @var array<string>
      */
-    private $directoryList = [];
+    private $directoryList;
 
     public function __construct(Finder $finder)
     {
@@ -64,16 +64,8 @@ final class LocalFilesRepository implements FilesRepository
             }
         }
 
-        $directoryFiles = [];
-        $singleFiles = [];
-
-        if ($this->directoryList !== []) {
-            $directoryFiles = $this->getDirectoryFiles($exclude);
-        }
-
-        if ($this->fileList !== []) {
-            $singleFiles = $this->getSingleFiles();
-        }
+        $directoryFiles = $this->directoryList === null ? [] : $this->getDirectoryFiles($exclude);
+        $singleFiles = $this->fileList === null ? [] : $this->getSingleFiles();
 
         $this->files = array_merge($directoryFiles, $singleFiles);
 
