@@ -21,6 +21,8 @@ final class ConfigResolver
 {
     private const CONFIG_FILENAME = 'phpinsights.php';
 
+    private const COMPOSER_FILENAME = 'composer.json';
+
     private const DEFAULT_PRESET = 'default';
 
     /**
@@ -47,7 +49,7 @@ final class ConfigResolver
     {
         $directories = DirectoryResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
-        $composer = self::getComposer($directories[0]);
+        $composer = self::getComposer($input, $directories);
 
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($composer);
@@ -154,11 +156,23 @@ final class ConfigResolver
         return $config;
     }
 
-    private static function getComposer(string $directory): Composer
+    /**
+     * @param InputInterface $input
+     * @param array<string> $directories
+     *
+     * @return Composer
+     */
+    private static function getComposer(InputInterface $input, array $directories): Composer
     {
-        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
+        /** @var string|null $composerPath */
+        $composerPath = $input->hasOption('composer') ? $input->getOption('composer') : null;
 
-        if (! file_exists($composerPath)) {
+        if ($composerPath === null) {
+            $directory = rtrim($directories[0], '/');
+            $composerPath = $directory . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
+        }
+
+        if (strpos($composerPath, self::COMPOSER_FILENAME) === false || ! file_exists($composerPath)) {
             return new Composer([]);
         }
 
