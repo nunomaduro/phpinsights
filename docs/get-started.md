@@ -77,6 +77,14 @@ In laravel, launch command as usual with your path:
 php artisan insights path/to/analyse
 ```
 
+## Specify composer file
+
+Optionally, you can specify your composer file by adding the `composer` flag as below:
+
+```bash
+./vendor/bin/phpinsights analyse --composer=/var/www/composer.json
+```
+
 ## Formatting the output
 
 For changing the output format you can add the `format` flag. The following formats are supported:
