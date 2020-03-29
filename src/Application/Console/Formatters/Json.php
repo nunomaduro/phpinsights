@@ -110,7 +110,7 @@ final class Json implements Formatter
                     $current[] = array_filter([
                         'title' => $insight->getTitle(),
                         'insightClass' => $insight->getInsightClass(),
-                        'file' => $detail->hasFile() ? $detail->getFile() : null,
+                        'file' => PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath()),
                         'line' => $detail->hasLine() ? $detail->getLine() : null,
                         'function' => $detail->hasFunction() ? $detail->getFunction() : null,
                         'message' => $detail->hasMessage() ? $detail->getMessage() : null,

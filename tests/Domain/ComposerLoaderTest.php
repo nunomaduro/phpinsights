@@ -14,7 +14,7 @@ final class ComposerLoaderTest extends TestCase
 {
     public function testGetInstance(): void
     {
-        $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures/Valid');
+        $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures/Valid', []);
         $composer = ComposerLoader::getInstance($collector);
 
         self::assertEquals(Composer::class, get_class($composer));
@@ -24,7 +24,7 @@ final class ComposerLoaderTest extends TestCase
     {
         $this->expectException(ComposerNotFound::class);
 
-        $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures');
+        $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures', []);
         ComposerLoader::getInstance($collector);
     }
 }

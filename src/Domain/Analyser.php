@@ -65,7 +65,7 @@ final class Analyser
     {
         $dir = (string) realpath($dir);
 
-        $collector = new Collector($dir);
+        $collector = new Collector($dir, $files);
 
         foreach ($files as $file) {
             $this->analyseFile($collector, $file);
@@ -73,6 +73,7 @@ final class Analyser
 
         return $collector;
     }
+
     /**
      * Processes a single file.
      *

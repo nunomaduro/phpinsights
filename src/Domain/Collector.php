@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use function count;
 use function max;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 
 /**
  * @internal
@@ -16,6 +17,11 @@ final class Collector
      * @var string
      */
     private $dir;
+
+    /**
+     * @var string
+     */
+    private $commonPath;
 
     /**
      * @var int
@@ -215,17 +221,17 @@ final class Collector
     /**
      * Creates a new instance of the Collector.
      *
-     * @param  string  $dir
+     * @param string $dir
+     * @param array<string> $files
      */
-    public function __construct(string $dir)
+    public function __construct(string $dir, array $files)
     {
         $this->dir = $dir;
+        $this->commonPath = $files !== [] ? PathShortener::extractCommonPath($files) : '';
     }
 
     public function addFile(string $filename): void
     {
-        $filename = str_replace($this->dir . '/', '', $filename);
-
         $this->files[$filename] = $filename;
         $this->directories[] = \dirname($filename);
         $this->directories = array_unique($this->directories);
@@ -454,6 +460,14 @@ final class Collector
     public function getDir(): string
     {
         return $this->dir;
+    }
+
+    /**
+     * Returns all files common path
+     */
+    public function getCommonPath(): string
+    {
+        return $this->commonPath;
     }
 
     public function getLines(): int

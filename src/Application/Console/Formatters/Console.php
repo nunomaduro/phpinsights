@@ -331,7 +331,7 @@ final class Console implements Formatter
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = $this->formatFileLine($detail, $directories[0], $category);
+                    $detailString = $this->formatFileLine($insightCollection, $detail, $category);
 
                     if ($detail->hasFunction()) {
                         $detailString .= ($detailString !== '' ? ':' : '') . $detail->getFunction();
@@ -559,22 +559,10 @@ EOD;
         return $categoryColor[$category] ?? 'blue';
     }
 
-    private function formatFileLine(Details $detail, string $directory, string $category): string
+    private function formatFileLine(InsightCollection $insightCollection, Details $detail, string $category): string
     {
-        $detailString = '';
-        $basePath = realpath($directory) . DIRECTORY_SEPARATOR;
-        $file = null;
-
-        if ($detail->hasFile()) {
-            $file = mb_strpos($basePath, $detail->getFile()) !== false ? '' : $basePath;
-            $file .= $detail->getFile();
-
-            $detailString .= str_replace($basePath, '', $file);
-        }
-
-        if ($detail->hasLine()) {
-            $detailString .= ($detailString !== '' ? ':' : '') . $detail->getLine();
-        }
+        $file = $detail->hasFile() ? $detail->getFile() : null;
+        $detailString = PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath());
 
         $formattedLink = null;
         if ($file !== null) {

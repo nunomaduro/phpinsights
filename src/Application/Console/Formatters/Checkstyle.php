@@ -57,7 +57,7 @@ final class Checkstyle implements Formatter
 
                 /** @var Details $detail */
                 foreach ($details as $detail) {
-                    $fileName = $this->getFileName($detail, $directories[0]);
+                    $fileName = PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath());
 
                     if (isset($checkstyle->file) && (string) $checkstyle->file->attributes()['name'] === $fileName) {
                         $file = $checkstyle->file;
@@ -76,15 +76,5 @@ final class Checkstyle implements Formatter
         }
 
         $this->output->write((string) $checkstyle->asXML());
-    }
-
-    private function getFileName(Details $detail, string $directory): string
-    {
-        if ($detail->hasFile()) {
-            /* replacement is necessary because relative paths are needed */
-            return str_replace($directory . '/', '', $detail->getFile());
-        }
-
-        return '';
     }
 }

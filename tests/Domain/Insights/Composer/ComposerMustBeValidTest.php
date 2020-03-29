@@ -12,7 +12,7 @@ final class ComposerMustBeValidTest extends TestCase
 {
     public function testComposerIsNotValid(): void
     {
-        $collector = new Collector(__DIR__ . '/Fixtures/Fresh');
+        $collector = new Collector(__DIR__ . '/Fixtures/Fresh', []);
         $insight = new ComposerMustBeValid($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -32,7 +32,7 @@ final class ComposerMustBeValidTest extends TestCase
 
     public function testComposerIsValid(): void
     {
-        $collector = new Collector(__DIR__ . '/Fixtures/Valid');
+        $collector = new Collector(__DIR__ . '/Fixtures/Valid', []);
         $insight = new ComposerMustBeValid($collector, []);
 
         self::assertFalse($insight->hasIssue());
