@@ -12,8 +12,6 @@ use NunoMaduro\PhpInsights\Domain\Details;
 final class PathShortener
 {
     /**
-     * Get an array of paths and return common one
-     *
      * @param array<string> $paths
      *
      * @return string

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use function count;
-use function max;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 
 /**
@@ -462,9 +460,6 @@ final class Collector
         return $this->dir;
     }
 
-    /**
-     * Returns all files common path
-     */
     public function getCommonPath(): string
     {
         return $this->commonPath;
@@ -789,12 +784,12 @@ final class Collector
 
     public function getGlobalAccesses(): int
     {
-        return $this->getGlobalConstantAccesses() + count($this->globalVariableAccesses) + count($this->superGlobalVariableAccesses);
+        return $this->getGlobalConstantAccesses() + \count($this->globalVariableAccesses) + \count($this->superGlobalVariableAccesses);
     }
 
     public function getGlobalConstantAccesses(): int
     {
-        return count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
+        return \count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
     }
 
     public function getAttributeAccesses(): int
@@ -815,7 +810,7 @@ final class Collector
      */
     public function getClasses(): int
     {
-        return count($this->getAbstractClasses()) + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
+        return \count($this->getAbstractClasses()) + \count($this->getConcreteNonFinalClasses()) + \count($this->getConcreteFinalClasses());
     }
 
     /**
@@ -831,7 +826,7 @@ final class Collector
      */
     public function getFunctions(): int
     {
-        return count($this->getNamedFunctions()) + $this->getAnonymousFunctions();
+        return \count($this->getNamedFunctions()) + $this->getAnonymousFunctions();
     }
 
     /**
@@ -839,7 +834,7 @@ final class Collector
      */
     public function getConstants(): int
     {
-        return count($this->getGlobalConstants()) + $this->getClassConstants();
+        return \count($this->getGlobalConstants()) + $this->getClassConstants();
     }
 
     /**
@@ -859,7 +854,7 @@ final class Collector
      */
     private function getCount(array $array): int
     {
-        return count($array);
+        return \count($array);
     }
 
     /**
@@ -883,7 +878,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return (bool) count($array) ? max($array) : 0;
+        return (bool) \count($array) ? \max($array) : 0;
     }
 
     private function divide(float $x, float $y): float
