@@ -564,6 +564,10 @@ EOD;
         $file = $detail->hasFile() ? $detail->getFile() : null;
         $detailString = PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath());
 
+        if ($detail->hasLine()) {
+            $detailString .= ($detailString !== '' ? ':' : '') . $detail->getLine();
+        }
+
         $formattedLink = null;
         if ($file !== null) {
             $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine());
