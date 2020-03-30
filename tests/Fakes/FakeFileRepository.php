@@ -33,9 +33,9 @@ final class FakeFileRepository implements FilesRepository
         return (string) getcwd();
     }
 
-    public function getFiles(): Traversable
+    public function getFiles(): array
     {
-        return new ArrayIterator($this->files);
+        return $this->files;
     }
 
     public function within(string $dir, array $exclude): FilesRepository

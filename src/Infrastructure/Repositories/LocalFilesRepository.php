@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Infrastructure\Repositories;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository;
 use Symfony\Component\Finder\Finder;
-use Traversable;
 
 /**
  * @internal
@@ -17,6 +16,11 @@ final class LocalFilesRepository implements FilesRepository
      * @var \Symfony\Component\Finder\Finder
      */
     private $finder;
+
+    /**
+     * @var array<\Symfony\Component\Finder\SplFileInfo>
+     */
+    private $files;
 
     public function __construct(Finder $finder)
     {
@@ -34,9 +38,13 @@ final class LocalFilesRepository implements FilesRepository
         return (string) getcwd();
     }
 
-    public function getFiles(): Traversable
+    public function getFiles(): array
     {
-        return $this->finder->getIterator();
+        if (null === $this->files) {
+            $this->files = iterator_to_array($this->finder->getIterator(), true);
+        }
+
+        return $this->files;
     }
 
     public function within(string $path, array $exclude = []): FilesRepository
@@ -56,6 +64,8 @@ final class LocalFilesRepository implements FilesRepository
                 $this->finder->notName($value);
             }
         }
+
+        $this->files = iterator_to_array($this->finder->getIterator(), true);
 
         return $this;
     }
