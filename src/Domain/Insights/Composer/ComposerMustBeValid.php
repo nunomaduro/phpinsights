@@ -14,24 +14,22 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 final class ComposerMustBeValid extends Insight implements HasDetails
 {
     /**
-     * @var array<string>
+     * @var bool
      */
-    private $errors;
+    private $analyzed = false;
+
     /**
-     * @var array<string>
+     * @var array<Details>
      */
-    private $publishErrors;
-    /**
-     * @var array<string>
-     */
-    private $warnings;
+    private $details = [];
 
     public function hasIssue(): bool
     {
-        $validator = new ConfigValidator(new NullIO());
-        [$this->errors, $this->publishErrors, $this->warnings] = $validator->validate(ComposerFinder::getPath($this->collector));
+        if (! $this->analyzed) {
+            $this->process();
+        }
 
-        return \count(\array_merge($this->errors, $this->publishErrors, $this->warnings)) > 0;
+        return count($this->details) > 0;
     }
 
     public function getTitle(): string
@@ -41,17 +39,24 @@ final class ComposerMustBeValid extends Insight implements HasDetails
 
     public function getDetails(): array
     {
-        $details = [];
+        return $this->details;
+    }
 
-        foreach (array_merge($this->errors, $this->publishErrors, $this->warnings) as $issue) {
+    private function process(): void
+    {
+        $validator = new ConfigValidator(new NullIO());
+
+        [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector));
+
+        foreach (array_merge($errors, $publishErrors, $warnings) as $issue) {
             if (strpos($issue, ' : ') !== false) {
                 $issue = explode(' : ', $issue)[1];
             }
-            $details[] = Details::make()
+            $this->details[] = Details::make()
                 ->setFile('composer.json')
                 ->setMessage($issue);
         }
 
-        return $details;
+        $this->analyzed = true;
     }
 }

@@ -24,6 +24,11 @@ final class InsightCollection
     private $collector;
 
     /**
+     * @var Results
+     */
+    private $results;
+
+    /**
      * Creates a new instance of the Insight Collection.
      *
      * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
@@ -77,8 +82,11 @@ final class InsightCollection
      */
     public function results(): Results
     {
-        $perCategory = [];
+        if (null !== $this->results) {
+            return $this->results;
+        }
 
+        $perCategory = [];
         foreach ($this->insightsPerMetric as $metric => $insights) {
             $category = explode('\\', $metric);
             $category = $category[count($category) - 2];
@@ -91,7 +99,8 @@ final class InsightCollection
                 $perCategory[$category], $insights
             );
         }
+        $this->results = new Results($this->collector, $perCategory);
 
-        return new Results($this->collector, $perCategory);
+        return $this->results;
     }
 }
