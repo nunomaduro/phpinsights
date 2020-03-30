@@ -45,5 +45,4 @@ final class PathShortenerTest extends TestCase
             PathShortener::extractCommonPath($paths)
         );
     }
-
 }

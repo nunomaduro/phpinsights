@@ -17,28 +17,19 @@ final class PathShortener
     public static function extractCommonPath(array $paths): string
     {
         $paths = array_values($paths);
-        $lastOffset = 1;
-        $common = DIRECTORY_SEPARATOR;
+        sort($paths);
 
-        while (($index = mb_strpos($paths[0], DIRECTORY_SEPARATOR, $lastOffset)) !== false) {
-            $dirLen = $index - $lastOffset + 1;
-            $dir = mb_substr($paths[0], $lastOffset, $dirLen);
+        $first = $paths[0];
+        $last = $paths[count($paths) - 1];
+        $length = min(\strlen($first), \strlen($last));
 
-            foreach ($paths as $path) {
-                if (mb_substr($path, $lastOffset, $dirLen) !== $dir) {
-                    return $common;
-                }
-            }
-
-            $common .= $dir;
-            $lastOffset = $index + 1;
+        for ($index = 0; $index < $length && $first[$index] === $last[$index];) {
+            $index++;
         }
 
-        $common = mb_substr($common, 0, -1);
+        $prefix = mb_substr($first, 0, $index ?? 0);
 
-        return mb_substr($common, -1) === DIRECTORY_SEPARATOR
-            ? $common
-            : $common . DIRECTORY_SEPARATOR;
+        return mb_substr($prefix, 0, (int) mb_strrpos($prefix, DIRECTORY_SEPARATOR) + 1);
     }
 
     public static function fileName(Details $detail, string $commonPath): string
