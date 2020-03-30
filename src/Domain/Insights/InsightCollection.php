@@ -82,7 +82,7 @@ final class InsightCollection
      */
     public function results(): Results
     {
-        if (null !== $this->results) {
+        if ($this->results !== null) {
             return $this->results;
         }
 

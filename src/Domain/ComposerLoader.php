@@ -24,7 +24,7 @@ final class ComposerLoader
 
     public static function getInstance(Collector $collector): Composer
     {
-        if (null === self::$composer || $collector !== self::$currentCollector) {
+        if (self::$composer === null || $collector !== self::$currentCollector) {
             self::$currentCollector = $collector;
 
             $io = new NullIO();
