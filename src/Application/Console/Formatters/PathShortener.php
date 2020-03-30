@@ -13,8 +13,6 @@ final class PathShortener
 {
     /**
      * @param array<string> $paths
-     *
-     * @return string
      */
     public static function extractCommonPath(array $paths): string
     {
