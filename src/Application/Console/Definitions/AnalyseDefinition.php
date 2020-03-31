@@ -17,9 +17,9 @@ final class AnalyseDefinition
     {
         return new InputDefinition([
             new InputArgument(
-                'directory',
+                'directories',
                 InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-                'The directory to analyse'
+                'The directories to analyse'
             ),
             new InputOption(
                 'config-path',

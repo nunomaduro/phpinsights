@@ -19,7 +19,7 @@ final class DirectoryResolver
     public static function resolve(InputInterface $input): array
     {
         /** @var array<string> $directories */
-        $directories = $input->getArgument('directory');
+        $directories = $input->getArgument('directories');
 
         if ($directories === [] || $directories == null) {
             $directories = [(string) getcwd()];

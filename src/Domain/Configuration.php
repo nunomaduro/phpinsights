@@ -241,7 +241,7 @@ final class Configuration
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'preset' => 'default',
-            'directory' => (string) getcwd(),
+            'directories' => [(string) getcwd()],
             'exclude' => [],
             'add' => [],
             'requirements' => [],
@@ -260,7 +260,7 @@ final class Configuration
 
         $this->preset = $config['preset'];
 
-        foreach ((array) $config['directory'] as $directory) {
+        foreach ((array) $config['directories'] as $directory) {
             // resolve symbolic link, /./, /../
             $this->directories[] = realpath($directory) !== false
                 ? realpath($directory)

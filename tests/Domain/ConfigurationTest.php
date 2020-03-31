@@ -70,7 +70,7 @@ final class ConfigurationTest extends TestCase
 
     public function testResolveDirectoryPath(): void
     {
-        $config = ['directory' => 'tests/..'];
+        $config = ['directories' => 'tests/..'];
         $configuration = new Configuration($config);
 
         self::assertSame([getcwd()], $configuration->getDirectories());

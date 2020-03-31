@@ -74,8 +74,8 @@ final class ConfigResolver
             $config = self::excludeGlobalInsights($config);
         }
 
-        if (! isset($config['directory'])) {
-            $config['directory'] = $directories;
+        if (! isset($config['directories'])) {
+            $config['directories'] = $directories;
         }
 
         return new Configuration($config);

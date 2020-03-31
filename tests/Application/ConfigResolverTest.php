@@ -204,7 +204,7 @@ final class ConfigResolverTest extends TestCase
                 '--directory=.'
             ],
             new InputDefinition([
-                new InputArgument('directory'),
+                new InputArgument('directories'),
                 new InputOption('min-complexity'),
                 new InputOption('disable-security-check'),
                 new InputOption('not-whitelisted'),
