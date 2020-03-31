@@ -45,7 +45,7 @@ final class LocalFilesRepository implements FilesRepository
     public function getFiles(): array
     {
         if ($this->files === null) {
-            $this->files = $this->getIterator();
+            $this->files = $this->getFilesList();
         }
 
         return $this->files;
@@ -94,7 +94,7 @@ final class LocalFilesRepository implements FilesRepository
             }
         }
 
-        return $this->getIterator();
+        return $this->getFilesList();
     }
 
     /**
@@ -106,13 +106,13 @@ final class LocalFilesRepository implements FilesRepository
             ->in($this->fileList['dirname'])
             ->name($this->fileList['basename']);
 
-        return $this->getIterator();
+        return $this->getFilesList();
     }
 
     /**
      * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    private function getIterator(): array
+    private function getFilesList(): array
     {
         return iterator_to_array($this->finder->getIterator(), true);
     }
