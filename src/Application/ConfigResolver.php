@@ -49,7 +49,7 @@ final class ConfigResolver
     {
         $directories = DirectoryResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
-        $composer = self::getComposer($input, $directories);
+        $composer = self::getComposer($input, $directories[0]);
 
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($composer);
@@ -62,15 +62,7 @@ final class ConfigResolver
             }
         }
 
-        $isRootAnalyse = true;
-        foreach (Kernel::getRequiredFiles() as $file) {
-            if (! file_exists($directories[0] . DIRECTORY_SEPARATOR . $file)) {
-                $isRootAnalyse = false;
-                break;
-            }
-        }
-
-        if (! $isRootAnalyse) {
+        if ($composer->getName() === '') {
             $config = self::excludeGlobalInsights($config);
         }
 
@@ -156,20 +148,13 @@ final class ConfigResolver
         return $config;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param array<string> $directories
-     *
-     * @return Composer
-     */
-    private static function getComposer(InputInterface $input, array $directories): Composer
+    private static function getComposer(InputInterface $input, string $directory): Composer
     {
         /** @var string|null $composerPath */
         $composerPath = $input->hasOption('composer') ? $input->getOption('composer') : null;
 
         if ($composerPath === null) {
-            $directory = rtrim($directories[0], '/');
-            $composerPath = $directory . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
+            $composerPath = rtrim($directory, '/') . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
         }
 
         if (strpos($composerPath, self::COMPOSER_FILENAME) === false || ! file_exists($composerPath)) {
