@@ -36,7 +36,7 @@ final class FakeFileRepository implements FilesRepository
         return $this->files;
     }
 
-    public function within(array $dir, array $exclude): FilesRepository
+    public function within(array $paths, array $exclude): FilesRepository
     {
         return $this;
     }
