@@ -118,7 +118,6 @@ final class InsightFactory
     private function loadInsights(array $insights): array
     {
         $insightsAdded = [];
-        $cwd = getcwd() ?? $this->config->getDirectories();
 
         foreach ($insights as $insight) {
             /** @var InsightLoader $loader */
@@ -126,7 +125,7 @@ final class InsightFactory
                 if ($loader->support($insight)) {
                     $insightsAdded[] = $loader->load(
                         $insight,
-                        (string) $cwd,
+                        (string) (getcwd() ?? $this->config->getCommonPath()),
                         $this->config->getConfigForInsight($insight)
                     );
                 }

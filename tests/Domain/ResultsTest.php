@@ -25,7 +25,7 @@ final class ResultsTest extends TestCase
 
     public function testGetTotalSecurityIssuesReturnZeroWhenForbiddenInsightNotLoaded(): void
     {
-        $collector = new Collector($this->baseFixturePath, []);
+        $collector = new Collector([$this->baseFixturePath]);
         $results = new Results($collector, ['Security' => []]);
 
         self::assertEquals(0, $results->getTotalSecurityIssues());
@@ -33,7 +33,7 @@ final class ResultsTest extends TestCase
 
     public function testGetTotalSecurityIssuesOnCompromisedCompose(): void
     {
-        $collector = new Collector($this->baseFixturePath . '/Domain/Results/SecurityIssueComposer', []);
+        $collector = new Collector([$this->baseFixturePath . '/Domain/Results/SecurityIssueComposer']);
         $categories = [
             'Security' => [new ForbiddenSecurityIssues($collector, [])],
         ];
@@ -44,7 +44,7 @@ final class ResultsTest extends TestCase
 
     public function testHasInsightClassInCategoryReturnFalse(): void
     {
-        $collector = new Collector($this->baseFixturePath, []);
+        $collector = new Collector([$this->baseFixturePath]);
         $categories = ['Security' => []];
 
         $result = new Results($collector, $categories);
@@ -56,7 +56,7 @@ final class ResultsTest extends TestCase
 
     public function testHasInsightClassInCategoryReturnTrue(): void
     {
-        $collector = new Collector($this->baseFixturePath, []);
+        $collector = new Collector([$this->baseFixturePath]);
         $categories = [
             'Security' => [new ForbiddenSecurityIssues($collector, [])]
         ];

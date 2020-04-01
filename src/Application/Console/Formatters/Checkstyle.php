@@ -31,12 +31,10 @@ final class Checkstyle implements Formatter
      * Format the result to the desired format.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
-     * @param array<string> $directories
      * @param array<int, string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
-        array $directories,
         array $metrics
     ): void {
         if (! extension_loaded('simplexml')) {

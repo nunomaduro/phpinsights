@@ -78,23 +78,21 @@ final class Console implements Formatter
      * Format the result to the desired format.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
-     * @param array<string> $directories
      * @param array<int, string> $metrics
      */
     public function format(
         InsightCollection $insightCollection,
-        array $directories,
         array $metrics
     ): void {
         $results = $insightCollection->results();
 
-        $this->summary($results, $directories)
+        $this->summary($results, $insightCollection->getCollector()->getAnalysedDirectories())
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
             ->architecture($insightCollection, $results)
             ->miscellaneous($results);
 
-        $this->issues($insightCollection, $metrics, $directories);
+        $this->issues($insightCollection, $metrics, $insightCollection->getCollector()->getCommonPath());
     }
 
     /**
@@ -278,14 +276,14 @@ final class Console implements Formatter
      *
      * @param InsightCollection $insightCollection
      * @param array<string> $metrics
-     * @param array<string> $directories
+     * @param string $commonPath
      *
      * @return self
      */
     private function issues(
         InsightCollection $insightCollection,
         array $metrics,
-        array $directories
+        string $commonPath
     ): self {
         $previousCategory = null;
         $detailsComparator = new DetailsComparator();
@@ -331,7 +329,7 @@ final class Console implements Formatter
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = $this->formatFileLine($insightCollection, $detail, $category);
+                    $detailString = $this->formatFileLine($detail, $category, $commonPath);
 
                     if ($detail->hasFunction()) {
                         $detailString .= ($detailString !== '' ? ':' : '') . $detail->getFunction();
@@ -559,10 +557,10 @@ EOD;
         return $categoryColor[$category] ?? 'blue';
     }
 
-    private function formatFileLine(InsightCollection $insightCollection, Details $detail, string $category): string
+    private function formatFileLine(Details $detail, string $category, string $commonPath): string
     {
         $file = $detail->hasFile() ? $detail->getFile() : null;
-        $detailString = PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath());
+        $detailString = PathShortener::fileName($detail, $commonPath);
 
         if ($detail->hasLine()) {
             $detailString .= ($detailString !== '' ? ':' : '') . $detail->getLine();

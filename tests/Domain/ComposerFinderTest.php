@@ -13,7 +13,7 @@ final class ComposerFinderTest extends TestCase
 {
     public function testGetComposerPath(): void
     {
-        $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures/Valid', []);
+        $collector = new Collector([__DIR__ . '/Insights/Composer/Fixtures/Valid']);
         $path = ComposerFinder::getPath($collector);
 
         self::assertEquals(
@@ -26,7 +26,7 @@ final class ComposerFinderTest extends TestCase
     {
         $this->expectException(ComposerNotFound::class);
 
-        $collector = new Collector(__DIR__ . '/Insights/Composer/Fixtures', []);
+        $collector = new Collector([__DIR__ . '/Insights/Composer/Fixtures']);
         ComposerFinder::getPath($collector);
     }
 }

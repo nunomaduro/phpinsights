@@ -18,7 +18,7 @@ final class ForbiddenTraitsTest extends TestCase
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
         $insight = new ForbiddenTraits($collector, []);
 
         self::assertTrue($insight->hasIssue());

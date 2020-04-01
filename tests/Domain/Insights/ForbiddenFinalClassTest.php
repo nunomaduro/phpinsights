@@ -18,7 +18,7 @@ final class ForbiddenFinalClassTest extends TestCase
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
         $insight = new ForbiddenFinalClasses($collector, []);
 
         self::assertTrue($insight->hasIssue());

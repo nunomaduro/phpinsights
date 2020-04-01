@@ -12,9 +12,9 @@ use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 final class Collector
 {
     /**
-     * @var string
+     * @var array<string>
      */
-    private $dir;
+    private $analysedDirectories;
 
     /**
      * @var string
@@ -219,13 +219,12 @@ final class Collector
     /**
      * Creates a new instance of the Collector.
      *
-     * @param string $dir
-     * @param array<string> $files
+     * @param array<string> $directories
      */
-    public function __construct(string $dir, array $files)
+    public function __construct(array $directories)
     {
-        $this->dir = $dir;
-        $this->commonPath = $files !== [] ? PathShortener::extractCommonPath($files) : '';
+        $this->analysedDirectories = $directories;
+        $this->commonPath = PathShortener::extractCommonPath($directories);
     }
 
     public function addFile(string $filename): void
@@ -453,13 +452,18 @@ final class Collector
     }
 
     /**
-     * Returns the analysed dir.
+     * Returns the analysed directories.
+     *
+     * @return array<string>
      */
-    public function getDir(): string
+    public function getAnalysedDirectories(): array
     {
-        return $this->dir;
+        return $this->analysedDirectories;
     }
 
+    /**
+     * Returns all files common path.
+     */
     public function getCommonPath(): string
     {
         return $this->commonPath;

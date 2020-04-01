@@ -19,7 +19,7 @@ final class ForbiddenGlobalsTest extends TestCase
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
         $insight = new ForbiddenGlobals($collector, []);
 
         self::assertFalse($insight->hasIssue());
@@ -36,7 +36,7 @@ final class ForbiddenGlobalsTest extends TestCase
         $commonPath = PathShortener::extractCommonPath($files);
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
         $insight = new ForbiddenGlobals($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -60,7 +60,7 @@ final class ForbiddenGlobalsTest extends TestCase
         $commonPath = PathShortener::extractCommonPath($files);
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
         $insight = new ForbiddenGlobals($collector, []);
 
         self::assertTrue($insight->hasIssue());

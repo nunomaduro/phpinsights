@@ -15,8 +15,8 @@ final class EmptyNamespaceTest extends TestCase
             __DIR__ . '/Fixtures/EmptyNamespaceFile.php',
         ];
 
-        $analyzer  = new Analyser();
-        $collector = $analyzer->analyse(__DIR__ . '/Fixtures/', $files);
+        $analyzer = new Analyser();
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
 
         self::assertNotEmpty($collector);
     }

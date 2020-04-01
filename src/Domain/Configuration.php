@@ -57,6 +57,11 @@ final class Configuration
     private $directories;
 
     /**
+     * @var string
+     */
+    private $commonPath;
+
+    /**
      * List of folder to exclude from analyse.
      *
      * @var array<string>
@@ -161,6 +166,11 @@ final class Configuration
         return $this->directories;
     }
 
+    public function getCommonPath(): string
+    {
+        return $this->commonPath;
+    }
+
     /**
      * @return array<string>
      */
@@ -242,6 +252,7 @@ final class Configuration
         $resolver->setDefaults([
             'preset' => 'default',
             'directories' => [(string) getcwd()],
+            'common_path' => '',
             'exclude' => [],
             'add' => [],
             'requirements' => [],
@@ -267,6 +278,7 @@ final class Configuration
                 : $directory;
         }
 
+        $this->commonPath = $config['common_path'];
         $this->exclude = $config['exclude'];
         $this->add = $config['add'];
         $this->remove = $config['remove'];

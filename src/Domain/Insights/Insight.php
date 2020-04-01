@@ -41,7 +41,7 @@ abstract class Insight implements InsightContract
         $exclude = $config['exclude'] ?? [];
         if (count($exclude) > 0) {
             $this->excludedFiles = Files::find(
-                (string) (getcwd() ?? $collector->getDir()),
+                (string) (getcwd() ?? $collector->getCommonPath()),
                 $exclude
             );
         }
@@ -54,12 +54,7 @@ abstract class Insight implements InsightContract
 
     final protected function shouldSkipFile(string $file): bool
     {
-        $filepath = $file;
-        if (mb_strpos($file, $this->collector->getDir()) === false) {
-            $filepath = $this->collector->getDir() . DIRECTORY_SEPARATOR . $file;
-        }
-
-        return array_key_exists($filepath, $this->excludedFiles);
+        return \array_key_exists($file, $this->excludedFiles);
     }
 
     /**

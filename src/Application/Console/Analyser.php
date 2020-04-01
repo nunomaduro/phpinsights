@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Console;
 
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
-use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory;
 use NunoMaduro\PhpInsights\Domain\MetricsFinder;
 use NunoMaduro\PhpInsights\Domain\Results;
@@ -22,22 +21,13 @@ final class Analyser
     private $insightCollectionFactory;
 
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Configuration
-     */
-    private $config;
-
-    /**
      * Analyser constructor.
      *
      * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory $insightCollectionFactory
-     * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
      */
-    public function __construct(
-        InsightCollectionFactory $insightCollectionFactory,
-        Configuration $config
-    ) {
+    public function __construct(InsightCollectionFactory $insightCollectionFactory)
+    {
         $this->insightCollectionFactory = $insightCollectionFactory;
-        $this->config = $config;
     }
 
     /**
@@ -57,7 +47,7 @@ final class Analyser
         $insightCollection = $this->insightCollectionFactory
             ->get($metrics, $consoleOutput);
 
-        $formatter->format($insightCollection, $this->config->getDirectories(), $metrics);
+        $formatter->format($insightCollection, $metrics);
 
         return $insightCollection->results();
     }

@@ -69,7 +69,7 @@ final class InsightCollectionFactory
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
 
-        $collector = $this->analyser->analyse($directories[0], $files);
+        $collector = $this->analyser->analyse($directories, $files);
 
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {
