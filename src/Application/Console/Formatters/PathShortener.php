@@ -17,6 +17,7 @@ final class PathShortener
     public static function extractCommonPath(array $paths): string
     {
         $paths = array_values($paths);
+        $paths = self::sanitizePath($paths);
         sort($paths);
 
         $first = $paths[0];
@@ -43,5 +44,19 @@ final class PathShortener
         }
 
         return '';
+    }
+
+    /**
+     * @param array<string> $paths
+     *
+     * @return array<string>
+     */
+    private static function sanitizePath(array $paths): array
+    {
+        return array_map(static function ($path): string {
+            $path = rtrim($path, DIRECTORY_SEPARATOR);
+
+            return is_dir($path) ? $path . DIRECTORY_SEPARATOR : $path;
+        }, $paths);
     }
 }
