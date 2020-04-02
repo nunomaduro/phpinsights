@@ -19,7 +19,7 @@ final class AnalyseDefinition
             new InputArgument(
                 'paths',
                 InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-                'The paths or files to analyse'
+                'Paths of directories or files to analyse'
             ),
             new InputOption(
                 'config-path',
