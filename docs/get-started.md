@@ -76,7 +76,7 @@ In laravel, launch command as usual with your path:
 php artisan insights path/to/analyse
 ```
 
-## Analyse multiple paths ![Version](https://img.shields.io/badge/Version-2.0.0-blue)
+## Analyse multiple paths <Badge text="^2.0"/>
 You can ask `phpinsights` to analyse multiple directories, multiple files or even combining them by providing multiple paths with `analyse` command:
 
 ```bash
@@ -96,7 +96,7 @@ In laravel, launch command as usual with your paths:
 php artisan insights path/to/dir path/to/file.php
 ```
 
-## Specify composer file ![Version](https://img.shields.io/badge/Version-2.0.0-blue)
+## Specify composer file <Badge text="^2.0"/>
 
 Optionally, you can specify your composer file by adding the `composer` flag as below:
 
