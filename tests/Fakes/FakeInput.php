@@ -11,16 +11,16 @@ use Symfony\Component\Console\Input\InputDefinition;
 final class FakeInput
 {
     /**
-     * @param array<string> $directories
+     * @param array<string> $paths
      *
      * @return \Symfony\Component\Console\Input\ArrayInput
      */
-    public static function directory(array $directories): ArrayInput
+    public static function paths(array $paths): ArrayInput
     {
         return new ArrayInput([
-            'directories' => $directories,
+            'paths' => $paths,
         ], new InputDefinition([
-            new InputArgument('directories'),
+            new InputArgument('paths'),
         ]));
     }
 }

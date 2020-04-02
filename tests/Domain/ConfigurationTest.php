@@ -16,7 +16,7 @@ final class ConfigurationTest extends TestCase
     {
         $configuration = new Configuration([]);
 
-        self::assertEquals([getcwd()], $configuration->getDirectories());
+        self::assertEquals([getcwd()], $configuration->getPaths());
         self::assertEquals('default', $configuration->getPreset());
         self::assertEquals([], $configuration->getAdd());
         self::assertEquals([], $configuration->getExcludes());
@@ -70,10 +70,10 @@ final class ConfigurationTest extends TestCase
 
     public function testResolveDirectoryPath(): void
     {
-        $config = ['directories' => 'tests/..'];
+        $config = ['paths' => 'tests/..'];
         $configuration = new Configuration($config);
 
-        self::assertSame([getcwd()], $configuration->getDirectories());
-        self::assertStringNotContainsString('..', $configuration->getDirectories()[0]);
+        self::assertSame([getcwd()], $configuration->getPaths());
+        self::assertStringNotContainsString('..', $configuration->getPaths()[0]);
     }
 }

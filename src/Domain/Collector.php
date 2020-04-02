@@ -12,7 +12,7 @@ final class Collector
     /**
      * @var array<string>
      */
-    private $analysedDirectories;
+    private $analysedPaths;
 
     /**
      * @var string
@@ -217,11 +217,11 @@ final class Collector
     /**
      * Creates a new instance of the Collector.
      *
-     * @param array<string> $directories
+     * @param array<string> $paths
      */
-    public function __construct(array $directories, string $commonPath)
+    public function __construct(array $paths, string $commonPath)
     {
-        $this->analysedDirectories = $directories;
+        $this->analysedPaths = $paths;
         $this->commonPath = $commonPath;
     }
 
@@ -450,13 +450,13 @@ final class Collector
     }
 
     /**
-     * Returns the analysed directories.
+     * Returns the analysed paths.
      *
      * @return array<string>
      */
-    public function getAnalysedDirectories(): array
+    public function getAnalysedPaths(): array
     {
-        return $this->analysedDirectories;
+        return $this->analysedPaths;
     }
 
     /**

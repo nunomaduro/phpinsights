@@ -48,9 +48,9 @@ final class ConfigResolver
      */
     public static function resolve(array $config, InputInterface $input): Configuration
     {
-        $directories = DirectoryResolver::resolve($input);
+        $paths = PathResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
-        $composer = self::getComposer($input, $directories[0]);
+        $composer = self::getComposer($input, $paths[0]);
 
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($composer);
@@ -67,11 +67,11 @@ final class ConfigResolver
             $config = self::excludeGlobalInsights($config);
         }
 
-        if (! isset($config['directories'])) {
-            $config['directories'] = $directories;
+        if (! isset($config['paths'])) {
+            $config['paths'] = $paths;
         }
 
-        $config['common_path'] = PathShortener::extractCommonPath((array) $config['directories']);
+        $config['common_path'] = PathShortener::extractCommonPath((array) $config['paths']);
 
         return new Configuration($config);
     }
@@ -151,13 +151,13 @@ final class ConfigResolver
         return $config;
     }
 
-    private static function getComposer(InputInterface $input, string $directory): Composer
+    private static function getComposer(InputInterface $input, string $path): Composer
     {
         /** @var string|null $composerPath */
         $composerPath = $input->hasOption('composer') ? $input->getOption('composer') : null;
 
         if ($composerPath === null) {
-            $composerPath = rtrim($directory, '/') . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
+            $composerPath = rtrim($path, '/') . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
         }
 
         if (strpos($composerPath, self::COMPOSER_FILENAME) === false || ! file_exists($composerPath)) {

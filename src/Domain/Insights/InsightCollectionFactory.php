@@ -59,18 +59,18 @@ final class InsightCollectionFactory
         array $metrics,
         OutputInterface $consoleOutput
     ): InsightCollection {
-        $directories = $this->config->getDirectories();
+        $paths = $this->config->getPaths();
         $commonPath = $this->config->getCommonPath();
 
         try {
             $files = array_map(static function (\SplFileInfo $file) {
                 return $file->getRealPath();
-            }, $this->filesRepository->within($directories, $this->config->getExcludes())->getFiles());
+            }, $this->filesRepository->within($paths, $this->config->getExcludes())->getFiles());
         } catch (\InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
 
-        $collector = $this->analyser->analyse($directories, $files, $commonPath);
+        $collector = $this->analyser->analyse($paths, $files, $commonPath);
 
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {

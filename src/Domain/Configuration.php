@@ -50,11 +50,11 @@ final class Configuration
     private $preset = 'default';
 
     /**
-     * List of directories to analyse.
+     * List of paths to analyse.
      *
      * @var array<string>
      */
-    private $directories;
+    private $paths;
 
     /**
      * @var string
@@ -161,9 +161,9 @@ final class Configuration
     /**
      * @return array<string>
      */
-    public function getDirectories(): array
+    public function getPaths(): array
     {
-        return $this->directories;
+        return $this->paths;
     }
 
     public function getCommonPath(): string
@@ -251,7 +251,7 @@ final class Configuration
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'preset' => 'default',
-            'directories' => [(string) getcwd()],
+            'paths' => [(string) getcwd()],
             'common_path' => '',
             'exclude' => [],
             'add' => [],
@@ -271,11 +271,11 @@ final class Configuration
 
         $this->preset = $config['preset'];
 
-        foreach ((array) $config['directories'] as $directory) {
+        foreach ((array) $config['paths'] as $path) {
             // resolve symbolic link, /./, /../
-            $this->directories[] = realpath($directory) !== false
-                ? realpath($directory)
-                : $directory;
+            $this->paths[] = realpath($path) !== false
+                ? realpath($path)
+                : $path;
         }
 
         $this->commonPath = $config['common_path'];

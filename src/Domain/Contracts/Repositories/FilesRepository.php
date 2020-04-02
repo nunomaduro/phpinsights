@@ -24,7 +24,7 @@ interface FilesRepository
     public function getFiles(): array;
 
     /**
-     * Sets the current files directories.
+     * Sets the current files paths.
      *
      * @param array<string> $paths
      * @param array<string> $exclude

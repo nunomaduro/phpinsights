@@ -86,7 +86,7 @@ final class Console implements Formatter
     ): void {
         $results = $insightCollection->results();
 
-        $this->summary($results, $insightCollection->getCollector()->getAnalysedDirectories())
+        $this->summary($results, $insightCollection->getCollector()->getAnalysedPaths())
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
             ->architecture($insightCollection, $results)
@@ -99,15 +99,15 @@ final class Console implements Formatter
      * Outputs the summary according to the format.
      *
      * @param Results $results
-     * @param array<string> $directories
+     * @param array<string> $paths
      *
      * @return self
      */
-    private function summary(Results $results, array $directories): self
+    private function summary(Results $results, array $paths): self
     {
         $this->style->newLine(2);
 
-        foreach ($directories as $path) {
+        foreach ($paths as $path) {
             $this->style->writeln(
                 sprintf(
                     '<fg=yellow>[%s]</> `%s`',

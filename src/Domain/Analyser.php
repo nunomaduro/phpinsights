@@ -56,14 +56,14 @@ final class Analyser
     /**
      * Processes a set of files.
      *
-     * @param array<string> $directories
+     * @param array<string> $paths
      * @param array<string> $files
      *
      * @return \NunoMaduro\PhpInsights\Domain\Collector
      */
-    public function analyse(array $directories, array $files, string $commonPath): Collector
+    public function analyse(array $paths, array $files, string $commonPath): Collector
     {
-        $collector = new Collector($directories, $commonPath);
+        $collector = new Collector($paths, $commonPath);
 
         foreach ($files as $file) {
             $this->analyseFile($collector, $file);

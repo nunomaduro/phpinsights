@@ -102,7 +102,7 @@ final class ConfigResolverTest extends TestCase
 
         $finalConfig = ConfigResolver::resolve(
             $config,
-            FakeInput::directory([$this->baseFixturePath . 'ComposerWithoutRequire'])
+            FakeInput::paths([$this->baseFixturePath . 'ComposerWithoutRequire'])
         );
 
         self::assertContains('my/path', $finalConfig->getExcludes());
@@ -124,7 +124,7 @@ final class ConfigResolverTest extends TestCase
 
         ConfigResolver::resolve(
             $config,
-            FakeInput::directory([$this->baseFixturePath . 'ComposerWithoutRequire'])
+            FakeInput::paths([$this->baseFixturePath . 'ComposerWithoutRequire'])
         );
     }
 
@@ -136,7 +136,7 @@ final class ConfigResolverTest extends TestCase
         $config = ['add' => ['say' => 'hello']];
         ConfigResolver::resolve(
             $config,
-            FakeInput::directory([$this->baseFixturePath . 'ComposerWithoutRequire'])
+            FakeInput::paths([$this->baseFixturePath . 'ComposerWithoutRequire'])
         );
     }
 
@@ -148,7 +148,7 @@ final class ConfigResolverTest extends TestCase
         $config = ['add' => [Classes::class => 'hello']];
         ConfigResolver::resolve(
             $config,
-            FakeInput::directory([$this->baseFixturePath . 'ComposerWithoutRequire'])
+            FakeInput::paths([$this->baseFixturePath . 'ComposerWithoutRequire'])
         );
     }
 
@@ -160,7 +160,7 @@ final class ConfigResolverTest extends TestCase
         $config = ['add' => [Classes::class => ['hello']]];
         ConfigResolver::resolve(
             $config,
-            FakeInput::directory([$this->baseFixturePath . 'ComposerWithoutRequire'])
+            FakeInput::paths([$this->baseFixturePath . 'ComposerWithoutRequire'])
         );
     }
 
@@ -171,7 +171,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = ['ide' => $ide];
 
-        $config = ConfigResolver::resolve($config, FakeInput::directory([$this->baseFixturePath]));
+        $config = ConfigResolver::resolve($config, FakeInput::paths([$this->baseFixturePath]));
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
@@ -181,7 +181,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = [];
 
-        $config = ConfigResolver::resolve($config, FakeInput::directory([$this->baseFixturePath]));
+        $config = ConfigResolver::resolve($config, FakeInput::paths([$this->baseFixturePath]));
 
         self::assertInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
@@ -190,7 +190,7 @@ final class ConfigResolverTest extends TestCase
     {
         $config = ['ide' => 'myide://file=%f&line=%l'];
 
-        $config = ConfigResolver::resolve($config, FakeInput::directory([$this->baseFixturePath]));
+        $config = ConfigResolver::resolve($config, FakeInput::paths([$this->baseFixturePath]));
 
         self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
@@ -204,7 +204,7 @@ final class ConfigResolverTest extends TestCase
                 '--directory=.'
             ],
             new InputDefinition([
-                new InputArgument('directories'),
+                new InputArgument('paths'),
                 new InputOption('min-complexity'),
                 new InputOption('disable-security-check'),
                 new InputOption('not-whitelisted'),
