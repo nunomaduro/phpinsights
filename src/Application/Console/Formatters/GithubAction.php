@@ -39,7 +39,7 @@ final class GithubAction implements Formatter
     {
         $this->decorated = new Console($input, $output);
         $this->output = $output;
-        $this->baseDir = Container::make()->get(Configuration::class)->getDirectories();
+        $this->baseDir = Container::make()->get(Configuration::class)->getCommonPath();
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Traits;
@@ -18,7 +19,7 @@ final class ForbiddenTraitsTest extends TestCase
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files, PathShortener::extractCommonPath($files));
         $insight = new ForbiddenTraits($collector, []);
 
         self::assertTrue($insight->hasIssue());

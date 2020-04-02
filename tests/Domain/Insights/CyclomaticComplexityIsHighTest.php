@@ -14,7 +14,8 @@ final class CyclomaticComplexityIsHighTest extends TestCase
 {
     public function testClassHasNoCyclomaticComplexity(): void
     {
-        $collector = new Collector([__DIR__ . '/Fixtures/']);
+        $path = __DIR__ . '/Fixtures/';
+        $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
         $insight = new CyclomaticComplexityIsHigh($collector, []);
 
         self::assertFalse($insight->hasIssue());
@@ -31,7 +32,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         $commonPath = PathShortener::extractCommonPath($files);
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files, $commonPath);
         $insight = new CyclomaticComplexityIsHigh($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -63,7 +64,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         $commonPath = PathShortener::extractCommonPath($files);
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files, $commonPath);
         $insight = new CyclomaticComplexityIsHigh($collector, ['maxComplexity' => 10]);
 
         self::assertTrue($insight->hasIssue());

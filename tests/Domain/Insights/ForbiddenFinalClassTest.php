@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenFinalClasses;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
@@ -18,7 +19,7 @@ final class ForbiddenFinalClassTest extends TestCase
         ];
 
         $analyzer = new Analyser();
-        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files);
+        $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files, PathShortener::extractCommonPath($files));
         $insight = new ForbiddenFinalClasses($collector, []);
 
         self::assertTrue($insight->hasIssue());

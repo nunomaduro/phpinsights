@@ -60,6 +60,7 @@ final class InsightCollectionFactory
         OutputInterface $consoleOutput
     ): InsightCollection {
         $directories = $this->config->getDirectories();
+        $commonPath = $this->config->getCommonPath();
 
         try {
             $files = array_map(static function (\SplFileInfo $file) {
@@ -69,7 +70,7 @@ final class InsightCollectionFactory
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
         }
 
-        $collector = $this->analyser->analyse($directories, $files);
+        $collector = $this->analyser->analyse($directories, $files, $commonPath);
 
         $insightsClasses = [];
         foreach ($metrics as $metricClass) {

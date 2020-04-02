@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights\Composer;
 
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +13,8 @@ final class ComposerMustBeValidTest extends TestCase
 {
     public function testComposerIsNotValid(): void
     {
-        $collector = new Collector([__DIR__ . '/Fixtures/Fresh']);
+        $path = __DIR__ . '/Fixtures/Fresh';
+        $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
         $insight = new ComposerMustBeValid($collector, []);
 
         self::assertTrue($insight->hasIssue());
@@ -32,7 +34,8 @@ final class ComposerMustBeValidTest extends TestCase
 
     public function testComposerIsValid(): void
     {
-        $collector = new Collector([__DIR__ . '/Fixtures/Valid']);
+        $path = __DIR__ . '/Fixtures/Valid';
+        $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
         $insight = new ComposerMustBeValid($collector, []);
 
         self::assertFalse($insight->hasIssue());

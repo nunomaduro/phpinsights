@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain;
 
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
@@ -13,7 +14,8 @@ final class ComposerFinderTest extends TestCase
 {
     public function testGetComposerPath(): void
     {
-        $collector = new Collector([__DIR__ . '/Insights/Composer/Fixtures/Valid']);
+        $path = __DIR__ . '/Insights/Composer/Fixtures/Valid';
+        $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
         $path = ComposerFinder::getPath($collector);
 
         self::assertEquals(
@@ -26,7 +28,8 @@ final class ComposerFinderTest extends TestCase
     {
         $this->expectException(ComposerNotFound::class);
 
-        $collector = new Collector([__DIR__ . '/Insights/Composer/Fixtures']);
+        $path = __DIR__ . '/Insights/Composer/Fixtures';
+        $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
         ComposerFinder::getPath($collector);
     }
 }

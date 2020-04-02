@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
-
 /**
  * @internal
  */
@@ -221,10 +219,10 @@ final class Collector
      *
      * @param array<string> $directories
      */
-    public function __construct(array $directories)
+    public function __construct(array $directories, string $commonPath)
     {
         $this->analysedDirectories = $directories;
-        $this->commonPath = PathShortener::extractCommonPath($directories);
+        $this->commonPath = $commonPath;
     }
 
     public function addFile(string $filename): void

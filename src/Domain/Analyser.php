@@ -61,9 +61,9 @@ final class Analyser
      *
      * @return \NunoMaduro\PhpInsights\Domain\Collector
      */
-    public function analyse(array $directories, array $files): Collector
+    public function analyse(array $directories, array $files, string $commonPath): Collector
     {
-        $collector = new Collector($directories);
+        $collector = new Collector($directories, $commonPath);
 
         foreach ($files as $file) {
             $this->analyseFile($collector, $file);
