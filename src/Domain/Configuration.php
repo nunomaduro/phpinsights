@@ -50,11 +50,16 @@ final class Configuration
     private $preset = 'default';
 
     /**
-     * Directory to analyse.
+     * List of paths to analyse.
      *
+     * @var array<string>
+     */
+    private $paths;
+
+    /**
      * @var string
      */
-    private $directory;
+    private $commonPath;
 
     /**
      * List of folder to exclude from analyse.
@@ -154,11 +159,16 @@ final class Configuration
     }
 
     /**
-     * @return string
+     * @return array<string>
      */
-    public function getDirectory(): string
+    public function getPaths(): array
     {
-        return $this->directory;
+        return $this->paths;
+    }
+
+    public function getCommonPath(): string
+    {
+        return $this->commonPath;
     }
 
     /**
@@ -241,7 +251,8 @@ final class Configuration
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'preset' => 'default',
-            'directory' => (string) getcwd(),
+            'paths' => [(string) getcwd()],
+            'common_path' => '',
             'exclude' => [],
             'add' => [],
             'requirements' => [],
@@ -260,10 +271,14 @@ final class Configuration
 
         $this->preset = $config['preset'];
 
-        // resolve symbolic link, /./, /../
-        $this->directory = realpath($config['directory']) !== false
-            ? realpath($config['directory'])
-            : $config['directory'];
+        foreach ((array) $config['paths'] as $path) {
+            // resolve symbolic link, /./, /../
+            $this->paths[] = realpath($path) !== false
+                ? realpath($path)
+                : $path;
+        }
+
+        $this->commonPath = $config['common_path'];
         $this->exclude = $config['exclude'];
         $this->add = $config['add'];
         $this->remove = $config['remove'];

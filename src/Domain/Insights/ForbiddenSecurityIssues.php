@@ -70,7 +70,8 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
 
             try {
                 self::$result = $checker->check(sprintf(
-                    '%s/composer.lock', $this->collector->getDir()
+                    '%scomposer.lock',
+                    $this->collector->getCommonPath()
                 ));
             } catch (\Throwable $e) {
                 throw new InternetConnectionNotFound(

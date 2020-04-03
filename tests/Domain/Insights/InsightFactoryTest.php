@@ -40,7 +40,7 @@ final class InsightFactoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = ConfigResolver::resolve([], FakeInput::directory('.'));
+        $config = ConfigResolver::resolve([], FakeInput::paths(['.']));
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::$usedInsights,
@@ -81,8 +81,9 @@ final class InsightFactoryTest extends TestCase
                 ],
             ],
         ];
-        $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
-        $insightFactory = new InsightFactory(new FakeFileRepository([]),
+        $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
+        $insightFactory = new InsightFactory(
+            new FakeFileRepository([]),
             static::$usedInsights,
             $configuration
         );
@@ -105,8 +106,9 @@ final class InsightFactoryTest extends TestCase
             ],
         ];
 
-        $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
-        $insightFactory = new InsightFactory(new FakeFileRepository([]),
+        $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
+        $insightFactory = new InsightFactory(
+            new FakeFileRepository([]),
             static::$usedInsights,
             $configuration
         );

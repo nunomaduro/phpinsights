@@ -24,12 +24,12 @@ interface FilesRepository
     public function getFiles(): array;
 
     /**
-     * Sets the current files directories.
+     * Sets the current files paths.
      *
-     * @param  string  $path
+     * @param array<string> $paths
      * @param array<string> $exclude
      *
      * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
-    public function within(string $path, array $exclude): FilesRepository;
+    public function within(array $paths, array $exclude): FilesRepository;
 }

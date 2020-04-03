@@ -49,18 +49,19 @@ abstract class TestCase extends BaseTestCase
      *
      * @param string $preset
      * @param array<string>  $filePaths
-     * @param string $dir
+     * @param array<string> $paths
+     *
      * @return InsightCollection
      */
     final public function runAnalyserOnPreset(
         string $preset,
         array $filePaths,
-        string $dir = ''
+        array $paths = []
     ) : InsightCollection {
         return $this->runAnalyserOnConfig(
             ['preset' => $preset],
             $filePaths,
-            $dir
+            $paths
         );
     }
 
@@ -69,15 +70,20 @@ abstract class TestCase extends BaseTestCase
      *
      * @param array<string, mixed> $config
      * @param array<string> $filePaths
-     * @param string        $dir
+     * @param array<string> $paths
+     *
      * @return InsightCollection
      */
     final public function runAnalyserOnConfig(
         array $config,
         array $filePaths,
-        string $dir = ''
+        array $paths = []
     ) : InsightCollection {
-        $config = ConfigResolver::resolve($config, FakeInput::directory($dir));
+        if ($paths === []) {
+            $paths = [\dirname($filePaths[0])];
+        }
+
+        $config = ConfigResolver::resolve($config, FakeInput::paths($paths));
 
         $analyser = new DomainAnalyser();
 
