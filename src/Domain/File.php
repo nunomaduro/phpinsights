@@ -25,11 +25,12 @@ final class File extends BaseFile
      */
     private $fileInfo;
 
-    public function __construct(string $path,
-                                string $content,
-                                Config $config,
-                                Ruleset $ruleset)
-    {
+    public function __construct(
+        string $path,
+        string $content,
+        Config $config,
+        Ruleset $ruleset
+    ) {
         $this->content = $content;
 
         $this->eolChar = Common::detectLineEndings($content);
