@@ -51,7 +51,6 @@ And setup is done, so you can now run `phpinsights` with the following command:
 php artisan insights
 ```
 
-
 ## With Docker
 
 You can also use `phpinsights` via Docker:
@@ -77,7 +76,7 @@ In laravel, launch command as usual with your path:
 php artisan insights path/to/analyse
 ```
 
-## Fixing errors automatically <Badge text="^1.13"/>
+## Fixing errors automatically <Badge text="^2.0"/>
 
 Some Insights support automatic fixing. 
 To fix your code automatically, two way are possibles: 
@@ -94,6 +93,34 @@ php artisan insights path/to/analyse --fix
 
 # Just fix
 vendor/bin/phpinsights fix path/to/analyse
+```
+
+## Analyse multiple paths <Badge text="^2.0"/>
+You can ask `phpinsights` to analyse multiple directories, multiple files or even combining them by providing multiple paths with `analyse` command:
+
+```bash
+# For multiple directories
+./vendor/bin/phpinsights analyse path/to/dir1 path/to/dir2
+
+# For multiple files
+./vendor/bin/phpinsights analyse path/to/file1.php path/to/file2.php
+
+# Combined
+./vendor/bin/phpinsights analyse path/to/dir path/to/file.php
+```
+
+In laravel, launch command as usual with your paths:
+
+```bash
+php artisan insights path/to/dir path/to/file.php
+```
+
+## Specify composer file <Badge text="^2.0"/>
+
+Optionally, you can specify your composer file by adding the `composer` flag as below:
+
+```bash
+./vendor/bin/phpinsights analyse --composer=/var/www/composer.json
 ```
 
 ## Formatting the output
@@ -119,8 +146,6 @@ A common use case is parsing the output formatted as json to a json file.
 
 When piping the result remember to add the no interaction flag `-n`, as the part where you need to interact is also getting piped. (the json format does not have any interaction)
 While piping data, if you want the progress bar to refresh itself instead of printing a new one, add the `--ansi` flag.
-
-
 
 ## Allowed memory size of X bytes exhausted
 

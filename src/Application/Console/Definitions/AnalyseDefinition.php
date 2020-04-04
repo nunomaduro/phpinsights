@@ -51,11 +51,17 @@ final class AnalyseDefinition extends BaseDefinition
                 'Disable Security issues check to not throw error if vulnerability is found'
             ),
             new InputOption(
-              'format',
-              null,
-              InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
+                'format',
+                null,
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
                 'Format to output the result in [console, json, checkstyle]',
                 ['console']
+            ),
+            new InputOption(
+                'composer',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The composer file path'
             ),
             new InputOption(
                 'fix',

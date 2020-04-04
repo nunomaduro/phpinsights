@@ -13,9 +13,24 @@ use Composer\IO\NullIO;
  */
 final class ComposerLoader
 {
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Collector
+     */
+    private static $currentCollector;
+    /**
+     * @var Composer|null
+     */
+    private static $composer;
+
     public static function getInstance(Collector $collector): Composer
     {
-        $io = new NullIO();
-        return Factory::create($io, ComposerFinder::getPath($collector));
+        if (self::$composer === null || $collector !== self::$currentCollector) {
+            self::$currentCollector = $collector;
+
+            $io = new NullIO();
+            self::$composer = Factory::create($io, ComposerFinder::getPath($collector));
+        }
+
+        return self::$composer;
     }
 }

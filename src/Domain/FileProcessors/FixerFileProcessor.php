@@ -67,6 +67,7 @@ final class FixerFileProcessor implements FileProcessor
         $needFix = false;
         try {
             $tokens = @Tokens::fromCode($oldContent);
+            $originalTokens = clone $tokens;
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
                 $fixer->fix($splFileInfo, $tokens);
@@ -87,7 +88,7 @@ final class FixerFileProcessor implements FileProcessor
                 $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
                 // Tokens has changed, so we need to clear cache
                 Tokens::clearCache();
-                $tokens = @Tokens::fromCode($oldContent);
+                $tokens = clone $originalTokens;
             }
 
             if ($this->fixEnabled === false || $needFix === false) {

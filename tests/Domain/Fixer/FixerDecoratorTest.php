@@ -58,7 +58,9 @@ final class FixerDecoratorTest extends TestCase
             [
                 __DIR__ . '/../../Fixtures/' . self::$fileToTest,
             ],
-            __DIR__ . '/../../Fixtures/'
+            [
+                __DIR__ . '/../../Fixtures/',
+            ]
         );
         $orderedImportErrors = 0;
 
@@ -108,7 +110,9 @@ final class FixerDecoratorTest extends TestCase
             [
                 __DIR__ . '/../../Fixtures/' . self::$fileToTest,
             ],
-            __DIR__ . '/../../Fixtures/'
+            [
+                __DIR__ . '/../../Fixtures/',
+            ]
         );
         $orderedImportErrors = 0;
 

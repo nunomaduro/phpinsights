@@ -19,9 +19,9 @@ abstract class BaseDefinition
     {
         return new InputDefinition([
             new InputArgument(
-                'directory',
-                InputArgument::OPTIONAL,
-                'The directory to analyse'
+                'paths',
+                InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
+                'Paths of directories or files to analyse'
             ),
             new InputOption(
                 'config-path',

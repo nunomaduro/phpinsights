@@ -10,19 +10,36 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerMustExist extends Insight
 {
+    /**
+     * @var bool
+     */
+    private $analyzed = false;
+    /**
+     * @var bool
+     */
+    private $hasError = false;
+
     public function hasIssue(): bool
     {
-        try {
-            ComposerFinder::contents($this->collector);
-        } catch (ComposerNotFound $e) {
-            return true;
+        if (! $this->analyzed) {
+            $this->check();
         }
 
-        return false;
+        return $this->hasError;
     }
 
     public function getTitle(): string
     {
         return 'The `composer.json` file was not found';
+    }
+
+    private function check(): void
+    {
+        try {
+            ComposerFinder::contents($this->collector);
+        } catch (ComposerNotFound $e) {
+            $this->hasError = true;
+        }
+        $this->analyzed = true;
     }
 }
