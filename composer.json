@@ -20,6 +20,7 @@
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
+        "php-parallel-lint/php-parallel-lint": "^1.1",
         "phploc/phploc": "^5.0|^6.0",
         "psr/container": "^1.0",
         "sensiolabs/security-checker": "^6.0",
@@ -33,7 +34,6 @@
         "illuminate/console": "^5.8|^6.0|^7.0",
         "illuminate/support": "^5.8|^6.0|^7.0",
         "mockery/mockery": "^1.0",
-        "php-parallel-lint/php-parallel-lint": "^1.1",
         "phpstan/phpstan-strict-rules": "^0.12",
         "phpunit/phpunit": "^8.0|^9.0",
         "symfony/var-dumper": "^4.2|^5.0",
@@ -41,8 +41,7 @@
         "thecodingmachine/phpstan-strict-rules": "^0.12.0"
     },
     "suggest": {
-        "ext-simplexml": "It is needed for the checkstyle formatter",
-        "php-parallel-lint/php-parallel-lint": "Speed up PHP lint"
+        "ext-simplexml": "It is needed for the checkstyle formatter"
     },
     "autoload-dev": {
         "psr-4": {
