@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -17,8 +18,10 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * @internal
  */
-final class SniffDecorator implements Sniff, Insight, HasDetails
+final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 {
+    use FixPerFileCollector;
+
     /**
      * @var \PHP_CodeSniffer\Sniffs\Sniff
      */
@@ -57,6 +60,8 @@ final class SniffDecorator implements Sniff, Insight, HasDetails
      * @param int $stackPtr
      *
      * @return int|void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function process(File $file, $stackPtr)
     {

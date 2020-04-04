@@ -67,6 +67,10 @@
                 "security issues": {
                     "type": "integer",
                     "minimum": 0
+                },
+                "fixed issues": {
+                    "type": "integer",
+                    "minimum": 0
                 }
             }
         },

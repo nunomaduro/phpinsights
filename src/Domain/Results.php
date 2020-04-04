@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
+use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InsightClassNotFound;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
@@ -106,6 +108,39 @@ final class Results
         } catch (InsightClassNotFound $exception) {
             return 0;
         }
+    }
+
+    public function getTotalFix(): int
+    {
+        $total = 0;
+        foreach ($this->perCategoryInsights as $metrics) {
+            foreach ($metrics as $insight) {
+                if ($insight instanceof Fixable) {
+                    $total += $insight->getTotalFix();
+                }
+            }
+        }
+
+        return $total;
+    }
+
+    public function getTotalIssues(): int
+    {
+        $total = 0;
+        foreach ($this->perCategoryInsights as $metrics) {
+            /** @var Insight $insight */
+            foreach ($metrics as $insight) {
+                if ($insight->hasIssue()) {
+                    if (! $insight instanceof HasDetails) {
+                        $total++;
+                        continue;
+                    }
+
+                    $total += count($insight->getDetails());
+                }
+            }
+        }
+        return $total;
     }
 
     public function hasInsightInCategory(string $insightClass, string $category): bool

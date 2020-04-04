@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 
 return [
@@ -60,6 +62,12 @@ return [
             'exclude' => [
                 'src/Domain/Reflection.php',
                 'src/Domain/Details.php',
+                'src/Application/ConfigResolver.php',
+            ],
+        ],
+        DisallowArrayTypeHintSyntaxSniff::class => [
+            'exclude' => [
+                'src/Application/ConfigResolver.php',
             ],
         ],
         ForbiddenSetterSniff::class => [
@@ -88,6 +96,11 @@ return [
         EmptyStatementSniff::class => [
             'exclude' => [
                 'src/Domain/FileProcessors/FixerFileProcessor.php',
+            ],
+        ],
+        ForbiddenTraits::class => [
+            'exclude' => [
+                'src/Domain/Insights/FixPerFileCollector.php',
             ],
         ],
     ],
