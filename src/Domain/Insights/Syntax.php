@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -51,14 +52,14 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
     {
         $cmdLine = '';
         $phpPath = (string) Config::getExecutablePath('php');
-        $isAnalyseDir = is_dir($this->collector->getDir());
+        $isAnalyseDir = is_dir($this->collector->getCommonPath());
 
         foreach ($this->collector->getFiles() as $filename) {
             if ($this->shouldSkipFile($filename)) {
                 continue;
             }
             if ($isAnalyseDir === true) {
-                $filename = $this->collector->getDir() . DIRECTORY_SEPARATOR . $filename;
+                $filename = $this->collector->getCommonPath() . DIRECTORY_SEPARATOR . $filename;
             }
             $cmdLine .= sprintf(
                 '%s -l -d display_errors=1 -d error_prepend_string="" %s;',
@@ -75,8 +76,8 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
             if (preg_match('/^.*error:(.*) in (.*) on line ([\d]+)/m', trim($error), $matches) === 1) {
                 $filename = $matches[2];
                 if ($isAnalyseDir === true) {
-                    $filename = str_replace($this->collector->getDir() . DIRECTORY_SEPARATOR, '', $filename);
-                } elseif ($filename === $this->collector->getDir()) {
+                    $filename = str_replace($this->collector->getCommonPath() . DIRECTORY_SEPARATOR, '', $filename);
+                } elseif ($filename === $this->collector->getCommonPath()) {
                     $filename = basename($filename);
                 }
 
@@ -91,14 +92,7 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
     private function processParallelLint(): void
     {
         $phpPath = (string) Config::getExecutablePath('php');
-        $isAnalyseDir = is_dir($this->collector->getDir());
-        $dir = $this->collector->getDir();
-
-        $filesToAnalyse = array_map(static function (string $file) use ($dir, $isAnalyseDir): string {
-            if ($isAnalyseDir === true) {
-                $file = $dir . DIRECTORY_SEPARATOR . $file;
-            }
-
+        $filesToAnalyse = array_map(static function (string $file): string {
             return escapeshellarg($file);
         }, $this->filterFilesWithoutExcluded($this->collector->getFiles()));
 
@@ -116,15 +110,8 @@ final class Syntax extends Insight implements HasDetails, GlobalInsight
 
         foreach ($errors as $error) {
             if (preg_match('/^.*error:(.*) in .* on line [\d]+/m', $error['message'], $matches) === 1) {
-                $file = $error['file'];
-                if ($isAnalyseDir === true) {
-                    $file = str_replace($this->collector->getDir() . DIRECTORY_SEPARATOR, '', $file);
-                } elseif ($file === $this->collector->getDir()) {
-                    $file = basename($file);
-                }
-
                 $this->details[] = Details::make()
-                    ->setFile($file)
+                    ->setFile($error['file'])
                     ->setLine($error['line'])
                     ->setMessage('PHP syntax error: ' . trim($matches[1]));
             }

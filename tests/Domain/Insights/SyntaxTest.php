@@ -15,7 +15,7 @@ final class SyntaxTest extends TestCase
         $insights = $this->runAnalyserOnPreset(
             'default',
             [__DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php'],
-            __DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php' // simulate analyse only this file
+            [__DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php']// simulate analyse only this file
         );
 
         foreach ($insights->all() as $insight) {
@@ -26,7 +26,7 @@ final class SyntaxTest extends TestCase
                 $detail = $insight->getDetails()[0];
                 self::assertSame('PHP syntax error: syntax error, unexpected \';\', expecting \'{\'', $detail->getMessage());
                 self::assertSame(2, $detail->getLine());
-                self::assertSame('SemiColonAfterExtendClass.php', $detail->getFile());
+                self::assertStringContainsString('SemiColonAfterExtendClass.php', $detail->getFile());
             }
         }
     }
@@ -37,7 +37,7 @@ final class SyntaxTest extends TestCase
         $insights = $this->runAnalyserOnPreset(
             'default',
             [__DIR__ . '/Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php'],
-            __DIR__ // simulate analyse only this directory
+            [__DIR__] // simulate analyse only this directory
         );
 
         foreach ($insights->all() as $insight) {
@@ -48,7 +48,7 @@ final class SyntaxTest extends TestCase
                 $detail = $insight->getDetails()[0];
                 self::assertSame('PHP syntax error: syntax error, unexpected \';\', expecting \'{\'', $detail->getMessage());
                 self::assertSame(2, $detail->getLine());
-                self::assertSame('Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php', $detail->getFile());
+                self::assertStringContainsString('Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php', $detail->getFile());
             }
         }
     }

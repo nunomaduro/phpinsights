@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Helper;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @internal
@@ -21,21 +22,31 @@ final class Files
      */
     public static function find(string $basedir, array $list): array
     {
-        $finder = Finder::create();
-        $finder
-            ->in($basedir)
-            ->path(array_map(static function (string $path) use ($basedir): string {
-                if (is_file($path)) {
-                    $realPath = realpath($path);
-
-                    if ($realPath !== false) {
-                        $path = $realPath;
-                    }
+        $files = [];
+        $userFinder = false;
+        $finder = Finder::create()->in($basedir);
+        /** @var string $file */
+        foreach ($list as $file) {
+            if (is_file($file)) {
+                $path = realpath($file);
+                if ($path === false) {
+                    $path = $file;
                 }
-                return str_replace($basedir . DIRECTORY_SEPARATOR, '', $path);
-            }, $list))
-            ->files();
+                $info = pathinfo($file);
+                $files[$path] = new SplFileInfo($path, $info['dirname'], $info['basename']);
+                continue;
+            }
 
-        return iterator_to_array($finder, true);
+            $userFinder = true;
+            $finder->path($file);
+        }
+
+        if ($userFinder === true) {
+            $finder->name('*.php')->files();
+            /** @var array<string, SplFileInfo> $files */
+            $files = array_merge($files, iterator_to_array($finder, true));
+        }
+
+        return $files;
     }
 }

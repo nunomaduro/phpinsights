@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace NunoMaduro\PhpInsights\Application;
+
+use Symfony\Component\Console\Input\InputInterface;
+
+/**
+ * @internal
+ */
+final class PathResolver
+{
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array<string>
+     */
+    public static function resolve(InputInterface $input): array
+    {
+        /** @var array<string> $paths */
+        $paths = $input->getArgument('paths');
+
+        if ($paths === [] || $paths == null) {
+            $paths = [(string) getcwd()];
+        }
+
+        $pathList = [];
+        foreach ($paths as $path) {
+            $pathList[] = $path[0] !== DIRECTORY_SEPARATOR && preg_match('~\A[A-Z]:(?![^/\\\\])~i', $path) === 0
+                ? getcwd() . DIRECTORY_SEPARATOR . $path
+                : $path;
+        }
+
+        return $pathList;
+    }
+}

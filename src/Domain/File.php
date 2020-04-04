@@ -25,26 +25,19 @@ final class File extends BaseFile
      */
     private $fileInfo;
 
-    /**
-     * File constructor.
-     *
-     * @param string $path
-     * @param string $content
-     */
-    public function __construct(string $path, string $content)
-    {
+    public function __construct(
+        string $path,
+        string $content,
+        Config $config,
+        Ruleset $ruleset
+    ) {
         $this->content = $content;
 
         $this->eolChar = Common::detectLineEndings($content);
 
-        $config = new Config([], false);
-        $config->__set('tabWidth', 4);
-        $config->__set('annotations', false);
-        $config->__set('encoding', 'UTF-8');
-
         parent::__construct(
             $path,
-            new Ruleset($config),
+            $ruleset,
             $config
         );
     }

@@ -20,11 +20,19 @@ final class Multiple implements Formatter
         $this->formatters = $formatters;
     }
 
-    public function format(InsightCollection $insightCollection, string $dir, array $metrics): void
-    {
+    /**
+     * Format the result to the desired format.
+     *
+     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
+     * @param array<int, string> $metrics
+     */
+    public function format(
+        InsightCollection $insightCollection,
+        array $metrics
+    ): void {
         /** @var Formatter $formatter */
         foreach ($this->formatters as $formatter) {
-            $formatter->format($insightCollection, $dir, $metrics);
+            $formatter->format($insightCollection, $metrics);
         }
     }
 }

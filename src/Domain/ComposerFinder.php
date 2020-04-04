@@ -20,7 +20,7 @@ final class ComposerFinder
 
     public static function getPath(Collector $collector): string
     {
-        $filePath = $collector->getDir() . '/composer.json';
+        $filePath = $collector->getCommonPath() . 'composer.json';
 
         if (file_exists($filePath)) {
             return $filePath;

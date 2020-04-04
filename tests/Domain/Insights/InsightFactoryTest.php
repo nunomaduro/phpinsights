@@ -41,12 +41,12 @@ final class InsightFactoryTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = ConfigResolver::resolve([], FakeInput::directory('.'));
+        $config = ConfigResolver::resolve([], FakeInput::paths(['.']));
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::$usedInsights,
             $config,
-            new Collector($config->getDirectory())
+            new Collector($config->getPaths(), $config->getCommonPath())
         );
     }
 
@@ -83,12 +83,12 @@ final class InsightFactoryTest extends TestCase
                 ],
             ],
         ];
-        $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
+        $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::$usedInsights,
             $configuration,
-            new Collector($configuration->getDirectory())
+            new Collector($configuration->getPaths(), $configuration->getCommonPath())
         );
 
         $sniff = $insightFactory->makeFrom(LineLengthSniff::class, new NullOutput());
@@ -109,12 +109,12 @@ final class InsightFactoryTest extends TestCase
             ],
         ];
 
-        $configuration = ConfigResolver::resolve($config, FakeInput::directory('.'));
+        $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::$usedInsights,
             $configuration,
-            new Collector($configuration->getDirectory())
+            new Collector($configuration->getPaths(), $configuration->getCommonPath())
         );
 
         $fixer = $insightFactory->makeFrom(YodaStyleFixer::class, new NullOutput());

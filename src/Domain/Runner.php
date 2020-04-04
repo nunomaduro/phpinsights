@@ -69,7 +69,6 @@ final class Runner
     {
         // Get the files.
         $files = $this->filesRepository->getFiles();
-        $files = iterator_to_array($files);
 
         // No files found
         if (count($files) === 0) {

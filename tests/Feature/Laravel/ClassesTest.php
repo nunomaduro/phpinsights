@@ -21,7 +21,9 @@ final class ClassesTest extends TestCase
             [
                 __DIR__. '/Fixtures/ModelWithAttributeSetter.php'
             ],
-            __DIR__. '/Fixtures'
+            [
+                __DIR__. '/Fixtures'
+            ]
         );
 
         foreach ($collection->allFrom(new Classes) as $insight) {

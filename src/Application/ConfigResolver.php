@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
 use NunoMaduro\PhpInsights\Domain\Kernel;
@@ -20,6 +21,8 @@ use Symfony\Component\Console\Input\InputInterface;
 final class ConfigResolver
 {
     private const CONFIG_FILENAME = 'phpinsights.php';
+
+    private const COMPOSER_FILENAME = 'composer.json';
 
     private const DEFAULT_PRESET = 'default';
 
@@ -45,9 +48,9 @@ final class ConfigResolver
      */
     public static function resolve(array $config, InputInterface $input): Configuration
     {
-        $directory = DirectoryResolver::resolve($input);
-        $config = ConfigResolver::mergeInputRequirements($config, $input);
-        $composer = self::getComposer($directory);
+        $paths = PathResolver::resolve($input);
+        $config = self::mergeInputRequirements($config, $input);
+        $composer = self::getComposer($input, $paths[0]);
 
         /** @var string $preset */
         $preset = $config['preset'] ?? self::guess($composer);
@@ -60,21 +63,15 @@ final class ConfigResolver
             }
         }
 
-        $isRootAnalyse = true;
-        foreach (Kernel::getRequiredFiles() as $file) {
-            if (! file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
-                $isRootAnalyse = false;
-                break;
-            }
-        }
-
-        if (! $isRootAnalyse) {
+        if ($composer->getName() === '') {
             $config = self::excludeGlobalInsights($config);
         }
 
-        if (! isset($config['directory'])) {
-            $config['directory'] = $directory;
+        if (! isset($config['paths'])) {
+            $config['paths'] = $paths;
         }
+
+        $config['common_path'] = PathShortener::extractCommonPath((array) $config['paths']);
 
         return new Configuration($config);
     }
@@ -154,11 +151,16 @@ final class ConfigResolver
         return $config;
     }
 
-    private static function getComposer(string $directory): Composer
+    private static function getComposer(InputInterface $input, string $path): Composer
     {
-        $composerPath = $directory . DIRECTORY_SEPARATOR . 'composer.json';
+        /** @var string|null $composerPath */
+        $composerPath = $input->hasOption('composer') ? $input->getOption('composer') : null;
 
-        if (! file_exists($composerPath)) {
+        if ($composerPath === null) {
+            $composerPath = rtrim($path, '/') . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
+        }
+
+        if (strpos($composerPath, self::COMPOSER_FILENAME) === false || ! file_exists($composerPath)) {
             return new Composer([]);
         }
 

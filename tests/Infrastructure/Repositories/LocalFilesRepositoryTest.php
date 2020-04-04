@@ -25,7 +25,7 @@ final class LocalFilesRepositoryTest extends TestCase
     {
         $repository = new LocalFilesRepository(Finder::create());
 
-        $files = $repository->within($this->base, $exclude)->getFiles();
+        $files = $repository->within([$this->base], $exclude)->getFiles();
 
         self::assertCount($expected, $files);
     }
@@ -62,9 +62,9 @@ final class LocalFilesRepositoryTest extends TestCase
         $finder = new Finder();
 
         $repository = new LocalFilesRepository($finder);
-        $repository->within(__DIR__.'/Fixtures/FolderWithBladeFile');
+        $repository->within([__DIR__ . '/Fixtures/FolderWithBladeFile']);
 
-        $files = iterator_to_array($repository->getFiles());
+        $files = $repository->getFiles();
 
         self::assertEmpty($files);
     }
@@ -74,8 +74,8 @@ final class LocalFilesRepositoryTest extends TestCase
         $finder = new Finder();
 
         $repository = new LocalFilesRepository($finder);
-        $repository->within(__DIR__ . '/Fixtures/FileToInspect.php');
-        $files = iterator_to_array($repository->getFiles(), false);
+        $repository->within([__DIR__ . '/Fixtures/FileToInspect.php']);
+        $files = array_values($repository->getFiles());
 
         self::assertCount(1, $files);
         self::assertInstanceOf(SplFileInfo::class, $files[0]);
@@ -83,6 +83,7 @@ final class LocalFilesRepositoryTest extends TestCase
 
         if ($path === false) {
             self::fail('Path cannot be false.');
+
             return;
         }
         self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);

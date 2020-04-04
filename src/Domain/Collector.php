@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use function count;
-use function max;
-
 /**
  * @internal
  */
 final class Collector
 {
     /**
+     * @var array<string>
+     */
+    private $analysedPaths;
+
+    /**
      * @var string
      */
-    private $dir;
+    private $commonPath;
 
     /**
      * @var int
@@ -215,17 +217,16 @@ final class Collector
     /**
      * Creates a new instance of the Collector.
      *
-     * @param  string  $dir
+     * @param array<string> $paths
      */
-    public function __construct(string $dir)
+    public function __construct(array $paths, string $commonPath)
     {
-        $this->dir = $dir;
+        $this->analysedPaths = $paths;
+        $this->commonPath = $commonPath;
     }
 
     public function addFile(string $filename): void
     {
-        $filename = str_replace($this->dir . '/', '', $filename);
-
         $this->files[$filename] = $filename;
         $this->directories[] = \dirname($filename);
         $this->directories = array_unique($this->directories);
@@ -449,11 +450,21 @@ final class Collector
     }
 
     /**
-     * Returns the analysed dir.
+     * Returns the analysed paths.
+     *
+     * @return array<string>
      */
-    public function getDir(): string
+    public function getAnalysedPaths(): array
     {
-        return $this->dir;
+        return $this->analysedPaths;
+    }
+
+    /**
+     * Returns all files common path.
+     */
+    public function getCommonPath(): string
+    {
+        return $this->commonPath;
     }
 
     public function getLines(): int
@@ -775,12 +786,12 @@ final class Collector
 
     public function getGlobalAccesses(): int
     {
-        return $this->getGlobalConstantAccesses() + count($this->globalVariableAccesses) + count($this->superGlobalVariableAccesses);
+        return $this->getGlobalConstantAccesses() + \count($this->globalVariableAccesses) + \count($this->superGlobalVariableAccesses);
     }
 
     public function getGlobalConstantAccesses(): int
     {
-        return count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
+        return \count(\array_intersect($this->possibleConstantAccesses, $this->globalConstants));
     }
 
     public function getAttributeAccesses(): int
@@ -801,7 +812,7 @@ final class Collector
      */
     public function getClasses(): int
     {
-        return count($this->getAbstractClasses()) + count($this->getConcreteNonFinalClasses()) + count($this->getConcreteFinalClasses());
+        return \count($this->getAbstractClasses()) + \count($this->getConcreteNonFinalClasses()) + \count($this->getConcreteFinalClasses());
     }
 
     /**
@@ -817,7 +828,7 @@ final class Collector
      */
     public function getFunctions(): int
     {
-        return count($this->getNamedFunctions()) + $this->getAnonymousFunctions();
+        return \count($this->getNamedFunctions()) + $this->getAnonymousFunctions();
     }
 
     /**
@@ -825,7 +836,7 @@ final class Collector
      */
     public function getConstants(): int
     {
-        return count($this->getGlobalConstants()) + $this->getClassConstants();
+        return \count($this->getGlobalConstants()) + $this->getClassConstants();
     }
 
     /**
@@ -845,7 +856,7 @@ final class Collector
      */
     private function getCount(array $array): int
     {
-        return count($array);
+        return \count($array);
     }
 
     /**
@@ -869,7 +880,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return (bool) count($array) ? max($array) : 0;
+        return (bool) \count($array) ? \max($array) : 0;
     }
 
     private function divide(float $x, float $y): float
