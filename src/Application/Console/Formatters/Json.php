@@ -48,8 +48,10 @@ final class Json implements Formatter
                 'architecture' => $results->getStructure(),
                 'style' => $results->getStyle(),
                 'security issues' => $results->getTotalSecurityIssues(),
+                'fixed issues' => $results->getTotalFix(),
             ],
         ];
+
         $data += $this->issues($insightCollection, $metrics);
 
         $json = json_encode($data);

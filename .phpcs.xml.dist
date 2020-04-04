@@ -14,7 +14,7 @@
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
     <arg value="p"/>
-    <ini name="memory_limit" value="128M"/>
+    <ini name="memory_limit" value="512M"/>
 
     <!-- Configs -->
     <config name="installed_paths" value="vendor/slevomat/coding-standard"/>

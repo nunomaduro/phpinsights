@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -16,8 +17,10 @@ use PhpCsFixer\Tokenizer\Tokens;
  *
  * @internal
  */
-final class FixerDecorator implements FixerInterface, InsightContract, HasDetails
+final class FixerDecorator implements FixerInterface, InsightContract, HasDetails, Fixable
 {
+    use FixPerFileCollector;
+
     /**
      * @var \PhpCsFixer\Fixer\FixerInterface
      */
@@ -34,9 +37,9 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     /**
      * FixerDecorator constructor.
      *
-     * @param  \PhpCsFixer\Fixer\FixerInterface  $fixer
-     * @param  string  $dir
-     * @param  array<string>  $exclude
+     * @param \PhpCsFixer\Fixer\FixerInterface $fixer
+     * @param string $dir
+     * @param array<string> $exclude
      */
     public function __construct(FixerInterface $fixer, string $dir, array $exclude)
     {

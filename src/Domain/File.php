@@ -12,18 +12,26 @@ use Symfony\Component\Finder\SplFileInfo;
 
 final class File extends BaseFile
 {
-    /** @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator */
+    /**
+     * @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator
+     */
     private $activeSniff;
-
     /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
     private $tokenListeners = [];
-
     /**
      * @var SplFileInfo
      */
     private $fileInfo;
+    /**
+     * @var bool
+     */
+    private $isFixable;
+    /**
+     * @var bool
+     */
+    private $fixEnabled = false;
 
     public function __construct(
         string $path,
@@ -55,7 +63,6 @@ final class File extends BaseFile
             /** @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator $sniff */
             foreach ($this->tokenListeners[$token['code']] as $sniff) {
                 $this->activeSniff = $sniff;
-
                 try {
                     $sniff->process($this, $stackPtr);
                 } catch (\Throwable $e) {
@@ -63,46 +70,21 @@ final class File extends BaseFile
                 }
             }
         }
-
-        $this->fixedCount += $this->fixer->getFixCount();
-    }
-
-    public function getErrorCount(): int
-    {
-        return 0;
-    }
-
-    /**
-     * Disabling the errors functionality.
-     *
-     * @return array<string>
-     */
-    public function getErrors(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addFixableError($error,
-                                    $stackPtr,
-                                    $code,
-                                    $data = [],
-                                    $severity = 0): bool
-    {
-        return $this->addError($error, $stackPtr, $code, $data, $severity);
     }
 
     /**
      * @param array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>> $tokenListeners
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     * @param bool $isFixable
      */
-    public function processWithTokenListenersAndFileInfo(array $tokenListeners,
-                                                         SplFileInfo $fileInfo
+    public function processWithTokenListenersAndFileInfo(
+        array $tokenListeners,
+        SplFileInfo $fileInfo,
+        bool $isFixable
     ): void {
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
+        $this->isFixable = $isFixable;
         $this->process();
     }
 
@@ -114,6 +96,20 @@ final class File extends BaseFile
     public function getFileInfo(): SplFileInfo
     {
         return $this->fileInfo;
+    }
+
+    /**
+     * Enable fix mode. It's used to prevent report twice
+     * details because fixer relaunch process method.
+     */
+    public function enableFix(): void
+    {
+        $this->fixEnabled = true;
+    }
+
+    public function disableFix(): void
+    {
+        $this->fixEnabled = false;
     }
 
     /**
@@ -130,6 +126,21 @@ final class File extends BaseFile
         $isFixable = false
     ): bool {
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
+
+        if ($isFixable === true && $this->isFixable === true) {
+            if ($this->fixEnabled === true) {
+                $this->activeSniff->addFileFixed($this->fileInfo->getRelativePathname());
+            } else {
+                $this->fixableCount++;
+            }
+
+            return true;
+        }
+
+        if ($this->fixEnabled === true) {
+            // detail already added
+            return true;
+        }
 
         $this->activeSniff->addDetails(
             Details::make()

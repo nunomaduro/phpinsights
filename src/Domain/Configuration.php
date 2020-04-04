@@ -100,6 +100,10 @@ final class Configuration
      * @var FileLinkFormatterContract
      */
     private $fileLinkFormatter;
+    /**
+     * @var bool
+     */
+    private $fix;
 
     /**
      * Configuration constructor.
@@ -187,9 +191,6 @@ final class Configuration
         return $this->remove;
     }
 
-    /**
-     * @return string
-     */
     public function getPreset(): string
     {
         return $this->preset;
@@ -243,6 +244,11 @@ final class Configuration
         return $this->fileLinkFormatter;
     }
 
+    public function hasFixEnabled(): bool
+    {
+        return $this->fix;
+    }
+
     /**
      * @param array<string, string|array|null> $config
      */
@@ -258,6 +264,7 @@ final class Configuration
             'requirements' => [],
             'remove' => [],
             'config' => [],
+            'fix' => false,
         ]);
 
         $resolver->setDefined('ide');
@@ -284,6 +291,7 @@ final class Configuration
         $this->remove = $config['remove'];
         $this->config = $config['config'];
         $this->requirements = $config['requirements'];
+        $this->fix = $config['fix'];
 
         if (
             array_key_exists('ide', $config)

@@ -76,6 +76,25 @@ In laravel, launch command as usual with your path:
 php artisan insights path/to/analyse
 ```
 
+## Fixing errors automatically <Badge text="^2.0"/>
+
+Some Insights support automatic fixing. 
+To fix your code automatically, two way are possibles: 
+
+* Add `--fix` option to your command. The output will be the classical output, with a resume of all issues fixed.
+* Or launch `phpinsights fix [directory]`
+
+```bash
+# Classical command with --fix option
+vendor/bin/phpinsights analyse path/to/analyse --fix
+
+# In laravel
+php artisan insights path/to/analyse --fix
+
+# Just fix
+vendor/bin/phpinsights fix path/to/analyse
+```
+
 ## Analyse multiple paths <Badge text="^2.0"/>
 You can ask `phpinsights` to analyse multiple directories, multiple files or even combining them by providing multiple paths with `analyse` command:
 

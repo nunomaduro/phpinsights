@@ -129,4 +129,23 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
+
+
+    public function testFixableIssues(): void
+    {
+        $fileToTest = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/UnorderedUse.php';
+        $fileExpected = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/UnorderedUseExpected.php';
+
+        $initalFileContent = \file_get_contents($fileToTest);
+
+        $this->runAnalyserOnConfig(
+            ['fix' => true],
+            [$fileToTest]
+        );
+
+        self::assertFileEquals($fileExpected, $fileToTest);
+
+        // Restore file content
+        file_put_contents($fileToTest, $initalFileContent);
+    }
 }

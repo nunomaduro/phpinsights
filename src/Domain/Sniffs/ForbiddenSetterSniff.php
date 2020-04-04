@@ -34,6 +34,8 @@ EOD;
      *
      * @param File $file
      * @param int  $position
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function process(File $file, $position): void
     {

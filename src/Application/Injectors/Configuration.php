@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
-use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
-use Symfony\Component\Console\Application;
+use NunoMaduro\PhpInsights\Application\Console\Definitions\DefinitionBinder;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**
@@ -24,21 +23,18 @@ final class Configuration
         return [
             \NunoMaduro\PhpInsights\Domain\Configuration::class => static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
                 $input = new ArgvInput();
-                // merge application default definition with analyse definition.
-                $definition = (new Application())->getDefinition();
-                $analyseDefinition = AnalyseDefinition::get();
 
-                $definition->addArguments($analyseDefinition->getArguments());
-                $definition->addOptions($analyseDefinition->getOptions());
-
-                $input->bind($definition);
-
+                DefinitionBinder::bind($input);
                 $configPath = ConfigResolver::resolvePath($input);
                 $config = [];
 
                 if ($configPath !== '' && file_exists($configPath)) {
                     $config = require $configPath;
                 }
+
+                $fixOption = $input->hasOption('fix') && (bool) $input->getOption('fix') === true;
+
+                $config['fix'] = $fixOption || $input->getFirstArgument() === 'fix';
 
                 return ConfigResolver::resolve($config, $input);
             },
