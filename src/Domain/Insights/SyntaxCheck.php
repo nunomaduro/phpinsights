@@ -45,7 +45,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $cmdLine = sprintf(
             '%s %s --no-colors --no-progress --json %s',
             escapeshellcmd($phpPath),
-            escapeshellarg(getcwd() . '/vendor/bin/parallel-lint'),
+            escapeshellarg(dirname(__DIR__, 3) . '/vendor/bin/parallel-lint'),
             implode(' ', $filesToAnalyse)
         );
 
