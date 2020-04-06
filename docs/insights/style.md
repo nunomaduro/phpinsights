@@ -191,7 +191,7 @@ This sniff ensures PHP believes the syntax is clean.
 
 This Insight process lint on all PHP files via `php -l` using [PHP-Parallel-Lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint).
 
-**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Syntax`
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\SyntaxCheck`
 
 ## Trailing array comma <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 

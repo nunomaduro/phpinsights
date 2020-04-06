@@ -13,7 +13,7 @@ use Symfony\Component\Process\Process;
 /**
  * @internal
  */
-final class Syntax extends Insight implements HasDetails, GlobalInsight
+final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 {
     /**
      * @var array<Details>

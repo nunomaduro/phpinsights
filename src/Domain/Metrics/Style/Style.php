@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Metrics\Style;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
-use NunoMaduro\PhpInsights\Domain\Insights\Syntax;
+use NunoMaduro\PhpInsights\Domain\Insights\SyntaxCheck;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\DisallowLongArraySyntaxSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\ByteOrderMarkSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineEndingsSniff;
@@ -97,7 +97,7 @@ final class Style implements HasInsights
     public function getInsights(): array
     {
         return [
-            Syntax::class,
+            SyntaxCheck::class,
             ClosingTagSniff::class,
             EndFileNewlineSniff::class,
             SideEffectsSniff::class,

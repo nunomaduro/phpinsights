@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Insights;
 
-use NunoMaduro\PhpInsights\Domain\Insights\Syntax;
+use NunoMaduro\PhpInsights\Domain\Insights\SyntaxCheck;
 use Tests\TestCase;
 
-final class SyntaxTest extends TestCase
+final class SyntaxCheckTest extends TestCase
 {
     public function testHasIssueOnFile(): void
     {
@@ -19,7 +19,7 @@ final class SyntaxTest extends TestCase
         );
 
         foreach ($insights->all() as $insight) {
-            if ($insight instanceof Syntax) {
+            if ($insight instanceof SyntaxCheck) {
                 self::assertTrue($insight->hasIssue());
                 self::assertCount(1, $insight->getDetails());
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
@@ -41,7 +41,7 @@ final class SyntaxTest extends TestCase
         );
 
         foreach ($insights->all() as $insight) {
-            if ($insight instanceof Syntax) {
+            if ($insight instanceof SyntaxCheck) {
                 self::assertTrue($insight->hasIssue());
                 self::assertCount(1, $insight->getDetails());
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
