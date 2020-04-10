@@ -6,12 +6,7 @@ parameters:
         - 'tests'
         - 'bin'
     exclude_paths:
-        - 'tests/Fixtures'
-        - 'tests/Domain/Insights/Fixtures'
-        - 'tests/Infrastructure/Repositories/Fixtures'
-        - 'tests/Domain/Sniffs/ForbiddenSetterMethods/Fixtures'
-        - 'tests/Feature/Fix/Fixtures'
-        - 'tests/Feature/Laravel/Fixtures'
+        - 'tests/*Fixtures/*'
         - 'src/Domain/MetricsFinder.php'
     auto_import_names: true
     php_version_features: '7.4'

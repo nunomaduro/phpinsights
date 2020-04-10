@@ -42,6 +42,7 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
+
     public function testCanIgnoreFileInFixerWithRelativePath(): void
     {
         $collection = $this->runAnalyserOnConfig(
@@ -74,6 +75,7 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
+
     public function testHasErrorWithNoConfig(): void
     {
         $collection = $this->runAnalyserOnConfig([], [__DIR__ . '/../../Fixtures/' . self::FILE_TO_TEST]);
@@ -92,6 +94,7 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(1, $orderedImportErrors);
     }
+
     public function testConfigExcludeDirectory(): void
     {
         $collection = $this->runAnalyserOnConfig(
@@ -124,6 +127,7 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
+
     public function testFixableIssues(): void
     {
         $fileToTest = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/UnorderedUse.php';
