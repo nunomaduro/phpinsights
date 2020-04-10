@@ -10,6 +10,9 @@ use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
+/**
+ * @see \Tests\Domain\Insights\Composer\ComposerLockMustBeFreshTest
+ */
 final class ComposerLockMustBeFresh extends Insight implements HasDetails
 {
     public function hasIssue(): bool

@@ -17,6 +17,8 @@ use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * @internal
+ *
+ * @see \Tests\Application\ConfigResolverTest
  */
 final class ConfigResolver
 {
@@ -26,10 +28,7 @@ final class ConfigResolver
 
     private const DEFAULT_PRESET = 'default';
 
-    /**
-     * @var array<class-string<Preset>>
-     */
-    private static array $presets = [
+    private const PRESETS = [
         DrupalPreset::class,
         LaravelPreset::class,
         SymfonyPreset::class,
@@ -53,7 +52,7 @@ final class ConfigResolver
         $preset = $config['preset'] ?? self::guess($composer);
 
         /** @var Preset $presetClass */
-        foreach (self::$presets as $presetClass) {
+        foreach (self::PRESETS as $presetClass) {
             if ($presetClass::getName() === $preset) {
                 $config = self::mergeConfig($presetClass::get($composer), $config);
                 break;
@@ -89,7 +88,7 @@ final class ConfigResolver
      */
     public static function guess(Composer $composer): string
     {
-        foreach (self::$presets as $presetClass) {
+        foreach (self::PRESETS as $presetClass) {
             if ($presetClass::shouldBeApplied($composer)) {
                 return $presetClass::getName();
             }

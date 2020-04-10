@@ -10,6 +10,8 @@ use Composer\IO\NullIO;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\ComposerLoaderTest
  */
 final class ComposerLoader
 {

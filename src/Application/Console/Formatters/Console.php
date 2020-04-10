@@ -35,6 +35,8 @@ use Symfony\Component\Console\Terminal;
 
 /**
  * @internal
+ *
+ * @see \Tests\Application\Console\Formatters\ConsoleTest
  */
 final class Console implements Formatter
 {
@@ -43,6 +45,40 @@ final class Console implements Formatter
     private const TWO_BLOCKS_IN_ROW = 2;
     private const MIN_SPACEWIDTH = 5;
     private const MAX_SPACEWIDTH = 15;
+
+    private const SUBTITLE = 'fg=white;options=bold;fg=white';
+
+    private const QUALITY = <<<EOD
+    <%quality_color%>%block_size%</>
+    <fg=black;options=bold;%quality_color%>  %quality%  </>
+    <%quality_color%>%block_size%</>
+    EOD;
+
+    private const COMPLEXITY = <<<EOD
+    <%complexity_color%>%block_size%</>
+    <fg=black;options=bold;%complexity_color%>  %complexity%  </>
+    <%complexity_color%>%block_size%</>
+    EOD;
+
+    private const STRUCTURE = <<<EOD
+    <%structure_color%>%block_size%</>
+    <fg=black;options=bold;%structure_color%>  %structure%  </>
+    <%structure_color%>%block_size%</>
+    EOD;
+
+    private const STYLE = <<<EOD
+    <%style_color%>%block_size%</>
+    <fg=black;options=bold;%style_color%>  %style%  </>
+    <%style_color%>%block_size%</>
+    EOD;
+
+    private const CATEGORY_COLOR = [
+        'Code' => 'cyan',
+        'Complexity' => 'green',
+        'Architecture' => 'blue',
+        'Style' => 'yellow',
+        'Security' => 'red',
+    ];
 
     private Style $style;
 
@@ -60,7 +96,6 @@ final class Console implements Formatter
         $this->totalWidth = (new Terminal())->getWidth();
 
         $outputFormatterStyle = new OutputFormatterStyle();
-        /** @var Configuration $config */
         $this->config = Container::make()->get(Configuration::class);
 
         $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
@@ -179,30 +214,18 @@ final class Console implements Formatter
                 )
             );
         }
-
-        $subtitle = 'fg=white;options=bold;fg=white';
         $this->style->newLine();
 
-        $codeQualityColor = "bg={$this->getColor($results->getCodeQuality())}";
-        $complexityColor = "bg={$this->getColor($results->getComplexity())}";
-        $structureColor = "bg={$this->getColor($results->getStructure())}";
-        $styleColor = "bg={$this->getColor($results->getStyle())}";
-
-        $codeQuality = self::getPercentageAsString($results->getCodeQuality());
-        $complexity = self::getPercentageAsString($results->getComplexity());
-        $structure = self::getPercentageAsString($results->getStructure());
-        $style = self::getPercentageAsString($results->getStyle());
-
         $this->renderBlocksScores([
-            '%quality%' => $codeQuality,
-            '%quality_color%' => $codeQualityColor,
-            '%complexity%' => $complexity,
-            '%complexity_color%' => $complexityColor,
-            '%structure%' => $structure,
-            '%structure_color%' => $structureColor,
-            '%style%' => $style,
-            '%style_color%' => $styleColor,
-            '%subtitle%' => $subtitle,
+            '%quality%' => self::getPercentageAsString($results->getCodeQuality()),
+            '%quality_color%' => "bg={$this->getColor($results->getCodeQuality())}",
+            '%complexity%' => self::getPercentageAsString($results->getComplexity()),
+            '%complexity_color%' => "bg={$this->getColor($results->getComplexity())}",
+            '%structure%' => self::getPercentageAsString($results->getStructure()),
+            '%structure_color%' => "bg={$this->getColor($results->getStructure())}",
+            '%style%' => self::getPercentageAsString($results->getStyle()),
+            '%style_color%' => "bg={$this->getColor($results->getStyle())}",
+            '%subtitle%' => self::SUBTITLE,
         ]);
 
         $this->style->newLine(2);
@@ -460,27 +483,6 @@ final class Console implements Formatter
             '%block_size%' => str_pad('', $blockSize),
         ]);
 
-        $quality = <<<EOD
-<%quality_color%>%block_size%</>
-<fg=black;options=bold;%quality_color%>  %quality%  </>
-<%quality_color%>%block_size%</>
-EOD;
-        $complexity = <<<EOD
-<%complexity_color%>%block_size%</>
-<fg=black;options=bold;%complexity_color%>  %complexity%  </>
-<%complexity_color%>%block_size%</>
-EOD;
-        $structure = <<<EOD
-<%structure_color%>%block_size%</>
-<fg=black;options=bold;%structure_color%>  %structure%  </>
-<%structure_color%>%block_size%</>
-EOD;
-        $style = <<<EOD
-<%style_color%>%block_size%</>
-<fg=black;options=bold;%style_color%>  %style%  </>
-<%style_color%>%block_size%</>
-EOD;
-
         $styleDefinition = clone Table::getStyleDefinition('compact');
 
         $styleDefinition->setVerticalBorderChars(
@@ -502,10 +504,10 @@ EOD;
         if ($disposition === self::ALL_BLOCKS_IN_ROW) {
             $table->setRows([
                 [
-                    strtr($quality, $templates),
-                    strtr($complexity, $templates),
-                    strtr($structure, $templates),
-                    strtr($style, $templates),
+                    strtr(self::QUALITY, $templates),
+                    strtr(self::COMPLEXITY, $templates),
+                    strtr(self::STRUCTURE, $templates),
+                    strtr(self::STYLE, $templates),
                 ],
                 ['', '', '', ''],
                 [
@@ -519,8 +521,8 @@ EOD;
         if ($disposition === self::TWO_BLOCKS_IN_ROW) {
             $table->setRows([
                 [
-                    strtr($quality, $templates),
-                    strtr($complexity, $templates),
+                    strtr(self::QUALITY, $templates),
+                    strtr(self::COMPLEXITY, $templates),
                 ],
                 ['', ''],
                 [
@@ -529,8 +531,8 @@ EOD;
                 ],
                 ['', ''],
                 [
-                    strtr($structure, $templates),
-                    strtr($style, $templates),
+                    strtr(self::STRUCTURE, $templates),
+                    strtr(self::STYLE, $templates),
                 ],
                 ['', ''],
                 [
@@ -568,14 +570,7 @@ EOD;
 
     private function getCategoryColor(string $category): string
     {
-        $categoryColor = [
-            'Code' => 'cyan',
-            'Complexity' => 'green',
-            'Architecture' => 'blue',
-            'Style' => 'yellow',
-            'Security' => 'red',
-        ];
-        return $categoryColor[$category] ?? 'blue';
+        return self::CATEGORY_COLOR[$category] ?? 'blue';
     }
 
     private function formatFileLine(Details $detail, string $category, string $commonPath): string

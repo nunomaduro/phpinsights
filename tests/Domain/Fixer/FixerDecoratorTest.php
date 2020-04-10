@@ -11,11 +11,11 @@ use Tests\TestCase;
 
 final class FixerDecoratorTest extends TestCase
 {
-    private static string $fileToTest = 'Domain/Fixer/UnorderedUse.php';
+    private const FILE_TO_TEST = 'Domain/Fixer/UnorderedUse.php';
 
     public function testCanIgnoreFileInFixerWithFullPath(): void
     {
-        $fileLocation = __DIR__ . '/../../Fixtures/' . self::$fileToTest;
+        $fileLocation = __DIR__ . '/../../Fixtures/' . self::FILE_TO_TEST;
         $collection = $this->runAnalyserOnConfig(
             [
                 'config' => [
@@ -42,19 +42,18 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
-
     public function testCanIgnoreFileInFixerWithRelativePath(): void
     {
         $collection = $this->runAnalyserOnConfig(
             [
                 'config' => [
                     OrderedImportsFixer::class => [
-                        'exclude' => [self::$fileToTest],
+                        'exclude' => [self::FILE_TO_TEST],
                     ],
                 ],
             ],
             [
-                __DIR__ . '/../../Fixtures/' . self::$fileToTest,
+                __DIR__ . '/../../Fixtures/' . self::FILE_TO_TEST,
             ],
             [
                 __DIR__ . '/../../Fixtures/',
@@ -75,10 +74,9 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
-
     public function testHasErrorWithNoConfig(): void
     {
-        $collection = $this->runAnalyserOnConfig([], [__DIR__ . '/../../Fixtures/' . self::$fileToTest]);
+        $collection = $this->runAnalyserOnConfig([], [__DIR__ . '/../../Fixtures/' . self::FILE_TO_TEST]);
         $orderedImportErrors = 0;
 
         /** @var Insight $insight */
@@ -94,7 +92,6 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(1, $orderedImportErrors);
     }
-
     public function testConfigExcludeDirectory(): void
     {
         $collection = $this->runAnalyserOnConfig(
@@ -106,7 +103,7 @@ final class FixerDecoratorTest extends TestCase
                 ],
             ],
             [
-                __DIR__ . '/../../Fixtures/' . self::$fileToTest,
+                __DIR__ . '/../../Fixtures/' . self::FILE_TO_TEST,
             ],
             [
                 __DIR__ . '/../../Fixtures/',
@@ -127,8 +124,6 @@ final class FixerDecoratorTest extends TestCase
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $orderedImportErrors);
     }
-
-
     public function testFixableIssues(): void
     {
         $fileToTest = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/UnorderedUse.php';

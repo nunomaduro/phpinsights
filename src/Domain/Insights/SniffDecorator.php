@@ -18,6 +18,8 @@ use RuntimeException;
  * Decorates original php-cs sniffs with additional behavior.
  *
  * @internal
+ *
+ * @see \Tests\Domain\Sniffs\SniffDecoratorTest
  */
 final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 {

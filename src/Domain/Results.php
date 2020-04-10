@@ -12,6 +12,8 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\ResultsTest
  */
 final class Results
 {

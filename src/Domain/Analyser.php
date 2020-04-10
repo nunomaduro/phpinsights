@@ -20,10 +20,7 @@ use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
  */
 final class Analyser
 {
-    /**
-     * @var array<string>
-     */
-    private array $superGlobals = [
+    private const SUPER_GLOBALS = [
         '$_ENV',
         '$_POST',
         '$_GET',
@@ -51,7 +48,6 @@ final class Analyser
 
         return $method->invoke(new BaseAnalyser(), ...$args);
     }
-
     /**
      * Processes a set of files.
      *
@@ -68,7 +64,6 @@ final class Analyser
 
         return $collector;
     }
-
     /**
      * Processes a single file.
      */
@@ -373,7 +368,7 @@ final class Analyser
                 case \T_VARIABLE:
                     if ($value === '$GLOBALS') {
                         $collector->addGlobalVariableAccesses($tokens[$i][2], $tokens[$i][1]);
-                    } elseif (isset(array_flip($this->superGlobals)[$value])) {
+                    } elseif (isset(array_flip(self::SUPER_GLOBALS)[$value])) {
                         $collector->addSuperGlobalVariableAccesses($tokens[$i][2], "super global {$tokens[$i][1]}");
                     }
 

@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 final class LocalFilesRepositoryTest extends TestCase
 {
-    private string $base = __DIR__ . '/../../Fixtures/Tree';
+    private const BASE = __DIR__ . '/../../Fixtures/Tree';
 
     /**
      * @dataProvider provider
@@ -22,11 +22,10 @@ final class LocalFilesRepositoryTest extends TestCase
     {
         $repository = new LocalFilesRepository(Finder::create());
 
-        $files = $repository->within([$this->base], $exclude)->getFiles();
+        $files = $repository->within([self::BASE], $exclude)->getFiles();
 
         self::assertCount($expected, $files);
     }
-
     /**
      * @return array<int, array<int, array<int, string>|int>>
      */
@@ -44,7 +43,6 @@ final class LocalFilesRepositoryTest extends TestCase
             [2, ['/((\w).*)?(FolderA\/)(\w).*/']]
         ];
     }
-
     public function testDefaultDirectory(): void
     {
         $finder = new Finder();
@@ -53,7 +51,6 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertSame((string) getcwd(), $repository->getDefaultDirectory());
     }
-
     public function testCanIgnoreBladeFiles(): void
     {
         $finder = new Finder();
@@ -65,7 +62,6 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertEmpty($files);
     }
-
     public function testPassFileInsteadOfDirectory(): void
     {
         $finder = new Finder();
@@ -80,9 +76,8 @@ final class LocalFilesRepositoryTest extends TestCase
 
         if ($path === false) {
             self::fail('Path cannot be false.');
-
-            return;
+        } else {
+            self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
         }
-        self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
     }
 }

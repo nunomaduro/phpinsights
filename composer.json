@@ -74,16 +74,19 @@
         "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.yaml",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
+        "rector:test": "rector process --ansi",
         "insights": "bin/phpinsights analyse --ansi -v --no-interaction",
         "test": [
             "@phpstan:test",
             "@ecs:test",
+            "@rector:test --dry-run",
             "@phpunit:test",
             "@insights"
         ],
         "fix": [
             "@ecs:test --fix",
-            "@insights --fix --quiet"
+            "@insights --fix --quiet",
+            "@rector:test"
         ],
         "post-install-cmd": [
             "@website:copy-changelog",

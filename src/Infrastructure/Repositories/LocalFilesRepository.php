@@ -10,6 +10,8 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * @internal
+ *
+ * @see \Tests\Infrastructure\Repositories\LocalFilesRepositoryTest
  */
 final class LocalFilesRepository implements FilesRepository
 {
@@ -74,7 +76,7 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * @param array<string> $exclude
      *
-     * @return array<\Symfony\Component\Finder\SplFileInfo>
+     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
      */
     private function getDirectoryFiles(array $exclude = []): array
     {
@@ -97,20 +99,18 @@ final class LocalFilesRepository implements FilesRepository
     }
 
     /**
-     * @return array<\Symfony\Component\Finder\SplFileInfo>
+     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
      */
     private function getSingleFiles(): array
     {
         $this->finder = Finder::create()
             ->in($this->fileList['dirname'] ?? [])
             ->name($this->fileList['basename'] ?? '')
-            ->filter(function (SplFileInfo $file): bool {
-                return in_array(
-                    $file->getPathname(),
-                    $this->fileList['full_path'] ?? '',
-                    true
-                );
-            });
+            ->filter(fn (SplFileInfo $file): bool => in_array(
+                $file->getPathname(),
+                $this->fileList['full_path'] ?? '',
+                true
+            ));
 
         return $this->getFilesList();
     }

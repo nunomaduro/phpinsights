@@ -11,6 +11,9 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
+/**
+ * @see \Tests\Domain\Insights\Composer\ComposerMustBeValidTest
+ */
 final class ComposerMustBeValid extends Insight implements HasDetails
 {
     private bool $analyzed = false;

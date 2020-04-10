@@ -17,6 +17,9 @@ use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 
+/**
+ * @see \Tests\Feature\Laravel\ClassesTest
+ */
 final class Classes implements HasValue, HasInsights
 {
     public function getValue(Collector $collector): string

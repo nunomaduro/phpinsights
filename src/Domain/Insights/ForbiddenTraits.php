@@ -7,6 +7,9 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 
+/**
+ * @see \Tests\Domain\Insights\ForbiddenTraitsTest
+ */
 final class ForbiddenTraits extends Insight implements HasDetails
 {
     public function hasIssue(): bool

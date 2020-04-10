@@ -14,10 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class FormatResolver
 {
-    /**
-     * @var array<string, string>
-     */
-    private static array $formatters = [
+    private const FORMATTERS = [
         'console' => Console::class,
         'json' => Json::class,
         'checkstyle' => Checkstyle::class,
@@ -66,15 +63,14 @@ final class FormatResolver
 
         return new Multiple($formatters);
     }
-
     private static function stringToFormatterClass(string $requestedFormat): string
     {
         if (class_exists($requestedFormat)) {
             return $requestedFormat;
         }
 
-        if (array_key_exists($requestedFormat, self::$formatters)) {
-            return self::$formatters[strtolower($requestedFormat)];
+        if (array_key_exists($requestedFormat, self::FORMATTERS)) {
+            return self::FORMATTERS[strtolower($requestedFormat)];
         }
 
         throw new InvalidArgumentException('Could not find a formatter from string.');

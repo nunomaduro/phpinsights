@@ -49,9 +49,7 @@ final class InsightCollectionFactory
         $commonPath = $this->config->getCommonPath();
 
         try {
-            $files = array_map(static function (SplFileInfo $file) {
-                return $file->getRealPath();
-            }, $this->filesRepository->within($paths, $this->config->getExcludes())->getFiles()
+            $files = array_map(static fn (SplFileInfo $file) => $file->getRealPath(), $this->filesRepository->within($paths, $this->config->getExcludes())->getFiles()
             );
         } catch (InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);

@@ -37,7 +37,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
         }
 
         try {
-            $issues = json_decode((string) $this->getResult(), true);
+            $issues = json_decode((string) $this->getResult(), true, 512, JSON_THROW_ON_ERROR);
         } catch (InternetConnectionNotFound $exception) {
             self::$details = [
                 Details::make()->setMessage($exception->getMessage()),

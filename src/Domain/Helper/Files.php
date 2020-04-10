@@ -42,7 +42,11 @@ final class Files
 
         if ($userFinder) {
             $finder->name('*.php')->files();
-            /** @var array<string, SplFileInfo> $files */
+            /**
+             * @noRector Rector\Php74\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector
+             *
+             * @var array<string, SplFileInfo> $files
+             */
             $files = array_merge($files, iterator_to_array($finder, true));
         }
 

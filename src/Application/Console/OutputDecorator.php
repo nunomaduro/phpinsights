@@ -14,10 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class OutputDecorator
 {
-    /**
-     * @var array<string>
-     */
-    private static array $styles = [
+    private const STYLES = [
         Title::class,
         Bold::class,
     ];
@@ -27,10 +24,10 @@ final class OutputDecorator
      */
     public static function decorate(OutputInterface $output): OutputInterface
     {
-        foreach (self::$styles as $styleClass) {
+        foreach (self::STYLES as $styleClass) {
+            /** @var Style $style */
             $style = new $styleClass();
 
-            /** @var Style $style */
             $style->addTo($output);
         }
 

@@ -7,6 +7,9 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 
+/**
+ * @see \Tests\Domain\Insights\CyclomaticComplexityIsHighTest
+ */
 final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 {
     public function hasIssue(): bool

@@ -6,6 +6,9 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Exceptions\ComposerNotFound;
 
+/**
+ * @see \Tests\Domain\ComposerFinderTest
+ */
 final class ComposerFinder
 {
     public static function contents(Collector $collector): string

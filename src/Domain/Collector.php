@@ -93,7 +93,7 @@ final class Collector
     private int $staticAttributeAccesses = 0;
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     private array $superGlobalVariableAccesses = [];
 
@@ -103,7 +103,7 @@ final class Collector
     private array $possibleConstantAccesses = [];
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     private array $globalVariableAccesses = [];
 

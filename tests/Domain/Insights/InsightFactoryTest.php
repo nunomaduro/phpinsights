@@ -26,7 +26,7 @@ final class InsightFactoryTest extends TestCase
     /**
      * @var array<string>
      */
-    private static array $usedInsights = [
+    private const USED_INSIGHTS = [
         BacktickToShellExecFixer::class,
         ForbiddenPublicPropertySniff::class,
         LineLengthSniff::class,
@@ -34,18 +34,26 @@ final class InsightFactoryTest extends TestCase
     ];
 
     private InsightFactory $insightFactory;
-
+    /**
+     * @var int[][][]
+     */
+    private const CONFIG = [
+        'config' => [
+            LineLengthSniff::class => [
+                'lineLimit' => 50,
+            ],
+        ],
+    ];
     public function setUp(): void
     {
         parent::setUp();
         $config = ConfigResolver::resolve([], FakeInput::paths(['.']));
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            static::$usedInsights,
+            static::USED_INSIGHTS,
             $config
         );
     }
-
     public function testMakeFromUnknowImplementThrowException(): void
     {
         $this->expectException(RuntimeException::class);
@@ -53,7 +61,6 @@ final class InsightFactoryTest extends TestCase
 
         $this->insightFactory->makeFrom(FakeFileRepository::class, new NullOutput());
     }
-
     public function testMakeFromSniffReturnInsight(): void
     {
         $sniff = $this->insightFactory->makeFrom(ForbiddenPublicPropertySniff::class, new NullOutput());
@@ -61,7 +68,6 @@ final class InsightFactoryTest extends TestCase
         self::assertInstanceOf(SniffContract::class, $sniff);
         self::assertInstanceOf(SniffDecorator::class, $sniff);
     }
-
     public function testMakeFromFixerReturnInsight(): void
     {
         $fixer = $this->insightFactory->makeFrom(BacktickToShellExecFixer::class, new NullOutput());
@@ -69,30 +75,20 @@ final class InsightFactoryTest extends TestCase
         self::assertInstanceOf(FixerInterface::class, $fixer);
         self::assertInstanceOf(FixerDecorator::class, $fixer);
     }
-
     public function testConfigureLineLengthSniff(): void
     {
-        $config = [
-            'config' => [
-                LineLengthSniff::class => [
-                    'lineLimit' => 50,
-                ],
-            ],
-        ];
-        $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
+        $configuration = ConfigResolver::resolve(self::CONFIG, FakeInput::paths(['.']));
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            static::$usedInsights,
+            static::USED_INSIGHTS,
             $configuration
         );
-
         $sniff = $insightFactory->makeFrom(LineLengthSniff::class, new NullOutput());
         self::assertInstanceOf(SniffContract::class, $sniff);
         $reflection = new Reflection($sniff);
         $decoratedSniff = $reflection->get('sniff');
         self::assertEquals(50, $decoratedSniff->lineLimit);
     }
-
     public function testConfigureYodaStyleFixer(): void
     {
         $config = [
@@ -107,7 +103,7 @@ final class InsightFactoryTest extends TestCase
         $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            static::$usedInsights,
+            static::USED_INSIGHTS,
             $configuration
         );
 

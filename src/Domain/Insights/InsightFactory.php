@@ -16,6 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\Insights\InsightFactoryTest
  */
 final class InsightFactory
 {

@@ -6,6 +6,8 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\DetailsComparatorTest
  */
 final class DetailsComparator
 {

@@ -8,6 +8,8 @@ use NunoMaduro\PhpInsights\Domain\Details;
 
 /**
  * @internal
+ *
+ * @see \Tests\Application\Console\Formatters\PathShortenerTest
  */
 final class PathShortener
 {

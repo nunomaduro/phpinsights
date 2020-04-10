@@ -20,6 +20,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class GithubAction implements Formatter
 {
+    private const TEMPLATES = [
+        "\r" => '%0D',
+        "\n" => '%0A',
+    ];
     private Console $decorated;
 
     private OutputInterface $output;
@@ -113,11 +117,6 @@ final class GithubAction implements Formatter
 
     private function escapeData(string $data): string
     {
-        $templates = [
-            "\r" => '%0D',
-            "\n" => '%0A',
-        ];
-
-        return strtr($data, $templates);
+        return strtr($data, self::TEMPLATES);
     }
 }

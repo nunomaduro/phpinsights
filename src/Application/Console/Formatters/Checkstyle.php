@@ -12,7 +12,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use RuntimeException;
 use SimpleXMLElement;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -22,7 +21,7 @@ final class Checkstyle implements Formatter
 {
     private OutputInterface $output;
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
     }

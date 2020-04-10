@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\ArgvInput;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\ConfigurationTest
  */
 final class Configuration
 {

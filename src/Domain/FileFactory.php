@@ -14,7 +14,7 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class FileFactory
 {
-    private ?Ruleset $ruleset = null;
+    private Ruleset $ruleset;
 
     private Config $config;
 
@@ -26,14 +26,11 @@ final class FileFactory
         $config->__set('encoding', 'UTF-8');
 
         $this->config = $config;
+        $this->ruleset = new Ruleset($this->config);
     }
 
     public function createFromFileInfo(SplFileInfo $smartFileInfo): File
     {
-        if ($this->ruleset === null) {
-            $this->ruleset = new Ruleset($this->config);
-        }
-
         $path = $smartFileInfo->getRealPath();
 
         if ($path === false) {

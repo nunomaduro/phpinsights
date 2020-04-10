@@ -16,7 +16,7 @@ final class InsightCollection
     /**
      * @var array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>
      */
-    private array $insightsPerMetric = [];
+    private array $insightsPerMetric;
 
     private Collector $collector;
 

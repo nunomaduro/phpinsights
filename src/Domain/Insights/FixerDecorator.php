@@ -17,6 +17,8 @@ use SplFileInfo;
  * Decorates original php-cs-fixers with additional behavior.
  *
  * @internal
+ *
+ * @see \Tests\Domain\Fixer\FixerDecoratorTest
  */
 final class FixerDecorator implements FixerInterface, InsightContract, HasDetails, Fixable
 {

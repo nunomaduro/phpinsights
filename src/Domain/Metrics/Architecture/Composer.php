@@ -10,6 +10,9 @@ use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
 use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName;
 use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustExist;
 
+/**
+ * @see \Tests\Application\ComposerTest
+ */
 final class Composer implements HasInsights
 {
     /**
