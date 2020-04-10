@@ -16,7 +16,7 @@
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
         "composer/composer": "^1.7",
-        "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsofphp/php-cs-fixer": "^2.16.1",
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
