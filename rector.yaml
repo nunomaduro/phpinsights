@@ -7,7 +7,6 @@ parameters:
         - 'bin'
     exclude_paths:
         - 'tests/*Fixtures/*'
-        - 'src/Domain/MetricsFinder.php'
     auto_import_names: true
     php_version_features: '7.4'
     sets:
