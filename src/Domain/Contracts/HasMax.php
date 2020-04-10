@@ -13,10 +13,6 @@ interface HasMax extends Metric
 {
     /**
      * Returns the max of the metric.
-     *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     *
-     * @return string
      */
     public function getMax(Collector $collector): string;
 }

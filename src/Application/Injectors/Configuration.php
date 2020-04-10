@@ -6,10 +6,13 @@ namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\DefinitionBinder;
+use NunoMaduro\PhpInsights\Domain\Configuration as DomainConfiguration;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\ConfigurationTest
  */
 final class Configuration
 {
@@ -21,7 +24,7 @@ final class Configuration
     public function __invoke(): array
     {
         return [
-            \NunoMaduro\PhpInsights\Domain\Configuration::class => static function (): \NunoMaduro\PhpInsights\Domain\Configuration {
+            DomainConfiguration::class => static function (): DomainConfiguration {
                 $input = new ArgvInput();
 
                 DefinitionBinder::bind($input);

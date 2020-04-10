@@ -20,13 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\ConfigurationTest
  */
 final class Configuration
 {
-    /**
-     * @var array<string>
-     */
-    private static $presets = [
+    private const PRESETS = [
         DrupalPreset::class,
         LaravelPreset::class,
         SymfonyPreset::class,
@@ -35,8 +34,7 @@ final class Configuration
         DefaultPreset::class,
     ];
 
-    /** @var array<string> */
-    private static $acceptedRequirements = [
+    private const ACCEPTED_REQUIREMENTS = [
         'min-quality',
         'min-complexity',
         'min-architecture',
@@ -44,66 +42,63 @@ final class Configuration
         'disable-security-check',
     ];
 
-    /**
-     * @var string
-     */
-    private $preset = 'default';
+    private const LINKS = [
+        'textmate' => 'txmt://open?url=file://%f&line=%l',
+        'macvim' => 'mvim://open?url=file://%f&line=%l',
+        'emacs' => 'emacs://open?url=file://%f&line=%l',
+        'sublime' => 'subl://open?url=file://%f&line=%l',
+        'phpstorm' => 'phpstorm://open?file=%f&line=%l',
+        'atom' => 'atom://core/open/file?filename=%f&line=%l',
+        'vscode' => 'vscode://file/%f:%l',
+    ];
+
+    private string $preset = 'default';
 
     /**
      * List of paths to analyse.
      *
      * @var array<string>
      */
-    private $paths;
+    private array $paths;
 
-    /**
-     * @var string
-     */
-    private $commonPath;
+    private string $commonPath;
 
     /**
      * List of folder to exclude from analyse.
      *
      * @var array<string>
      */
-    private $exclude;
-
+    private array $exclude;
     /**
      * List of insights added by metrics.
      *
      * @var array<string, array<string>>
      */
-    private $add;
-
+    private array $add;
     /**
      * List of insights class to remove.
      *
      * @var array<string>
      */
-    private $remove;
+    private array $remove;
 
     /**
      * List of requirements.
      *
      * @var array<string>
      */
-    private $requirements;
+    private array $requirements;
 
     /**
      * List of custom configuration by insight.
      *
      * @var array<string, array<string, string|int|array>>
      */
-    private $config;
+    private array $config;
 
-    /**
-     * @var FileLinkFormatterContract
-     */
-    private $fileLinkFormatter;
-    /**
-     * @var bool
-     */
-    private $fix;
+    private FileLinkFormatterContract $fileLinkFormatter;
+
+    private bool $fix;
 
     /**
      * Configuration constructor.
@@ -121,7 +116,7 @@ final class Configuration
      */
     public static function getAcceptedRequirements(): array
     {
-        return self::$acceptedRequirements;
+        return self::ACCEPTED_REQUIREMENTS;
     }
 
     /**
@@ -133,17 +128,12 @@ final class Configuration
     }
 
     /**
-     * @param string $metric
-     *
      * @return array<string>
      */
     public function getAddedInsightsByMetric(string $metric): array
     {
-        return array_key_exists($metric, $this->add)
-            ? $this->add[$metric]
-            : [];
+        return $this->add[$metric] ?? [];
     }
-
     /**
      * @return array<string, array<string, string|int|array>>
      */
@@ -151,17 +141,13 @@ final class Configuration
     {
         return $this->config;
     }
-
     /**
-     * @param string $insight
-     *
      * @return array<string, string|int|array>
      */
     public function getConfigForInsight(string $insight): array
     {
         return $this->config[$insight] ?? [];
     }
-
     /**
      * @return array<string>
      */
@@ -169,12 +155,10 @@ final class Configuration
     {
         return $this->paths;
     }
-
     public function getCommonPath(): string
     {
         return $this->commonPath;
     }
-
     /**
      * @return array<string>
      */
@@ -182,7 +166,6 @@ final class Configuration
     {
         return $this->exclude;
     }
-
     /**
      * @return array<string>
      */
@@ -190,65 +173,38 @@ final class Configuration
     {
         return $this->remove;
     }
-
     public function getPreset(): string
     {
         return $this->preset;
     }
-
-    /**
-     * @return float
-     */
     public function getMinQuality(): float
     {
         return (float) ($this->requirements['min-quality'] ?? 0);
     }
-
-    /**
-     * @return float
-     */
     public function getMinComplexity(): float
     {
         return (float) ($this->requirements['min-complexity'] ?? 0);
     }
-
-    /**
-     * @return float
-     */
     public function getMinArchitecture(): float
     {
         return (float) ($this->requirements['min-architecture'] ?? 0);
     }
-
-    /**
-     * @return float
-     */
     public function getMinStyle(): float
     {
         return (float) ($this->requirements['min-style'] ?? 0);
     }
-
-    /**
-     * @return bool
-     */
     public function isSecurityCheckDisabled(): bool
     {
         return (bool) ($this->requirements['disable-security-check'] ?? false);
     }
-
-    /**
-     * @return FileLinkFormatterContract
-     */
     public function getFileLinkFormatter(): FileLinkFormatterContract
     {
         return $this->fileLinkFormatter;
     }
-
     public function hasFixEnabled(): bool
     {
         return $this->fix;
     }
-
     /**
      * @param array<string, string|array|null> $config
      */
@@ -268,9 +224,10 @@ final class Configuration
         ]);
 
         $resolver->setDefined('ide');
-        $resolver->setAllowedValues('preset', array_map(static function (string $presetClass) {
-            return $presetClass::getName();
-        }, self::$presets));
+        $resolver->setAllowedValues(
+            'preset',
+            array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
+        );
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
@@ -298,11 +255,10 @@ final class Configuration
             && is_string($config['ide'])
             && $config['ide'] !== ''
         ) {
-            $this->fileLinkFormatter = $this->resolveIde((string) $config['ide']);
+            $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
     }
-
-    private function validateAddedInsight(): \Closure
+    private function validateAddedInsight(): Closure
     {
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
@@ -333,8 +289,7 @@ final class Configuration
             return true;
         };
     }
-
-    private function validateConfigInsights(): \Closure
+    private function validateConfigInsights(): Closure
     {
         return static function ($values): bool {
             foreach (array_keys($values) as $insight) {
@@ -348,33 +303,19 @@ final class Configuration
             return true;
         };
     }
-
     private function resolveIde(string $ide): FileLinkFormatterContract
     {
-        $links = [
-            'textmate' => 'txmt://open?url=file://%f&line=%l',
-            'macvim' => 'mvim://open?url=file://%f&line=%l',
-            'emacs' => 'emacs://open?url=file://%f&line=%l',
-            'sublime' => 'subl://open?url=file://%f&line=%l',
-            'phpstorm' => 'phpstorm://open?file=%f&line=%l',
-            'atom' => 'atom://core/open/file?filename=%f&line=%l',
-            'vscode' => 'vscode://file/%f:%l',
-        ];
-
-        if (isset($links[$ide]) === false &&
-            mb_strpos((string) $ide, '://') === false) {
+        if (! isset(self::LINKS[$ide]) &&
+            mb_strpos($ide, '://') === false) {
             throw new InvalidConfiguration(sprintf(
                 'Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler',
                 $ide,
-                implode(', ', array_keys($links))
+                implode(', ', array_keys(self::LINKS))
             ));
         }
-
-        $fileFormatterPattern = $links[$ide] ?? $ide;
-
+        $fileFormatterPattern = self::LINKS[$ide] ?? $ide;
         return new FileLinkFormatter($fileFormatterPattern);
     }
-
     private function validateRequirements(): Closure
     {
         return static function ($values): bool {

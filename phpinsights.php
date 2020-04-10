@@ -54,7 +54,7 @@ return [
 
     'config' => [
         LineLengthSniff::class => [
-            'lineLimit' => 80,
+            'lineLimit' => 120,
             'absoluteLineLimit' => 120,
             'ignoreComments' => true,
         ],
@@ -118,7 +118,7 @@ return [
 
     'requirements' => [
         'min-quality' => 90.0,
-        'min-architecture' => 80.0,
-        'min-style' => 97.8,
+        'min-architecture' => 85.0,
+        'min-style' => 98.0,
     ],
 ];

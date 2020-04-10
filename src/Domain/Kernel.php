@@ -17,6 +17,8 @@ final class Kernel
 {
     /**
      * The app version.
+     *
+     * @noRector Rector\DeadCode\Rector\ClassConst\RemoveUnusedClassConstantRector
      */
     public const VERSION = 'v1.14.0';
 

@@ -17,6 +17,8 @@ use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * @internal
+ *
+ * @see \Tests\Application\ConfigResolverTest
  */
 final class ConfigResolver
 {
@@ -26,10 +28,7 @@ final class ConfigResolver
 
     private const DEFAULT_PRESET = 'default';
 
-    /**
-     * @var array<class-string<Preset>>
-     */
-    private static $presets = [
+    private const PRESETS = [
         DrupalPreset::class,
         LaravelPreset::class,
         SymfonyPreset::class,
@@ -42,9 +41,6 @@ final class ConfigResolver
      * Merge the given config with the specified preset.
      *
      * @param array<string, string|array> $config
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return Configuration
      */
     public static function resolve(array $config, InputInterface $input): Configuration
     {
@@ -56,7 +52,7 @@ final class ConfigResolver
         $preset = $config['preset'] ?? self::guess($composer);
 
         /** @var Preset $presetClass */
-        foreach (self::$presets as $presetClass) {
+        foreach (self::PRESETS as $presetClass) {
             if ($presetClass::getName() === $preset) {
                 $config = self::mergeConfig($presetClass::get($composer), $config);
                 break;
@@ -89,12 +85,10 @@ final class ConfigResolver
 
     /**
      * Guesses the preset based in information from composer.
-     *
-     * @return string
      */
     public static function guess(Composer $composer): string
     {
-        foreach (self::$presets as $presetClass) {
+        foreach (self::PRESETS as $presetClass) {
             if ($presetClass::shouldBeApplied($composer)) {
                 return $presetClass::getName();
             }
@@ -136,7 +130,6 @@ final class ConfigResolver
      * Merge requirements config from console input.
      *
      * @param array<string, string|array> $config
-     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return array<string, string|array>
      */

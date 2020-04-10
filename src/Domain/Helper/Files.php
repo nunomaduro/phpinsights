@@ -15,7 +15,6 @@ final class Files
     /**
      * Return an array of files matching in list.
      *
-     * @param string $basedir
      * @param array<string> $list
      *
      * @return array<string, \Symfony\Component\Finder\SplFileInfo>
@@ -41,9 +40,13 @@ final class Files
             $finder->path($file);
         }
 
-        if ($userFinder === true) {
+        if ($userFinder) {
             $finder->name('*.php')->files();
-            /** @var array<string, SplFileInfo> $files */
+            /**
+             * @noRector Rector\Php74\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector
+             *
+             * @var array<string, SplFileInfo> $files
+             */
             $files = array_merge($files, iterator_to_array($finder, true));
         }
 

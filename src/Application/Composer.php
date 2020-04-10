@@ -8,11 +8,13 @@ use Composer\Semver\Semver;
 
 /**
  * @internal
+ *
+ * @see \Tests\Application\ComposerTest
  */
 final class Composer
 {
     /** @var array<string, mixed> */
-    private $config;
+    private array $config;
 
     /**
      * Composer constructor.
@@ -26,7 +28,7 @@ final class Composer
 
     public static function fromPath(string $path): self
     {
-        return new self(json_decode((string) file_get_contents($path), true));
+        return new self(json_decode((string) file_get_contents($path), true, 512, JSON_THROW_ON_ERROR));
     }
 
     /**

@@ -6,7 +6,6 @@ namespace NunoMaduro\PhpInsights\Domain\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use SlevomatCodingStandard\Helpers\ClassHelper;
 
 /**
  * This sniff disallows setter methods.
@@ -14,15 +13,15 @@ use SlevomatCodingStandard\Helpers\ClassHelper;
 final class ForbiddenSetterSniff implements Sniff
 {
     private const ERROR_MESSAGE = <<<'EOD'
-Setters are not allowed. Use constructor injection and behavior naming instead.
-EOD;
+    Setters are not allowed. Use constructor injection and behavior naming instead.
+    EOD;
 
     private const SETTER_REGEX = '#^set[A-Z0-9]#';
 
     /**
      * @var array<string>
      */
-    public $allowedMethodRegex;
+    public array $allowedMethodRegex;
 
     public function register(): array
     {
@@ -32,7 +31,6 @@ EOD;
     /**
      * Runs the sniff on a file.
      *
-     * @param File $file
      * @param int  $position
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -44,10 +42,8 @@ EOD;
             return;
         }
 
-        $className = self::getClassName($file);
-
         // Check if method should be skipped.
-        if ($this->shouldSkip($methodName, $className)) {
+        if ($this->shouldSkip($methodName)) {
             return;
         }
 
@@ -60,39 +56,10 @@ EOD;
     }
 
     /**
-     * Returns the class name from the file.
-     *
-     * @param File $file
-     *
-     * @return string
-     */
-    private static function getClassName(File $file): string
-    {
-        $classTokenPosition = $file->findNext(T_CLASS, 0);
-
-        // anonymous class
-        if (! is_integer($classTokenPosition)) {
-            return 'anonymous';
-        }
-
-        $className = ClassHelper::getFullyQualifiedName(
-            $file,
-            $classTokenPosition
-        );
-
-        return ltrim($className, '\\');
-    }
-
-    /**
      * Checks if we should skip this method based on either the
      * method name or the class name.
-     *
-     * @param string $methodName
-     * @param string $className
-     *
-     * @return bool
      */
-    private function shouldSkip(string $methodName, string $className): bool
+    private function shouldSkip(string $methodName): bool
     {
         // Skip setUp method as often used in test classes
         if ($methodName === 'setUp') {

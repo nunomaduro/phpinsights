@@ -10,7 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 final class Multiple implements Formatter
 {
     /** @var array<Formatter> */
-    private $formatters;
+    private array $formatters;
 
     /**
      * @param array<Formatter> $formatters
@@ -23,7 +23,6 @@ final class Multiple implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
     public function format(

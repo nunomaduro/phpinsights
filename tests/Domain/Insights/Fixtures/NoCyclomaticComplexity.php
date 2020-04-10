@@ -4,7 +4,7 @@
 namespace Tests\Domain\Insights\Fixtures;
 
 
-class NoCyclomaticComplexity
+final class NoCyclomaticComplexity
 {
 
 }

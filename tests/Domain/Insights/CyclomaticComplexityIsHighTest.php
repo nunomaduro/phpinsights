@@ -7,6 +7,7 @@ namespace Tests\Domain\Insights;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 use PHPUnit\Framework\TestCase;
 
@@ -41,7 +42,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
 
         $messages = [];
         $files = [];
-        /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+        /** @var Details $detail */
         foreach ($insight->getDetails() as $detail) {
             $messages[] = $detail->getMessage();
             $files[] = PathShortener::fileName($detail, $commonPath);
@@ -73,7 +74,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
 
         $messages = [];
         $files = [];
-        /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+        /** @var Details $detail */
         foreach ($insight->getDetails() as $detail) {
             $messages[] = $detail->getMessage();
             $files[] = PathShortener::fileName($detail, $commonPath);

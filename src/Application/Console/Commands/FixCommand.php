@@ -16,10 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class FixCommand
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory
-     */
-    private $collectionFactory;
+    private InsightCollectionFactory $collectionFactory;
 
     public function __construct(
         InsightCollectionFactory $collectionFactory

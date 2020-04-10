@@ -11,22 +11,16 @@ interface Insight
 {
     /**
      * Checks if the insight detects an issue.
-     *
-     * @return bool
      */
     public function hasIssue(): bool;
 
     /**
      * Gets the title of the insight.
-     *
-     * @return string
      */
     public function getTitle(): string;
 
     /**
      * Get the class name of Insight used.
-     *
-     * @return string
      */
     public function getInsightClass(): string;
 }

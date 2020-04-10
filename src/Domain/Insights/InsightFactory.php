@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use Exception;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
@@ -15,43 +16,36 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\Insights\InsightFactoryTest
  */
 final class InsightFactory
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
-     */
-    private $filesRepository;
+    private FilesRepository $filesRepository;
 
     /**
      * @var array<string>
      */
-    private $insightsClasses;
+    private array $insightsClasses;
 
     /**
      * @var array<InsightContract>
      */
-    private $insights = [];
+    private array $insights = [];
 
     /**
      * @var array<InsightLoader>
      */
-    private $insightLoaders;
+    private array $insightLoaders;
 
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Configuration
-     */
-    private $config;
+    private Configuration $config;
 
-    /** @var bool */
-    private $ran = false;
+    private bool $ran = false;
 
     /**
      * Creates a new instance of Insight Factory.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository $filesRepository
      * @param array<string> $insightsClasses
-     * @param \NunoMaduro\PhpInsights\Domain\Configuration $config
      */
     public function __construct(FilesRepository $filesRepository, array $insightsClasses, Configuration $config)
     {
@@ -64,12 +58,7 @@ final class InsightFactory
     /**
      * Creates a Insight from the given error class.
      *
-     * @param string $errorClass
-     * @param OutputInterface $consoleOutput
-     *
-     * @return InsightContract
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function makeFrom(
         string $errorClass,
@@ -89,7 +78,7 @@ final class InsightFactory
 
     private function runInsightCollector(OutputInterface $consoleOutput): void
     {
-        if ($this->ran === true) {
+        if ($this->ran) {
             return;
         }
 

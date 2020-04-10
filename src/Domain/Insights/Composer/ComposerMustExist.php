@@ -10,14 +10,8 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerMustExist extends Insight
 {
-    /**
-     * @var bool
-     */
-    private $analyzed = false;
-    /**
-     * @var bool
-     */
-    private $hasError = false;
+    private bool $analyzed = false;
+    private bool $hasError = false;
 
     public function hasIssue(): bool
     {

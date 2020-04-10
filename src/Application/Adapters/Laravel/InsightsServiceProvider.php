@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Commands\InsightsCommand;
 use NunoMaduro\PhpInsights\Application\Injectors\Repositories;
@@ -22,7 +23,7 @@ final class InsightsServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        if ($this->app instanceof \Illuminate\Contracts\Foundation\Application) {
+        if ($this->app instanceof Application) {
             $this->publishes([
                 __DIR__.'/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),
             ], 'config');

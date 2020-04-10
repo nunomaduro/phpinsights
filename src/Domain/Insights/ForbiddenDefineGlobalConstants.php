@@ -30,10 +30,8 @@ final class ForbiddenDefineGlobalConstants extends Insight implements HasDetails
         $globalConstants = array_diff($this->collector->getGlobalConstants(), $ignore);
         $globalConstants = $this->filterFilesWithoutExcluded($globalConstants);
 
-        return array_map(static function ($file, $constant): Details {
-            return Details::make()
-                ->setFile($file)
-                ->setMessage($constant);
-        }, array_keys($globalConstants), $globalConstants);
+        return array_map(static fn ($file, $constant): Details => Details::make()
+            ->setFile($file)
+            ->setMessage($constant), array_keys($globalConstants), $globalConstants);
     }
 }

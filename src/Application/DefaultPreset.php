@@ -51,7 +51,9 @@ final class DefaultPreset implements PresetContract
                     'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
                 ],
                 PropertyTypeHintSniff::class => [
-                    'enableNativeTypeHint' => $composer->hasPhpVersion() ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4') === true : PHP_VERSION_ID >= 70400,
+                    'enableNativeTypeHint' => $composer->hasPhpVersion()
+                        ? $composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.4')
+                        : PHP_VERSION_ID >= 70_400,
                 ],
             ],
         ];

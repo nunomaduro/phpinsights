@@ -20,21 +20,13 @@ final class AnalyseCommand
 {
     /**
      * Holds an instance of the Analyser.
-     *
-     * @var \NunoMaduro\PhpInsights\Application\Console\Analyser
      */
-    private $analyser;
+    private Analyser $analyser;
 
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Configuration
-     */
-    private $configuration;
+    private Configuration $configuration;
 
     /**
      * Creates a new instance of the Analyse Command.
-     *
-     * @param \NunoMaduro\PhpInsights\Application\Console\Analyser $analyser
-     * @param \NunoMaduro\PhpInsights\Domain\Configuration         $configuration
      */
     public function __construct(Analyser $analyser, Configuration $configuration)
     {
@@ -44,11 +36,6 @@ final class AnalyseCommand
 
     /**
      * Handle the given input.
-     *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
      */
     public function __invoke(InputInterface $input, OutputInterface $output): int
     {

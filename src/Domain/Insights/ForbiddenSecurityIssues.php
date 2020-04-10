@@ -9,18 +9,16 @@ use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InternetConnectionNotFound;
 use SensioLabs\Security\Result;
 use SensioLabs\Security\SecurityChecker;
+use Throwable;
 
 final class ForbiddenSecurityIssues extends Insight implements HasDetails
 {
-    /**
-     * @var \SensioLabs\Security\Result|null
-     */
-    private static $result;
+    private static ?Result $result = null;
 
     /**
      * @var array<Details>
      */
-    private static $details;
+    private static ?array $details = null;
 
     public function hasIssue(): bool
     {
@@ -39,7 +37,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
         }
 
         try {
-            $issues = json_decode((string) $this->getResult(), true);
+            $issues = json_decode((string) $this->getResult(), true, 512, JSON_THROW_ON_ERROR);
         } catch (InternetConnectionNotFound $exception) {
             self::$details = [
                 Details::make()->setMessage($exception->getMessage()),
@@ -73,7 +71,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
                     '%scomposer.lock',
                     $this->collector->getCommonPath()
                 ));
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 throw new InternetConnectionNotFound(
                     'PHP Insights needs an internet connection to inspect security issues.',
                     1,

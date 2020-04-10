@@ -10,25 +10,21 @@ use NunoMaduro\PhpInsights\Domain\Helper\Files;
 
 abstract class Insight implements InsightContract
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Collector
-     */
-    protected $collector;
+    protected Collector $collector;
 
     /**
      * @var array<string, string|int>
      */
-    protected $config;
+    protected array $config;
 
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
-    protected $excludedFiles;
+    protected array $excludedFiles;
 
     /**
      * Creates an new instance of the Insight.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  array<string, string|int>  $config
      */
     final public function __construct(Collector $collector, array $config)
@@ -64,8 +60,6 @@ abstract class Insight implements InsightContract
      */
     final protected function filterFilesWithoutExcluded(array $files): array
     {
-        return array_filter($files, function (string $file): bool {
-            return $this->shouldSkipFile($file) === false;
-        }, ARRAY_FILTER_USE_KEY);
+        return array_filter($files, fn (string $file): bool => ! $this->shouldSkipFile($file), ARRAY_FILTER_USE_KEY);
     }
 }

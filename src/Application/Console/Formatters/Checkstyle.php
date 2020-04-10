@@ -11,7 +11,7 @@ use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
 use RuntimeException;
-use Symfony\Component\Console\Input\InputInterface;
+use SimpleXMLElement;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,10 +19,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Checkstyle implements Formatter
 {
-    /** @var OutputInterface */
-    private $output;
+    private OutputInterface $output;
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
     }
@@ -30,7 +29,6 @@ final class Checkstyle implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
     public function format(
@@ -40,7 +38,7 @@ final class Checkstyle implements Formatter
         if (! extension_loaded('simplexml')) {
             throw new RuntimeException('To use checkstyle format install simplexml extension.');
         }
-        $checkstyle = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><checkstyle/>');
+        $checkstyle = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><checkstyle/>');
         $detailsComparator = new DetailsComparator();
 
         foreach ($metrics as $metricClass) {

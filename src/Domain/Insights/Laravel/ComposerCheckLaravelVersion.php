@@ -13,7 +13,7 @@ final class ComposerCheckLaravelVersion extends Insight
     public function hasIssue(): bool
     {
         try {
-            $composer = json_decode(ComposerFinder::contents($this->collector), true);
+            $composer = json_decode(ComposerFinder::contents($this->collector), true, 512, JSON_THROW_ON_ERROR);
         } catch (ComposerNotFound $exception) {
             return true;
         }

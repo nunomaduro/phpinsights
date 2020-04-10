@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
 use Exception;
-use InvalidArgumentException;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,10 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Json implements Formatter
 {
-    /** @var OutputInterface */
-    private $output;
+    private OutputInterface $output;
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
     }
@@ -30,7 +28,6 @@ final class Json implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      *
      * @throws Exception
@@ -54,11 +51,7 @@ final class Json implements Formatter
 
         $data += $this->issues($insightCollection, $metrics);
 
-        $json = json_encode($data);
-
-        if ($json === false) {
-            throw new InvalidArgumentException('Failed parsing result to JSON.');
-        }
+        $json = json_encode($data, JSON_THROW_ON_ERROR);
 
         $this->output->write($json);
     }
@@ -66,7 +59,6 @@ final class Json implements Formatter
     /**
      * Outputs the issues errors according to the format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<string> $metrics
      *
      * @return array<string, array<int, array<string, int|string>>|null>
@@ -105,7 +97,7 @@ final class Json implements Formatter
                 $details = $insight->getDetails();
                 usort($details, $detailsComparator);
 
-                /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+                /** @var Details $detail */
                 foreach ($details as $detail) {
                     $current[] = array_filter([
                         'title' => $insight->getTitle(),

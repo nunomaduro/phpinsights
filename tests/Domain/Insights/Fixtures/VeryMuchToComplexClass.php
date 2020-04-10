@@ -3,7 +3,7 @@
 namespace Tests\Domain\Insights\Fixtures;
 
 
-class VeryMuchToComplexClass
+final class VeryMuchToComplexClass
 {
 
     public function first(int $first, int $second)
