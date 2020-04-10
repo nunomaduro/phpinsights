@@ -29,7 +29,7 @@ final class ConfigResolver
     /**
      * @var array<class-string<Preset>>
      */
-    private static $presets = [
+    private static array $presets = [
         DrupalPreset::class,
         LaravelPreset::class,
         SymfonyPreset::class,
@@ -42,9 +42,6 @@ final class ConfigResolver
      * Merge the given config with the specified preset.
      *
      * @param array<string, string|array> $config
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return Configuration
      */
     public static function resolve(array $config, InputInterface $input): Configuration
     {
@@ -89,8 +86,6 @@ final class ConfigResolver
 
     /**
      * Guesses the preset based in information from composer.
-     *
-     * @return string
      */
     public static function guess(Composer $composer): string
     {
@@ -136,7 +131,6 @@ final class ConfigResolver
      * Merge requirements config from console input.
      *
      * @param array<string, string|array> $config
-     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return array<string, string|array>
      */

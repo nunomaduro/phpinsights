@@ -26,7 +26,7 @@ final class Configuration
     /**
      * @var array<string>
      */
-    private static $presets = [
+    private static array $presets = [
         DrupalPreset::class,
         LaravelPreset::class,
         SymfonyPreset::class,
@@ -36,7 +36,7 @@ final class Configuration
     ];
 
     /** @var array<string> */
-    private static $acceptedRequirements = [
+    private static array $acceptedRequirements = [
         'min-quality',
         'min-complexity',
         'min-architecture',
@@ -44,66 +44,54 @@ final class Configuration
         'disable-security-check',
     ];
 
-    /**
-     * @var string
-     */
-    private $preset = 'default';
+    private string $preset = 'default';
 
     /**
      * List of paths to analyse.
      *
      * @var array<string>
      */
-    private $paths;
+    private array $paths;
 
-    /**
-     * @var string
-     */
-    private $commonPath;
+    private string $commonPath;
 
     /**
      * List of folder to exclude from analyse.
      *
      * @var array<string>
      */
-    private $exclude;
+    private array $exclude;
 
     /**
      * List of insights added by metrics.
      *
      * @var array<string, array<string>>
      */
-    private $add;
+    private array $add;
 
     /**
      * List of insights class to remove.
      *
      * @var array<string>
      */
-    private $remove;
+    private array $remove;
 
     /**
      * List of requirements.
      *
      * @var array<string>
      */
-    private $requirements;
+    private array $requirements;
 
     /**
      * List of custom configuration by insight.
      *
      * @var array<string, array<string, string|int|array>>
      */
-    private $config;
+    private array $config;
 
-    /**
-     * @var FileLinkFormatterContract
-     */
-    private $fileLinkFormatter;
-    /**
-     * @var bool
-     */
-    private $fix;
+    private \NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter $fileLinkFormatter;
+    private bool $fix;
 
     /**
      * Configuration constructor.
@@ -133,15 +121,11 @@ final class Configuration
     }
 
     /**
-     * @param string $metric
-     *
      * @return array<string>
      */
     public function getAddedInsightsByMetric(string $metric): array
     {
-        return array_key_exists($metric, $this->add)
-            ? $this->add[$metric]
-            : [];
+        return $this->add[$metric] ?? [];
     }
 
     /**
@@ -153,8 +137,6 @@ final class Configuration
     }
 
     /**
-     * @param string $insight
-     *
      * @return array<string, string|int|array>
      */
     public function getConfigForInsight(string $insight): array
@@ -196,49 +178,31 @@ final class Configuration
         return $this->preset;
     }
 
-    /**
-     * @return float
-     */
     public function getMinQuality(): float
     {
         return (float) ($this->requirements['min-quality'] ?? 0);
     }
 
-    /**
-     * @return float
-     */
     public function getMinComplexity(): float
     {
         return (float) ($this->requirements['min-complexity'] ?? 0);
     }
 
-    /**
-     * @return float
-     */
     public function getMinArchitecture(): float
     {
         return (float) ($this->requirements['min-architecture'] ?? 0);
     }
 
-    /**
-     * @return float
-     */
     public function getMinStyle(): float
     {
         return (float) ($this->requirements['min-style'] ?? 0);
     }
 
-    /**
-     * @return bool
-     */
     public function isSecurityCheckDisabled(): bool
     {
         return (bool) ($this->requirements['disable-security-check'] ?? false);
     }
 
-    /**
-     * @return FileLinkFormatterContract
-     */
     public function getFileLinkFormatter(): FileLinkFormatterContract
     {
         return $this->fileLinkFormatter;
@@ -268,9 +232,10 @@ final class Configuration
         ]);
 
         $resolver->setDefined('ide');
-        $resolver->setAllowedValues('preset', array_map(static function (string $presetClass) {
-            return $presetClass::getName();
-        }, self::$presets));
+        $resolver->setAllowedValues(
+            'preset',
+            array_map(static fn (string $presetClass) => $presetClass::getName(), self::$presets)
+        );
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
@@ -302,7 +267,7 @@ final class Configuration
         }
     }
 
-    private function validateAddedInsight(): \Closure
+    private function validateAddedInsight(): Closure
     {
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
@@ -334,7 +299,7 @@ final class Configuration
         };
     }
 
-    private function validateConfigInsights(): \Closure
+    private function validateConfigInsights(): Closure
     {
         return static function ($values): bool {
             foreach (array_keys($values) as $insight) {
@@ -361,7 +326,7 @@ final class Configuration
             'vscode' => 'vscode://file/%f:%l',
         ];
 
-        if (isset($links[$ide]) === false &&
+        if (! isset($links[$ide]) &&
             mb_strpos((string) $ide, '://') === false) {
             throw new InvalidConfiguration(sprintf(
                 'Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler',

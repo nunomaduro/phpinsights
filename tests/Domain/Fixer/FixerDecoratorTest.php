@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Fixer;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Metrics\Style\Style;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use Tests\TestCase;
 
 final class FixerDecoratorTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private static $fileToTest = 'Domain/Fixer/UnorderedUse.php';
+    private static string $fileToTest = 'Domain/Fixer/UnorderedUse.php';
 
     public function testCanIgnoreFileInFixerWithFullPath(): void
     {
@@ -31,7 +29,7 @@ final class FixerDecoratorTest extends TestCase
 
         $orderedImportErrors = 0;
 
-        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
+        /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
@@ -64,7 +62,7 @@ final class FixerDecoratorTest extends TestCase
         );
         $orderedImportErrors = 0;
 
-        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
+        /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
@@ -83,7 +81,7 @@ final class FixerDecoratorTest extends TestCase
         $collection = $this->runAnalyserOnConfig([], [__DIR__ . '/../../Fixtures/' . self::$fileToTest]);
         $orderedImportErrors = 0;
 
-        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
+        /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()
@@ -116,7 +114,7 @@ final class FixerDecoratorTest extends TestCase
         );
         $orderedImportErrors = 0;
 
-        /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
+        /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
             if (
                 $insight->hasIssue()

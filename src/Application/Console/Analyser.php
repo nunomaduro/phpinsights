@@ -15,15 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Analyser
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory
-     */
-    private $insightCollectionFactory;
+    private InsightCollectionFactory $insightCollectionFactory;
 
     /**
      * Analyser constructor.
-     *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollectionFactory $insightCollectionFactory
      */
     public function __construct(InsightCollectionFactory $insightCollectionFactory)
     {
@@ -32,11 +27,6 @@ final class Analyser
 
     /**
      * Analyse the given dirs.
-     *
-     * @param Formatter $formatter
-     * @param OutputInterface $consoleOutput
-     *
-     * @return  \NunoMaduro\PhpInsights\Domain\Results
      */
     public function analyse(
         Formatter $formatter,

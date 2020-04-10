@@ -29,32 +29,23 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDetails(): array
     {
         $complexityLimit = $this->getMaxComplexity();
         $classesComplexity = array_filter(
             $this->collector->getClassComplexity(),
-            static function ($complexity) use ($complexityLimit): bool {
-                return $complexity > $complexityLimit;
-            }
+            static fn ($complexity): bool => $complexity > $complexityLimit
         );
 
-        uasort($classesComplexity, static function ($left, $right) {
-            return $right - $left;
-        });
+        uasort($classesComplexity, static fn ($left, $right) => $right - $left);
 
         $classesComplexity = array_reverse(
             $this->filterFilesWithoutExcluded($classesComplexity)
         );
 
-        return array_map(static function ($class, $complexity): Details {
-            return Details::make()
-                ->setFile($class)
-                ->setMessage("${complexity} cyclomatic complexity");
-        }, array_keys($classesComplexity), $classesComplexity);
+        return array_map(static fn ($class, $complexity): Details => Details::make()
+            ->setFile($class)
+            ->setMessage("${complexity} cyclomatic complexity"), array_keys($classesComplexity), $classesComplexity);
     }
 
     private function getMaxComplexity(): int

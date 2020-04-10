@@ -16,17 +16,12 @@ use Symfony\Component\Finder\SplFileInfo;
 final class Runner
 {
     /** @var array<FileProcessorContract> */
-    private $filesProcessors;
+    private array $filesProcessors;
 
-    /** @var \Symfony\Component\Console\Output\OutputInterface */
-    private $output;
+    private OutputInterface $output;
 
-    /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository */
-    private $filesRepository;
+    private FilesRepository $filesRepository;
 
-    /**
-     * InsightContainer constructor.
-     */
     public function __construct(
         OutputInterface $output,
         FilesRepository $filesRepository

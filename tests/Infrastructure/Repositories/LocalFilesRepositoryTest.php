@@ -11,10 +11,7 @@ use Tests\TestCase;
 
 final class LocalFilesRepositoryTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $base = __DIR__ . '/../../Fixtures/Tree';
+    private string $base = __DIR__ . '/../../Fixtures/Tree';
 
     /**
      * @dataProvider provider

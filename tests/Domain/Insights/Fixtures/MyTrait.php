@@ -6,8 +6,5 @@ namespace Tests\Domain\Insights\Fixtures;
 
 trait MyTrait
 {
-    /**
-     * @var bool
-     */
-    public $isTrait = true;
+    public bool $isTrait = true;
 }

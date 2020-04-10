@@ -13,7 +13,7 @@ final class FakeInput
     /**
      * @param array<string> $paths
      *
-     * @return \Symfony\Component\Console\Input\ArrayInput
+     * @return ArrayInput
      */
     public static function paths(array $paths): ArrayInput
     {

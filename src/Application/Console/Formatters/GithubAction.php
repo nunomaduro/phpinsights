@@ -20,20 +20,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class GithubAction implements Formatter
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Application\Console\Formatters\Console
-     */
-    private $decorated;
+    private Console $decorated;
 
-    /**
-     * @var \Symfony\Component\Console\Output\OutputInterface
-     */
-    private $output;
+    private OutputInterface $output;
 
-    /**
-     * @var string
-     */
-    private $baseDir;
+    private string $baseDir;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -45,7 +36,6 @@ final class GithubAction implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
     public function format(

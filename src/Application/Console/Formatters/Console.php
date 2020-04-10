@@ -15,7 +15,6 @@ use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
-use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes as ArchitectureClasses;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Files;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Globally as ArchitectureGlobally;
@@ -45,26 +44,15 @@ final class Console implements Formatter
     private const MIN_SPACEWIDTH = 5;
     private const MAX_SPACEWIDTH = 15;
 
-    /**
-     * @var Style
-     */
-    private $style;
-    /**
-     * @var int
-     */
-    private $totalWidth;
-    /**
-     * @var FileLinkFormatter
-     */
-    private $fileLinkFormatter;
-    /**
-     * @var bool
-     */
-    private $supportHyperLinks;
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Configuration
-     */
-    private $config;
+    private Style $style;
+
+    private int $totalWidth;
+
+    private FileLinkFormatter $fileLinkFormatter;
+
+    private bool $supportHyperLinks;
+
+    private Configuration $config;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -82,7 +70,6 @@ final class Console implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
     public function format(
@@ -106,7 +93,6 @@ final class Console implements Formatter
     /**
      * Format the result of fixes to the desired format.
      *
-     * @param InsightCollection $insightCollection
      * @param array<string> $metrics
      */
     public function formatFix(
@@ -156,7 +142,11 @@ final class Console implements Formatter
                 $details = $insight->getFixPerFile();
                 /** @var Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = $this->formatFileLine($detail, $category, $insightCollection->getCollector()->getCommonPath());
+                    $detailString = $this->formatFileLine(
+                        $detail,
+                        $category,
+                        $insightCollection->getCollector()->getCommonPath()
+                    );
                     if ($detail->hasMessage()) {
                         $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
                     }
@@ -174,10 +164,7 @@ final class Console implements Formatter
     /**
      * Outputs the summary according to the format.
      *
-     * @param Results $results
      * @param array<string> $paths
-     *
-     * @return self
      */
     private function summary(Results $results, array $paths): self
     {
@@ -226,11 +213,6 @@ final class Console implements Formatter
 
     /**
      * Outputs the code errors according to the format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param Results $results
-     *
-     * @return self
      */
     private function code(
         InsightCollection $insightCollection,
@@ -261,11 +243,6 @@ final class Console implements Formatter
 
     /**
      * Outputs the complexity errors according to the format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param Results $results
-     *
-     * @return self
      */
     private function complexity(
         InsightCollection $insightCollection,
@@ -283,11 +260,6 @@ final class Console implements Formatter
 
     /**
      * Outputs the architecture errors according to the format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param Results $results
-     *
-     * @return self
      */
     private function architecture(
         InsightCollection $insightCollection,
@@ -320,10 +292,6 @@ final class Console implements Formatter
 
     /**
      * Outputs the miscellaneous errors according to the format.
-     *
-     * @param Results $results
-     *
-     * @return self
      */
     private function miscellaneous(
         Results $results
@@ -350,11 +318,7 @@ final class Console implements Formatter
     /**
      * Outputs the issues errors according to the format.
      *
-     * @param InsightCollection $insightCollection
      * @param array<string> $metrics
-     * @param string $commonPath
-     *
-     * @return self
      */
     private function issues(
         InsightCollection $insightCollection,
@@ -433,10 +397,6 @@ final class Console implements Formatter
 
     /**
      * Returns the percentage as 5 chars string.
-     *
-     * @param float $percentage
-     *
-     * @return string
      */
     private static function getPercentageAsString(float $percentage): string
     {
@@ -449,10 +409,6 @@ final class Console implements Formatter
 
     /**
      * Returns the color for the given percentage.
-     *
-     * @param float $percentage
-     *
-     * @return string
      */
     private function getColor(float $percentage): string
     {
@@ -589,12 +545,6 @@ EOD;
 
     /**
      * Total width of terminal - block size * disposition (4 or 2) / number of space block.
-     *
-     * @param int $totalWidth
-     * @param int $blockSize
-     * @param int $disposition
-     *
-     * @return int
      */
     private function getSpaceWidth(int $totalWidth, int $blockSize, int $disposition): int
     {
@@ -613,10 +563,6 @@ EOD;
 
     private function getFileLinkFormatter(): FileLinkFormatter
     {
-        if ($this->fileLinkFormatter === null) {
-            $this->fileLinkFormatter = new NullFileLinkFormatter();
-        }
-
         return $this->fileLinkFormatter;
     }
 

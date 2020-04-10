@@ -12,7 +12,7 @@ use Composer\Semver\Semver;
 final class Composer
 {
     /** @var array<string, mixed> */
-    private $config;
+    private array $config;
 
     /**
      * Composer constructor.

@@ -12,20 +12,12 @@ use ReflectionException;
  */
 final class Reflection
 {
-    /**
-     * @var object
-     */
-    private $instance;
+    private object $instance;
 
-    /**
-     * @var \ReflectionClass
-     */
-    private $reflectionClass;
+    private ReflectionClass $reflectionClass;
 
     /**
      * Creates an new instance of Reflection.
-     *
-     * @param object $instance
      */
     public function __construct(object $instance)
     {
@@ -36,10 +28,7 @@ final class Reflection
     /**
      * Sets an private attribute value on the given instance.
      *
-     * @param string $attribute
      * @param mixed $value
-     *
-     * @return \NunoMaduro\PhpInsights\Domain\Reflection
      */
     public function set(string $attribute, $value): Reflection
     {
@@ -56,8 +45,6 @@ final class Reflection
     /**
      * Gets an private attribute value on the given instance.
      *
-     * @param string $attribute
-     *
      * @return mixed
      */
     public function get(string $attribute)
@@ -70,9 +57,7 @@ final class Reflection
     }
 
     /**
-     * @param ReflectionClass $class
      * @param mixed $instance
-     * @param string $attribute
      * @param mixed $value
      *
      * @throws ReflectionException

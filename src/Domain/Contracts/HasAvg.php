@@ -13,10 +13,6 @@ interface HasAvg extends Metric
 {
     /**
      * Returns the avg of the metric.
-     *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     *
-     * @return string
      */
     public function getAvg(Collector $collector): string;
 }

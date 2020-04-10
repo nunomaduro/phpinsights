@@ -12,207 +12,138 @@ final class Collector
     /**
      * @var array<string>
      */
-    private $analysedPaths;
+    private array $analysedPaths;
 
-    /**
-     * @var string
-     */
-    private $commonPath;
+    private string $commonPath;
 
-    /**
-     * @var int
-     */
-    private $commentLines = 0;
+    private int $commentLines = 0;
 
-    /**
-     * @var int
-     */
-    private $logicalLines = 0;
+    private int $logicalLines = 0;
 
-    /**
-     * @var int
-     */
-    private $functionLines = 0;
+    private int $functionLines = 0;
 
     /**
      * @var array<string>
      */
-    private $files = [];
+    private array $files = [];
 
     /**
      * @var array<string>
      */
-    private $directories = [];
+    private array $directories = [];
 
     /**
      * @var array<string>
      */
-    private $concreteNonFinalClasses = [];
+    private array $concreteNonFinalClasses = [];
 
     /**
      * @var array<string>
      */
-    private $concreteFinalClasses = [];
+    private array $concreteFinalClasses = [];
 
     /**
      * @var array<string>
      */
-    private $abstractClasses = [];
+    private array $abstractClasses = [];
 
     /**
      * @var array<string>
      */
-    private $traits = [];
+    private array $traits = [];
 
     /**
      * @var array<string>
      */
-    private $globalConstants = [];
+    private array $globalConstants = [];
 
-    /**
-     * @var int
-     */
-    private $interfaces = 0;
+    private int $interfaces = 0;
 
     /**
      * @var array<string>
      */
-    private $namespaces = [];
+    private array $namespaces = [];
 
-    /**
-     * @var int
-     */
-    private $complexity = 0;
+    private int $complexity = 0;
 
-    /**
-     * @var int
-     */
-    private $totalMethodComplexity = 0;
+    private int $totalMethodComplexity = 0;
 
     /**
      * @var array<int>
      */
-    private $methodComplexity = [];
+    private array $methodComplexity = [];
 
     /**
      * @var array<string, float>
      */
-    private $classComplexity = [];
+    private array $classComplexity = [];
 
-    /**
-     * @var int
-     */
-    private $classConstants = 0;
+    private int $classConstants = 0;
 
     /**
      * @var array<string, int>
      */
-    private $methodLines = [];
+    private array $methodLines = [];
 
     /**
      * @var array<string, float>
      */
-    private $classLines = [];
+    private array $classLines = [];
 
-    /**
-     * @var int
-     */
-    private $staticAttributeAccesses = 0;
+    private int $staticAttributeAccesses = 0;
 
     /**
      * @var array<string>
      */
-    private $superGlobalVariableAccesses = [];
+    private array $superGlobalVariableAccesses = [];
 
     /**
      * @var array<string>
      */
-    private $possibleConstantAccesses = [];
+    private array $possibleConstantAccesses = [];
 
     /**
      * @var array<string>
      */
-    private $globalVariableAccesses = [];
+    private array $globalVariableAccesses = [];
 
-    /**
-     * @var int
-     */
-    private $nonStaticMethodCalls = 0;
+    private int $nonStaticMethodCalls = 0;
 
-    /**
-     * @var int
-     */
-    private $nonStaticAttributeAccesses = 0;
+    private int $nonStaticAttributeAccesses = 0;
 
-    /**
-     * @var int
-     */
-    private $anonymousFunctions = 0;
+    private int $anonymousFunctions = 0;
 
     /**
      * @var array<string, array<string>>
      */
-    private $namedFunctions = [];
+    private array $namedFunctions = [];
 
-    /**
-     * @var int
-     */
-    private $publicMethods = 0;
+    private int $publicMethods = 0;
 
-    /**
-     * @var int
-     */
-    private $staticMethods = 0;
+    private int $staticMethods = 0;
 
-    /**
-     * @var int
-     */
-    private $nonStaticMethods = 0;
+    private int $nonStaticMethods = 0;
 
-    /**
-     * @var int
-     */
-    private $protectedMethods = 0;
+    private int $protectedMethods = 0;
 
-    /**
-     * @var int
-     */
-    private $privateMethods = 0;
+    private int $privateMethods = 0;
 
-    /**
-     * @var int
-     */
-    private $staticMethodCalls = 0;
+    private int $staticMethodCalls = 0;
 
-    /**
-     * @var string
-     */
-    private $currentFilename = '';
+    private string $currentFilename = '';
 
-    /**
-     * @var int
-     */
-    private $currentClassComplexity = 0;
+    private int $currentClassComplexity = 0;
 
-    /**
-     * @var int
-     */
-    private $currentClassLines = 0;
+    private int $currentClassLines = 0;
 
-    /**
-     * @var int
-     */
-    private $currentMethodComplexity = 0;
+    private int $currentMethodComplexity = 0;
 
-    /**
-     * @var int
-     */
-    private $currentMethodLines = 0;
+    private int $currentMethodLines = 0;
 
     /**
      * @var array<string, string>
      */
-    private $globalFunctions = [];
+    private array $globalFunctions = [];
 
     /**
      * Creates a new instance of the Collector.
@@ -444,7 +375,7 @@ final class Collector
 
     public function incrementTraits(): void
     {
-        if ($this->currentFilename !== null) {
+        if ($this->currentFilename !== '') {
             $this->traits[] = $this->currentFilename;
         }
     }
@@ -786,7 +717,9 @@ final class Collector
 
     public function getGlobalAccesses(): int
     {
-        return $this->getGlobalConstantAccesses() + \count($this->globalVariableAccesses) + \count($this->superGlobalVariableAccesses);
+        return $this->getGlobalConstantAccesses()
+            + count($this->globalVariableAccesses)
+            + count($this->superGlobalVariableAccesses);
     }
 
     public function getGlobalConstantAccesses(): int
@@ -812,7 +745,9 @@ final class Collector
      */
     public function getClasses(): int
     {
-        return \count($this->getAbstractClasses()) + \count($this->getConcreteNonFinalClasses()) + \count($this->getConcreteFinalClasses());
+        return count($this->getAbstractClasses()) +
+            count($this->getConcreteNonFinalClasses()) +
+            count($this->getConcreteFinalClasses());
     }
 
     /**
@@ -841,8 +776,6 @@ final class Collector
 
     /**
      * @param  array<float>  $array
-     *
-     * @return float
      */
     private function getAverage(array $array): float
     {
@@ -851,8 +784,6 @@ final class Collector
 
     /**
      * @param  array<string, float|int>  $array
-     *
-     * @return int
      */
     private function getCount(array $array): int
     {

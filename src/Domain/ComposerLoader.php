@@ -13,14 +13,8 @@ use Composer\IO\NullIO;
  */
 final class ComposerLoader
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Collector
-     */
-    private static $currentCollector;
-    /**
-     * @var Composer|null
-     */
-    private static $composer;
+    private static ?Collector $currentCollector = null;
+    private static ?Composer $composer = null;
 
     public static function getInstance(Collector $collector): Composer
     {

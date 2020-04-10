@@ -4,34 +4,24 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Util\Common;
 use Symfony\Component\Finder\SplFileInfo;
+use Throwable;
 
 final class File extends BaseFile
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator
-     */
-    private $activeSniff;
+    private SniffDecorator $activeSniff;
     /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
-    private $tokenListeners = [];
-    /**
-     * @var SplFileInfo
-     */
-    private $fileInfo;
-    /**
-     * @var bool
-     */
-    private $isFixable;
-    /**
-     * @var bool
-     */
-    private $fixEnabled = false;
+    private array $tokenListeners = [];
+    private SplFileInfo $fileInfo;
+    private bool $isFixable;
+    private bool $fixEnabled = false;
 
     public function __construct(
         string $path,
@@ -56,7 +46,7 @@ final class File extends BaseFile
         $this->fixer->startFile($this);
 
         foreach ($this->tokens as $stackPtr => $token) {
-            if (isset($this->tokenListeners[$token['code']]) === false) {
+            if (! isset($this->tokenListeners[$token['code']])) {
                 continue;
             }
 
@@ -65,7 +55,7 @@ final class File extends BaseFile
                 $this->activeSniff = $sniff;
                 try {
                     $sniff->process($this, $stackPtr);
-                } catch (\Throwable $e) {
+                } catch (Throwable $e) {
                     $this->addError('Unparsable php code: syntax error or wrong phpdocs.', $stackPtr, $token['code']);
                 }
             }
@@ -74,8 +64,6 @@ final class File extends BaseFile
 
     /**
      * @param array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>> $tokenListeners
-     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
-     * @param bool $isFixable
      */
     public function processWithTokenListenersAndFileInfo(
         array $tokenListeners,
@@ -90,8 +78,6 @@ final class File extends BaseFile
 
     /**
      * Get's the file info from the file.
-     *
-     * @return SplFileInfo
      */
     public function getFileInfo(): SplFileInfo
     {
@@ -127,8 +113,8 @@ final class File extends BaseFile
     ): bool {
         $message = count($data) > 0 ? vsprintf($message, $data) : $message;
 
-        if ($isFixable === true && $this->isFixable === true) {
-            if ($this->fixEnabled === true) {
+        if ($isFixable && $this->isFixable) {
+            if ($this->fixEnabled) {
                 $this->activeSniff->addFileFixed($this->fileInfo->getRelativePathname());
             } else {
                 $this->fixableCount++;
@@ -137,7 +123,7 @@ final class File extends BaseFile
             return true;
         }
 
-        if ($this->fixEnabled === true) {
+        if ($this->fixEnabled) {
             // detail already added
             return true;
         }

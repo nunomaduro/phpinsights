@@ -17,10 +17,6 @@ interface FileProcessor
 
     /**
      * Check if an Insight implementation could be add to current file processor.
-     *
-     * @param Insight $insight
-     *
-     * @return bool
      */
     public function support(Insight $insight): bool;
 

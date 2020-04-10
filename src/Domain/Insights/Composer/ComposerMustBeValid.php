@@ -13,15 +13,12 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerMustBeValid extends Insight implements HasDetails
 {
-    /**
-     * @var bool
-     */
-    private $analyzed = false;
+    private bool $analyzed = false;
 
     /**
      * @var array<Details>
      */
-    private $details = [];
+    private array $details = [];
 
     public function hasIssue(): bool
     {

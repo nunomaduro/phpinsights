@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 
+use LogicException;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
-use NunoMaduro\PhpInsights\Domain\Differ;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
+use PhpCsFixer\Differ\DifferInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
+use Throwable;
 
 /**
  * @internal
@@ -21,19 +24,13 @@ final class FixerFileProcessor implements FileProcessor
     /**
      * @var array<FixerDecorator>
      */
-    private $fixers = [];
+    private array $fixers = [];
 
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Differ
-     */
-    private $differ;
-    /**
-     * @var bool
-     */
-    private $fixEnabled;
+    private DifferInterface $differ;
+    private bool $fixEnabled;
 
     public function __construct(
-        Differ $differ
+        DifferInterface $differ
     ) {
         $this->differ = $differ;
         $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
@@ -47,7 +44,7 @@ final class FixerFileProcessor implements FileProcessor
     public function addChecker(InsightContract $insight): void
     {
         if (! $insight instanceof FixerDecorator) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'Unable to add %s, not a Fixer instance',
                 get_class($insight)
             ));
@@ -60,7 +57,7 @@ final class FixerFileProcessor implements FileProcessor
     {
         $filePath = $splFileInfo->getRealPath();
         if ($filePath === false) {
-            throw new \LogicException('Unable to found file ' . $splFileInfo->getFilename());
+            throw new LogicException('Unable to found file ' . $splFileInfo->getFilename());
         }
 
         $oldContent = $splFileInfo->getContents();
@@ -75,7 +72,7 @@ final class FixerFileProcessor implements FileProcessor
                     continue;
                 }
 
-                if ($this->fixEnabled === true) {
+                if ($this->fixEnabled) {
                     $needFix = true;
                     // Register diff will be applied
                     $fixer->addFileFixed($splFileInfo->getRelativePathname());
@@ -91,7 +88,7 @@ final class FixerFileProcessor implements FileProcessor
                 $tokens = clone $originalTokens;
             }
 
-            if ($this->fixEnabled === false || $needFix === false) {
+            if (! $this->fixEnabled || ! $needFix) {
                 return;
             }
 
@@ -102,7 +99,7 @@ final class FixerFileProcessor implements FileProcessor
             }
 
             file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // @ignoreException
         }
     }

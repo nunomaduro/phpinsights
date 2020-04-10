@@ -8,8 +8,8 @@ use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
+use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -21,10 +21,7 @@ use Tests\Fakes\FakeInput;
 
 final class ConfigResolverTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $baseFixturePath;
+    private string $baseFixturePath;
 
     public function setUp(): void
     {

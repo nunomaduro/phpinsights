@@ -9,20 +9,15 @@ final class Details
     /** @var mixed */
     private $original;
 
-    /** @var string */
-    private $file;
+    private ?string $file = null;
 
-    /** @var int */
-    private $line;
+    private ?int $line = null;
 
-    /** @var string  */
-    private $function;
+    private ?string $function = null;
 
-    /** @var string */
-    private $message;
+    private ?string $message = null;
 
-    /** @var string */
-    private $diff;
+    private ?string $diff = null;
 
     public static function make(): Details
     {
@@ -37,8 +32,6 @@ final class Details
 
     /**
      * @param mixed $original
-     *
-     * @return Details
      */
     public function setOriginal($original): Details
     {
@@ -72,7 +65,7 @@ final class Details
 
     public function getFile(): string
     {
-        return $this->file;
+        return $this->file ?? '';
     }
 
     public function hasFile(): bool
@@ -92,7 +85,7 @@ final class Details
 
     public function getMessage(): string
     {
-        return $this->message;
+        return $this->message ?? '';
     }
 
     public function hasMessage(): bool
@@ -102,7 +95,7 @@ final class Details
 
     public function getFunction(): string
     {
-        return $this->function;
+        return $this->function ?? '';
     }
 
     public function hasFunction(): bool
@@ -125,7 +118,7 @@ final class Details
 
     public function getDiff(): string
     {
-        return $this->diff;
+        return $this->diff ?? '';
     }
 
     public function hasDiff(): bool

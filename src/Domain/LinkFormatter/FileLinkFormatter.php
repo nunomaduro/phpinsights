@@ -12,10 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
  */
 final class FileLinkFormatter implements FileLinkFormatterContract
 {
-    /**
-     * @var string
-     */
-    private $pattern;
+    private string $pattern;
 
     public function __construct(string $pattern)
     {

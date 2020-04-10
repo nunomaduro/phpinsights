@@ -12,16 +12,14 @@ use Symfony\Component\Console\Input\InputInterface;
 final class PathResolver
 {
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
      * @return array<string>
      */
     public static function resolve(InputInterface $input): array
     {
-        /** @var array<string> $paths */
+        /** @var array<string>|null $paths */
         $paths = $input->getArgument('paths');
 
-        if ($paths === [] || $paths == null) {
+        if ($paths === [] || $paths === null) {
             $paths = [(string) getcwd()];
         }
 

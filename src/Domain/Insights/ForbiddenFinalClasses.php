@@ -16,7 +16,9 @@ final class ForbiddenFinalClasses extends Insight implements HasDetails
 
     public function getTitle(): string
     {
-        return array_key_exists('title', $this->config) ? (string) $this->config['title'] : 'The use of `final` classes is prohibited';
+        return array_key_exists('title', $this->config)
+            ? (string) $this->config['title']
+            : 'The use of `final` classes is prohibited';
     }
 
     /**

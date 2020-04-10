@@ -12,6 +12,7 @@ use NunoMaduro\PhpInsights\Domain\File as InsightFile;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use RuntimeException;
 
 /**
  * Decorates original php-cs sniffs with additional behavior.
@@ -22,18 +23,15 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 {
     use FixPerFileCollector;
 
-    /**
-     * @var \PHP_CodeSniffer\Sniffs\Sniff
-     */
-    private $sniff;
+    private Sniff $sniff;
 
     /** @var array<\NunoMaduro\PhpInsights\Domain\Details> */
-    private $errors = [];
+    private array $errors = [];
 
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
-    private $excludedFiles;
+    private array $excludedFiles;
 
     public function __construct(Sniff $sniff, string $dir)
     {
@@ -56,7 +54,6 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
     }
 
     /**
-     * @param \PHP_CodeSniffer\Files\File $file
      * @param int $stackPtr
      *
      * @return int|void
@@ -66,7 +63,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
     public function process(File $file, $stackPtr)
     {
         set_error_handler(static function (): bool {
-            throw new \RuntimeException();
+            throw new RuntimeException();
         }, E_NOTICE);
 
         if ($file instanceof InsightFile && $this->skipFilesFromIgnoreFiles($file)) {
@@ -88,8 +85,6 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 
     /**
      * Checks if the insight detects an issue.
-     *
-     * @return bool
      */
     public function hasIssue(): bool
     {
@@ -98,8 +93,6 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 
     /**
      * Gets the title of the insight.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -125,8 +118,6 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 
     /**
      * Get the class name of Insight used.
-     *
-     * @return string
      */
     public function getInsightClass(): string
     {

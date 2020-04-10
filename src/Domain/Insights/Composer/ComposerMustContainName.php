@@ -13,19 +13,13 @@ final class ComposerMustContainName extends Insight
     /**
      * @var array<string>
      */
-    private $defaults = [
+    private array $defaults = [
         'laravel/laravel',
         'symfony/symfony',
     ];
 
-    /**
-     * @var bool
-     */
-    private $analyzed = false;
-    /**
-     * @var bool
-     */
-    private $hasError = false;
+    private bool $analyzed = false;
+    private bool $hasError = false;
 
     public function hasIssue(): bool
     {
@@ -45,7 +39,8 @@ final class ComposerMustContainName extends Insight
     {
         try {
             $contents = json_decode(ComposerFinder::contents($this->collector), true);
-            $this->hasError = array_key_exists('name', $contents) && array_key_exists($contents['name'], array_flip($this->defaults));
+            $this->hasError = array_key_exists('name', $contents)
+                && array_key_exists($contents['name'], array_flip($this->defaults));
         } catch (ComposerNotFound $e) {
             $this->hasError = true;
         }

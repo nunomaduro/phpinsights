@@ -12,15 +12,9 @@ use PHPUnit\Framework\TestCase;
 
 final class ResultsTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $baseFixturePath;
+    private string $baseFixturePath;
 
-    /**
-     * @var string
-     */
-    private $commonPath;
+    private string $commonPath;
 
     public function setUp(): void
     {

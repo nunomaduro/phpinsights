@@ -17,7 +17,7 @@ final class FormatResolver
     /**
      * @var array<string, string>
      */
-    private static $formatters = [
+    private static array $formatters = [
         'console' => Console::class,
         'json' => Json::class,
         'checkstyle' => Checkstyle::class,
@@ -32,7 +32,9 @@ final class FormatResolver
         $requestedFormats = $input->getOption('format');
 
         if (! is_array($requestedFormats)) {
-            $consoleOutput->writeln('<fg=red>Could not understand requested format, using fallback [console] instead.</>');
+            $consoleOutput->writeln(
+                '<fg=red>Could not understand requested format, using fallback [console] instead.</>'
+            );
             $requestedFormats = ['console'];
         }
 
@@ -44,7 +46,9 @@ final class FormatResolver
                 $instance = new $formatter($input, $output);
 
                 if (! ($instance instanceof Formatter)) {
-                    $consoleOutput->writeln("<fg=red>The formatter [{$formatter}] is not implementing the interface.</>");
+                    $consoleOutput->writeln(
+                        "<fg=red>The formatter [{$formatter}] is not implementing the interface.</>"
+                    );
                     continue;
                 }
                 $formatters[] = $instance;
@@ -54,7 +58,9 @@ final class FormatResolver
         }
 
         if ($formatters === []) {
-            $consoleOutput->writeln('<fg=red>No requested formats were found, using fallback [console] instead.</>');
+            $consoleOutput->writeln(
+                '<fg=red>No requested formats were found, using fallback [console] instead.</>'
+            );
             return new Console($input, $output);
         }
 

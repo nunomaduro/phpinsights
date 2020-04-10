@@ -11,15 +11,12 @@ use NunoMaduro\PhpInsights\Domain\Details;
  */
 trait FixPerFileCollector
 {
-    /**
-     * @var int
-     */
-    private $totalFixed = 0;
+    private int $totalFixed = 0;
 
     /**
      * @var array<string, int>
      */
-    private $fixPerFile = [];
+    private array $fixPerFile = [];
 
     public function addFileFixed(string $file): void
     {

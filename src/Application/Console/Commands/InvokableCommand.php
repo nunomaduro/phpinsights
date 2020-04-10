@@ -19,10 +19,6 @@ final class InvokableCommand extends BaseCommand
 
     /**
      * Creates a new instance of the Invokable Command.
-     *
-     * @param string $name
-     * @param callable $callable
-     * @param InputDefinition $definition
      */
     public function __construct(string $name, callable $callable, InputDefinition $definition)
     {

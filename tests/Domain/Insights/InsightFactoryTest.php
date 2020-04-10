@@ -16,6 +16,7 @@ use PhpCsFixer\Fixer\Alias\BacktickToShellExecFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
 use Tests\Fakes\FakeInput;
@@ -25,17 +26,14 @@ final class InsightFactoryTest extends TestCase
     /**
      * @var array<string>
      */
-    private static $usedInsights = [
+    private static array $usedInsights = [
         BacktickToShellExecFixer::class,
         ForbiddenPublicPropertySniff::class,
         LineLengthSniff::class,
         YodaStyleFixer::class,
     ];
 
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightFactory
-     */
-    private $insightFactory;
+    private InsightFactory $insightFactory;
 
     public function setUp(): void
     {
@@ -50,7 +48,7 @@ final class InsightFactoryTest extends TestCase
 
     public function testMakeFromUnknowImplementThrowException(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(sprintf('Insight `%s` is not instantiable.', FakeFileRepository::class));
 
         $this->insightFactory->makeFrom(FakeFileRepository::class, new NullOutput());

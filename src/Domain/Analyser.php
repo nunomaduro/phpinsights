@@ -23,7 +23,7 @@ final class Analyser
     /**
      * @var array<string>
      */
-    private $superGlobals = [
+    private array $superGlobals = [
         '$_ENV',
         '$_POST',
         '$_GET',
@@ -40,8 +40,7 @@ final class Analyser
     ];
 
     /**
-     * @param string $method
-     * @param array<(int|float|array<string>), (int|float|array<string>)> $args
+     * @param array<int|float|array<string>, int|float|array<string>> $args
      *
      * @return int|float|array<string>
      */
@@ -58,8 +57,6 @@ final class Analyser
      *
      * @param array<string> $paths
      * @param array<string> $files
-     *
-     * @return \NunoMaduro\PhpInsights\Domain\Collector
      */
     public function analyse(array $paths, array $files, string $commonPath): Collector
     {
@@ -74,11 +71,6 @@ final class Analyser
 
     /**
      * Processes a single file.
-     *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     * @param  string  $filename
-     *
-     * @return void
      */
     private function analyseFile(Collector $collector, string $filename): void
     {
@@ -134,7 +126,7 @@ final class Analyser
                         $block = false;
                     }
 
-                    \array_push($blocks, $block);
+                    $blocks[] = $block;
 
                     $currentBlock = false;
                 } elseif ($token === '}') {
@@ -185,19 +177,17 @@ final class Analyser
                         $collector->incrementTraits();
                     } elseif ($token === \T_INTERFACE) {
                         $collector->incrementInterfaces();
-                    } else {
-                        if (isset($tokens[$i - 2]) &&
-                            \is_array($tokens[$i - 2])) {
-                            if ($tokens[$i - 2][0] === \T_ABSTRACT) {
-                                $collector->addAbstractClass($filename);
-                            } elseif ($tokens[$i - 2][0] === \T_FINAL) {
-                                $collector->addConcreteFinalClass($filename);
-                            } else {
-                                $collector->addConcreteNonFinalClass($filename);
-                            }
+                    } elseif (isset($tokens[$i - 2]) &&
+                        \is_array($tokens[$i - 2])) {
+                        if ($tokens[$i - 2][0] === \T_ABSTRACT) {
+                            $collector->addAbstractClass($filename);
+                        } elseif ($tokens[$i - 2][0] === \T_FINAL) {
+                            $collector->addConcreteFinalClass($filename);
                         } else {
                             $collector->addConcreteNonFinalClass($filename);
                         }
+                    } else {
+                        $collector->addConcreteNonFinalClass($filename);
                     }
 
                     break;
@@ -288,13 +278,13 @@ final class Analyser
 
                 case \T_CURLY_OPEN:
                     $currentBlock = \T_CURLY_OPEN;
-                    \array_push($blocks, $currentBlock);
+                    $blocks[] = $currentBlock;
 
                     break;
 
                 case \T_DOLLAR_OPEN_CURLY_BRACES:
                     $currentBlock = \T_DOLLAR_OPEN_CURLY_BRACES;
-                    \array_push($blocks, $currentBlock);
+                    $blocks[] = $currentBlock;
 
                     break;
 
@@ -366,13 +356,11 @@ final class Analyser
                         } else {
                             $collector->incrementNonStaticMethodCalls();
                         }
-                    } else {
-                        if ($token === \T_DOUBLE_COLON &&
-                            $tokens[$n][0] === \T_VARIABLE) {
-                            $collector->incrementStaticAttributeAccesses();
-                        } elseif ($token === \T_OBJECT_OPERATOR) {
-                            $collector->incrementNonStaticAttributeAccesses();
-                        }
+                    } elseif ($token === \T_DOUBLE_COLON &&
+                        $tokens[$n][0] === \T_VARIABLE) {
+                        $collector->incrementStaticAttributeAccesses();
+                    } elseif ($token === \T_OBJECT_OPERATOR) {
+                        $collector->incrementNonStaticAttributeAccesses();
                     }
 
                     break;

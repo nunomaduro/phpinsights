@@ -22,7 +22,7 @@ EOD;
     /**
      * @var array<string>
      */
-    public $allowedMethodRegex;
+    public array $allowedMethodRegex;
 
     public function register(): array
     {
@@ -32,7 +32,6 @@ EOD;
     /**
      * Runs the sniff on a file.
      *
-     * @param File $file
      * @param int  $position
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -61,10 +60,6 @@ EOD;
 
     /**
      * Returns the class name from the file.
-     *
-     * @param File $file
-     *
-     * @return string
      */
     private static function getClassName(File $file): string
     {
@@ -86,11 +81,6 @@ EOD;
     /**
      * Checks if we should skip this method based on either the
      * method name or the class name.
-     *
-     * @param string $methodName
-     * @param string $className
-     *
-     * @return bool
      */
     private function shouldSkip(string $methodName, string $className): bool
     {

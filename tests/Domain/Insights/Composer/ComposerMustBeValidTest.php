@@ -6,6 +6,7 @@ namespace Tests\Domain\Insights\Composer;
 
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ final class ComposerMustBeValidTest extends TestCase
         self::assertIsArray($insight->getDetails());
 
         $messages = [];
-        /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
+        /** @var Details $detail */
         foreach ($insight->getDetails() as $detail) {
             self::assertEquals('composer.json', $detail->getFile());
             $messages[] = $detail->getMessage();
