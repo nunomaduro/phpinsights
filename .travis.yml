@@ -6,8 +6,6 @@ services:
   - docker
 
 php:
-  - 7.2
-  - 7.3
   - 7.4
 
 env:
