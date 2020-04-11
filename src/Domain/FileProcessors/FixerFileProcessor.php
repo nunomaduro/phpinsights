@@ -66,9 +66,11 @@ final class FixerFileProcessor implements FileProcessor
         try {
             $tokens = @Tokens::fromCode($oldContent);
             $originalTokens = clone $tokens;
+
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
                 $fixer->fix($splFileInfo, $tokens);
+
                 if (! $tokens->isChanged()) {
                     continue;
                 }
