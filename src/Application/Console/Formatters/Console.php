@@ -567,11 +567,6 @@ final class Console implements Formatter
         return $spaceWidth;
     }
 
-    private function getFileLinkFormatter(): FileLinkFormatter
-    {
-        return $this->fileLinkFormatter;
-    }
-
     private function getCategoryColor(string $category): string
     {
         return self::CATEGORY_COLOR[$category] ?? 'blue';
@@ -588,7 +583,7 @@ final class Console implements Formatter
 
         $formattedLink = null;
         if ($file !== null) {
-            $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine());
+            $formattedLink = $this->fileLinkFormatter->format($file, $detail->getLine());
         }
 
         $color = $this->getCategoryColor($category);
@@ -619,11 +614,14 @@ final class Console implements Formatter
                     $hasColor = true;
                     $detailString .= '<fg=red>';
                 }
+
                 if (mb_strpos($line, '+') === 0) {
                     $hasColor = true;
                     $detailString .= '<fg=green>';
                 }
+
                 $detailString .= $line . PHP_EOL;
+
                 if ($hasColor) {
                     $hasColor = false;
                     $detailString .= '</>';

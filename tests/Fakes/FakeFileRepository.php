@@ -12,7 +12,7 @@ final class FakeFileRepository implements FilesRepository
     /**
      * @var array<SplFileInfo>
      */
-    protected array $files = [];
+    private array $files;
 
     /**
      * FakeFileRepository constructor.

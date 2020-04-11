@@ -52,7 +52,7 @@ final class Composer
         return $this->config['name'] ?? '';
     }
 
-    public function getPhpVersion(): string
+    private function getPhpVersion(): string
     {
         return $this->getRequirements()['php'];
     }
