@@ -129,7 +129,7 @@ final class SniffDecoratorTest extends TestCase
         $fileToTest = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/ParamTypeHint.php';
         $fileExpected = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/ParamTypeHintExpected.php';
 
-        $initalFileContent = \file_get_contents($fileToTest);
+        $initialFileContent = \file_get_contents($fileToTest);
 
         $this->runAnalyserOnConfig(
             ['fix' => true],
@@ -139,6 +139,6 @@ final class SniffDecoratorTest extends TestCase
         self::assertFileEquals($fileExpected, $fileToTest);
 
         // Restore file content
-        file_put_contents($fileToTest, $initalFileContent);
+        file_put_contents($fileToTest, $initialFileContent);
     }
 }

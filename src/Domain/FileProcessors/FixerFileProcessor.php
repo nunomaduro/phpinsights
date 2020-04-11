@@ -95,7 +95,7 @@ final class FixerFileProcessor implements FileProcessor
             }
 
             $tokens = @Tokens::fromCode($oldContent);
-            // Reloop on fixer to get full tokens to change
+            // Iterate on fixer to get full tokens to change
             foreach ($this->fixers as $fixer) {
                 $fixer->fix($splFileInfo, $tokens);
             }

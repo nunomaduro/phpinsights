@@ -59,7 +59,7 @@ final class InsightFactoryTest extends TestCase
         );
     }
 
-    public function testMakeFromUnknowImplementThrowException(): void
+    public function testMakeFromUnknownImplementThrowException(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(sprintf('Insight `%s` is not instantiable.', FakeFileRepository::class));

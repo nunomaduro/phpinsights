@@ -1,6 +1,6 @@
 # Code
 
-The following insights are organised in differents metrics :
+The following insights are organised in different metrics :
 
 * `NunoMaduro\PhpInsights\Domain\Metrics\Code\Classes` <Badge text="Code\Classes" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Code\Code` <Badge text="Code\Code" type="warn" vertical="middle"/>
@@ -39,13 +39,13 @@ This sniff verifies that properties are declared correctly.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\PropertyDeclarationSniff`
 
-## Class constant visibilty <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
+## Class constant visibility <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
 
 This sniff requires declaring visibility for all class constants.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff`
 
-## Disallow Late static Bindig for constants <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
+## Disallow Late static Binding for constants <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
 
 This sniff disallows late static binding for constants.
 
@@ -388,7 +388,7 @@ This sniff looks for duplicate assignments to a variable.
 
 ## Nullable type for null default value <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
-This sniff checks whether the nullablity `?` symbol is present before each nullable and optional parameter (which are marked as `= null`)
+This sniff checks whether the nullability `?` symbol is present before each nullable and optional parameter (which are marked as `= null`)
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff`
 
@@ -470,7 +470,7 @@ This sniff reports invalid inline phpDocs with `@var`.
 
 This sniff disallows useless doc comments. If the native method declaration contains everything and the phpDoc does not add anything useful, it's reported as useless.
 
-Some typehints can be enforced to be specified with a contained type, with `traversableTypeHints`. See the [official explanation](https://github.com/slevomat/coding-standard#slevomatcodingstandardcommentinguselessfunctiondoccomment-)
+Some type hints can be enforced to be specified with a contained type, with `traversableTypeHints`. See the [official explanation](https://github.com/slevomat/coding-standard#slevomatcodingstandardcommentinguselessfunctiondoccomment-)
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff`
 
@@ -498,8 +498,8 @@ This sniff disallows usage of the "mixed" type hint in phpDocs.
 
 ## Long type hints <Badge text="^1.0"/> <Badge text="Code\Comments" type="warn"/>
 
-This sniff enforces using shorthand scalar typehint variants in phpDocs: `int` instead of `integer` and `bool` instead of `boolean`.
-This is for consistency with native scalar typehints which also allow shorthand variants only.
+This sniff enforces using shorthand scalar type hint variants in phpDocs: `int` instead of `integer` and `bool` instead of `boolean`.
+This is for consistency with native scalar type hints which also allow shorthand variants only.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\LongTypeHintsSniff`
 
@@ -557,7 +557,7 @@ This sniff ensures that variables are not passed by reference when calling a fun
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\CallTimePassByReferenceSniff`
 
-## Deperacted functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
+## Deprecated functions <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
 
 This sniff discourages the use of deprecated PHP functions.
 
@@ -565,7 +565,7 @@ This sniff discourages the use of deprecated PHP functions.
 
 ## Nullable type declaration <Badge text="^1.0"/> <Badge text="Code\Functions" type="warn"/>
 
-This sniff verifies that nullable typehints are lacking superfluous whitespace (e.g. `?int`).
+This sniff verifies that nullable type hints are lacking superfluous whitespace (e.g. `?int`).
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions\NullableTypeDeclarationSniff`
 

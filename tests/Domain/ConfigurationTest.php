@@ -56,10 +56,10 @@ final class ConfigurationTest extends TestCase
         self::assertInstanceOf(FileLinkFormatter::class, $configuration->getFileLinkFormatter());
     }
 
-    public function testWithUnknowIde(): void
+    public function testWithUnknownIde(): void
     {
         $this->expectException(InvalidConfiguration::class);
-        $this->expectExceptionMessage('Unknow IDE "notepad++"');
+        $this->expectExceptionMessage('Unknown IDE "notepad++"');
 
         $config = [
             'ide' => 'notepad++',

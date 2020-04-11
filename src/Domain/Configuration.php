@@ -331,7 +331,7 @@ final class Configuration
         if (! isset(self::LINKS[$ide]) &&
             mb_strpos($ide, '://') === false) {
             throw new InvalidConfiguration(sprintf(
-                'Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler',
+                'Unknown IDE "%s". Try one in this list [%s] or provide pattern link handler',
                 $ide,
                 implode(', ', array_keys(self::LINKS))
             ));

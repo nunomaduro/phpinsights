@@ -8,7 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Code\Classes;
 use Tests\TestCase;
 
 /**
- * This test class is for testing if the metrics for Classes gives the correct results with Larave
+ * This test class is for testing if the metrics for Classes gives the correct results with Laravel
  *
  * @see Classes
  */

@@ -133,7 +133,7 @@ final class ConfigResolverTest extends TestCase
         );
     }
 
-    public function testUnknowMetricAddedThrowException(): void
+    public function testUnknownMetricAddedThrowException(): void
     {
         $this->expectException(InvalidConfiguration::class);
         $this->expectExceptionMessage('Unable to use "say" class as metric in section add.');
@@ -157,7 +157,7 @@ final class ConfigResolverTest extends TestCase
         );
     }
 
-    public function testAddUnknowClassThrowException(): void
+    public function testAddUnknownClassThrowException(): void
     {
         $this->expectException(InvalidConfiguration::class);
         $this->expectExceptionMessage('Unable to add "hello" insight, class doesn\'t exists.');

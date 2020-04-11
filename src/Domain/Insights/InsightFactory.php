@@ -96,7 +96,7 @@ final class InsightFactory
     }
 
     /**
-     * Return instancied insights.
+     * Return instantiated insights.
      *
      * @param array<string> $insights
      *
