@@ -52,11 +52,6 @@ final class Composer
         return $this->config['name'] ?? '';
     }
 
-    private function getPhpVersion(): string
-    {
-        return $this->getRequirements()['php'];
-    }
-
     public function hasPhpVersion(): bool
     {
         return isset($this->getRequirements()['php']);
@@ -69,5 +64,10 @@ final class Composer
         $composerVersion = $matches[0];
 
         return Semver::satisfies($composerVersion, $version);
+    }
+
+    private function getPhpVersion(): string
+    {
+        return $this->getRequirements()['php'];
     }
 }

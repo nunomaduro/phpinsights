@@ -104,7 +104,6 @@ final class FixerFileProcessor implements FileProcessor
 
             file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
         } catch (Throwable $e) {
-            // @ignoreException
-}
+        }
     }
 }
