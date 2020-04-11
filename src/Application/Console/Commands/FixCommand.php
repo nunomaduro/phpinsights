@@ -18,9 +18,8 @@ final class FixCommand
 {
     private InsightCollectionFactory $collectionFactory;
 
-    public function __construct(
-        InsightCollectionFactory $collectionFactory
-    ) {
+    public function __construct(InsightCollectionFactory $collectionFactory)
+    {
         $this->collectionFactory = $collectionFactory;
     }
 

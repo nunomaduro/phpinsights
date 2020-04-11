@@ -27,12 +27,14 @@ final class ConfigResolverTest extends TestCase
     {
         parent::setUp();
 
-        $this->baseFixturePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'ConfigResolver' . DIRECTORY_SEPARATOR;
+        $this->baseFixturePath = dirname(__DIR__) . DIRECTORY_SEPARATOR .
+            'Fixtures' . DIRECTORY_SEPARATOR . 'ConfigResolver' . DIRECTORY_SEPARATOR;
     }
 
     public function testGuessDirectoryWithoutComposer(): void
     {
         $preset = ConfigResolver::guess(new Composer([]));
+
         self::assertSame('default', $preset);
     }
 
@@ -41,6 +43,7 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess(
             Composer::fromPath("{$this->baseFixturePath}ComposerWithoutRequire" . DIRECTORY_SEPARATOR . 'composer.json')
         );
+
         self::assertSame('default', $preset);
     }
 
@@ -49,6 +52,7 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess(
             Composer::fromPath($this->baseFixturePath . 'ComposerSymfony' . DIRECTORY_SEPARATOR . 'composer.json')
         );
+
         self::assertSame('symfony', $preset);
     }
 
@@ -57,6 +61,7 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess(
             Composer::fromPath($this->baseFixturePath . 'ComposerLaravel' . DIRECTORY_SEPARATOR . 'composer.json')
         );
+
         self::assertSame('laravel', $preset);
     }
 
@@ -65,6 +70,7 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess(
             Composer::fromPath($this->baseFixturePath . 'ComposerYii' . DIRECTORY_SEPARATOR . 'composer.json')
         );
+
         self::assertSame('yii', $preset);
     }
 
@@ -73,6 +79,7 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess(
             Composer::fromPath($this->baseFixturePath . 'ComposerMagento2' . DIRECTORY_SEPARATOR . 'composer.json')
         );
+
         self::assertSame('magento2', $preset);
     }
 
@@ -81,6 +88,7 @@ final class ConfigResolverTest extends TestCase
         $preset = ConfigResolver::guess(
             Composer::fromPath($this->baseFixturePath . 'ComposerDrupal' . DIRECTORY_SEPARATOR . 'composer.json')
         );
+
         self::assertSame('drupal', $preset);
     }
 
@@ -92,9 +100,9 @@ final class ConfigResolverTest extends TestCase
             ],
             'config' => [
                 DocCommentSpacingSniff::class => [
-                    'linesCountBetweenDifferentAnnotationsTypes' => 2
-                ]
-            ]
+                    'linesCountBetweenDifferentAnnotationsTypes' => 2,
+                ],
+            ],
         ];
 
         $finalConfig = ConfigResolver::resolve(
@@ -140,7 +148,7 @@ final class ConfigResolverTest extends TestCase
     public function testKnownMetricAddedWithNonArrayValueThrowException(): void
     {
         $this->expectException(InvalidConfiguration::class);
-        $this->expectExceptionMessage('Added insights for metric "' . Classes::class. '" should be in an array.');
+        $this->expectExceptionMessage('Added insights for metric "' . Classes::class . '" should be in an array.');
 
         $config = ['add' => [Classes::class => 'hello']];
         ConfigResolver::resolve(
@@ -195,10 +203,11 @@ final class ConfigResolverTest extends TestCase
 
     public function testMergeInputRequirements(): void
     {
-        $input = new ArrayInput([
+        $input = new ArrayInput(
+            [
                 '--not-whitelisted' => 1,
                 '--min-complexity' => 1,
-                '--directory=.'
+                '--directory=.',
             ],
             new InputDefinition([
                 new InputArgument('paths'),

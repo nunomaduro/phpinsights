@@ -25,7 +25,7 @@ final class InsightsServiceProvider extends ServiceProvider
     {
         if ($this->app instanceof Application) {
             $this->publishes([
-                __DIR__.'/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),
+                __DIR__ . '/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),
             ], 'config');
         }
 

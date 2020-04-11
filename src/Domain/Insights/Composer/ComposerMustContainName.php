@@ -16,7 +16,9 @@ final class ComposerMustContainName extends Insight
     ];
 
     private bool $analyzed = false;
+
     private bool $hasError = false;
+
     public function hasIssue(): bool
     {
         if (! $this->analyzed) {
@@ -25,10 +27,12 @@ final class ComposerMustContainName extends Insight
 
         return $this->hasError;
     }
+
     public function getTitle(): string
     {
         return 'The name property in the `composer.json` contains the default value';
     }
+
     private function check(): void
     {
         try {

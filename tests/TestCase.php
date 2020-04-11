@@ -105,7 +105,7 @@ abstract class TestCase extends BaseTestCase
 
         return $insightCollectionFactory->get(
             MetricsFinder::find(),
-            new NullOutput
+            new NullOutput()
         );
     }
 
@@ -141,11 +141,12 @@ abstract class TestCase extends BaseTestCase
         $ruleset->ruleset = [
             "PhpInsights.Sniffs.{$ruleName}" => [
                 'properties' => $properties,
-            ]
+            ],
         ];
 
         $ruleset->registerSniffs($sniffs, [], []);
         $ruleset->populateTokenListeners();
+
         return new LocalFile($fixtureFile, $ruleset, $config);
     }
 

@@ -86,6 +86,7 @@ final class InsightCollection
 
             $perCategory[$category] = [...$perCategory[$category], ...$insights];
         }
+
         $this->results = new Results($this->collector, $perCategory);
 
         return $this->results;

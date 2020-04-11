@@ -18,8 +18,5 @@ interface Formatter
      *
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void;
+    public function format(InsightCollection $insightCollection, array $metrics): void;
 }

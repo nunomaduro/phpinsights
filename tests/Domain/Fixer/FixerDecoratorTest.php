@@ -31,10 +31,7 @@ final class FixerDecoratorTest extends TestCase
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === OrderedImportsFixer::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === OrderedImportsFixer::class) {
                 $orderedImportErrors++;
             }
         }
@@ -60,14 +57,12 @@ final class FixerDecoratorTest extends TestCase
                 __DIR__ . '/../../Fixtures/',
             ]
         );
+
         $orderedImportErrors = 0;
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === OrderedImportsFixer::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === OrderedImportsFixer::class) {
                 $orderedImportErrors++;
             }
         }
@@ -83,10 +78,7 @@ final class FixerDecoratorTest extends TestCase
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === OrderedImportsFixer::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === OrderedImportsFixer::class) {
                 $orderedImportErrors++;
             }
         }
@@ -112,12 +104,12 @@ final class FixerDecoratorTest extends TestCase
                 __DIR__ . '/../../Fixtures/',
             ]
         );
+
         $orderedImportErrors = 0;
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
+            if ($insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
             ) {
                 $orderedImportErrors++;

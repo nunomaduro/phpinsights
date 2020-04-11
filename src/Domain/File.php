@@ -14,30 +14,26 @@ use Throwable;
 
 final class File extends BaseFile
 {
-    private SniffDecorator $activeSniff;
     /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
     private array $tokenListeners = [];
+
+    private SniffDecorator $activeSniff;
+
     private SplFileInfo $fileInfo;
+
     private bool $isFixable;
+
     private bool $fixEnabled = false;
 
-    public function __construct(
-        string $path,
-        string $content,
-        Config $config,
-        Ruleset $ruleset
-    ) {
+    public function __construct(string $path, string $content, Config $config, Ruleset $ruleset)
+    {
         $this->content = $content;
 
         $this->eolChar = Common::detectLineEndings($content);
 
-        parent::__construct(
-            $path,
-            $ruleset,
-            $config
-        );
+        parent::__construct($path, $ruleset, $config);
     }
 
     public function process(): void
@@ -53,6 +49,7 @@ final class File extends BaseFile
             /** @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator $sniff */
             foreach ($this->tokenListeners[$token['code']] as $sniff) {
                 $this->activeSniff = $sniff;
+
                 try {
                     $sniff->process($this, $stackPtr);
                 } catch (Throwable $e) {
@@ -73,6 +70,7 @@ final class File extends BaseFile
         $this->tokenListeners = $tokenListeners;
         $this->fileInfo = $fileInfo;
         $this->isFixable = $isFixable;
+
         $this->process();
     }
 

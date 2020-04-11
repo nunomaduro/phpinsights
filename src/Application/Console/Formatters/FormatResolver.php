@@ -32,6 +32,7 @@ final class FormatResolver
             $consoleOutput->writeln(
                 '<fg=red>Could not understand requested format, using fallback [console] instead.</>'
             );
+
             $requestedFormats = ['console'];
         }
 
@@ -46,8 +47,10 @@ final class FormatResolver
                     $consoleOutput->writeln(
                         "<fg=red>The formatter [{$formatter}] is not implementing the interface.</>"
                     );
+
                     continue;
                 }
+
                 $formatters[] = $instance;
             } catch (InvalidArgumentException $exception) {
                 $consoleOutput->writeln("<fg=red>Could not find requested format [{$requestedFormat}].</>");
@@ -58,6 +61,7 @@ final class FormatResolver
             $consoleOutput->writeln(
                 '<fg=red>No requested formats were found, using fallback [console] instead.</>'
             );
+
             return new Console($input, $output);
         }
 

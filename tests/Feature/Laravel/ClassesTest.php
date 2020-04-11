@@ -19,10 +19,10 @@ final class ClassesTest extends TestCase
         $collection = $this->runAnalyserOnPreset(
             'laravel',
             [
-                __DIR__. '/Fixtures/ModelWithAttributeSetter.php'
+                __DIR__ . '/Fixtures/ModelWithAttributeSetter.php',
             ],
             [
-                __DIR__. '/Fixtures'
+                __DIR__ . '/Fixtures',
             ]
         );
 

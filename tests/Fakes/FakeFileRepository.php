@@ -21,7 +21,10 @@ final class FakeFileRepository implements FilesRepository
      */
     public function __construct(array $filePaths)
     {
-        $this->files = array_map(fn(string $filePath): SplFileInfo => new SplFileInfo($filePath, $filePath, $filePath), $filePaths);
+        $this->files = array_map(
+            fn (string $filePath): SplFileInfo => new SplFileInfo($filePath, $filePath, $filePath),
+            $filePaths
+        );
     }
 
     public function getDefaultDirectory(): string

@@ -36,6 +36,7 @@ trait FixPerFileCollector
         $details = [];
         foreach ($this->fixPerFile as $file => $count) {
             $message = 'issues fixed';
+
             if ($count === 1) {
                 $message = 'issue fixed';
             }

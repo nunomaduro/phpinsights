@@ -90,6 +90,7 @@ final class Results
         try {
             /** @var ForbiddenSecurityIssues $insight */
             $insight = $this->getInsightByCategory(ForbiddenSecurityIssues::class, 'Security');
+
             return count($insight->getDetails());
         } catch (InsightClassNotFound $exception) {
             return 0;
@@ -119,6 +120,7 @@ final class Results
                 if ($insight->hasIssue()) {
                     if (! $insight instanceof HasDetails) {
                         $total++;
+
                         continue;
                     }
 
@@ -126,6 +128,7 @@ final class Results
                 }
             }
         }
+
         return $total;
     }
 
@@ -133,11 +136,13 @@ final class Results
     {
         try {
             $this->getInsightByCategory($insightClass, $category);
+
             return true;
         } catch (InsightClassNotFound $exception) {
             return false;
         }
     }
+
     /**
      * Returns the percentage of the given category.
      */

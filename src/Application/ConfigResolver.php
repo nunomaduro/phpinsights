@@ -55,6 +55,7 @@ final class ConfigResolver
         foreach (self::PRESETS as $presetClass) {
             if ($presetClass::getName() === $preset) {
                 $config = self::mergeConfig($presetClass::get($composer), $config);
+
                 break;
             }
         }
@@ -110,8 +111,10 @@ final class ConfigResolver
         foreach ($replacement as $key => $value) {
             if (! array_key_exists($key, $base) && ! is_numeric($key)) {
                 $base[$key] = $replacement[$key];
+
                 continue;
             }
+
             if (is_array($value) || (array_key_exists($key, $base) && is_array($base[$key]))) {
                 $base[$key] = self::mergeConfig($base[$key], $replacement[$key]);
             } elseif (is_numeric($key)) {
@@ -137,10 +140,11 @@ final class ConfigResolver
     {
         $requirements = Configuration::getAcceptedRequirements();
         foreach ($requirements as $requirement) {
-            if ($input->hasParameterOption('--'.$requirement)) {
+            if ($input->hasParameterOption('--' . $requirement)) {
                 $config['requirements'][$requirement] = $input->getOption($requirement);
             }
         }
+
         return $config;
     }
 

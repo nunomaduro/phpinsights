@@ -42,6 +42,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
             self::$details = [
                 Details::make()->setMessage($exception->getMessage()),
             ];
+
             return self::$details;
         }
 

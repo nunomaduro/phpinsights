@@ -80,6 +80,20 @@ final class Console implements Formatter
         'Security' => 'red',
     ];
 
+    private const CODE_METRIC_CLASSES = [
+        Comments::class,
+        Classes::class,
+        Functions::class,
+        Globally::class,
+    ];
+
+    private const ARCHITECTURE_METRIC_CLASSES = [
+        ArchitectureClasses::class,
+        ArchitectureInterfaces::class,
+        ArchitectureGlobally::class,
+        ArchitectureTraits::class,
+    ];
+
     private Style $style;
 
     private int $totalWidth;
@@ -107,10 +121,8 @@ final class Console implements Formatter
      *
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         $results = $insightCollection->results();
 
         $this->summary($results, $insightCollection->getCollector()->getAnalysedPaths())
@@ -120,6 +132,7 @@ final class Console implements Formatter
             ->miscellaneous($results);
 
         $this->issues($insightCollection, $metrics, $insightCollection->getCollector()->getCommonPath());
+
         if ($this->config->hasFixEnabled()) {
             $this->formatFix($insightCollection, $metrics);
         }
@@ -130,10 +143,8 @@ final class Console implements Formatter
      *
      * @param array<string> $metrics
      */
-    public function formatFix(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function formatFix(InsightCollection $insightCollection, array $metrics): void
+    {
         $results = $insightCollection->results();
         $this->style->newLine();
 
@@ -182,6 +193,7 @@ final class Console implements Formatter
                         $category,
                         $insightCollection->getCollector()->getCommonPath()
                     );
+
                     if ($detail->hasMessage()) {
                         $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
                     }
@@ -193,6 +205,7 @@ final class Console implements Formatter
                 $this->style->newLine();
             }
         }
+
         $this->style->newLine();
     }
 
@@ -214,6 +227,7 @@ final class Console implements Formatter
                 )
             );
         }
+
         $this->style->newLine();
 
         $this->renderBlocksScores([
@@ -237,24 +251,19 @@ final class Console implements Formatter
     /**
      * Outputs the code errors according to the format.
      */
-    private function code(
-        InsightCollection $insightCollection,
-        Results $results
-    ): self {
+    private function code(InsightCollection $insightCollection, Results $results): self
+    {
         $this->style->newLine();
-        $this->style->writeln(sprintf('[CODE] %s within <title>%s</title> lines',
+        $this->style->writeln(sprintf(
+            '[CODE] %s within <title>%s</title> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code())->getValue($insightCollection->getCollector())
         ));
+
         $this->style->newLine();
 
         $lines = [];
-        foreach ([
-            Comments::class,
-            Classes::class,
-            Functions::class,
-            Globally::class,
-        ] as $metric) {
+        foreach (self::CODE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
             $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -267,13 +276,12 @@ final class Console implements Formatter
     /**
      * Outputs the complexity errors according to the format.
      */
-    private function complexity(
-        InsightCollection $insightCollection,
-        Results $results
-    ): self {
+    private function complexity(InsightCollection $insightCollection, Results $results): self
+    {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
+        $this->style->writeln(sprintf(
+            '[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -284,13 +292,12 @@ final class Console implements Formatter
     /**
      * Outputs the architecture errors according to the format.
      */
-    private function architecture(
-        InsightCollection $insightCollection,
-        Results $results
-    ): self {
+    private function architecture(InsightCollection $insightCollection, Results $results): self
+    {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf('[ARCHITECTURE] %s within <title>%s</title> files',
+        $this->style->writeln(sprintf(
+            '[ARCHITECTURE] %s within <title>%s</title> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Files())->getValue($insightCollection->getCollector())
         ));
@@ -298,12 +305,7 @@ final class Console implements Formatter
         $this->style->newLine();
 
         $lines = [];
-        foreach ([
-            ArchitectureClasses::class,
-            ArchitectureInterfaces::class,
-            ArchitectureGlobally::class,
-            ArchitectureTraits::class,
-        ] as $metric) {
+        foreach (self::ARCHITECTURE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
             $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -316,14 +318,14 @@ final class Console implements Formatter
     /**
      * Outputs the miscellaneous errors according to the format.
      */
-    private function miscellaneous(
-        Results $results
-    ): self {
+    private function miscellaneous(Results $results): self
+    {
         $this->style->newLine();
 
         $message = sprintf(
             '[MISC] %s on coding style',
-            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>");
+            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>"
+        );
 
         if ($results->hasInsightInCategory(ForbiddenSecurityIssues::class, 'Security')) {
             $totalSecurityIssuesColor = $results->getTotalSecurityIssues() === 0 ? 'green' : 'red';
@@ -343,11 +345,8 @@ final class Console implements Formatter
      *
      * @param array<string> $metrics
      */
-    private function issues(
-        InsightCollection $insightCollection,
-        array $metrics,
-        string $commonPath
-    ): self {
+    private function issues(InsightCollection $insightCollection, array $metrics, string $commonPath): self
+    {
         $previousCategory = null;
         $detailsComparator = new DetailsComparator();
 
@@ -370,8 +369,10 @@ final class Console implements Formatter
 
                 if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
+
                     continue;
                 }
+
                 $issue .= ':';
                 if ($this->style->getOutput()->isVerbose()) {
                     $issue .= " ({$insight->getInsightClass()})";
@@ -379,6 +380,7 @@ final class Console implements Formatter
 
                 if (! $insight instanceof HasDetails) {
                     $this->style->writeln($issue);
+
                     continue;
                 }
 
@@ -457,7 +459,8 @@ final class Console implements Formatter
             $percentage = number_format((float) $percentage, 1, '.', '');
             $takenSize = strlen($name . $percentage) + 4; // adding 3 space and percent sign
 
-            $this->style->writeln(sprintf('%s %s %s %%',
+            $this->style->writeln(sprintf(
+                '%s %s %s %%',
                 $name,
                 str_repeat('.', $dottedLineLength - $takenSize),
                 $percentage
@@ -518,6 +521,7 @@ final class Console implements Formatter
                 ],
             ]);
         }
+
         if ($disposition === self::TWO_BLOCKS_IN_ROW) {
             $table->setRows([
                 [
@@ -590,8 +594,7 @@ final class Console implements Formatter
         $color = $this->getCategoryColor($category);
         $detailString = sprintf('<fg=%s>%s</>', $color, $detailString);
 
-        if (
-            $this->supportHyperLinks &&
+        if ($this->supportHyperLinks &&
             $formattedLink !== '' &&
             $detailString !== ''
         ) {
@@ -610,6 +613,7 @@ final class Console implements Formatter
         if ($detail->hasDiff()) {
             $hasColor = false;
             $detailString = '';
+
             foreach (explode(PHP_EOL, $detail->getMessage()) as $line) {
                 if (mb_strpos($line, '-') === 0) {
                     $hasColor = true;

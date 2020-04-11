@@ -25,10 +25,8 @@ final class Multiple implements Formatter
      *
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         /** @var Formatter $formatter */
         foreach ($this->formatters as $formatter) {
             $formatter->format($insightCollection, $metrics);

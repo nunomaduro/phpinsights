@@ -60,10 +60,8 @@ final class InsightFactory
      *
      * @throws Exception
      */
-    public function makeFrom(
-        string $errorClass,
-        OutputInterface $consoleOutput
-    ): InsightContract {
+    public function makeFrom(string $errorClass, OutputInterface $consoleOutput): InsightContract
+    {
         $this->runInsightCollector($consoleOutput);
 
         /** @var InsightContract $insight */
