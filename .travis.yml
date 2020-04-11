@@ -28,11 +28,12 @@ script:
   - rm -rf vendor/
   - composer install --no-dev
   - composer run insights -- --disable-security-check
+
 jobs:
   include:
     - stage: build docker image
       if: tag IS present
-      php: 7.3
+      php: 7.4
       env: COMPOSER_FLAGS=""
       script:
         - rm -rf vendor/
