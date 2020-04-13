@@ -69,12 +69,14 @@ final class Configuration
      * @var array<string>
      */
     private array $exclude;
+
     /**
      * List of insights added by metrics.
      *
      * @var array<string, array<string>>
      */
     private array $add;
+
     /**
      * List of insights class to remove.
      *
@@ -134,6 +136,7 @@ final class Configuration
     {
         return $this->add[$metric] ?? [];
     }
+
     /**
      * @return array<string, array<string, string|int|array>>
      */
@@ -141,6 +144,7 @@ final class Configuration
     {
         return $this->config;
     }
+
     /**
      * @return array<string, string|int|array>
      */
@@ -148,6 +152,7 @@ final class Configuration
     {
         return $this->config[$insight] ?? [];
     }
+
     /**
      * @return array<string>
      */
@@ -155,10 +160,12 @@ final class Configuration
     {
         return $this->paths;
     }
+
     public function getCommonPath(): string
     {
         return $this->commonPath;
     }
+
     /**
      * @return array<string>
      */
@@ -166,6 +173,7 @@ final class Configuration
     {
         return $this->exclude;
     }
+
     /**
      * @return array<string>
      */
@@ -173,38 +181,47 @@ final class Configuration
     {
         return $this->remove;
     }
+
     public function getPreset(): string
     {
         return $this->preset;
     }
+
     public function getMinQuality(): float
     {
         return (float) ($this->requirements['min-quality'] ?? 0);
     }
+
     public function getMinComplexity(): float
     {
         return (float) ($this->requirements['min-complexity'] ?? 0);
     }
+
     public function getMinArchitecture(): float
     {
         return (float) ($this->requirements['min-architecture'] ?? 0);
     }
+
     public function getMinStyle(): float
     {
         return (float) ($this->requirements['min-style'] ?? 0);
     }
+
     public function isSecurityCheckDisabled(): bool
     {
         return (bool) ($this->requirements['disable-security-check'] ?? false);
     }
+
     public function getFileLinkFormatter(): FileLinkFormatterContract
     {
         return $this->fileLinkFormatter;
     }
+
     public function hasFixEnabled(): bool
     {
         return $this->fix;
     }
+
     /**
      * @param array<string, string|array|null> $config
      */
@@ -228,6 +245,7 @@ final class Configuration
             'preset',
             array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
         );
+
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
@@ -250,14 +268,14 @@ final class Configuration
         $this->requirements = $config['requirements'];
         $this->fix = $config['fix'];
 
-        if (
-            array_key_exists('ide', $config)
+        if (array_key_exists('ide', $config)
             && is_string($config['ide'])
             && $config['ide'] !== ''
         ) {
             $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
     }
+
     private function validateAddedInsight(): Closure
     {
         return static function ($values): bool {
@@ -270,6 +288,7 @@ final class Configuration
                         $metric
                     ));
                 }
+
                 if (! is_array($insights)) {
                     throw new InvalidConfiguration(sprintf(
                         'Added insights for metric "%s" should be in an array.',
@@ -286,9 +305,11 @@ final class Configuration
                     }
                 }
             }
+
             return true;
         };
     }
+
     private function validateConfigInsights(): Closure
     {
         return static function ($values): bool {
@@ -300,22 +321,27 @@ final class Configuration
                     ));
                 }
             }
+
             return true;
         };
     }
+
     private function resolveIde(string $ide): FileLinkFormatterContract
     {
         if (! isset(self::LINKS[$ide]) &&
             mb_strpos($ide, '://') === false) {
             throw new InvalidConfiguration(sprintf(
-                'Unknow IDE "%s". Try one in this list [%s] or provide pattern link handler',
+                'Unknown IDE "%s". Try one in this list [%s] or provide pattern link handler',
                 $ide,
                 implode(', ', array_keys(self::LINKS))
             ));
         }
+
         $fileFormatterPattern = self::LINKS[$ide] ?? $ide;
+
         return new FileLinkFormatter($fileFormatterPattern);
     }
+
     private function validateRequirements(): Closure
     {
         return static function ($values): bool {
@@ -323,6 +349,7 @@ final class Configuration
                 array_keys($values),
                 self::getAcceptedRequirements()
             );
+
             if ($invalidValues !== []) {
                 throw new InvalidConfiguration(sprintf(
                     'Unknown requirements [%s], valid values are [%s].',
@@ -330,6 +357,7 @@ final class Configuration
                     implode(', ', self::getAcceptedRequirements())
                 ));
             }
+
             return true;
         };
     }

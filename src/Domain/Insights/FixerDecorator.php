@@ -25,10 +25,12 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     use FixPerFileCollector;
 
     private FixerInterface $fixer;
+
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
     private array $exclude;
+
     /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
@@ -41,6 +43,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     {
         $this->fixer = $fixer;
         $this->exclude = [];
+
         if (count($exclude) > 0) {
             $this->exclude = Files::find($dir, $exclude);
         }
@@ -101,7 +104,8 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $path = explode('\\', $fixerClass);
         $name = (string) array_pop($path);
         $name = str_replace('Fixer', '', $name);
-        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
+
+        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name))));
     }
 
     /**

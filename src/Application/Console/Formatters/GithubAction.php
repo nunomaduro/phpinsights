@@ -24,6 +24,7 @@ final class GithubAction implements Formatter
         "\r" => '%0D',
         "\n" => '%0A',
     ];
+
     private Console $decorated;
 
     private OutputInterface $output;
@@ -42,10 +43,8 @@ final class GithubAction implements Formatter
      *
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         // Call The Console Formatter to get summary and recap,
         // not issues by passing an empty array for metrics.
         $this->decorated->format($insightCollection, []);
@@ -79,6 +78,7 @@ final class GithubAction implements Formatter
 
                 if (! array_key_exists($line, $errors[$file])) {
                     $errors[$file][$line] = $message;
+
                     continue;
                 }
 

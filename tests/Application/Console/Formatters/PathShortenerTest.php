@@ -29,7 +29,7 @@ final class PathShortenerTest extends TestCase
                     '/Users/MyUser/Code/phpinsights/src/Application/Composer.php',
                 ],
                 '/Users/MyUser/Code/phpinsights/src/',
-            ]
+            ],
         ];
     }
 
@@ -40,9 +40,6 @@ final class PathShortenerTest extends TestCase
      */
     public function testExtractingCommonPath(array $paths, string $commonPath): void
     {
-        self::assertEquals(
-            $commonPath,
-            PathShortener::extractCommonPath($paths)
-        );
+        self::assertEquals($commonPath, PathShortener::extractCommonPath($paths));
     }
 }

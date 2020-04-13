@@ -28,11 +28,8 @@ final class InsightCollectionFactory
     /**
      * Creates a new instance of InsightCollection Factory.
      */
-    public function __construct(
-        FilesRepository $filesRepository,
-        Analyser $analyser,
-        Configuration $config
-    ) {
+    public function __construct(FilesRepository $filesRepository, Analyser $analyser, Configuration $config)
+    {
         $this->filesRepository = $filesRepository;
         $this->analyser = $analyser;
         $this->config = $config;
@@ -41,15 +38,15 @@ final class InsightCollectionFactory
     /**
      * @param array<string> $metrics
      */
-    public function get(
-        array $metrics,
-        OutputInterface $consoleOutput
-    ): InsightCollection {
+    public function get(array $metrics, OutputInterface $consoleOutput): InsightCollection
+    {
         $paths = $this->config->getPaths();
         $commonPath = $this->config->getCommonPath();
 
         try {
-            $files = array_map(static fn (SplFileInfo $file) => $file->getRealPath(), $this->filesRepository->within($paths, $this->config->getExcludes())->getFiles()
+            $files = array_map(
+                static fn (SplFileInfo $file) => $file->getRealPath(),
+                $this->filesRepository->within($paths, $this->config->getExcludes())->getFiles()
             );
         } catch (InvalidArgumentException $exception) {
             throw new DirectoryNotFound($exception->getMessage(), 0, $exception);
@@ -64,6 +61,7 @@ final class InsightCollectionFactory
 
         $insightFactory = new InsightFactory($this->filesRepository, $insightsClasses, $this->config);
         $insightsForCollection = [];
+
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(
                 function (string $insightClass) use ($insightFactory, $collector, $consoleOutput) {
@@ -93,10 +91,9 @@ final class InsightCollectionFactory
         /** @var HasInsights $metric */
         $metric = new $metricClass();
 
-        $insights = array_key_exists(
-            HasInsights::class,
-            class_implements($metricClass)
-        ) ? $metric->getInsights() : [];
+        $insights = array_key_exists(HasInsights::class, class_implements($metricClass))
+            ? $metric->getInsights()
+            : [];
 
         $toAdd = $this->config->getAddedInsightsByMetric($metricClass);
         $insights = [...$insights, ...$toAdd];

@@ -32,10 +32,8 @@ final class Json implements Formatter
      *
      * @throws Exception
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         $results = $insightCollection->results();
 
         $data = [
@@ -63,10 +61,8 @@ final class Json implements Formatter
      *
      * @return array<string, array<int, array<string, int|string>>|null>
      */
-    private function issues(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): array {
+    private function issues(InsightCollection $insightCollection, array $metrics): array
+    {
         $data = [];
         $detailsComparator = new DetailsComparator();
 
@@ -91,6 +87,7 @@ final class Json implements Formatter
                         'title' => $insight->getTitle(),
                         'insightClass' => $insight->getInsightClass(),
                     ];
+
                     continue;
                 }
 

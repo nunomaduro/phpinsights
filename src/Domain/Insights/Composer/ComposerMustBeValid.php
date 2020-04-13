@@ -52,9 +52,8 @@ final class ComposerMustBeValid extends Insight implements HasDetails
             if (strpos($issue, ' : ') !== false) {
                 $issue = explode(' : ', $issue)[1];
             }
-            $this->details[] = Details::make()
-                ->setFile('composer.json')
-                ->setMessage($issue);
+
+            $this->details[] = Details::make()->setFile('composer.json')->setMessage($issue);
         }
 
         $this->analyzed = true;

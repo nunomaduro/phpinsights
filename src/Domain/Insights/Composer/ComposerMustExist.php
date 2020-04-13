@@ -11,6 +11,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 final class ComposerMustExist extends Insight
 {
     private bool $analyzed = false;
+
     private bool $hasError = false;
 
     public function hasIssue(): bool
@@ -34,6 +35,7 @@ final class ComposerMustExist extends Insight
         } catch (ComposerNotFound $e) {
             $this->hasError = true;
         }
+
         $this->analyzed = true;
     }
 }

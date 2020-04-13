@@ -21,6 +21,7 @@ final class Differ implements DifferInterface
             'fromFile' => '',
             'toFile' => '',
         ]);
+
         $this->differ = new BaseDiffer($outputBuilder);
     }
 

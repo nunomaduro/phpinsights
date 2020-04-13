@@ -39,11 +39,9 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
     {
         $this->sniff = $sniff;
         $this->excludedFiles = [];
+
         if (count($this->getIgnoredFilesPath()) > 0) {
-            $this->excludedFiles = Files::find(
-                $dir,
-                $this->getIgnoredFilesPath()
-            );
+            $this->excludedFiles = Files::find($dir, $this->getIgnoredFilesPath());
         }
     }
 
@@ -109,7 +107,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
             mb_strtolower(
                 trim(
                     (string) preg_replace(
-                        '/(?<!\ )[A-Z]/',
+                        '/(?<! )[A-Z]/',
                         ' $0',
                         $name
                     )

@@ -25,13 +25,11 @@ final class ForbiddenSetterMethodsTest extends TestCase
 
     public function testNoErrorIfNoSetter() : void
     {
-        // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
             __DIR__ . '/Fixtures/ClassWithNoSetter.php'
         );
 
-        // Run the sniff
         $file->process();
 
         self::assertEquals(0, $file->getErrorCount());
@@ -39,18 +37,14 @@ final class ForbiddenSetterMethodsTest extends TestCase
 
     public function testErrorOnLaravelAttributeSetter() : void
     {
-        // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
             __DIR__ . '/Fixtures/ClassWithLaravelAttributeSetter.php',
             [
-                'allowedMethodRegex' => [
-
-                ]
+                'allowedMethodRegex' => [],
             ]
         );
 
-        // Run the sniff
         $file->process();
 
         self::assertEquals(1, $file->getErrorCount());
@@ -58,7 +52,6 @@ final class ForbiddenSetterMethodsTest extends TestCase
 
     public function testNoErrorOnLaravelAttributeSetterWithRegex() : void
     {
-        // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
             __DIR__ . '/Fixtures/ClassWithLaravelAttributeSetter.php',
@@ -69,7 +62,6 @@ final class ForbiddenSetterMethodsTest extends TestCase
             ]
         );
 
-        // Run the sniff
         $file->process();
 
         self::assertEquals(0, $file->getErrorCount());
@@ -77,13 +69,11 @@ final class ForbiddenSetterMethodsTest extends TestCase
 
     public function testOneErrorIfOneSetterOnAnonymousClass() : void
     {
-        // Prepare the sniff
         $file = self::prepareFixtureWithSniff(
             ForbiddenSetterSniff::class,
             __DIR__ . '/Fixtures/AnonymousClassWithSetter.php'
         );
 
-        // Run the sniff
         $file->process();
 
         self::assertEquals(1, $file->getErrorCount());

@@ -31,10 +31,7 @@ final class FixerDecoratorTest extends TestCase
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === OrderedImportsFixer::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === OrderedImportsFixer::class) {
                 $orderedImportErrors++;
             }
         }
@@ -60,14 +57,12 @@ final class FixerDecoratorTest extends TestCase
                 __DIR__ . '/../../Fixtures/',
             ]
         );
+
         $orderedImportErrors = 0;
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === OrderedImportsFixer::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === OrderedImportsFixer::class) {
                 $orderedImportErrors++;
             }
         }
@@ -83,10 +78,7 @@ final class FixerDecoratorTest extends TestCase
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === OrderedImportsFixer::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === OrderedImportsFixer::class) {
                 $orderedImportErrors++;
             }
         }
@@ -112,12 +104,12 @@ final class FixerDecoratorTest extends TestCase
                 __DIR__ . '/../../Fixtures/',
             ]
         );
+
         $orderedImportErrors = 0;
 
         /** @var Insight $insight */
         foreach ($collection->allFrom(new Style) as $insight) {
-            if (
-                $insight->hasIssue()
+            if ($insight->hasIssue()
                 && $insight->getInsightClass() === OrderedImportsFixer::class
             ) {
                 $orderedImportErrors++;
@@ -133,7 +125,7 @@ final class FixerDecoratorTest extends TestCase
         $fileToTest = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/UnorderedUse.php';
         $fileExpected = dirname(__DIR__, 2) . '/Feature/Fix/Fixtures/UnorderedUseExpected.php';
 
-        $initalFileContent = \file_get_contents($fileToTest);
+        $initialFileContent = \file_get_contents($fileToTest);
 
         $this->runAnalyserOnConfig(
             ['fix' => true],
@@ -143,6 +135,6 @@ final class FixerDecoratorTest extends TestCase
         self::assertFileEquals($fileExpected, $fileToTest);
 
         // Restore file content
-        file_put_contents($fileToTest, $initalFileContent);
+        file_put_contents($fileToTest, $initialFileContent);
     }
 }

@@ -27,11 +27,11 @@ final class FixerFileProcessor implements FileProcessor
     private array $fixers = [];
 
     private DifferInterface $differ;
+
     private bool $fixEnabled;
 
-    public function __construct(
-        DifferInterface $differ
-    ) {
+    public function __construct(DifferInterface $differ)
+    {
         $this->differ = $differ;
         $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
     }
@@ -62,12 +62,15 @@ final class FixerFileProcessor implements FileProcessor
 
         $oldContent = $splFileInfo->getContents();
         $needFix = false;
+
         try {
             $tokens = @Tokens::fromCode($oldContent);
             $originalTokens = clone $tokens;
+
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
                 $fixer->fix($splFileInfo, $tokens);
+
                 if (! $tokens->isChanged()) {
                     continue;
                 }
@@ -79,6 +82,7 @@ final class FixerFileProcessor implements FileProcessor
                     // Tokens has changed, so we need to clear cache
                     @Tokens::clearCache();
                     $tokens = @Tokens::fromCode($oldContent);
+
                     continue;
                 }
 
@@ -93,14 +97,13 @@ final class FixerFileProcessor implements FileProcessor
             }
 
             $tokens = @Tokens::fromCode($oldContent);
-            // Reloop on fixer to get full tokens to change
+            // Iterate on fixer to get full tokens to change
             foreach ($this->fixers as $fixer) {
                 $fixer->fix($splFileInfo, $tokens);
             }
 
             file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
         } catch (Throwable $e) {
-            // @ignoreException
         }
     }
 }

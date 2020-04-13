@@ -6,12 +6,12 @@ declare(strict_types=1);
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Application;
 
-(function () {
+(static function () {
     require file_exists(__DIR__ . '/../vendor/autoload.php')
         ? __DIR__ . '/../vendor/autoload.php'
         : __DIR__ . '/../../../../vendor/autoload.php';
 
-    /**
+    /*
      * Bootstraps the domain kernel.
      */
     Kernel::bootstrap();

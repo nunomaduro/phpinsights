@@ -19,7 +19,7 @@ final class InvalidPhpCodeTest extends TestCase
             ],
             'Unclosed comment' => [
                 __DIR__ . '/Fixtures/InvalidPhpCode/UnclosedComment.php',
-            ]
+            ],
         ];
     }
 

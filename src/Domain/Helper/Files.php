@@ -24,6 +24,7 @@ final class Files
         $files = [];
         $userFinder = false;
         $finder = Finder::create()->in($basedir);
+
         /** @var string $file */
         foreach ($list as $file) {
             if (is_file($file)) {
@@ -33,6 +34,7 @@ final class Files
                 }
                 $info = pathinfo($file);
                 $files[$path] = new SplFileInfo($path, $info['dirname'], $info['basename']);
+
                 continue;
             }
 

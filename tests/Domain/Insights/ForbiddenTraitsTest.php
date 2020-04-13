@@ -45,13 +45,11 @@ final class ForbiddenTraitsTest extends TestCase
         $traitErrors = 0;
 
         foreach ($collection->allFrom(new Traits()) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === ForbiddenTraits::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === ForbiddenTraits::class) {
                 $traitErrors++;
             }
         }
+
         // No errors of this type as we are ignoring the file.
         self::assertEquals(0, $traitErrors);
     }

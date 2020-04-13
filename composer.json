@@ -101,10 +101,11 @@
         "website:copy-changelog": "Copy package changelog to the website",
         "website:copy-logo": "Copy logo from art directory to the website",
         "ecs:test": "Run the ecs tests.",
+        "rector:test": "Run the rector tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
         "insights": "Run the phpinsights tests",
         "test": "Run all tests including phpstan, phpunit and ecs.",
-        "fix": "Run ecs and phpinsights fixers."
+        "fix": "Run ecs, phpinsights and rector fixers."
     }
 }

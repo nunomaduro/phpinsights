@@ -43,7 +43,6 @@ final class ForbiddenGlobalsTest extends TestCase
         self::assertCount(1, $insight->getDetails());
 
         $detail = $insight->getDetails()[0];
-
         $message = $detail->getMessage();
         self::assertEquals('Usage of super global $_POST found; Usage of GLOBALS are discouraged consider not relying on global scope', $message);
 
@@ -65,8 +64,8 @@ final class ForbiddenGlobalsTest extends TestCase
 
         self::assertTrue($insight->hasIssue());
         self::assertCount(3, $insight->getDetails());
-        $detail = $insight->getDetails()[0];
 
+        $detail = $insight->getDetails()[0];
         $message = $detail->getMessage();
         self::assertEquals('Usage of "global" keyword found; Usage of GLOBALS are discouraged consider not relying on global scope', $message);
 

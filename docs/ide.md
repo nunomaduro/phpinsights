@@ -3,7 +3,7 @@
 Since <Badge text="^1.10"/> version of PhpInsights, you can add links to files in PhpInsights
 output. 
 
-## Prerequisite & Troubleshouting
+## Prerequisite & Troubleshooting
 
 Links in terminal work thanks to [`symfony/console`](https://github.com/symfony/console)
 from 4.3 version. Be sure you are using this version with `composer info symfony/console`.

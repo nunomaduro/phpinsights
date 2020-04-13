@@ -15,6 +15,7 @@ final class AnalyseDefinition extends BaseDefinition
     public static function get(): InputDefinition
     {
         $definition = parent::get();
+
         $definition->addOptions([
             new InputOption(
                 'min-quality',

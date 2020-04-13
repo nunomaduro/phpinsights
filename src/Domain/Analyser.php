@@ -48,6 +48,7 @@ final class Analyser
 
         return $method->invoke(new BaseAnalyser(), ...$args);
     }
+
     /**
      * Processes a set of files.
      *
@@ -64,6 +65,7 @@ final class Analyser
 
         return $collector;
     }
+
     /**
      * Processes a single file.
      */
@@ -82,8 +84,9 @@ final class Analyser
         $namespace = false;
         $className = null;
         $functionName = null;
-        $collector->currentClassReset();
         $isInMethod = false;
+
+        $collector->currentClassReset();
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (\is_string($tokens[$i])) {
@@ -253,10 +256,10 @@ final class Analyser
                             $isInMethod = true;
                             $collector->currentMethodStart();
 
-                            if (! $static) {
-                                $collector->incrementNonStaticMethods();
-                            } else {
+                            if ($static) {
                                 $collector->incrementStaticMethods();
+                            } else {
+                                $collector->incrementNonStaticMethods();
                             }
 
                             if ($visibility === \T_PUBLIC) {
@@ -361,7 +364,7 @@ final class Analyser
                     break;
 
                 case \T_GLOBAL:
-                    $collector->addGlobalVariableAccesses($tokens[$i][2], '"' .$tokens[$i][1] .'" keyword');
+                    $collector->addGlobalVariableAccesses($tokens[$i][2], '"' . $tokens[$i][1] . '" keyword');
 
                     break;
 

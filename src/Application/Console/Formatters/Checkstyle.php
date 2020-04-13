@@ -31,13 +31,12 @@ final class Checkstyle implements Formatter
      *
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         if (! extension_loaded('simplexml')) {
             throw new RuntimeException('To use checkstyle format install simplexml extension.');
         }
+
         $checkstyle = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><checkstyle/>');
         $detailsComparator = new DetailsComparator();
 

@@ -26,6 +26,7 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertCount($expected, $files);
     }
+
     /**
      * @return array<int, array<int, array<int, string>|int>>
      */
@@ -40,9 +41,10 @@ final class LocalFilesRepositoryTest extends TestCase
             [3, ['FolderA/SubFolderA']],
             [3, ['FolderA/SubFolderA/ClassC.php']],
             [2, ['/(\w).*(A.php)$/']],
-            [2, ['/((\w).*)?(FolderA\/)(\w).*/']]
+            [2, ['/((\w).*)?(FolderA\/)(\w).*/']],
         ];
     }
+
     public function testDefaultDirectory(): void
     {
         $finder = new Finder();
@@ -51,6 +53,7 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertSame((string) getcwd(), $repository->getDefaultDirectory());
     }
+
     public function testCanIgnoreBladeFiles(): void
     {
         $finder = new Finder();
@@ -62,6 +65,7 @@ final class LocalFilesRepositoryTest extends TestCase
 
         self::assertEmpty($files);
     }
+
     public function testPassFileInsteadOfDirectory(): void
     {
         $finder = new Finder();
@@ -74,10 +78,10 @@ final class LocalFilesRepositoryTest extends TestCase
         self::assertInstanceOf(SplFileInfo::class, $files[0]);
         $path = $files[0]->getRealPath();
 
-        if ($path === false) {
-            self::fail('Path cannot be false.');
-        } else {
+        if ($path !== false) {
             self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
+        } else {
+            self::fail('Path cannot be false.');
         }
     }
 }

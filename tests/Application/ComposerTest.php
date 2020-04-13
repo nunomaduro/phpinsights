@@ -31,7 +31,6 @@ final class ComposerTest extends TestCase
         self::assertFalse($composer->lowestPhpVersionIsGreaterThenOrEqualTo('7.0'));
     }
 
-
     public function testPhpVersionMatchesWhenBothIn74(): void
     {
         $composer = new Composer([

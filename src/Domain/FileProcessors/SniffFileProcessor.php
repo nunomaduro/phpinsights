@@ -24,6 +24,7 @@ final class SniffFileProcessor implements FileProcessor
     private array $tokenListeners = [];
 
     private FileFactory $fileFactory;
+
     private bool $fixEnabled;
 
     /**
@@ -57,6 +58,7 @@ final class SniffFileProcessor implements FileProcessor
     public function processFile(SplFileInfo $splFileInfo): void
     {
         $file = $this->fileFactory->createFromFileInfo($splFileInfo);
+
         $file->processWithTokenListenersAndFileInfo(
             $this->tokenListeners,
             $splFileInfo,

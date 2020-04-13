@@ -24,7 +24,7 @@ interface Preset
     public static function get(Composer $composer): array;
 
     /**
-     * Determinates if the preset should be applied.
+     * Determines if the preset should be applied.
      */
     public static function shouldBeApplied(Composer $composer): bool;
 }

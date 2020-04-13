@@ -28,10 +28,8 @@ final class Analyser
     /**
      * Analyse the given dirs.
      */
-    public function analyse(
-        Formatter $formatter,
-        OutputInterface $consoleOutput
-    ): Results {
+    public function analyse(Formatter $formatter, OutputInterface $consoleOutput): Results
+    {
         $metrics = MetricsFinder::find();
 
         $insightCollection = $this->insightCollectionFactory

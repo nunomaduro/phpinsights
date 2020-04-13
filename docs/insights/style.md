@@ -192,7 +192,7 @@ Commas after the last element in an array make adding a new element easier and r
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff`
 
-## Arbitraty parentheses spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Arbitrary parentheses spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff checks whitespace on the inside of arbitrary parentheses.
 
@@ -350,14 +350,14 @@ This sniff enforces using short form of list syntax, `[...]` instead of `list(..
 ## Parameter type hint spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 
 This sniff
-- checks that there's a single space between a typehint and a parameter name: `Foo $foo`
-- checks that there's no whitespace between a nullability symbol and a typehint: `?Foo`
+- checks that there's a single space between a type hint and a parameter name: `Foo $foo`
+- checks that there's no whitespace between a nullability symbol and a type hint: `?Foo`
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSpacingSniff`
 
 ## Return type hint spacing <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="configurable"/>
 
-This sniff enforces consistent formatting of return typehints.
+This sniff enforces consistent formatting of return type hints.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff`
 
@@ -414,7 +414,7 @@ This sniff verifies that classes are instantiated with parentheses.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR12\Sniffs\Classes\ClassInstantiationSniff`
 
-## No trailing comma in singleline array <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+## No trailing comma in single line array <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
 This fixer removes trailing commas in list function calls.
 
@@ -567,9 +567,9 @@ Spaces should be properly placed in a function declaration.
 ```
 </details>
 
-## Function typehint space <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+## Function type hint space <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
-This fixer adds missing spaces between function's argument and its typehint.
+This fixer adds missing spaces between function's argument and its type hint.
 
 **Insight Class**: `PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer`
 
@@ -586,7 +586,7 @@ Binary operators should be surrounded by spaces as configured.
 \PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class => [
     'align_double_arrow' => false, // Whether to apply, remove or ignore double arrows alignment: possibles values [true, false, null]
     'align_equals' => false, // Whether to apply, remove or ignore equals alignment: possibles values [true, false, null]
-    'default' => 'single_space', // default fix strategie: possibles values ['align', 'align_single_space', 'align_single_space_minimal', 'single_space', 'no_space', null]
+    'default' => 'single_space', // default fix strategy: possibles values ['align', 'align_single_space', 'align_single_space_minimal', 'single_space', 'no_space', null]
 ]
 ```
 </details>
@@ -619,7 +619,7 @@ PHP code must use the long `<?php` tags or short-echo `<?=` tags and not other t
 
 **Insight Class**: `PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer`
 
-## No singleline whitespace before semicolons <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
+## No single line whitespace before semicolons <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
 Single-line whitespace before closing semicolon are prohibited.
 
@@ -782,7 +782,7 @@ There must be one `use` keyword per declaration.
 
 ## Phpdoc trim <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
-PHPDoc should start and end with content, excluding the very first and last line of the docblocks.
+PHPDoc should start and end with content, excluding the very first and last line of the DocBlocks.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer`
 
@@ -794,7 +794,7 @@ PHPDoc should start and end with content, excluding the very first and last line
 
 ## Phpdoc indent <Badge text="^1.10"/> <Badge text="Style" type="warn"/>
 
-Docblocks should have the same indentation as the documented subject.
+DocBlocks should have the same indentation as the documented subject.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer`
 

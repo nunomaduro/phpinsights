@@ -8,7 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Code\Classes;
 use Tests\TestCase;
 
 /**
- * This test class is for testing if the metrics for Classes gives the correct results with Larave
+ * This test class is for testing if the metrics for Classes gives the correct results with Laravel
  *
  * @see Classes
  */
@@ -19,10 +19,10 @@ final class ClassesTest extends TestCase
         $collection = $this->runAnalyserOnPreset(
             'laravel',
             [
-                __DIR__. '/Fixtures/ModelWithAttributeSetter.php'
+                __DIR__ . '/Fixtures/ModelWithAttributeSetter.php',
             ],
             [
-                __DIR__. '/Fixtures'
+                __DIR__ . '/Fixtures',
             ]
         );
 

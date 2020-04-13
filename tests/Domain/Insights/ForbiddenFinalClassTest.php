@@ -50,10 +50,7 @@ final class ForbiddenFinalClassTest extends TestCase
         $classErrors = 0;
 
         foreach ($collection->allFrom(new Classes()) as $insight) {
-            if (
-                $insight->hasIssue()
-                && $insight->getInsightClass() === ForbiddenFinalClasses::class
-            ) {
+            if ($insight->hasIssue() && $insight->getInsightClass() === ForbiddenFinalClasses::class) {
                 $classErrors++;
             }
         }

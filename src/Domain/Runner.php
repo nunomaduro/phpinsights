@@ -16,9 +16,12 @@ use Symfony\Component\Finder\SplFileInfo;
 final class Runner
 {
     private const EMPTY_BAR_CHARACTER = '░';
+
     // light shade character \u2591
     private const PROGRESS_CHARACTER = '';
+
     private const BAR_CHARACTER = '▓';
+
     /** @var array<FileProcessorContract> */
     private array $filesProcessors;
 
@@ -26,10 +29,8 @@ final class Runner
 
     private FilesRepository $filesRepository;
 
-    public function __construct(
-        OutputInterface $output,
-        FilesRepository $filesRepository
-    ) {
+    public function __construct(OutputInterface $output, FilesRepository $filesRepository)
+    {
         $this->filesRepository = $filesRepository;
         $this->output = $output;
 
@@ -82,6 +83,7 @@ final class Runner
         if ($this->output->isVerbose()) {
             $progressBar->setMessage(PHP_EOL . '<info>Analysis Completed !</info>');
         }
+
         $progressBar->finish();
     }
 
@@ -99,11 +101,11 @@ final class Runner
 
         $format = ProgressBar::getFormatDefinition($this->getProgressFormat());
         $format .= PHP_EOL . '%message%';
+
         ProgressBar::setFormatDefinition('phpinsight', $format);
         $progressBar->setFormat('phpinsight');
 
-        if (\DIRECTORY_SEPARATOR !== '\\'
-            || getenv('TERM_PROGRAM') === 'Hyper') {
+        if (\DIRECTORY_SEPARATOR !== '\\' || getenv('TERM_PROGRAM') === 'Hyper') {
             $progressBar->setEmptyBarCharacter(self::EMPTY_BAR_CHARACTER);
             $progressBar->setProgressCharacter(self::PROGRESS_CHARACTER);
             $progressBar->setBarCharacter(self::BAR_CHARACTER);
@@ -115,15 +117,19 @@ final class Runner
     private function getProgressFormat(): string
     {
         $verbosity = $this->output->getVerbosity();
+
         if ($verbosity === OutputInterface::VERBOSITY_VERBOSE) {
             return 'verbose';
         }
+
         if ($verbosity === OutputInterface::VERBOSITY_VERY_VERBOSE) {
             return 'very_verbose';
         }
+
         if ($verbosity === OutputInterface::VERBOSITY_DEBUG) {
             return 'debug';
         }
+
         return 'normal';
     }
 }

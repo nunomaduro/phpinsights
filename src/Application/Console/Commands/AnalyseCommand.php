@@ -41,22 +41,21 @@ final class AnalyseCommand
     {
         $consoleOutput = $output;
         $format = $input->getOption('format');
+
         if ($consoleOutput instanceof ConsoleOutputInterface
             && is_array($format)
             && ! in_array('console', $format, true)) {
             $consoleOutput = $consoleOutput->getErrorOutput();
             $consoleOutput->setDecorated($output->isDecorated());
         }
+
         $consoleStyle = new Style($input, $consoleOutput);
 
         $output = OutputDecorator::decorate($output);
 
         $formatter = FormatResolver::resolve($input, $output, $consoleOutput);
 
-        $results = $this->analyser->analyse(
-            $formatter,
-            $consoleOutput
-        );
+        $results = $this->analyser->analyse($formatter, $consoleOutput);
 
         $hasError = false;
         if ($this->configuration->getMinQuality() > $results->getCodeQuality()) {
