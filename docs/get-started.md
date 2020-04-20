@@ -81,7 +81,7 @@ php artisan insights path/to/analyse
 Some Insights support automatic fixing. 
 To fix your code automatically, two way are possibles: 
 
-* Add `--fix` option to your command. The output will be the classical output, with a resume of all issues fixed.
+* Add `--fix` option to your command. The output will be the classical output, with a summary of all issues fixed.
 * Or launch `phpinsights fix [directory]`
 
 ```bash
