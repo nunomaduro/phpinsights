@@ -28,7 +28,10 @@ Then, use the `insights` Artisan command:
 php artisan insights
 ```
 
-> Note for Laravel 7 users : phpinsights requires [PHP 7.3+](https://php.net/releases/), and `PHPUnit 9.0+`.
+> Note for Laravel 7 users: phpinsights requires [PHP 7.3+](https://php.net/releases/), and `PHPUnit 9.0+`. For upgrading PHPUnit, you can use following command:
+ ```bash
+ composer require --dev phpunit/phpunit:^9.0 --update-with-dependencies
+ ```
 
 ## Within Lumen
 
