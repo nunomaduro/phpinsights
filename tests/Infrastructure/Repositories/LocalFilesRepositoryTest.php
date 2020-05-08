@@ -11,10 +11,7 @@ use Tests\TestCase;
 
 final class LocalFilesRepositoryTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $base = __DIR__ . '/../../Fixtures/Tree';
+    private const BASE = __DIR__ . '/../../Fixtures/Tree';
 
     /**
      * @dataProvider provider
@@ -25,7 +22,7 @@ final class LocalFilesRepositoryTest extends TestCase
     {
         $repository = new LocalFilesRepository(Finder::create());
 
-        $files = $repository->within([$this->base], $exclude)->getFiles();
+        $files = $repository->within([self::BASE], $exclude)->getFiles();
 
         self::assertCount($expected, $files);
     }
@@ -44,7 +41,7 @@ final class LocalFilesRepositoryTest extends TestCase
             [3, ['FolderA/SubFolderA']],
             [3, ['FolderA/SubFolderA/ClassC.php']],
             [2, ['/(\w).*(A.php)$/']],
-            [2, ['/((\w).*)?(FolderA\/)(\w).*/']]
+            [2, ['/((\w).*)?(FolderA\/)(\w).*/']],
         ];
     }
 
@@ -81,11 +78,10 @@ final class LocalFilesRepositoryTest extends TestCase
         self::assertInstanceOf(SplFileInfo::class, $files[0]);
         $path = $files[0]->getRealPath();
 
-        if ($path === false) {
+        if ($path !== false) {
+            self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
+        } else {
             self::fail('Path cannot be false.');
-
-            return;
         }
-        self::assertStringContainsString('/Fixtures/FileToInspect.php', $path);
     }
 }

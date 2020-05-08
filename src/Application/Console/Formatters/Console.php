@@ -15,7 +15,6 @@ use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\DetailsComparator;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightCollection;
-use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes as ArchitectureClasses;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Files;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Globally as ArchitectureGlobally;
@@ -36,6 +35,8 @@ use Symfony\Component\Console\Terminal;
 
 /**
  * @internal
+ *
+ * @see \Tests\Application\Console\Formatters\ConsoleTest
  */
 final class Console implements Formatter
 {
@@ -45,26 +46,63 @@ final class Console implements Formatter
     private const MIN_SPACEWIDTH = 5;
     private const MAX_SPACEWIDTH = 15;
 
-    /**
-     * @var Style
-     */
-    private $style;
-    /**
-     * @var int
-     */
-    private $totalWidth;
-    /**
-     * @var FileLinkFormatter
-     */
-    private $fileLinkFormatter;
-    /**
-     * @var bool
-     */
-    private $supportHyperLinks;
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Configuration
-     */
-    private $config;
+    private const SUBTITLE = 'fg=white;options=bold;fg=white';
+
+    private const QUALITY = <<<EOD
+    <%quality_color%>%block_size%</>
+    <fg=black;options=bold;%quality_color%>  %quality%  </>
+    <%quality_color%>%block_size%</>
+    EOD;
+
+    private const COMPLEXITY = <<<EOD
+    <%complexity_color%>%block_size%</>
+    <fg=black;options=bold;%complexity_color%>  %complexity%  </>
+    <%complexity_color%>%block_size%</>
+    EOD;
+
+    private const STRUCTURE = <<<EOD
+    <%structure_color%>%block_size%</>
+    <fg=black;options=bold;%structure_color%>  %structure%  </>
+    <%structure_color%>%block_size%</>
+    EOD;
+
+    private const STYLE = <<<EOD
+    <%style_color%>%block_size%</>
+    <fg=black;options=bold;%style_color%>  %style%  </>
+    <%style_color%>%block_size%</>
+    EOD;
+
+    private const CATEGORY_COLOR = [
+        'Code' => 'cyan',
+        'Complexity' => 'green',
+        'Architecture' => 'blue',
+        'Style' => 'yellow',
+        'Security' => 'red',
+    ];
+
+    private const CODE_METRIC_CLASSES = [
+        Comments::class,
+        Classes::class,
+        Functions::class,
+        Globally::class,
+    ];
+
+    private const ARCHITECTURE_METRIC_CLASSES = [
+        ArchitectureClasses::class,
+        ArchitectureInterfaces::class,
+        ArchitectureGlobally::class,
+        ArchitectureTraits::class,
+    ];
+
+    private Style $style;
+
+    private int $totalWidth;
+
+    private FileLinkFormatter $fileLinkFormatter;
+
+    private bool $supportHyperLinks;
+
+    private Configuration $config;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -72,7 +110,6 @@ final class Console implements Formatter
         $this->totalWidth = (new Terminal())->getWidth();
 
         $outputFormatterStyle = new OutputFormatterStyle();
-        /** @var Configuration $config */
         $this->config = Container::make()->get(Configuration::class);
 
         $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
@@ -82,13 +119,10 @@ final class Console implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         $results = $insightCollection->results();
 
         $this->summary($results, $insightCollection->getCollector()->getAnalysedPaths())
@@ -98,6 +132,7 @@ final class Console implements Formatter
             ->miscellaneous($results);
 
         $this->issues($insightCollection, $metrics, $insightCollection->getCollector()->getCommonPath());
+
         if ($this->config->hasFixEnabled()) {
             $this->formatFix($insightCollection, $metrics);
         }
@@ -106,13 +141,10 @@ final class Console implements Formatter
     /**
      * Format the result of fixes to the desired format.
      *
-     * @param InsightCollection $insightCollection
      * @param array<string> $metrics
      */
-    public function formatFix(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function formatFix(InsightCollection $insightCollection, array $metrics): void
+    {
         $results = $insightCollection->results();
         $this->style->newLine();
 
@@ -156,7 +188,12 @@ final class Console implements Formatter
                 $details = $insight->getFixPerFile();
                 /** @var Details $detail */
                 foreach ($details as $detail) {
-                    $detailString = $this->formatFileLine($detail, $category, $insightCollection->getCollector()->getCommonPath());
+                    $detailString = $this->formatFileLine(
+                        $detail,
+                        $category,
+                        $insightCollection->getCollector()->getCommonPath()
+                    );
+
                     if ($detail->hasMessage()) {
                         $detailString .= ($detailString !== '' ? ': ' : '') . $detail->getMessage();
                     }
@@ -168,16 +205,14 @@ final class Console implements Formatter
                 $this->style->newLine();
             }
         }
+
         $this->style->newLine();
     }
 
     /**
      * Outputs the summary according to the format.
      *
-     * @param Results $results
      * @param array<string> $paths
-     *
-     * @return self
      */
     private function summary(Results $results, array $paths): self
     {
@@ -193,29 +228,18 @@ final class Console implements Formatter
             );
         }
 
-        $subtitle = 'fg=white;options=bold;fg=white';
         $this->style->newLine();
 
-        $codeQualityColor = "bg={$this->getColor($results->getCodeQuality())}";
-        $complexityColor = "bg={$this->getColor($results->getComplexity())}";
-        $structureColor = "bg={$this->getColor($results->getStructure())}";
-        $styleColor = "bg={$this->getColor($results->getStyle())}";
-
-        $codeQuality = self::getPercentageAsString($results->getCodeQuality());
-        $complexity = self::getPercentageAsString($results->getComplexity());
-        $structure = self::getPercentageAsString($results->getStructure());
-        $style = self::getPercentageAsString($results->getStyle());
-
         $this->renderBlocksScores([
-            '%quality%' => $codeQuality,
-            '%quality_color%' => $codeQualityColor,
-            '%complexity%' => $complexity,
-            '%complexity_color%' => $complexityColor,
-            '%structure%' => $structure,
-            '%structure_color%' => $structureColor,
-            '%style%' => $style,
-            '%style_color%' => $styleColor,
-            '%subtitle%' => $subtitle,
+            '%quality%' => self::getPercentageAsString($results->getCodeQuality()),
+            '%quality_color%' => "bg={$this->getColor($results->getCodeQuality())}",
+            '%complexity%' => self::getPercentageAsString($results->getComplexity()),
+            '%complexity_color%' => "bg={$this->getColor($results->getComplexity())}",
+            '%structure%' => self::getPercentageAsString($results->getStructure()),
+            '%structure_color%' => "bg={$this->getColor($results->getStructure())}",
+            '%style%' => self::getPercentageAsString($results->getStyle()),
+            '%style_color%' => "bg={$this->getColor($results->getStyle())}",
+            '%subtitle%' => self::SUBTITLE,
         ]);
 
         $this->style->newLine(2);
@@ -226,30 +250,20 @@ final class Console implements Formatter
 
     /**
      * Outputs the code errors according to the format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param Results $results
-     *
-     * @return self
      */
-    private function code(
-        InsightCollection $insightCollection,
-        Results $results
-    ): self {
+    private function code(InsightCollection $insightCollection, Results $results): self
+    {
         $this->style->newLine();
-        $this->style->writeln(sprintf('[CODE] %s within <title>%s</title> lines',
+        $this->style->writeln(sprintf(
+            '[CODE] %s within <title>%s</title> lines',
             "<fg={$this->getColor($results->getCodeQuality())};options=bold>{$results->getCodeQuality()} pts</>",
             (new Code())->getValue($insightCollection->getCollector())
         ));
+
         $this->style->newLine();
 
         $lines = [];
-        foreach ([
-            Comments::class,
-            Classes::class,
-            Functions::class,
-            Globally::class,
-        ] as $metric) {
+        foreach (self::CODE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
             $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -261,19 +275,13 @@ final class Console implements Formatter
 
     /**
      * Outputs the complexity errors according to the format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param Results $results
-     *
-     * @return self
      */
-    private function complexity(
-        InsightCollection $insightCollection,
-        Results $results
-    ): self {
+    private function complexity(InsightCollection $insightCollection, Results $results): self
+    {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf('[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
+        $this->style->writeln(sprintf(
+            '[COMPLEXITY] %s with average of <title>%s</title> cyclomatic complexity',
             "<fg={$this->getColor($results->getComplexity())};options=bold>{$results->getComplexity()} pts</>",
             (new Complexity())->getAvg($insightCollection->getCollector())
         ));
@@ -283,19 +291,13 @@ final class Console implements Formatter
 
     /**
      * Outputs the architecture errors according to the format.
-     *
-     * @param InsightCollection $insightCollection
-     * @param Results $results
-     *
-     * @return self
      */
-    private function architecture(
-        InsightCollection $insightCollection,
-        Results $results
-    ): self {
+    private function architecture(InsightCollection $insightCollection, Results $results): self
+    {
         $this->style->newLine();
 
-        $this->style->writeln(sprintf('[ARCHITECTURE] %s within <title>%s</title> files',
+        $this->style->writeln(sprintf(
+            '[ARCHITECTURE] %s within <title>%s</title> files',
             "<fg={$this->getColor($results->getStructure())};options=bold>{$results->getStructure()} pts</>",
             (new Files())->getValue($insightCollection->getCollector())
         ));
@@ -303,12 +305,7 @@ final class Console implements Formatter
         $this->style->newLine();
 
         $lines = [];
-        foreach ([
-            ArchitectureClasses::class,
-            ArchitectureInterfaces::class,
-            ArchitectureGlobally::class,
-            ArchitectureTraits::class,
-        ] as $metric) {
+        foreach (self::ARCHITECTURE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
             $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
@@ -320,19 +317,15 @@ final class Console implements Formatter
 
     /**
      * Outputs the miscellaneous errors according to the format.
-     *
-     * @param Results $results
-     *
-     * @return self
      */
-    private function miscellaneous(
-        Results $results
-    ): self {
+    private function miscellaneous(Results $results): self
+    {
         $this->style->newLine();
 
         $message = sprintf(
             '[MISC] %s on coding style',
-            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>");
+            "<fg={$this->getColor($results->getStyle())};options=bold>{$results->getStyle()} pts</>"
+        );
 
         if ($results->hasInsightInCategory(ForbiddenSecurityIssues::class, 'Security')) {
             $totalSecurityIssuesColor = $results->getTotalSecurityIssues() === 0 ? 'green' : 'red';
@@ -350,17 +343,10 @@ final class Console implements Formatter
     /**
      * Outputs the issues errors according to the format.
      *
-     * @param InsightCollection $insightCollection
      * @param array<string> $metrics
-     * @param string $commonPath
-     *
-     * @return self
      */
-    private function issues(
-        InsightCollection $insightCollection,
-        array $metrics,
-        string $commonPath
-    ): self {
+    private function issues(InsightCollection $insightCollection, array $metrics, string $commonPath): self
+    {
         $previousCategory = null;
         $detailsComparator = new DetailsComparator();
 
@@ -383,8 +369,10 @@ final class Console implements Formatter
 
                 if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
+
                     continue;
                 }
+
                 $issue .= ':';
                 if ($this->style->getOutput()->isVerbose()) {
                     $issue .= " ({$insight->getInsightClass()})";
@@ -392,6 +380,7 @@ final class Console implements Formatter
 
                 if (! $insight instanceof HasDetails) {
                     $this->style->writeln($issue);
+
                     continue;
                 }
 
@@ -433,10 +422,6 @@ final class Console implements Formatter
 
     /**
      * Returns the percentage as 5 chars string.
-     *
-     * @param float $percentage
-     *
-     * @return string
      */
     private static function getPercentageAsString(float $percentage): string
     {
@@ -449,10 +434,6 @@ final class Console implements Formatter
 
     /**
      * Returns the color for the given percentage.
-     *
-     * @param float $percentage
-     *
-     * @return string
      */
     private function getColor(float $percentage): string
     {
@@ -478,7 +459,8 @@ final class Console implements Formatter
             $percentage = number_format((float) $percentage, 1, '.', '');
             $takenSize = strlen($name . $percentage) + 4; // adding 3 space and percent sign
 
-            $this->style->writeln(sprintf('%s %s %s %%',
+            $this->style->writeln(sprintf(
+                '%s %s %s %%',
                 $name,
                 str_repeat('.', $dottedLineLength - $takenSize),
                 $percentage
@@ -504,27 +486,6 @@ final class Console implements Formatter
             '%block_size%' => str_pad('', $blockSize),
         ]);
 
-        $quality = <<<EOD
-<%quality_color%>%block_size%</>
-<fg=black;options=bold;%quality_color%>  %quality%  </>
-<%quality_color%>%block_size%</>
-EOD;
-        $complexity = <<<EOD
-<%complexity_color%>%block_size%</>
-<fg=black;options=bold;%complexity_color%>  %complexity%  </>
-<%complexity_color%>%block_size%</>
-EOD;
-        $structure = <<<EOD
-<%structure_color%>%block_size%</>
-<fg=black;options=bold;%structure_color%>  %structure%  </>
-<%structure_color%>%block_size%</>
-EOD;
-        $style = <<<EOD
-<%style_color%>%block_size%</>
-<fg=black;options=bold;%style_color%>  %style%  </>
-<%style_color%>%block_size%</>
-EOD;
-
         $styleDefinition = clone Table::getStyleDefinition('compact');
 
         $styleDefinition->setVerticalBorderChars(
@@ -546,10 +507,10 @@ EOD;
         if ($disposition === self::ALL_BLOCKS_IN_ROW) {
             $table->setRows([
                 [
-                    strtr($quality, $templates),
-                    strtr($complexity, $templates),
-                    strtr($structure, $templates),
-                    strtr($style, $templates),
+                    strtr(self::QUALITY, $templates),
+                    strtr(self::COMPLEXITY, $templates),
+                    strtr(self::STRUCTURE, $templates),
+                    strtr(self::STYLE, $templates),
                 ],
                 ['', '', '', ''],
                 [
@@ -560,11 +521,12 @@ EOD;
                 ],
             ]);
         }
+
         if ($disposition === self::TWO_BLOCKS_IN_ROW) {
             $table->setRows([
                 [
-                    strtr($quality, $templates),
-                    strtr($complexity, $templates),
+                    strtr(self::QUALITY, $templates),
+                    strtr(self::COMPLEXITY, $templates),
                 ],
                 ['', ''],
                 [
@@ -573,8 +535,8 @@ EOD;
                 ],
                 ['', ''],
                 [
-                    strtr($structure, $templates),
-                    strtr($style, $templates),
+                    strtr(self::STRUCTURE, $templates),
+                    strtr(self::STYLE, $templates),
                 ],
                 ['', ''],
                 [
@@ -589,12 +551,6 @@ EOD;
 
     /**
      * Total width of terminal - block size * disposition (4 or 2) / number of space block.
-     *
-     * @param int $totalWidth
-     * @param int $blockSize
-     * @param int $disposition
-     *
-     * @return int
      */
     private function getSpaceWidth(int $totalWidth, int $blockSize, int $disposition): int
     {
@@ -611,25 +567,9 @@ EOD;
         return $spaceWidth;
     }
 
-    private function getFileLinkFormatter(): FileLinkFormatter
-    {
-        if ($this->fileLinkFormatter === null) {
-            $this->fileLinkFormatter = new NullFileLinkFormatter();
-        }
-
-        return $this->fileLinkFormatter;
-    }
-
     private function getCategoryColor(string $category): string
     {
-        $categoryColor = [
-            'Code' => 'cyan',
-            'Complexity' => 'green',
-            'Architecture' => 'blue',
-            'Style' => 'yellow',
-            'Security' => 'red',
-        ];
-        return $categoryColor[$category] ?? 'blue';
+        return self::CATEGORY_COLOR[$category] ?? 'blue';
     }
 
     private function formatFileLine(Details $detail, string $category, string $commonPath): string
@@ -643,14 +583,13 @@ EOD;
 
         $formattedLink = null;
         if ($file !== null) {
-            $formattedLink = $this->getFileLinkFormatter()->format($file, $detail->getLine());
+            $formattedLink = $this->fileLinkFormatter->format($file, $detail->getLine());
         }
 
         $color = $this->getCategoryColor($category);
         $detailString = sprintf('<fg=%s>%s</>', $color, $detailString);
 
-        if (
-            $this->supportHyperLinks &&
+        if ($this->supportHyperLinks &&
             $formattedLink !== '' &&
             $detailString !== ''
         ) {
@@ -669,16 +608,20 @@ EOD;
         if ($detail->hasDiff()) {
             $hasColor = false;
             $detailString = '';
+
             foreach (explode(PHP_EOL, $detail->getMessage()) as $line) {
                 if (mb_strpos($line, '-') === 0) {
                     $hasColor = true;
                     $detailString .= '<fg=red>';
                 }
+
                 if (mb_strpos($line, '+') === 0) {
                     $hasColor = true;
                     $detailString .= '<fg=green>';
                 }
+
                 $detailString .= $line . PHP_EOL;
+
                 if ($hasColor) {
                     $hasColor = false;
                     $detailString .= '</>';

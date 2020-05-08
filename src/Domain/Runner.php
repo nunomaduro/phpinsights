@@ -16,27 +16,25 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class Runner
 {
+    private const EMPTY_BAR_CHARACTER = '░';
+
+    // light shade character \u2591
+    private const PROGRESS_CHARACTER = '';
+
+    private const BAR_CHARACTER = '▓';
+
     /** @var array<FileProcessorContract> */
-    private $filesProcessors;
+    private array $filesProcessors;
 
-    /** @var \Symfony\Component\Console\Output\OutputInterface */
-    private $output;
+    private OutputInterface $output;
 
-    /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository */
-    private $filesRepository;
+    private FilesRepository $filesRepository;
 
-    /**
-     * @var array<\NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight|\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
-     */
-    private $globalInsights = [];
+    /** @var array<\NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight|\NunoMaduro\PhpInsights\Domain\Contracts\Insight> */
+    private array $globalInsights = [];
 
-    /**
-     * InsightContainer constructor.
-     */
-    public function __construct(
-        OutputInterface $output,
-        FilesRepository $filesRepository
-    ) {
+    public function __construct(OutputInterface $output, FilesRepository $filesRepository)
+    {
         $this->filesRepository = $filesRepository;
         $this->output = $output;
 
@@ -105,6 +103,7 @@ final class Runner
         if ($this->output->isVerbose()) {
             $progressBar->setMessage(PHP_EOL . '<info>Analysis Completed !</info>');
         }
+
         $progressBar->finish();
     }
 
@@ -118,22 +117,18 @@ final class Runner
 
     private function createProgressBar(int $max = 0): ProgressBar
     {
-        $progressBar = new ProgressBar($this->output, $max);
-
-        $emptyBarCharacter = '░'; // light shade character \u2591
-        $progressCharacter = '';
-        $barCharacter = '▓'; // dark shade character \u2593
+        $progressBar = new ProgressBar($this->output, $max); // dark shade character \u2593
 
         $format = ProgressBar::getFormatDefinition($this->getProgressFormat());
         $format .= PHP_EOL . '%message%';
+
         ProgressBar::setFormatDefinition('phpinsight', $format);
         $progressBar->setFormat('phpinsight');
 
-        if (\DIRECTORY_SEPARATOR !== '\\'
-            || getenv('TERM_PROGRAM') === 'Hyper') {
-            $progressBar->setEmptyBarCharacter($emptyBarCharacter);
-            $progressBar->setProgressCharacter($progressCharacter);
-            $progressBar->setBarCharacter($barCharacter);
+        if (\DIRECTORY_SEPARATOR !== '\\' || getenv('TERM_PROGRAM') === 'Hyper') {
+            $progressBar->setEmptyBarCharacter(self::EMPTY_BAR_CHARACTER);
+            $progressBar->setProgressCharacter(self::PROGRESS_CHARACTER);
+            $progressBar->setBarCharacter(self::BAR_CHARACTER);
         }
 
         return $progressBar;
@@ -142,15 +137,19 @@ final class Runner
     private function getProgressFormat(): string
     {
         $verbosity = $this->output->getVerbosity();
+
         if ($verbosity === OutputInterface::VERBOSITY_VERBOSE) {
             return 'verbose';
         }
+
         if ($verbosity === OutputInterface::VERBOSITY_VERY_VERBOSE) {
             return 'very_verbose';
         }
+
         if ($verbosity === OutputInterface::VERBOSITY_DEBUG) {
             return 'debug';
         }
+
         return 'normal';
     }
 }

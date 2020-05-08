@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
+use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -20,21 +21,14 @@ final class SniffFileProcessor implements FileProcessor
     /**
      * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
      */
-    private $tokenListeners = [];
+    private array $tokenListeners = [];
 
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\FileFactory
-     */
-    private $fileFactory;
-    /**
-     * @var bool
-     */
-    private $fixEnabled;
+    private FileFactory $fileFactory;
+
+    private bool $fixEnabled;
 
     /**
      * FileProcessor constructor.
-     *
-     * @param \NunoMaduro\PhpInsights\Domain\FileFactory $fileFactory
      */
     public function __construct(FileFactory $fileFactory)
     {
@@ -50,7 +44,7 @@ final class SniffFileProcessor implements FileProcessor
     public function addChecker(InsightContract $insight): void
     {
         if (! $insight instanceof SniffDecorator) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'Unable to add %s, not an Sniff instance',
                 get_class($insight)
             ));
@@ -64,13 +58,14 @@ final class SniffFileProcessor implements FileProcessor
     public function processFile(SplFileInfo $splFileInfo): void
     {
         $file = $this->fileFactory->createFromFileInfo($splFileInfo);
+
         $file->processWithTokenListenersAndFileInfo(
             $this->tokenListeners,
             $splFileInfo,
             $this->fixEnabled
         );
 
-        if ($this->fixEnabled === true && $file->getFixableCount() !== 0) {
+        if ($this->fixEnabled && $file->getFixableCount() !== 0) {
             $file->enableFix();
             $file->fixer->fixFile();
             file_put_contents($splFileInfo->getPathname(), $file->fixer->getContents());

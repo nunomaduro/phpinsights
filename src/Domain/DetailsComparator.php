@@ -6,6 +6,8 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\DetailsComparatorTest
  */
 final class DetailsComparator
 {
@@ -39,11 +41,15 @@ final class DetailsComparator
 
     private function functionComparison(Details $first, Details $second): int
     {
-        return ($first->hasFunction() ? $first->getFunction() : null) <=> ($second->hasFunction() ? $second->getFunction() : null);
+        return ($first->hasFunction() ? $first->getFunction() : null)
+            <=>
+            ($second->hasFunction() ? $second->getFunction() : null);
     }
 
     private function messageComparison(Details $first, Details $second): int
     {
-        return ($first->hasMessage() ? $first->getMessage() : null) <=> ($second->hasMessage() ? $second->getMessage() : null);
+        return ($first->hasMessage() ? $first->getMessage() : null)
+            <=>
+            ($second->hasMessage() ? $second->getMessage() : null);
     }
 }

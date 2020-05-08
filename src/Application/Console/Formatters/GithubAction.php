@@ -20,20 +20,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class GithubAction implements Formatter
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Application\Console\Formatters\Console
-     */
-    private $decorated;
+    private const TEMPLATES = [
+        "\r" => '%0D',
+        "\n" => '%0A',
+    ];
 
-    /**
-     * @var \Symfony\Component\Console\Output\OutputInterface
-     */
-    private $output;
+    private Console $decorated;
 
-    /**
-     * @var string
-     */
-    private $baseDir;
+    private OutputInterface $output;
+
+    private string $baseDir;
 
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -45,13 +41,10 @@ final class GithubAction implements Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void {
+    public function format(InsightCollection $insightCollection, array $metrics): void
+    {
         // Call The Console Formatter to get summary and recap,
         // not issues by passing an empty array for metrics.
         $this->decorated->format($insightCollection, []);
@@ -85,6 +78,7 @@ final class GithubAction implements Formatter
 
                 if (! array_key_exists($line, $errors[$file])) {
                     $errors[$file][$line] = $message;
+
                     continue;
                 }
 
@@ -123,11 +117,6 @@ final class GithubAction implements Formatter
 
     private function escapeData(string $data): string
     {
-        $templates = [
-            "\r" => '%0D',
-            "\n" => '%0A',
-        ];
-
-        return strtr($data, $templates);
+        return strtr($data, self::TEMPLATES);
     }
 }

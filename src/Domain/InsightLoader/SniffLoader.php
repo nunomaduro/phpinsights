@@ -29,9 +29,6 @@ final class SniffLoader implements InsightLoader
             $sniff->{$property} = $value;
         }
 
-        return new SniffDecorator(
-            $sniff,
-            $dir
-        );
+        return new SniffDecorator($sniff, $dir);
     }
 }

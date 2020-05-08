@@ -17,6 +17,7 @@ use PhpCsFixer\Fixer\Alias\BacktickToShellExecFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
 use PhpCsFixer\Fixer\FixerInterface;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
 use Tests\Fakes\FakeInput;
@@ -26,7 +27,7 @@ final class InsightFactoryTest extends TestCase
     /**
      * @var array<string>
      */
-    private static $usedInsights = [
+    private const USED_INSIGHTS = [
         BacktickToShellExecFixer::class,
         ForbiddenPublicPropertySniff::class,
         LineLengthSniff::class,
@@ -34,25 +35,35 @@ final class InsightFactoryTest extends TestCase
     ];
 
     /**
-     * @var \NunoMaduro\PhpInsights\Domain\Insights\InsightFactory
+     * @var int[][][]
      */
-    private $insightFactory;
+    private const CONFIG = [
+        'config' => [
+            LineLengthSniff::class => [
+                'lineLimit' => 50,
+            ],
+        ],
+    ];
+
+    private InsightFactory $insightFactory;
 
     public function setUp(): void
     {
         parent::setUp();
+
         $config = ConfigResolver::resolve([], FakeInput::paths(['.']));
+
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            static::$usedInsights,
+            static::USED_INSIGHTS,
             $config,
             new Collector($config->getPaths(), $config->getCommonPath())
         );
     }
 
-    public function testMakeFromUnknowImplementThrowException(): void
+    public function testMakeFromUnknownImplementThrowException(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(sprintf('Insight `%s` is not instantiable.', FakeFileRepository::class));
 
         $this->insightFactory->makeFrom(FakeFileRepository::class, new NullOutput());
@@ -76,23 +87,18 @@ final class InsightFactoryTest extends TestCase
 
     public function testConfigureLineLengthSniff(): void
     {
-        $config = [
-            'config' => [
-                LineLengthSniff::class => [
-                    'lineLimit' => 50,
-                ],
-            ],
-        ];
-        $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
+        $configuration = ConfigResolver::resolve(self::CONFIG, FakeInput::paths(['.']));
+
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            static::$usedInsights,
+            static::USED_INSIGHTS,
             $configuration,
             new Collector($configuration->getPaths(), $configuration->getCommonPath())
         );
 
         $sniff = $insightFactory->makeFrom(LineLengthSniff::class, new NullOutput());
         self::assertInstanceOf(SniffContract::class, $sniff);
+
         $reflection = new Reflection($sniff);
         $decoratedSniff = $reflection->get('sniff');
         self::assertEquals(50, $decoratedSniff->lineLimit);
@@ -110,20 +116,22 @@ final class InsightFactoryTest extends TestCase
         ];
 
         $configuration = ConfigResolver::resolve($config, FakeInput::paths(['.']));
+
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
-            static::$usedInsights,
+            static::USED_INSIGHTS,
             $configuration,
             new Collector($configuration->getPaths(), $configuration->getCommonPath())
         );
 
         $fixer = $insightFactory->makeFrom(YodaStyleFixer::class, new NullOutput());
-
         self::assertInstanceOf(FixerInterface::class, $fixer);
+
         $reflection = new Reflection($fixer);
         $decoratedFixer = $reflection->get('fixer');
         $reflection = new Reflection($decoratedFixer);
         $fixerConfiguration = $reflection->get('configuration');
+
         self::assertTrue($fixerConfiguration['equal']);
         self::assertFalse($fixerConfiguration['identical']);
     }

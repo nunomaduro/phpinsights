@@ -7,6 +7,9 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 
+/**
+ * @see \Tests\Domain\Insights\ForbiddenTraitsTest
+ */
 final class ForbiddenTraits extends Insight implements HasDetails
 {
     public function hasIssue(): bool
@@ -27,8 +30,9 @@ final class ForbiddenTraits extends Insight implements HasDetails
         $traits = $this->collector->getTraits();
         $traits = array_flip($this->filterFilesWithoutExcluded(array_flip($traits)));
 
-        return array_values(array_map(static function (string $name): Details {
-            return Details::make()->setFile($name);
-        }, $traits));
+        return array_values(array_map(
+            static fn (string $name): Details => Details::make()->setFile($name),
+            $traits
+        ));
     }
 }

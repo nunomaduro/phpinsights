@@ -11,15 +11,12 @@ use NunoMaduro\PhpInsights\Domain\Details;
  */
 trait FixPerFileCollector
 {
-    /**
-     * @var int
-     */
-    private $totalFixed = 0;
+    private int $totalFixed = 0;
 
     /**
      * @var array<string, int>
      */
-    private $fixPerFile = [];
+    private array $fixPerFile = [];
 
     public function addFileFixed(string $file): void
     {
@@ -39,6 +36,7 @@ trait FixPerFileCollector
         $details = [];
         foreach ($this->fixPerFile as $file => $count) {
             $message = 'issues fixed';
+
             if ($count === 1) {
                 $message = 'issue fixed';
             }

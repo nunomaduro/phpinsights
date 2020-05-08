@@ -10,22 +10,14 @@ use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
 final class ComposerMustContainName extends Insight
 {
-    /**
-     * @var array<string>
-     */
-    private $defaults = [
+    private const DEFAULTS = [
         'laravel/laravel',
         'symfony/symfony',
     ];
 
-    /**
-     * @var bool
-     */
-    private $analyzed = false;
-    /**
-     * @var bool
-     */
-    private $hasError = false;
+    private bool $analyzed = false;
+
+    private bool $hasError = false;
 
     public function hasIssue(): bool
     {
@@ -44,8 +36,9 @@ final class ComposerMustContainName extends Insight
     private function check(): void
     {
         try {
-            $contents = json_decode(ComposerFinder::contents($this->collector), true);
-            $this->hasError = array_key_exists('name', $contents) && array_key_exists($contents['name'], array_flip($this->defaults));
+            $contents = json_decode(ComposerFinder::contents($this->collector), true, 512, JSON_THROW_ON_ERROR);
+            $this->hasError = array_key_exists('name', $contents)
+                && array_key_exists($contents['name'], array_flip(self::DEFAULTS));
         } catch (ComposerNotFound $e) {
             $this->hasError = true;
         }

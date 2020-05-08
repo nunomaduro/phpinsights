@@ -12,7 +12,7 @@ final class FakeFileRepository implements FilesRepository
     /**
      * @var array<SplFileInfo>
      */
-    protected $files = [];
+    private array $files;
 
     /**
      * FakeFileRepository constructor.
@@ -21,9 +21,10 @@ final class FakeFileRepository implements FilesRepository
      */
     public function __construct(array $filePaths)
     {
-        $this->files = array_map(function (string $filePath) : SplFileInfo {
-            return new SplFileInfo($filePath, $filePath, $filePath);
-        }, $filePaths);
+        $this->files = array_map(
+            fn (string $filePath): SplFileInfo => new SplFileInfo($filePath, $filePath, $filePath),
+            $filePaths
+        );
     }
 
     public function getDefaultDirectory(): string

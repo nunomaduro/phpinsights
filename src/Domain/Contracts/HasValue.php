@@ -13,10 +13,6 @@ interface HasValue extends Metric
 {
     /**
      * Returns the result of the metric.
-     *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
-     *
-     * @return string
      */
     public function getValue(Collector $collector): string;
 }

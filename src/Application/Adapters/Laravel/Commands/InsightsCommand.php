@@ -12,6 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use NunoMaduro\PhpInsights\Domain\Reflection;
+use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 /**
@@ -19,10 +20,8 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
  */
 final class InsightsCommand extends Command
 {
-    /** @var string */
     protected $name = 'insights';
 
-    /** @var string */
     protected $description = 'Analyze the code quality';
 
     public function handle(): int
@@ -42,7 +41,7 @@ final class InsightsCommand extends Command
 
         $container = Container::make();
         if (! $container instanceof \League\Container\Container) {
-            throw new \RuntimeException('Container should be League Container instance');
+            throw new RuntimeException('Container should be League Container instance');
         }
 
         $configurationDefinition = $container->extend(Configuration::class);

@@ -11,40 +11,39 @@ use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use SplFileInfo;
 
 /**
  * Decorates original php-cs-fixers with additional behavior.
  *
  * @internal
+ *
+ * @see \Tests\Domain\Fixer\FixerDecoratorTest
  */
 final class FixerDecorator implements FixerInterface, InsightContract, HasDetails, Fixable
 {
     use FixPerFileCollector;
 
-    /**
-     * @var \PhpCsFixer\Fixer\FixerInterface
-     */
-    private $fixer;
+    private FixerInterface $fixer;
+
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
-    private $exclude;
+    private array $exclude;
+
     /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
      */
-    private $errors = [];
+    private array $errors = [];
 
     /**
-     * FixerDecorator constructor.
-     *
-     * @param \PhpCsFixer\Fixer\FixerInterface $fixer
-     * @param string $dir
      * @param array<string> $exclude
      */
     public function __construct(FixerInterface $fixer, string $dir, array $exclude)
     {
         $this->fixer = $fixer;
         $this->exclude = [];
+
         if (count($exclude) > 0) {
             $this->exclude = Files::find($dir, $exclude);
         }
@@ -60,7 +59,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         return $this->fixer->isRisky();
     }
 
-    public function fix(\SplFileInfo $file, Tokens $tokens): void
+    public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         if ($this->skipFilesFromExcludedFiles($file)) {
             return;
@@ -79,7 +78,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         return $this->fixer->getPriority();
     }
 
-    public function supports(\SplFileInfo $file): bool
+    public function supports(SplFileInfo $file): bool
     {
         if ($this->skipFilesFromExcludedFiles($file)) {
             return false;
@@ -90,8 +89,6 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
 
     /**
      * Checks if the insight detects an issue.
-     *
-     * @return bool
      */
     public function hasIssue(): bool
     {
@@ -100,8 +97,6 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
 
     /**
      * Gets the title of the insight.
-     *
-     * @return string
      */
     public function getTitle(): string
     {
@@ -109,13 +104,12 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $path = explode('\\', $fixerClass);
         $name = (string) array_pop($path);
         $name = str_replace('Fixer', '', $name);
-        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<!\ )[A-Z]/', ' $0', $name))));
+
+        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name))));
     }
 
     /**
      * Get the class name of Insight used.
-     *
-     * @return string
      */
     public function getInsightClass(): string
     {
@@ -139,7 +133,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         $this->errors[] = Details::make()->setFile($file)->setDiff($diff)->setMessage($diff);
     }
 
-    private function skipFilesFromExcludedFiles(\SplFileInfo $file): bool
+    private function skipFilesFromExcludedFiles(SplFileInfo $file): bool
     {
         $path = $file->getRealPath();
 

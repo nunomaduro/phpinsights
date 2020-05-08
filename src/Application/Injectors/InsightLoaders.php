@@ -21,15 +21,9 @@ final class InsightLoaders
     public function __invoke(): array
     {
         return [
-            InsightLoader::class => static function (): InsightLoader {
-                return new InsightLoader();
-            },
-            SniffLoader::class => static function (): SniffLoader {
-                return new SniffLoader();
-            },
-            FixerLoader::class => static function (): FixerLoader {
-                return new FixerLoader();
-            },
+            InsightLoader::class => static fn (): InsightLoader => new InsightLoader(),
+            SniffLoader::class => static fn (): SniffLoader => new SniffLoader(),
+            FixerLoader::class => static fn (): FixerLoader => new FixerLoader(),
         ];
     }
 }

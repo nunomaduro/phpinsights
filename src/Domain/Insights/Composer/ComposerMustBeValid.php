@@ -11,17 +11,17 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\Insight;
 
+/**
+ * @see \Tests\Domain\Insights\Composer\ComposerMustBeValidTest
+ */
 final class ComposerMustBeValid extends Insight implements HasDetails
 {
-    /**
-     * @var bool
-     */
-    private $analyzed = false;
+    private bool $analyzed = false;
 
     /**
      * @var array<Details>
      */
-    private $details = [];
+    private array $details = [];
 
     public function hasIssue(): bool
     {
@@ -52,9 +52,8 @@ final class ComposerMustBeValid extends Insight implements HasDetails
             if (strpos($issue, ' : ') !== false) {
                 $issue = explode(' : ', $issue)[1];
             }
-            $this->details[] = Details::make()
-                ->setFile('composer.json')
-                ->setMessage($issue);
+
+            $this->details[] = Details::make()->setFile('composer.json')->setMessage($issue);
         }
 
         $this->analyzed = true;

@@ -16,11 +16,7 @@ interface Formatter
     /**
      * Format the result to the desired format.
      *
-     * @param \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insightCollection
      * @param array<int, string> $metrics
      */
-    public function format(
-        InsightCollection $insightCollection,
-        array $metrics
-    ): void;
+    public function format(InsightCollection $insightCollection, array $metrics): void;
 }

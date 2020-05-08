@@ -10,6 +10,7 @@ namespace NunoMaduro\PhpInsights\Domain\Contracts;
 interface Fixable extends Insight
 {
     public function getTotalFix(): int;
+
     /**
      * @return array<\NunoMaduro\PhpInsights\Domain\Details>
      */

@@ -12,26 +12,24 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 
 /**
  * @internal
+ *
+ * @see \Tests\Domain\ResultsTest
  */
 final class Results
 {
-    /**
-     * @var \NunoMaduro\PhpInsights\Domain\Collector
-     */
-    private $collector;
+    private Collector $collector;
 
     /**
      * @var array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>
      */
-    private $perCategoryInsights;
+    private array $perCategoryInsights;
 
     /**
      * Creates a new instance of results.
      *
-     * @param  \NunoMaduro\PhpInsights\Domain\Collector  $collector
      * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
      */
-    public function __construct(\NunoMaduro\PhpInsights\Domain\Collector $collector, array $perCategoryInsights)
+    public function __construct(Collector $collector, array $perCategoryInsights)
     {
         $this->collector = $collector;
         $this->perCategoryInsights = $perCategoryInsights;
@@ -39,8 +37,6 @@ final class Results
 
     /**
      * Gets the code quality.
-     *
-     * @return float
      */
     public function getCodeQuality(): float
     {
@@ -49,8 +45,6 @@ final class Results
 
     /**
      * Gets the code quality.
-     *
-     * @return float
      */
     public function getComplexity(): float
     {
@@ -66,8 +60,6 @@ final class Results
 
     /**
      * Gets the code quality.
-     *
-     * @return float
      */
     public function getStructure(): float
     {
@@ -76,8 +68,6 @@ final class Results
 
     /**
      * Gets the code quality.
-     *
-     * @return float
      */
     public function getDependencies(): float
     {
@@ -86,8 +76,6 @@ final class Results
 
     /**
      * Gets the style quality.
-     *
-     * @return float
      */
     public function getStyle(): float
     {
@@ -96,14 +84,13 @@ final class Results
 
     /**
      * Gets number of security issues.
-     *
-     * @return int
      */
     public function getTotalSecurityIssues(): int
     {
         try {
             /** @var ForbiddenSecurityIssues $insight */
             $insight = $this->getInsightByCategory(ForbiddenSecurityIssues::class, 'Security');
+
             return count($insight->getDetails());
         } catch (InsightClassNotFound $exception) {
             return 0;
@@ -133,6 +120,7 @@ final class Results
                 if ($insight->hasIssue()) {
                     if (! $insight instanceof HasDetails) {
                         $total++;
+
                         continue;
                     }
 
@@ -140,6 +128,7 @@ final class Results
                 }
             }
         }
+
         return $total;
     }
 
@@ -147,17 +136,15 @@ final class Results
     {
         try {
             $this->getInsightByCategory($insightClass, $category);
+
             return true;
         } catch (InsightClassNotFound $exception) {
             return false;
         }
     }
+
     /**
      * Returns the percentage of the given category.
-     *
-     * @param  string  $category
-     *
-     * @return float
      */
     private function getPercentage(string $category): float
     {

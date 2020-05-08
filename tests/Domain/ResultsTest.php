@@ -12,15 +12,13 @@ use PHPUnit\Framework\TestCase;
 
 final class ResultsTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $baseFixturePath;
+    private string $baseFixturePath;
 
+    private string $commonPath;
     /**
-     * @var string
+     * @var mixed[][]
      */
-    private $commonPath;
+    private const CATEGORIES = ['Security' => []];
 
     public function setUp(): void
     {
@@ -57,9 +55,7 @@ final class ResultsTest extends TestCase
     {
         $collector = new Collector([$this->baseFixturePath], $this->commonPath);
 
-        $categories = ['Security' => []];
-
-        $result = new Results($collector, $categories);
+        $result = new Results($collector, self::CATEGORIES);
 
         self::assertFalse($result->hasInsightInCategory(
             ForbiddenSecurityIssues::class,

@@ -6,6 +6,7 @@ namespace NunoMaduro\PhpInsights\Application\Console;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -14,21 +15,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class Style extends SymfonyStyle
 {
-    /**
-     * @var \Symfony\Component\Console\Input\InputInterface
-     */
-    private $input;
+    private InputInterface $input;
 
-    /**
-     * @var \Symfony\Component\Console\Output\OutputInterface
-     */
-    private $output;
+    private OutputInterface $output;
 
     /**
      * Style constructor.
-     *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function __construct(InputInterface $input, OutputInterface $output)
     {
@@ -37,17 +29,14 @@ final class Style extends SymfonyStyle
 
     /**
      * Waits for Enter key.
-     *
-     * @param string $category
-     *
-     * @return \NunoMaduro\PhpInsights\Application\Console\Style
      */
     public function waitForKey(string $category): Style
     {
-        $stdin = fopen('php://stdin', 'r');
+        $stdin = fopen('php://stdin', 'rb');
 
-        if ($stdin !== false && $this->output instanceof ConsoleOutput && $this->input->isInteractive() === true) {
+        if ($stdin !== false && $this->output instanceof ConsoleOutput && $this->input->isInteractive()) {
             $this->newLine();
+            /** @var ConsoleSectionOutput $section */
             $section = $this->output->section();
             $section->writeln(sprintf('<title>Press enter to see %s issues...</title>', strtolower($category)));
             fgetc($stdin);

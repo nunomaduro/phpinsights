@@ -10,8 +10,7 @@ use Tests\TestCase;
 
 final class DetailsComparatorTest extends TestCase
 {
-    /** @var \NunoMaduro\PhpInsights\Domain\DetailsComparator */
-    private $comparator;
+    private DetailsComparator $comparator;
 
     protected function setUp(): void
     {

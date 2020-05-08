@@ -11,8 +11,6 @@ interface FilesRepository
 {
     /**
      * Get the default repository.
-     *
-     * @return string
      */
     public function getDefaultDirectory(): string;
 
@@ -28,8 +26,6 @@ interface FilesRepository
      *
      * @param array<string> $paths
      * @param array<string> $exclude
-     *
-     * @return \NunoMaduro\PhpInsights\Domain\Contracts\Repositories\FilesRepository
      */
     public function within(array $paths, array $exclude): FilesRepository;
 }

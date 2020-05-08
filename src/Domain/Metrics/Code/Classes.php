@@ -22,6 +22,9 @@ use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff;
 
+/**
+ * @see \Tests\Feature\Laravel\ClassesTest
+ */
 final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsights
 {
     public function getValue(Collector $collector): string

@@ -1,6 +1,6 @@
 # Architecture
 
-The following insights are organised in differents metrics :
+The following insights are organised in different metrics :
 
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes` <Badge text="Architecture\Classes" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer` <Badge text="Architecture\Composer" type="warn" vertical="middle"/>

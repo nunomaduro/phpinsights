@@ -10,10 +10,7 @@ use PhpCsFixer\Differ\DifferInterface;
 
 final class Differ implements DifferInterface
 {
-    /**
-     * @var \PhpCsFixer\Diff\v3_0\Differ
-     */
-    private $differ;
+    private BaseDiffer $differ;
 
     public function __construct()
     {
@@ -24,6 +21,7 @@ final class Differ implements DifferInterface
             'fromFile' => '',
             'toFile' => '',
         ]);
+
         $this->differ = new BaseDiffer($outputBuilder);
     }
 

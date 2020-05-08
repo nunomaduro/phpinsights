@@ -7,6 +7,9 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 
+/**
+ * @see \Tests\Domain\Insights\ForbiddenGlobalsTest
+ */
 final class ForbiddenGlobals extends Insight implements HasDetails
 {
     public function hasIssue(): bool
@@ -30,6 +33,7 @@ final class ForbiddenGlobals extends Insight implements HasDetails
             if ($this->shouldSkipFile($file)) {
                 continue;
             }
+
             $details[] = Details::make()->setFile($file)->setMessage(
                 "Usage of ${global} found; Usage of GLOBALS are discouraged consider not relying on global scope"
             );
