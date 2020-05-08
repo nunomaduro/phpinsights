@@ -64,11 +64,8 @@ final class InsightCollectionFactory
 
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(
-                static function (string $insightClass) use ($insightFactory, $consoleOutput): Insight {
-                    return $insightFactory->makeFrom($insightClass, $consoleOutput);
-                },
-                    $this->getInsights($metricClass)
-            ,
+                static fn (string $insightClass): Insight => $insightFactory->makeFrom($insightClass, $consoleOutput),
+                $this->getInsights($metricClass)
             );
         }
 

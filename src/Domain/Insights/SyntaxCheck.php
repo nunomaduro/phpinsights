@@ -15,10 +15,8 @@ use Symfony\Component\Process\Process;
  */
 final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 {
-    /**
-     * @var array<Details>
-     */
-    private $details = [];
+    /** @var array<Details> */
+    private array $details = [];
 
     public function getTitle(): string
     {
@@ -38,9 +36,10 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     public function process(): void
     {
         $phpPath = (string) Config::getExecutablePath('php');
-        $filesToAnalyse = array_map(static function (string $file): string {
-            return escapeshellarg($file);
-        }, $this->filterFilesWithoutExcluded($this->collector->getFiles()));
+        $filesToAnalyse = array_map(
+            static fn (string $file): string => escapeshellarg($file),
+            $this->filterFilesWithoutExcluded($this->collector->getFiles())
+        );
 
         $cmdLine = sprintf(
             '%s %s --no-colors --no-progress --json %s',
