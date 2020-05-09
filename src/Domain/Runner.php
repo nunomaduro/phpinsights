@@ -89,6 +89,10 @@ final class Runner
             $progressBar->advance();
         }
 
+        set_error_handler(static function (int $errno, string $errstr): bool {
+            throw new \RuntimeException($errstr, $errno);
+        }, E_NOTICE);
+
         /** @var SplFileInfo $file */
         foreach ($files as $file) {
             // Output file name if verbose
