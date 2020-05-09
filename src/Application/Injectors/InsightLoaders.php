@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Domain\InsightLoader\FixerLoader;
+use NunoMaduro\PhpInsights\Domain\InsightLoader\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\InsightLoader\SniffLoader;
 
 /**
@@ -20,6 +21,7 @@ final class InsightLoaders
     public function __invoke(): array
     {
         return [
+            InsightLoader::class => static fn (): InsightLoader => new InsightLoader(),
             SniffLoader::class => static fn (): SniffLoader => new SniffLoader(),
             FixerLoader::class => static fn (): FixerLoader => new FixerLoader(),
         ];

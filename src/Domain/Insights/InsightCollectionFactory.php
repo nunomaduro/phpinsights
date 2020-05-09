@@ -59,22 +59,13 @@ final class InsightCollectionFactory
             $insightsClasses = [...$insightsClasses, ...$this->getInsights($metricClass)];
         }
 
-        $insightFactory = new InsightFactory($this->filesRepository, $insightsClasses, $this->config);
+        $insightFactory = new InsightFactory($this->filesRepository, $insightsClasses, $this->config, $collector);
         $insightsForCollection = [];
 
         foreach ($metrics as $metricClass) {
             $insightsForCollection[$metricClass] = array_map(
-                function (string $insightClass) use ($insightFactory, $collector, $consoleOutput) {
-                    if (! array_key_exists(Insight::class, class_implements($insightClass))) {
-                        return $insightFactory->makeFrom(
-                            $insightClass,
-                            $consoleOutput
-                        );
-                    }
-
-                    return new $insightClass($collector, $this->config->getConfigForInsight($insightClass));
-                },
-                $this->getInsights($metricClass),
+                static fn (string $insightClass): Insight => $insightFactory->makeFrom($insightClass, $consoleOutput),
+                $this->getInsights($metricClass)
             );
         }
 

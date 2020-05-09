@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightFactory;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
@@ -55,7 +56,8 @@ final class InsightFactoryTest extends TestCase
         $this->insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::USED_INSIGHTS,
-            $config
+            $config,
+            new Collector($config->getPaths(), $config->getCommonPath())
         );
     }
 
@@ -90,7 +92,8 @@ final class InsightFactoryTest extends TestCase
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::USED_INSIGHTS,
-            $configuration
+            $configuration,
+            new Collector($configuration->getPaths(), $configuration->getCommonPath())
         );
 
         $sniff = $insightFactory->makeFrom(LineLengthSniff::class, new NullOutput());
@@ -117,7 +120,8 @@ final class InsightFactoryTest extends TestCase
         $insightFactory = new InsightFactory(
             new FakeFileRepository([]),
             static::USED_INSIGHTS,
-            $configuration
+            $configuration,
+            new Collector($configuration->getPaths(), $configuration->getCommonPath())
         );
 
         $fixer = $insightFactory->makeFrom(YodaStyleFixer::class, new NullOutput());

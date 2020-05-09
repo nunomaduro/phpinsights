@@ -179,11 +179,19 @@ This sniff ensures the `PHP_SAPI` constant is used instead of `php_sapi_name()`.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\SAPIUsageSniff`
 
-## Syntax <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
+## Syntax <Badge text="^1.0"/> <Badge text="Style" type="warn"/> <Badge text="Deprecated since 2.0" type="error"/>
 
 This sniff ensures PHP believes the syntax is clean.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\SyntaxSniff`
+
+> Note: This sniff is deprecated, use insight below
+
+## Syntax Check <Badge text="^2.0"/> <Badge text="Style" type="warn"/>
+
+This Insight process lint on all PHP files via `php -l` using [PHP-Parallel-Lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint).
+
+**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\SyntaxCheck`
 
 ## Trailing array comma <Badge text="^1.0"/> <Badge text="Style" type="warn"/>
 

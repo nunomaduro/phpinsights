@@ -20,6 +20,7 @@
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
+        "php-parallel-lint/php-parallel-lint": "^1.1",
         "phploc/phploc": "^5.0|^6.0",
         "psr/container": "^1.0",
         "sensiolabs/security-checker": "^6.0",
