@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
-use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
+use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\Insights\Decorators\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
@@ -15,12 +15,17 @@ use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
  */
 final class SniffLoader implements InsightLoader
 {
+    /**
+     * @var InsightContract[]
+     */
+    private array $sniffs = [];
+
     public function support(string $insightClass): bool
     {
         return array_key_exists(SniffContract::class, class_implements($insightClass));
     }
 
-    public function load(string $insightClass, string $dir, array $config, Collector $collector): Insight
+    public function load(string $insightClass, string $dir, array $config, Collector $collector): void
     {
         /** @var SniffContract $sniff */
         $sniff = new $insightClass();
@@ -29,6 +34,11 @@ final class SniffLoader implements InsightLoader
             $sniff->{$property} = $value;
         }
 
-        return new SniffDecorator($sniff, $dir);
+        $this->sniffs[] = new SniffDecorator($sniff, $dir);
+    }
+
+    public function getLoadedInsights(): array
+    {
+        return $this->sniffs;
     }
 }
