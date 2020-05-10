@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InternetConnectionNotFound;
@@ -11,7 +12,7 @@ use SensioLabs\Security\Result;
 use SensioLabs\Security\SecurityChecker;
 use Throwable;
 
-final class ForbiddenSecurityIssues extends Insight implements HasDetails
+final class ForbiddenSecurityIssues extends Insight implements HasDetails, GlobalInsight
 {
     private static ?Result $result = null;
 
@@ -28,6 +29,11 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
     public function getTitle(): string
     {
         return 'Security issues found on dependencies';
+    }
+
+    public function process(): void
+    {
+        $this->getResult();
     }
 
     public function getDetails(): array
