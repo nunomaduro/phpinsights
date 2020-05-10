@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
-use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\SniffDecorator;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -19,7 +19,7 @@ use Symfony\Component\Finder\SplFileInfo;
 final class SniffFileProcessor implements FileProcessor
 {
     /**
-     * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
+     * @var array<array<SniffDecorator>>
      */
     private array $tokenListeners = [];
 

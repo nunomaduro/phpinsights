@@ -6,9 +6,9 @@ namespace Tests\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Collector;
-use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\FixerDecorator;
 use NunoMaduro\PhpInsights\Domain\Insights\InsightFactory;
-use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\SniffDecorator;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;

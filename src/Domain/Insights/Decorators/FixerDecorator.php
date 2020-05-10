@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights;
+namespace NunoMaduro\PhpInsights\Domain\Insights\Decorators;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
@@ -29,7 +29,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     /**
      * @var array<string, \Symfony\Component\Finder\SplFileInfo>
      */
-    private array $exclude;
+    private array $excludedFiles;
 
     /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Details>
@@ -42,10 +42,10 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     public function __construct(FixerInterface $fixer, string $dir, array $exclude)
     {
         $this->fixer = $fixer;
-        $this->exclude = [];
+        $this->excludedFiles = [];
 
         if (count($exclude) > 0) {
-            $this->exclude = Files::find($dir, $exclude);
+            $this->excludedFiles = Files::find($dir, $exclude);
         }
     }
 
@@ -101,8 +101,10 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     public function getTitle(): string
     {
         $fixerClass = $this->getInsightClass();
+
         $path = explode('\\', $fixerClass);
         $name = (string) array_pop($path);
+
         $name = str_replace('Fixer', '', $name);
 
         return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name))));
@@ -135,8 +137,9 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
 
     private function skipFilesFromExcludedFiles(SplFileInfo $file): bool
     {
-        $path = $file->getRealPath();
-
-        return $path !== false && isset($this->exclude[$path]);
+        return array_key_exists(
+            (string) $file->getRealPath(),
+            $this->excludedFiles
+        );
     }
 }

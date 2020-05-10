@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights;
+namespace NunoMaduro\PhpInsights\Domain\Insights\Decorators;
 
 use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
@@ -61,7 +61,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
      */
     public function process(File $file, $stackPtr)
     {
-        if ($file instanceof InsightFile && $this->skipFilesFromIgnoreFiles($file)) {
+        if ($file instanceof InsightFile && $this->skipFilesFromExcludedFiles($file)) {
             return;
         }
 
@@ -98,17 +98,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
 
         $name = str_replace('Sniff', '', $name);
 
-        return ucfirst(
-            mb_strtolower(
-                trim(
-                    (string) preg_replace(
-                        '/(?<! )[A-Z]/',
-                        ' $0',
-                        $name
-                    )
-                )
-            )
-        );
+        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name))));
     }
 
     /**
@@ -124,7 +114,7 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
         $this->errors[] = $details;
     }
 
-    private function skipFilesFromIgnoreFiles(InsightFile $file): bool
+    private function skipFilesFromExcludedFiles(InsightFile $file): bool
     {
         return array_key_exists(
             (string) $file->getFileInfo()->getRealPath(),

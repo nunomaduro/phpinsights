@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
-use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\FixerDecorator;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 

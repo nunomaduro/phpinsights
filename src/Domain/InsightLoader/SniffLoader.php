@@ -7,7 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
-use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\SniffDecorator;
 use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 
 /**

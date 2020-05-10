@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NunoMaduro\PhpInsights\Domain\Insights;
+namespace NunoMaduro\PhpInsights\Domain\Insights\Decorators;
 
 use NunoMaduro\PhpInsights\Domain\Details;
 
