@@ -12,7 +12,6 @@ use NunoMaduro\PhpInsights\Domain\File as InsightFile;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use RuntimeException;
 
 /**
  * Decorates original php-cs sniffs with additional behavior.
@@ -62,10 +61,6 @@ final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
      */
     public function process(File $file, $stackPtr)
     {
-        set_error_handler(static function (): bool {
-            throw new RuntimeException();
-        }, E_NOTICE);
-
         if ($file instanceof InsightFile && $this->skipFilesFromIgnoreFiles($file)) {
             return;
         }
