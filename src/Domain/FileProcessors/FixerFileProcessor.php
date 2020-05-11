@@ -12,6 +12,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use PhpCsFixer\Differ\DifferInterface;
 use PhpCsFixer\Tokenizer\Tokens;
+use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 use Throwable;
@@ -30,10 +31,13 @@ final class FixerFileProcessor implements FileProcessor
 
     private bool $fixEnabled;
 
+    private CacheInterface $cache;
+
     public function __construct(DifferInterface $differ)
     {
         $this->differ = $differ;
         $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
+        $this->cache = Container::make()->get(CacheInterface::class);
     }
 
     public function support(InsightContract $insight): bool
@@ -66,12 +70,22 @@ final class FixerFileProcessor implements FileProcessor
         try {
             $tokens = @Tokens::fromCode($oldContent);
             $originalTokens = clone $tokens;
-
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
+                $cacheKey = md5($oldContent) . '.fixer.' . $fixer->getName();
+
+                if ($this->cache->get($cacheKey, '') !== '') {
+                    $fixer->addDiff($filePath, $this->cache->get($cacheKey));
+                }
+
+                if (! $this->fixEnabled && $this->cache->has($cacheKey)) {
+                    continue;
+                }
+
                 $fixer->fix($splFileInfo, $tokens);
 
                 if (! $tokens->isChanged()) {
+                    $this->cache->set($cacheKey, '');
                     continue;
                 }
 
@@ -86,7 +100,10 @@ final class FixerFileProcessor implements FileProcessor
                     continue;
                 }
 
-                $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
+                $diff = $this->differ->diff($oldContent, $tokens->generateCode());
+                $this->cache->set($cacheKey, $diff);
+
+                $fixer->addDiff($filePath, $diff);
                 // Tokens has changed, so we need to clear cache
                 Tokens::clearCache();
                 $tokens = clone $originalTokens;
