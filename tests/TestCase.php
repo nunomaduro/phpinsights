@@ -15,8 +15,11 @@ use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use Psr\SimpleCache\CacheInterface;
 use ReflectionClass;
 use ReflectionException;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\Console\Output\NullOutput;
 use Tests\Fakes\FakeFileRepository;
 use Tests\Fakes\FakeInput;
@@ -92,6 +95,10 @@ abstract class TestCase extends BaseTestCase
 
         $configurationDefinition = $container->extend(Configuration::class);
         $configurationDefinition->setConcrete($config);
+
+        // disable cache
+        $cacheDefinition = $container->extend(CacheInterface::class);
+        $cacheDefinition->setConcrete(new Psr16Cache(new FilesystemAdapter('phpinsight', 1, '/dev/null')));
 
         $analyser = new DomainAnalyser();
 
