@@ -104,6 +104,11 @@ final class Console implements Formatter
 
     private Configuration $config;
 
+    private bool $showSummary = true;
+
+    private bool $showIssues = true;
+
+
     public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->style = new Style($input, $output);
@@ -114,6 +119,13 @@ final class Console implements Formatter
 
         $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
         $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
+
+        if ($input->getOption('summary-only')) {
+            $this->showIssues = false;
+        }
+        if ($input->getOption('issues-only')) {
+            $this->showSummary = false;
+        }
     }
 
     /**
@@ -125,6 +137,7 @@ final class Console implements Formatter
     {
         $results = $insightCollection->results();
 
+<<<<<<< HEAD
         $this->summary($results, $insightCollection->getCollector()->getAnalysedPaths())
             ->code($insightCollection, $results)
             ->complexity($insightCollection, $results)
@@ -135,6 +148,18 @@ final class Console implements Formatter
 
         if ($this->config->hasFixEnabled()) {
             $this->formatFix($insightCollection, $metrics);
+=======
+        if ($this->showSummary) {
+            $this->summary($results, $dir)
+                ->code($insightCollection, $results)
+                ->complexity($insightCollection, $results)
+                ->architecture($insightCollection, $results)
+                ->miscellaneous($results);
+        }
+
+        if ($this->showIssues) {
+            $this->issues($insightCollection, $metrics, $dir);
+>>>>>>> feat: Allow hiding summary and/or issues in console formatter
         }
     }
 

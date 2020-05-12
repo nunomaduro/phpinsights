@@ -76,6 +76,18 @@ final class AnalyseDefinition extends BaseDefinition
                 InputOption::VALUE_NONE,
                 'Flush cache results before processing'
             ),
+            new InputOption(
+                'summary-only',
+                null,
+                InputOption::VALUE_NONE,
+                'Only show the summary. This option only applies to the console formatter.'
+            ),
+            new InputOption(
+                'issues-only',
+                null,
+                InputOption::VALUE_NONE,
+                'Only show the issues. This option only applies to the console formatter.'
+            ),
         ]);
 
         return $definition;
