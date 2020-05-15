@@ -88,6 +88,13 @@ final class RectorDecorator implements RectorInterface, InsightContract, HasDeta
             ->setMessage($this->rector->getDefinition()->getDescription() . "\n" . $diff);
     }
 
+    public function addErrorDetails(string $file, string $message): void
+    {
+        $this->errors[] = Details::make()
+            ->setFile($file)
+            ->setMessage("[ERROR] Could not process this file, due to: $message.");
+    }
+
     public function skipFilesFromExcludedFiles(SplFileInfo $file): bool
     {
         return array_key_exists(

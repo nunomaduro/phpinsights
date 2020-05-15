@@ -75,13 +75,15 @@ final class RectorFileProcessor implements FileProcessor
 
             try {
                 [$newStmts, $oldStmts, $oldTokens] = $this->parseAndTraverseFileToNodes($splFileInfo);
+
+                $newStmts = $this->refactor($rector, $newStmts);
+
+                $newContent = $this->printFileContentToString($newStmts, $oldStmts, $oldTokens);
             } catch (Throwable $e) {
+                $rector->addErrorDetails($filePath, $e->getMessage());
+
                 continue;
             }
-
-            $newStmts = $this->refactor($rector, $newStmts);
-
-            $newContent = $this->printFileContentToString($newStmts, $oldStmts, $oldTokens);
 
             $diff = $this->calculateDiff($splFileInfo->getContents(), $newContent);
 
@@ -131,6 +133,7 @@ final class RectorFileProcessor implements FileProcessor
      */
     private function printFileContentToString(array $newStmts, array $oldStmts, array $oldTokens): string
     {
+        // TODO
         return (new Standard())->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
     }
 

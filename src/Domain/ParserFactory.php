@@ -15,7 +15,7 @@ final class ParserFactory
 
     public static function createParser(): Parser
     {
-        return (new nikicParserFactory())
+        return (new NikicParserFactory())
             ->create(NikicParserFactory::PREFER_PHP7, self::getLexer(), [
                 'useIdentifierNodes' => true,
                 'useConsistentVariableNodes' => true,
