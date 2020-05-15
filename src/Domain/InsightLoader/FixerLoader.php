@@ -17,7 +17,7 @@ use PhpCsFixer\Fixer\FixerInterface;
 final class FixerLoader implements InsightLoader
 {
     /**
-     * @var InsightContract[]
+     * @var array<InsightContract>
      */
     private array $fixers = [];
 

@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\FileProcessors\FixerFileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\RectorFileProcessor;
 use NunoMaduro\PhpInsights\Domain\FileProcessors\SniffFileProcessor;
 use NunoMaduro\PhpInsights\Domain\ParserFactory;
+use PhpParser\PrettyPrinter\Standard;
 
 /**
  * @internal
@@ -31,9 +32,10 @@ final class FileProcessors
                 new Differ()
             ),
             RectorFileProcessor::class => static fn (): RectorFileProcessor => new RectorFileProcessor(
-                new Differ(),
                 ParserFactory::createParser(),
                 ParserFactory::getLexer(),
+                new Standard(),
+                new Differ()
             ),
         ];
     }

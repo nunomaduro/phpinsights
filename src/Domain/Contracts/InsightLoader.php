@@ -28,7 +28,7 @@ interface InsightLoader
     /**
      * Gets all loaded insights.
      *
-     * @return \NunoMaduro\PhpInsights\Domain\Contracts\Insight[]
+     * @return array<Insight>
      */
     public function getLoadedInsights(): array;
 }

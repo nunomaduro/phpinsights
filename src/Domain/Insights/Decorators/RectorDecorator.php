@@ -67,7 +67,7 @@ final class RectorDecorator implements RectorInterface, InsightContract, HasDeta
 
         $name = str_replace('Rector', '', $name);
 
-        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name)))) . " ($rectorClass)";
+        return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name)))) . " (${rectorClass})";
     }
 
     public function getInsightClass(): string
@@ -92,7 +92,7 @@ final class RectorDecorator implements RectorInterface, InsightContract, HasDeta
     {
         $this->errors[] = Details::make()
             ->setFile($file)
-            ->setMessage("[ERROR] Could not process this file, due to: $message.");
+            ->setMessage("[ERROR] Could not process this file, due to: ${message}.");
     }
 
     public function skipFilesFromExcludedFiles(SplFileInfo $file): bool

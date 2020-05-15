@@ -16,7 +16,7 @@ use PHP_CodeSniffer\Sniffs\Sniff as SniffContract;
 final class SniffLoader implements InsightLoader
 {
     /**
-     * @var InsightContract[]
+     * @var array<InsightContract>
      */
     private array $sniffs = [];
 

@@ -14,7 +14,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader as LoaderContract;
 final class InsightLoader implements LoaderContract
 {
     /**
-     * @var InsightContract[]
+     * @var array<InsightContract>
      */
     private array $insights = [];
 

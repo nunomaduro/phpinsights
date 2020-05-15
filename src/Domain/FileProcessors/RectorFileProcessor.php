@@ -28,6 +28,8 @@ final class RectorFileProcessor implements FileProcessor
 {
     private DifferInterface $differ;
 
+    private Standard $prettyPrinter;
+
     private Lexer $lexer;
 
     private Parser $parser;
@@ -37,11 +39,12 @@ final class RectorFileProcessor implements FileProcessor
      */
     private array $rectors = [];
 
-    public function __construct(DifferInterface $differ, Parser $parser, Lexer $lexer)
+    public function __construct(Parser $parser, Lexer $lexer, Standard $prettyPrinter, DifferInterface $differ)
     {
-        $this->differ = $differ;
         $this->parser = $parser;
         $this->lexer = $lexer;
+        $this->prettyPrinter = $prettyPrinter;
+        $this->differ = $differ;
     }
 
     public function support(InsightContract $insight): bool
@@ -94,7 +97,7 @@ final class RectorFileProcessor implements FileProcessor
     }
 
     /**
-     * @return Node[][]|mixed[]
+     * @return array<array<Node>|mixed>
      */
     private function parseAndTraverseFileToNodes(SplFileInfo $splFileInfo): array
     {
@@ -109,9 +112,9 @@ final class RectorFileProcessor implements FileProcessor
     }
 
     /**
-     * @param Node[] $statements
+     * @param array<Node> $statements
      *
-     * @return Node[]
+     * @return array<Node>
      */
     private function refactor(RectorDecorator $rector, array $statements): array
     {
@@ -127,14 +130,13 @@ final class RectorFileProcessor implements FileProcessor
     }
 
     /**
-     * @param Node[] $newStmts
-     * @param Node[] $oldStmts
+     * @param array<Node> $newStmts
+     * @param array<Node> $oldStmts
      * @param array<string> $oldTokens
      */
     private function printFileContentToString(array $newStmts, array $oldStmts, array $oldTokens): string
     {
-        // TODO
-        return (new Standard())->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
+        return $this->prettyPrinter->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
     }
 
     private function calculateDiff(string $oldContent, string $newContent): string

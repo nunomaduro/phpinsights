@@ -21,7 +21,7 @@ final class RectorLoader implements InsightLoader
     private array $rectorClasses = [];
 
     /**
-     * @var RectorDecorator[]
+     * @var array<RectorDecorator>
      */
     private array $rectors = [];
 
