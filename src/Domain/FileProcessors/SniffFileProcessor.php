@@ -36,14 +36,20 @@ final class SniffFileProcessor implements FileProcessor
 
     private CacheInterface $cache;
 
+    private string $cacheKey;
+
     /**
      * FileProcessor constructor.
      */
     public function __construct(FileFactory $fileFactory)
     {
         $this->fileFactory = $fileFactory;
-        $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
+        /** @var Configuration $config */
+        $config = Container::make()->get(Configuration::class);
+
+        $this->fixEnabled = $config->hasFixEnabled();
         $this->cache = Container::make()->get(CacheInterface::class);
+        $this->cacheKey = $config->getCacheKey();
     }
 
     public function support(InsightContract $insight): bool
@@ -68,7 +74,7 @@ final class SniffFileProcessor implements FileProcessor
 
     public function processFile(SplFileInfo $splFileInfo): void
     {
-        $cacheKey = md5($splFileInfo->getContents()) . 'sniffs';
+        $cacheKey = $this->cacheKey . md5($splFileInfo->getContents()) . 'sniffs';
         if (! $this->fixEnabled && $this->cache->has($cacheKey)) {
             $detailsBySniff = $this->cache->get($cacheKey);
             foreach ($this->insights as $sniff) {

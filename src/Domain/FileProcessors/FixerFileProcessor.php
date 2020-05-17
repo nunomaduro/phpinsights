@@ -33,11 +33,17 @@ final class FixerFileProcessor implements FileProcessor
 
     private CacheInterface $cache;
 
+    private string $cacheKey;
+
     public function __construct(DifferInterface $differ)
     {
         $this->differ = $differ;
-        $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
+        /** @var Configuration $config */
+        $config = Container::make()->get(Configuration::class);
+
+        $this->fixEnabled = $config->hasFixEnabled();
         $this->cache = Container::make()->get(CacheInterface::class);
+        $this->cacheKey = $config->getCacheKey();
     }
 
     public function support(InsightContract $insight): bool
@@ -72,7 +78,7 @@ final class FixerFileProcessor implements FileProcessor
             $originalTokens = clone $tokens;
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
-                $cacheKey = md5($oldContent) . '.fixer.' . $fixer->getName();
+                $cacheKey = $this->cacheKey . md5($oldContent) . '.fixer.' . $fixer->getName();
 
                 if ($this->cache->get($cacheKey, '') !== '') {
                     $fixer->addDiff($filePath, $this->cache->get($cacheKey));
