@@ -126,6 +126,11 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
         return $this->errors;
     }
 
+    public function addDetails(Details $details): void
+    {
+        $this->errors[] = $details;
+    }
+
     public function addDiff(string $file, string $diff): void
     {
         $diff = substr($diff, 8);

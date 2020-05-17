@@ -9,6 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use PhpCsFixer\Differ\DifferInterface;
 use PhpCsFixer\Tokenizer\Tokens;
@@ -71,6 +72,26 @@ final class FixerFileProcessor implements FileProcessor
         }
 
         $oldContent = $splFileInfo->getContents();
+        $cacheKey = $this->cacheKey . '.' . md5($oldContent) . '.fixer';
+
+        if (! $this->fixEnabled && $this->cache->has($cacheKey)) {
+            $detailsByFixers = $this->cache->get($cacheKey);
+            foreach ($this->fixers as $fixer) {
+                if (! isset($detailsByFixers[$fixer->getInsightClass()])) {
+                    continue;
+                }
+
+                array_walk(
+                    $detailsByFixers[$fixer->getInsightClass()],
+                    static function (Details $details) use ($fixer): void {
+                        $fixer->addDetails($details);
+                    }
+                );
+            }
+
+            return;
+        }
+
         $needFix = false;
 
         try {
@@ -78,20 +99,9 @@ final class FixerFileProcessor implements FileProcessor
             $originalTokens = clone $tokens;
             /** @var FixerDecorator $fixer */
             foreach ($this->fixers as $fixer) {
-                $cacheKey = $this->cacheKey . md5($oldContent) . '.fixer.' . $fixer->getName();
-
-                if ($this->cache->get($cacheKey, '') !== '') {
-                    $fixer->addDiff($filePath, $this->cache->get($cacheKey));
-                }
-
-                if (! $this->fixEnabled && $this->cache->has($cacheKey)) {
-                    continue;
-                }
-
                 $fixer->fix($splFileInfo, $tokens);
 
                 if (! $tokens->isChanged()) {
-                    $this->cache->set($cacheKey, '');
                     continue;
                 }
 
@@ -106,16 +116,14 @@ final class FixerFileProcessor implements FileProcessor
                     continue;
                 }
 
-                $diff = $this->differ->diff($oldContent, $tokens->generateCode());
-                $this->cache->set($cacheKey, $diff);
-
-                $fixer->addDiff($filePath, $diff);
+                $fixer->addDiff($filePath, $this->differ->diff($oldContent, $tokens->generateCode()));
                 // Tokens has changed, so we need to clear cache
                 Tokens::clearCache();
                 $tokens = clone $originalTokens;
             }
 
             if (! $this->fixEnabled || ! $needFix) {
+                $this->cacheDetailsForFile($cacheKey, $splFileInfo);
                 return;
             }
 
@@ -128,5 +136,22 @@ final class FixerFileProcessor implements FileProcessor
             file_put_contents($splFileInfo->getPathname(), $tokens->generateCode());
         } catch (Throwable $e) {
         }
+    }
+
+    private function cacheDetailsForFile(string $cacheKey, SplFileInfo $file): void
+    {
+        $detailsByFixers = [];
+        foreach ($this->fixers as $fixer) {
+            if (! $fixer->hasIssue()) {
+                continue;
+            }
+            $details = array_filter(
+                $fixer->getDetails(),
+                fn (Details $detail): bool => $detail->getFile() === $file->getRealPath()
+            );
+            $detailsByFixers[$fixer->getInsightClass()] = $details;
+        }
+
+        $this->cache->set($cacheKey, $detailsByFixers);
     }
 }
