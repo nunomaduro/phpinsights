@@ -776,7 +776,7 @@ This sniff orders `use` statements (import of classes).
 
 ```php
 \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
-    'import_order' => ['class', 'const', 'function'],
+    'imports_order' => ['class', 'const', 'function'],
     'sort_algorithm' => 'alpha', // possible values ['alpha', 'length', 'none']
 ]
 ```
