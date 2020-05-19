@@ -44,6 +44,18 @@ use PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer;
 use PhpCsFixer\Fixer\Operator\TernaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\Operator\TernaryToNullCoalescingFixer;
 use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
+use Rector\CodeQuality\Rector\Assign\CombinedAssignRector;
+use Rector\CodeQuality\Rector\Foreach_\ForeachToInArrayRector;
+use Rector\CodeQuality\Rector\FuncCall\InArrayAndArrayKeysToArrayKeyExistsRector;
+use Rector\CodeQuality\Rector\FuncCall\IntvalToTypeCastRector;
+use Rector\CodeQuality\Rector\Identical\GetClassToInstanceOfRector;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\If_\ConsecutiveNullCompareReturnsToNullCoalesceQueueRector;
+use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
+use Rector\CodeQuality\Rector\If_\SimplifyIfIssetToNullCoalescingRector;
+use Rector\CodeQuality\Rector\Return_\SimplifyUselessVariableRector;
+use Rector\DeadCode\Rector\Foreach_\RemoveUnusedForeachKeyRector;
+use Rector\Php74\Rector\Assign\NullCoalescingOperatorRector;
 use SlevomatCodingStandard\Sniffs\Arrays\DisallowImplicitArrayCreationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowContinueWithoutIntegerOperandInSwitchSniff;
@@ -128,6 +140,8 @@ final class Code implements HasValue, HasInsights
             // FullyQualifiedExceptionsSniff::class,
             // FullyQualifiedGlobalConstantsSniff::class,
             TernaryToNullCoalescingFixer::class,
+            NullCoalescingOperatorRector::class,
+            ConsecutiveNullCompareReturnsToNullCoalesceQueueRector::class,
             CombineNestedDirnameFixer::class,
             DeclareEqualNormalizeFixer::class,
             ExplicitStringVariableFixer::class,
@@ -143,6 +157,16 @@ final class Code implements HasValue, HasInsights
             ObjectOperatorWithoutWhitespaceFixer::class,
             ShortScalarCastFixer::class,
             TernaryOperatorSpacesFixer::class,
+            CombineIfRector::class,
+            CombinedAssignRector::class,
+            ForeachToInArrayRector::class,
+            GetClassToInstanceOfRector::class,
+            InArrayAndArrayKeysToArrayKeyExistsRector::class,
+            IntvalToTypeCastRector::class,
+            SimplifyIfElseToTernaryRector::class,
+            SimplifyIfIssetToNullCoalescingRector::class,
+            SimplifyUselessVariableRector::class,
+            RemoveUnusedForeachKeyRector::class,
         ];
     }
 }

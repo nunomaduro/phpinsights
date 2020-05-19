@@ -16,6 +16,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnnecessaryFinalModifi
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\PropertyDeclarationSniff;
 use PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer;
 use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
+use Rector\Php74\Rector\Property\TypedPropertyRector;
 use SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff;
 use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
@@ -59,6 +60,7 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
             ForbiddenSetterSniff::class,
             UnnecessaryFinalModifierSniff::class,
             PropertyDeclarationSniff::class,
+            TypedPropertyRector::class,
             ClassConstantVisibilitySniff::class,
             DisallowLateStaticBindingForConstantsSniff::class,
             ModernClassNameReferenceSniff::class,
