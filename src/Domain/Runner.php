@@ -36,6 +36,8 @@ final class Runner
 
     private string $cacheKey;
 
+    private bool $fixEnabled;
+
     /** @var array<\NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight|\NunoMaduro\PhpInsights\Domain\Contracts\Insight> */
     private array $globalInsights = [];
 
@@ -51,7 +53,11 @@ final class Runner
 
         $this->filesProcessors = $container->get(FileProcessorContract::FILE_PROCESSOR_TAG);
         $this->cache = $container->get(CacheInterface::class);
-        $this->cacheKey = $container->get(Configuration::class)->getCacheKey();
+
+        /** @var \NunoMaduro\PhpInsights\Domain\Configuration $configuration */
+        $configuration = $container->get(Configuration::class);
+        $this->cacheKey = $configuration->getCacheKey();
+        $this->fixEnabled = $configuration->hasFixEnabled();
     }
 
     /**
@@ -126,7 +132,8 @@ final class Runner
     private function processFile(SplFileInfo $file): void
     {
         $cacheKey = 'insights.' . $this->cacheKey . '.' . md5($file->getContents());
-        if ($this->cache->has($cacheKey)) {
+        // Do not use cache if fix is enabled to force processors to handle it
+        if ($this->fixEnabled === false && $this->cache->has($cacheKey)) {
             $detailsByInsights = $this->cache->get($cacheKey);
             /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
             foreach ($this->allInsights as $insight) {
