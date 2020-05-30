@@ -8,10 +8,8 @@ use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
-use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\FileFactory;
 use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
-use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -30,26 +28,12 @@ final class SniffFileProcessor implements FileProcessor
     private bool $fixEnabled;
 
     /**
-     * @var array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>
-     */
-    private array $insights = [];
-
-    private CacheInterface $cache;
-
-    private string $cacheKey;
-
-    /**
      * FileProcessor constructor.
      */
     public function __construct(FileFactory $fileFactory)
     {
         $this->fileFactory = $fileFactory;
-        /** @var Configuration $config */
-        $config = Container::make()->get(Configuration::class);
-
-        $this->fixEnabled = $config->hasFixEnabled();
-        $this->cache = Container::make()->get(CacheInterface::class);
-        $this->cacheKey = $config->getCacheKey();
+        $this->fixEnabled = Container::make()->get(Configuration::class)->hasFixEnabled();
     }
 
     public function support(InsightContract $insight): bool
@@ -65,7 +49,6 @@ final class SniffFileProcessor implements FileProcessor
                 get_class($insight)
             ));
         }
-        $this->insights[] = $insight;
 
         foreach ($insight->register() as $token) {
             $this->tokenListeners[$token][] = $insight;
@@ -74,25 +57,6 @@ final class SniffFileProcessor implements FileProcessor
 
     public function processFile(SplFileInfo $splFileInfo): void
     {
-        $cacheKey = $this->cacheKey . md5($splFileInfo->getContents()) . 'sniffs';
-        if (! $this->fixEnabled && $this->cache->has($cacheKey)) {
-            $detailsBySniff = $this->cache->get($cacheKey);
-            foreach ($this->insights as $sniff) {
-                if (! isset($detailsBySniff[$sniff->getInsightClass()])) {
-                    continue;
-                }
-
-                array_walk(
-                    $detailsBySniff[$sniff->getInsightClass()],
-                    static function (Details $details) use ($sniff): void {
-                        $sniff->addDetails($details);
-                    }
-                );
-            }
-
-            return;
-        }
-
         $file = $this->fileFactory->createFromFileInfo($splFileInfo);
 
         $file->processWithTokenListenersAndFileInfo(
@@ -107,17 +71,5 @@ final class SniffFileProcessor implements FileProcessor
             file_put_contents($splFileInfo->getPathname(), $file->fixer->getContents());
             $file->disableFix();
         }
-
-        // rebrowse all sniff to get details about this file to register it in cache
-        $detailsBySniff = [];
-        foreach ($this->insights as $sniff) {
-            if (! $sniff->hasIssue()) {
-                continue;
-            }
-            $details = array_filter($sniff->getDetails(), fn (Details $detail) => $detail->getFile() === $splFileInfo->getRealPath());
-            $detailsBySniff[$sniff->getInsightClass()] = $details;
-        }
-
-        $this->cache->set($cacheKey, $detailsBySniff);
     }
 }
