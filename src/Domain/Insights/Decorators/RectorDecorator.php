@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Decorators;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\DetailsCarrier;
 use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
@@ -19,7 +19,7 @@ use SplFileInfo;
  *
  * @internal
  */
-final class RectorDecorator implements RectorInterface, InsightContract, HasDetails, Fixable
+final class RectorDecorator implements RectorInterface, InsightContract, DetailsCarrier, Fixable
 {
     use FixPerFileCollector;
 
@@ -80,19 +80,9 @@ final class RectorDecorator implements RectorInterface, InsightContract, HasDeta
         return $this->rector->getDefinition();
     }
 
-    public function addDetails(string $file, string $diff): void
+    public function addDetails(Details $details): void
     {
-        $this->errors[] = Details::make()
-            ->setFile($file)
-            ->setDiff($diff)
-            ->setMessage($this->rector->getDefinition()->getDescription() . "\n" . $diff);
-    }
-
-    public function addErrorDetails(string $file, string $message): void
-    {
-        $this->errors[] = Details::make()
-            ->setFile($file)
-            ->setMessage("[ERROR] Could not process this file, due to: ${message}.");
+        $this->errors[] = $details;
     }
 
     public function skipFilesFromExcludedFiles(SplFileInfo $file): bool

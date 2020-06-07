@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\FileProcessors;
 use LogicException;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
+use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\Decorators\RectorDecorator;
 use NunoMaduro\PhpInsights\Domain\RectorContainer;
 use PhpCsFixer\Differ\DifferInterface;
@@ -83,7 +84,7 @@ final class RectorFileProcessor implements FileProcessor
 
                 $newContent = $this->printFileContentToString($newStmts, $oldStmts, $oldTokens);
             } catch (Throwable $e) {
-                $rector->addErrorDetails($filePath, $e->getMessage());
+                $rector->addDetails($this->prepareErrorDetails($filePath, $e->getMessage()));
 
                 continue;
             }
@@ -91,7 +92,7 @@ final class RectorFileProcessor implements FileProcessor
             $diff = $this->calculateDiff($splFileInfo->getContents(), $newContent);
 
             if ($diff !== '') {
-                $rector->addDetails($filePath, $diff);
+                $rector->addDetails($this->prepareDetails($rector, $filePath, $diff));
             }
         }
     }
@@ -142,5 +143,20 @@ final class RectorFileProcessor implements FileProcessor
     private function calculateDiff(string $oldContent, string $newContent): string
     {
         return $this->differ->diff($oldContent, $newContent);
+    }
+
+    private function prepareDetails(RectorDecorator $rector, string $file, string $diff): Details
+    {
+        return Details::make()
+            ->setFile($file)
+            ->setDiff($diff)
+            ->setMessage($rector->getDefinition()->getDescription() . "\n" . $diff);
+    }
+
+    private function prepareErrorDetails(string $file, string $message): Details
+    {
+        return Details::make()
+            ->setFile($file)
+            ->setMessage("[ERROR] Could not process this file, due to: ${message}.");
     }
 }
