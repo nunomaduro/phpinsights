@@ -89,7 +89,7 @@ final class RectorFileProcessor implements FileProcessor
                 continue;
             }
 
-            $diff = $this->calculateDiff($splFileInfo->getContents(), $newContent);
+            $diff = $this->differ->diff($splFileInfo->getContents(), $newContent);
 
             if ($diff !== '') {
                 $rector->addDetails($this->prepareDetails($rector, $filePath, $diff));
@@ -138,11 +138,6 @@ final class RectorFileProcessor implements FileProcessor
     private function printFileContentToString(array $newStmts, array $oldStmts, array $oldTokens): string
     {
         return $this->prettyPrinter->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
-    }
-
-    private function calculateDiff(string $oldContent, string $newContent): string
-    {
-        return $this->differ->diff($oldContent, $newContent);
     }
 
     private function prepareDetails(RectorDecorator $rector, string $file, string $diff): Details
