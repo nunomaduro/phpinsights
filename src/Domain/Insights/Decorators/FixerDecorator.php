@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Decorators;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\DetailsCarrier;
 use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
@@ -20,7 +20,7 @@ use SplFileInfo;
  *
  * @see \Tests\Domain\Fixer\FixerDecoratorTest
  */
-final class FixerDecorator implements FixerInterface, InsightContract, HasDetails, Fixable
+final class FixerDecorator implements FixerInterface, InsightContract, DetailsCarrier, Fixable
 {
     use FixPerFileCollector;
 
@@ -126,6 +126,11 @@ final class FixerDecorator implements FixerInterface, InsightContract, HasDetail
     public function getDetails(): array
     {
         return $this->errors;
+    }
+
+    public function addDetails(Details $details): void
+    {
+        $this->errors[] = $details;
     }
 
     public function addDiff(string $file, string $diff): void

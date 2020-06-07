@@ -173,3 +173,8 @@ composer require --dev bamarni/composer-bin-plugin
 composer bin phpinsights require nunomaduro/phpinsights
 ./vendor/bin/phpinsights
 ```
+
+## Flush cache results <Badge text="^2.0"/>
+
+Between 2 analysis, issues are cached. 
+PHPInsights is smart enough to invalidate cache when it detect changes in your code, but you may completly flush cache before analysis by adding `--flush-cache` flag.

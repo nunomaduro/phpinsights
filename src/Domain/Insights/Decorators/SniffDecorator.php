@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Decorators;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\DetailsCarrier;
 use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
-use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\File as InsightFile;
@@ -20,7 +20,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * @see \Tests\Domain\Sniffs\SniffDecoratorTest
  */
-final class SniffDecorator implements Sniff, Insight, HasDetails, Fixable
+final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
 {
     use FixPerFileCollector;
 
