@@ -9,6 +9,8 @@ use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
 use NunoMaduro\PhpInsights\Application\Console\OutputDecorator;
 use NunoMaduro\PhpInsights\Application\Console\Style;
 use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Container;
+use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -54,6 +56,11 @@ final class AnalyseCommand
         $output = OutputDecorator::decorate($output);
 
         $formatter = FormatResolver::resolve($input, $output, $consoleOutput);
+
+        // flush cache before processing if asked
+        if ($input->getOption('flush-cache') === true) {
+            Container::make()->get(CacheInterface::class)->clear();
+        }
 
         $results = $this->analyser->analyse($formatter, $consoleOutput);
 

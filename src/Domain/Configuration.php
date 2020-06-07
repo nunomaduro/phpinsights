@@ -102,6 +102,8 @@ final class Configuration
 
     private bool $fix;
 
+    private string $cacheKey;
+
     /**
      * Configuration constructor.
      *
@@ -111,6 +113,7 @@ final class Configuration
     {
         $this->fileLinkFormatter = new NullFileLinkFormatter();
         $this->resolveConfig($config);
+        $this->cacheKey = md5(\json_encode($config, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -220,6 +223,11 @@ final class Configuration
     public function hasFixEnabled(): bool
     {
         return $this->fix;
+    }
+
+    public function getCacheKey(): string
+    {
+        return $this->cacheKey;
     }
 
     /**

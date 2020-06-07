@@ -70,6 +70,12 @@ final class AnalyseDefinition extends BaseDefinition
                 InputOption::VALUE_NONE,
                 'Enable auto-fix for fixable insights'
             ),
+            new InputOption(
+                'flush-cache',
+                null,
+                InputOption::VALUE_NONE,
+                'Flush cache results before processing'
+            ),
         ]);
 
         return $definition;

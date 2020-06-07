@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use NunoMaduro\PhpInsights\Application\Injectors\Cache;
 use NunoMaduro\PhpInsights\Application\Injectors\Configuration;
 use NunoMaduro\PhpInsights\Application\Injectors\FileProcessors;
 use NunoMaduro\PhpInsights\Application\Injectors\InsightLoaders;
@@ -14,6 +15,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
 return (static function (): Container {
     $injectors = [
         Configuration::class,
+        Cache::class,
         Repositories::class,
         FileProcessors::class,
         InsightLoaders::class,
