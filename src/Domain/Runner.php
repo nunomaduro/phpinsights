@@ -90,8 +90,11 @@ final class Runner
 
         $sizeChunk = (int) ceil($totalFiles / $this->threads);
         // Create batch for files
-        $filesByThread = array_chunk($files, $sizeChunk, false);
-
+        $filesByThread = array_chunk(
+            array_map(static fn (SplFileInfo $file) => $file->getRealPath(), $files),
+            $sizeChunk,
+            false
+        );
         // Create progress bar
         $this->output->writeln('');
         $progressBar = $this->createProgressBar($totalFiles + \count($this->globalInsights));
@@ -100,10 +103,15 @@ final class Runner
 
         $this->cache->set('current_configuration', $this->configuration);
 
+        // retrieve current binary, fallback on expected binary in vendors
         $binary = realpath($_SERVER['argv'][0]) ?? getcwd() . '/vendor/bin/phpinsights';
         $runningProcesses = [];
         for ($i = 0; $i < $this->threads; $i++) {
-            $process = new Process([PHP_BINARY, $binary, InternalProcessorCommand::NAME, ...$filesByThread[$i]]);
+            if (!\array_key_exists($i, $filesByThread)) {
+                // Not enough file to inspects to occupate every threads. Bypass
+                continue;
+            }
+            $process = new Process([PHP_BINARY, $binary, InternalProcessorCommand::NAME, ...$filesByThread[$i] ?? '']);
             $process->start();
             $runningProcesses[] = $process;
         }
