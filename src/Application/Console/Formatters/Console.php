@@ -586,20 +586,20 @@ final class Console implements Formatter
             $formattedLink = $this->fileLinkFormatter->format($file, $detail->getLine());
         }
 
-        if ($detailString !== '') {
-            $color = $this->getCategoryColor($category);
-            $detailString = sprintf('<fg=%s>%s</>', $color, $detailString);
-        }
-
         if ($this->supportHyperLinks &&
             $formattedLink !== '' &&
             $detailString !== ''
         ) {
-            $detailString = sprintf(
-                '<href=%s>%s</>',
+            return sprintf(
+                '<href=%s;fg=%s>%s</>',
                 $formattedLink,
+                $this->getCategoryColor($category),
                 $detailString
             );
+        }
+
+        if ($detailString !== '') {
+            $detailString = sprintf('<fg=%s>%s</>', $this->getCategoryColor($category), $detailString);
         }
 
         return $detailString;
