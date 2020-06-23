@@ -78,12 +78,35 @@ final class Runner
     {
         // Get the files.
         $files = $this->filesRepository->getFiles();
-        $totalFiles = \count($files);
+        $initialCountOfFiles = \count($files);
 
         // No files found
-        if ($totalFiles === 0) {
+        if ($initialCountOfFiles === 0) {
+            // no file to inspect, no progress bar, early return.
             return;
         }
+
+        if (! $this->configuration->hasFixEnabled()) {
+            // retrieve all files already cached
+            $filesCached = array_filter(
+                $files,
+                fn (SplFileInfo $file): bool => $this->cache->has(
+                    'insights.' . $this->cacheKey . '.' . md5($file->getContents())
+                )
+            );
+
+            // process them
+            array_walk($filesCached,
+                function (SplFileInfo $file): void {
+                    $this->processFile($file);
+                }
+            );
+
+            // and reduce files to launch inspection
+            $files = array_diff($files, $filesCached);
+        }
+
+        $totalFiles = \count($files);
 
         // Save in cache the current configuration
         $this->cache->set('current_configuration', $this->configuration);
@@ -94,20 +117,24 @@ final class Runner
             array_map(static fn (SplFileInfo $file) => $file->getRealPath(), $files),
             $sizeChunk,
             false
-        );
+        ) ?? [];
+
         // Create progress bar
         $this->output->writeln('');
-        $progressBar = $this->createProgressBar($totalFiles + \count($this->globalInsights));
+        $progressBar = $this->createProgressBar($initialCountOfFiles + \count($this->globalInsights));
         $progressBar->setMessage('');
         $progressBar->start();
 
-        $this->cache->set('current_configuration', $this->configuration);
+        if ($initialCountOfFiles !== $totalFiles) {
+            $progressBar->advance($initialCountOfFiles - $totalFiles);
+            $progressBar->display();
+        }
 
         // retrieve current binary, fallback on expected binary in vendors
         $binary = realpath($_SERVER['argv'][0]) ?? getcwd() . '/vendor/bin/phpinsights';
         $runningProcesses = [];
         for ($i = 0; $i < $this->threads; $i++) {
-            if (!\array_key_exists($i, $filesByThread)) {
+            if (! \array_key_exists($i, $filesByThread)) {
                 // Not enough file to inspects to occupate every threads. Bypass
                 continue;
             }
