@@ -44,6 +44,12 @@ parameters:
         - '#NunoMaduro\\PhpInsights\\Domain\\File::addFixableError#'
         - '#iterable type PhpCsFixer\\Tokenizer\\Tokens#'
         - '#Method NunoMaduro\\PhpInsights\\Application\\Console\\Definitions\\BaseDefinition::get\(\) is not final#'
+        -
+            message: "#^Method Tests\\\\TestCase\\:\\:.*\\(\\) is not final, but since the containing class is abstract, it should be\\.$#"
+            count: 2
+            path: tests/TestCase.php
+
+
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false

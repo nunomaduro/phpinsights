@@ -109,6 +109,7 @@ final class ConfigurationTest extends TestCase
 
     /**
      * @dataProvider invalidThreadsNumber
+     * @param int|string $invalid
      */
     public function testExceptionOnInvalidSetThread($invalid): void
     {
@@ -117,6 +118,9 @@ final class ConfigurationTest extends TestCase
         new Configuration(['threads' => $invalid]);
     }
 
+    /**
+     * @return array<array<string|int>>
+     */
     public function invalidThreadsNumber(): array
     {
         return [[

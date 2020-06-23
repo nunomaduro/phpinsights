@@ -132,19 +132,19 @@ final class Runner
 
         // retrieve current binary, fallback on expected binary in vendors
         $binary = realpath($_SERVER['argv'][0]) ?? getcwd() . '/vendor/bin/phpinsights';
+        /** @var array<Process> $runningProcesses */
         $runningProcesses = [];
         for ($i = 0; $i < $this->threads; $i++) {
             if (! \array_key_exists($i, $filesByThread)) {
                 // Not enough file to inspects to occupate every threads. Bypass
                 continue;
             }
-            $process = new Process([PHP_BINARY, $binary, InternalProcessorCommand::NAME, ...$filesByThread[$i] ?? '']);
+            $process = new Process([PHP_BINARY, $binary, InternalProcessorCommand::NAME, ...$filesByThread[$i] ?? []]);
             $process->start();
             $runningProcesses[] = $process;
         }
 
         while (\count($runningProcesses) > 0) {
-            /** @var Process $runningProcess */
             foreach ($runningProcesses as $i => $runningProcess) {
                 if (! $runningProcess->isRunning()) {
                     $progressBar->advance(\count($filesByThread[$i]));
@@ -176,7 +176,7 @@ final class Runner
         $cacheKey = 'insights.' . $this->cacheKey . '.' . md5($file->getContents());
         // Do not use cache if fix is enabled to force processors to handle it
         if (! $this->cache->has($cacheKey)) {
-            throw new \Exception('Unable to find data for ' . $file->getPathname());
+            throw new \LogicException('Unable to find data for ' . $file->getPathname());
         }
 
         $this->loadDetailsCache($cacheKey);

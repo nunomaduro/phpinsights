@@ -109,7 +109,7 @@ final class Configuration
     /**
      * Configuration constructor.
      *
-     * @param array<string, string|array|null> $config
+     * @param array<string, string|int|array|null> $config
      */
     public function __construct(array $config)
     {
@@ -238,7 +238,7 @@ final class Configuration
     }
 
     /**
-     * @param array<string, string|array|null> $config
+     * @param array<string, string|int|array|null> $config
      */
     private function resolveConfig(array $config): void
     {

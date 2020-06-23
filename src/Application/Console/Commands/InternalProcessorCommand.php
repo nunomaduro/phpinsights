@@ -31,11 +31,20 @@ final class InternalProcessorCommand
 
     private Configuration $configuration;
 
+    /**
+     * @var array<InsightLoaderContract>
+     */
     private array $insightsLoaders;
 
+    /**
+     * @var array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
+     */
     private array $allInsights = [];
 
-    private $filesProcessors;
+    /**
+     * @var array<FileProcessorContract>
+     */
+    private array $filesProcessors;
 
     public function __construct(CacheInterface $cache, Configuration $configuration)
     {
@@ -47,7 +56,7 @@ final class InternalProcessorCommand
         $loaders = $container->get(InsightLoaderContract::INSIGHT_LOADER_TAG);
 
         // exclude InsightLoader, not used here
-        $this->insightsLoaders = array_filter($loaders, static function (InsightLoaderContract $loader) {
+        $this->insightsLoaders = array_filter($loaders, static function (InsightLoaderContract $loader): bool {
             return ! $loader instanceof InsightLoader;
         });
     }
@@ -175,7 +184,7 @@ final class InternalProcessorCommand
         $fixByInsights = [];
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
         foreach ($this->allInsights as $insight) {
-            if (! $insight instanceof Fixable || ! $insight->getTotalFix() === 0) {
+            if (! $insight instanceof Fixable || $insight->getTotalFix() === 0) {
                 continue;
             }
             $details = array_filter(
