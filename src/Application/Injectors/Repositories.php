@@ -22,7 +22,7 @@ final class Repositories
     {
         return [
             FilesRepository::class => static function (): LocalFilesRepository {
-                $finder = Finder::create();
+                $finder = Finder::create()->ignoreVCSIgnored(true);
 
                 return new LocalFilesRepository($finder);
             },
