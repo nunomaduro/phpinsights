@@ -114,7 +114,7 @@ final class ConfigurationTest extends TestCase
     public function testExceptionOnInvalidSetThread($invalid): void
     {
         $this->expectException(\Symfony\Component\OptionsResolver\Exception\InvalidOptionsException::class);
-        $this->expectExceptionMessage('The option "threads" with value ' . $invalid . ' is invalid.');
+        $this->expectExceptionMessage('The option "threads" with value');
         new Configuration(['threads' => $invalid]);
     }
 
@@ -123,11 +123,12 @@ final class ConfigurationTest extends TestCase
      */
     public function invalidThreadsNumber(): array
     {
-        return [[
-            0,
-            -1,
-            '0',
-            '2'
-        ]];
+        return [
+            [0],
+            [0.],
+            [-1],
+            ['0'],
+            ['2'],
+        ];
     }
 }
