@@ -43,7 +43,7 @@ final class LocalFilesRepository implements FilesRepository
     }
 
     /**
-     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     public function getFiles(): array
     {
@@ -80,10 +80,10 @@ final class LocalFilesRepository implements FilesRepository
     }
 
     /**
-     * @param array<string> $directories
+     * @param array<array> $directories
      * @param array<string> $exclude
      *
-     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     private function filesWithinDirectories(array $directories, array $exclude = []): array
     {
@@ -112,9 +112,9 @@ final class LocalFilesRepository implements FilesRepository
     }
 
     /**
-     * @param array<string> $paths
+     * @param array<array> $paths
      *
-     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     private function filesAtPaths(array $paths): array
     {
