@@ -91,7 +91,7 @@ final class LocalFilesRepository implements FilesRepository
             return [];
         }
 
-        $directories = array_column($directories, 'full_path');
+        $directories = array_unique(array_column($directories, 'full_path'));
 
         $finder = (clone $this->finder)
             ->files()
@@ -122,18 +122,20 @@ final class LocalFilesRepository implements FilesRepository
             return [];
         }
 
-        $dirname = array_column($paths, 'dirname');
-        $basename = array_column($paths, 'basename');
-        $full_path = array_column($paths, 'full_path');
+        $directories = array_unique(array_column($paths, 'dirname'));
+        $basenames = array_unique(array_column($paths, 'basename'));
+        $full_paths = array_column($paths, 'full_path');
+
+        $fullPathIsMatched = fn (SplFileInfo $file): bool => in_array(
+            $file->getPathname(),
+            $full_paths,
+            true
+        );
 
         $finder = (clone $this->finder)
-            ->in($dirname)
-            ->name($basename)
-            ->filter(fn (SplFileInfo $file): bool => in_array(
-                $file->getPathname(),
-                $full_path,
-                true
-            ));
+            ->in($directories)
+            ->name($basenames)
+            ->filter($fullPathIsMatched);
 
         return $this->getFilesList($finder);
     }
