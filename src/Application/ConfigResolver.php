@@ -190,16 +190,14 @@ final class ConfigResolver
         $removedRulesByPreset = [];
         $addedRulesByConfig = [];
 
-        if (isset($preset['remove'])) {
-            $data = (array) $preset['remove'];
-            array_walk_recursive($data, static function ($value) use (&$removedRulesByPreset): void {
+        if (isset($preset['remove']) && is_array($preset['remove']) && count($preset['remove']) > 0) {
+            array_walk_recursive($preset['remove'], static function ($value) use (&$removedRulesByPreset): void {
                 $removedRulesByPreset[] = $value;
             });
         }
 
-        if (isset($config['add'])) {
-            $data = (array) $config['add'];
-            array_walk_recursive($data, static function ($value) use (&$addedRulesByConfig): void {
+        if (isset($config['add']) && is_array($config['add']) && count($config['add']) > 0) {
+            array_walk_recursive($config['add'], static function ($value) use (&$addedRulesByConfig): void {
                 $addedRulesByConfig[] = $value;
             });
         }
