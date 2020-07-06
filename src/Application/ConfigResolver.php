@@ -54,7 +54,8 @@ final class ConfigResolver
         /** @var Preset $presetClass */
         foreach (self::PRESETS as $presetClass) {
             if ($presetClass::getName() === $preset) {
-                $config = self::mergeConfig($presetClass::get($composer), $config);
+                $presetData = self::preparePreset($presetClass::get($composer), $config);
+                $config = self::mergeConfig($presetData, $config);
 
                 break;
             }
@@ -176,5 +177,36 @@ final class ConfigResolver
         }
 
         return $config;
+    }
+
+    /**
+     * @param array<string, array|string|int> $preset
+     * @param array<string, array|string> $config
+     *
+     * @return array<string, array|int|string>
+     */
+    private static function preparePreset(array $preset, array $config): array
+    {
+        $removedRulesByPreset = [];
+        $addedRulesByConfig = [];
+
+        if (isset($preset['remove']) && is_array($preset['remove']) && count($preset['remove']) > 0) {
+            array_walk_recursive($preset['remove'], static function ($value) use (&$removedRulesByPreset): void {
+                $removedRulesByPreset[] = $value;
+            });
+        }
+
+        if (isset($config['add']) && is_array($config['add']) && count($config['add']) > 0) {
+            array_walk_recursive($config['add'], static function ($value) use (&$addedRulesByConfig): void {
+                $addedRulesByConfig[] = $value;
+            });
+        }
+
+        $intersectRules = array_intersect($addedRulesByConfig, $removedRulesByPreset);
+
+        // Config rules have more priority against preset rules, so we should override them.
+        $preset['remove'] = array_diff($removedRulesByPreset, $intersectRules);
+
+        return $preset;
     }
 }

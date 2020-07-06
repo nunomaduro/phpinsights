@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Application;
 
+use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
@@ -12,6 +13,7 @@ use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -182,7 +184,7 @@ final class ConfigResolverTest extends TestCase
         self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
     }
 
-    public function testResolveWithoutIde():void
+    public function testResolveWithoutIde(): void
     {
         $config = [];
 
@@ -219,7 +221,29 @@ final class ConfigResolverTest extends TestCase
 
         $config = ConfigResolver::resolve([], $input);
 
-        self::assertEquals($config->getMinComplexity(), 1);
+        self::assertEquals(1, $config->getMinComplexity());
+    }
+
+    public function testOverridePresetByConfig(): void
+    {
+        $preset = LaravelPreset::get(new Composer([]));
+        $removedRulesByPreset = (array) $preset['remove'];
+
+        $config = [
+            'preset' => 'laravel',
+            'add' => [
+                Classes::class => [
+                    $removedRulesByPreset[0],
+                ],
+            ],
+        ];
+
+        $finalConfig = ConfigResolver::resolve(
+            $config,
+            FakeInput::paths([$this->baseFixturePath . 'ComposerLaravel' . DIRECTORY_SEPARATOR . 'composer.json'])
+        );
+
+        self::assertNotContains($removedRulesByPreset[0], $finalConfig->getRemoves());
     }
 
     /**
