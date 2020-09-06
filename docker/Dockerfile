@@ -1,8 +1,8 @@
-FROM php:7.3-cli-alpine
+FROM php:7.4-cli-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-COPY --from=composer:1.8 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
 
 COPY . /phpinsights
 
