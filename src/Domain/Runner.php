@@ -113,11 +113,14 @@ final class Runner
 
         $sizeChunk = (int) ceil($totalFiles / $this->threads);
         // Create batch for files
-        $filesByThread = array_chunk(
-            array_map(static fn (SplFileInfo $file) => $file->getRealPath(), $files),
-            $sizeChunk,
-            false
-        ) ?? [];
+        $filesByThread = [];
+        if ($sizeChunk > 0) {
+            $filesByThread = array_chunk(
+                array_map(static fn (SplFileInfo $file) => $file->getRealPath(), $files),
+                $sizeChunk,
+                false
+            );
+        }
 
         // Create progress bar
         $this->output->writeln('');
