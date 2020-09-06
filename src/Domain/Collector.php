@@ -811,7 +811,7 @@ final class Collector
      */
     private function getMaximum(array $array)
     {
-        return \count($array) > 0 ? \max($array) : 0;
+        return \count($array) !== 0 ? \max($array) : 0;
     }
 
     private function divide(float $x, float $y): float
