@@ -133,8 +133,7 @@ final class Runner
             $progressBar->display();
         }
 
-        // retrieve current binary, fallback on expected binary in vendors
-        $binary = realpath($_SERVER['argv'][0]) ?? getcwd() . '/vendor/bin/phpinsights';
+        $binary = $this->retrieveBinaryPath();
         /** @var array<Process> $runningProcesses */
         $runningProcesses = [];
         for ($i = 0; $i < $this->threads; $i++) {
@@ -264,5 +263,16 @@ final class Runner
         }
 
         return 'normal';
+    }
+
+    private function retrieveBinaryPath(): string
+    {
+        $binary = realpath($_SERVER['argv'][0]);
+        if ($binary === false ||
+            mb_strpos(pathinfo($binary, PATHINFO_FILENAME), 'phpinsights') === false) {
+            $binary = getcwd() . '/vendor/bin/phpinsights';
+        }
+
+        return $binary;
     }
 }
