@@ -7,6 +7,9 @@ namespace NunoMaduro\PhpInsights\Application\Console\Definitions;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 
+/**
+ * @internal
+ */
 final class InternalProcessorDefinition
 {
     public static function get(): InputDefinition

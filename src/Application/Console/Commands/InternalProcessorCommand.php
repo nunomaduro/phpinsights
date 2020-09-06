@@ -34,7 +34,7 @@ final class InternalProcessorCommand
     /**
      * @var array<InsightLoaderContract>
      */
-    private array $insightsLoaders;
+    private array $insightsLoaders = [];
 
     /**
      * @var array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
@@ -44,25 +44,18 @@ final class InternalProcessorCommand
     /**
      * @var array<FileProcessorContract>
      */
-    private array $filesProcessors;
+    private array $filesProcessors = [];
 
     public function __construct(CacheInterface $cache, Configuration $configuration)
     {
         $this->cache = $cache;
         $this->configuration = $configuration;
-        $container = Container::make();
-
-        $this->filesProcessors = $container->get(FileProcessorContract::FILE_PROCESSOR_TAG);
-        $loaders = $container->get(InsightLoaderContract::INSIGHT_LOADER_TAG);
-
-        // exclude InsightLoader, not used here
-        $this->insightsLoaders = array_filter($loaders, static function (InsightLoaderContract $loader): bool {
-            return ! $loader instanceof InsightLoader;
-        });
     }
 
     public function __invoke(InputInterface $input, OutputInterface $output): int
     {
+        $this->initialize();
+
         $files = $input->getArgument('files');
         if (! \is_array($files) || \count($files) === 0) {
             return 0;
@@ -85,6 +78,22 @@ final class InternalProcessorCommand
         }
 
         return 0;
+    }
+
+    /**
+     * Retrieve filesProcessors and insightsLoaders.
+     */
+    private function initialize(): void
+    {
+        $container = Container::make();
+
+        $this->filesProcessors = $container->get(FileProcessorContract::FILE_PROCESSOR_TAG);
+        $loaders = $container->get(InsightLoaderContract::INSIGHT_LOADER_TAG);
+
+        // exclude InsightLoader, not used here
+        $this->insightsLoaders = array_filter($loaders, static function (InsightLoaderContract $loader): bool {
+            return ! $loader instanceof InsightLoader;
+        });
     }
 
     /**
