@@ -141,7 +141,10 @@ final class Runner
                 // Not enough file to inspects to occupate every threads. Bypass
                 continue;
             }
-            $process = new Process([PHP_BINARY, $binary, InternalProcessorCommand::NAME, ...$filesByThread[$i] ?? []]);
+            $cacheKey = sprintf('thread-%s-%s', $i, md5(implode('', $filesByThread[$i])));
+            $this->cache->set($cacheKey, $filesByThread[$i]);
+
+            $process = new Process([PHP_BINARY, $binary, InternalProcessorCommand::NAME, $cacheKey]);
             $process->start();
             $runningProcesses[] = $process;
         }

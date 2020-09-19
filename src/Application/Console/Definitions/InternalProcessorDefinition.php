@@ -16,9 +16,9 @@ final class InternalProcessorDefinition
     {
         return new InputDefinition([
             new InputArgument(
-                'files',
-                InputArgument::IS_ARRAY,
-                'Paths of directories or files to analyse'
+                'cache-key',
+                InputArgument::REQUIRED,
+                'Cache key containing files to analyse'
             ),
         ]);
     }

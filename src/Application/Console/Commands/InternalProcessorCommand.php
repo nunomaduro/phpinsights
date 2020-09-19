@@ -56,7 +56,7 @@ final class InternalProcessorCommand
     {
         $this->initialize();
 
-        $files = $input->getArgument('files');
+        $files = $this->cache->get($input->getArgument('cache-key'), []);
         if (! \is_array($files) || \count($files) === 0) {
             return 0;
         }
