@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Domain\Insights;
 use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
+use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use PHP_CodeSniffer\Config;
 use Symfony\Component\Process\Process;
 
@@ -36,19 +37,27 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     public function process(): void
     {
         $phpPath = (string) Config::getExecutablePath('php');
-        $filesToAnalyse = array_map(
-            static fn (string $file): string => escapeshellarg($file),
-            $this->filterFilesWithoutExcluded($this->collector->getFiles())
+        $toExclude = array_map(
+            static fn (string $file): string => '--exclude ' . escapeshellarg($file),
+            array_merge($this->excludedFiles, LocalFilesRepository::DEFAULT_EXCLUDE)
         );
+
+        $binary = sprintf(
+            '%s %s',
+            escapeshellcmd($phpPath),
+            escapeshellarg(dirname(__DIR__, 3) . '/vendor/bin/parallel-lint')
+        );
+        if (DIRECTORY_SEPARATOR === '\\') {
+            $binary = dirname(__DIR__, 3) . '\vendor\bin\parallel-lint.bat';
+        }
 
         $cmdLine = sprintf(
-            '%s %s --no-colors --no-progress --json %s',
-            escapeshellcmd($phpPath),
-            escapeshellarg(dirname(__DIR__, 3) . '/vendor/bin/parallel-lint'),
-            implode(' ', $filesToAnalyse)
+            '%s --no-colors --no-progress --json %s .',
+            $binary,
+            implode(' ', $toExclude)
         );
 
-        $process = Process::fromShellCommandline($cmdLine);
+        $process = Process::fromShellCommandline($cmdLine, $this->collector->getCommonPath());
         $process->run();
         $output = json_decode($process->getOutput(), true);
         $errors = $output['results']['errors'] ?? [];
