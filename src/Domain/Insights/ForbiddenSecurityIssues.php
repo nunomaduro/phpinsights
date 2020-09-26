@@ -33,7 +33,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
 
     public function process(): void
     {
-        $this->getResult();
+        $this->getDetails();
     }
 
     public function getDetails(): array
