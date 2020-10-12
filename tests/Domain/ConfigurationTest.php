@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Tests\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 final class ConfigurationTest extends TestCase
 {
@@ -17,7 +19,7 @@ final class ConfigurationTest extends TestCase
         $configuration = new Configuration([]);
 
         self::assertEquals([getcwd()], $configuration->getPaths());
-        self::assertEquals('default', $configuration->getPreset());
+        self::assertEquals(DefaultPreset::class, $configuration->getPreset());
         self::assertEquals([], $configuration->getAdd());
         self::assertEquals([], $configuration->getExcludes());
         self::assertEquals([], $configuration->getConfig());
@@ -75,5 +77,11 @@ final class ConfigurationTest extends TestCase
 
         self::assertSame([getcwd()], $configuration->getPaths());
         self::assertStringNotContainsString('..', $configuration->getPaths()[0]);
+    }
+
+    public function testInvalidPresetThrowsException()
+    {
+        $this->expectException(InvalidOptionsException::class);
+        new Configuration(['preset' => \stdClass::class]);
     }
 }

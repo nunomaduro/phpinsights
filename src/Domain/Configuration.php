@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use Closure;
-use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
-use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
+use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
@@ -25,15 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Configuration
 {
-    private const PRESETS = [
-        DrupalPreset::class,
-        LaravelPreset::class,
-        SymfonyPreset::class,
-        YiiPreset::class,
-        Magento2Preset::class,
-        DefaultPreset::class,
-    ];
-
     private const ACCEPTED_REQUIREMENTS = [
         'min-quality',
         'min-complexity',
@@ -52,7 +39,10 @@ final class Configuration
         'vscode' => 'vscode://file/%f:%l',
     ];
 
-    private string $preset = 'default';
+    /**
+     * @var string
+     */
+    private string $preset = DefaultPreset::class;
 
     /**
      * List of paths to analyse.
@@ -61,6 +51,9 @@ final class Configuration
      */
     private array $paths;
 
+    /**
+     * @var string
+     */
     private string $commonPath;
 
     /**
@@ -237,7 +230,7 @@ final class Configuration
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
-            'preset' => 'default',
+            'preset' => $this->preset,
             'paths' => [(string) getcwd()],
             'common_path' => '',
             'exclude' => [],
@@ -249,10 +242,7 @@ final class Configuration
         ]);
 
         $resolver->setDefined('ide');
-        $resolver->setAllowedValues(
-            'preset',
-            array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
-        );
+        $resolver->setAllowedValues('preset', $this->validatePresetClass());
 
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
@@ -368,5 +358,17 @@ final class Configuration
 
             return true;
         };
+    }
+
+    private function validatePresetClass(): Closure
+    {
+        return static function ($value): bool {
+            return self::isValidPreset($value);
+        };
+    }
+
+    public static function isValidPreset(string $testPreset): bool
+    {
+        return is_a($testPreset, Preset::class, true);
     }
 }
