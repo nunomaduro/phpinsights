@@ -85,10 +85,8 @@ final class ConfigResolver
      */
     public static function guess(Composer $composer): string
     {
-        foreach (self::PRESETS as $presetClass) {
-            if ($presetClass::shouldBeApplied($composer)) {
-                return $presetClass::getName();
-            }
+        if ($preset = self::guessPresetClass('', $composer)) {
+            return $preset::getName();
         }
 
         return 'default';
