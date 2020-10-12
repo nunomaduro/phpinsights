@@ -7,6 +7,7 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Laravel;
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
+use NunoMaduro\PhpInsights\Domain\Contracts\GuessablePreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
@@ -18,7 +19,7 @@ use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 /**
  * @internal
  */
-final class Preset implements PresetContract
+final class Preset implements PresetContract, GuessablePreset
 {
     public static function getName(): string
     {
