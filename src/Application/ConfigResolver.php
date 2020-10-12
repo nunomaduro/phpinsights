@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application;
 
-use http\Exception\InvalidArgumentException;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPresetException;
 use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
@@ -92,7 +91,7 @@ final class ConfigResolver
             }
         }
 
-        return self::DEFAULT_PRESET;
+        return 'default';
     }
 
     /**

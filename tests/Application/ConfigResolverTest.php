@@ -37,7 +37,7 @@ final class ConfigResolverTest extends TestCase
     {
         $preset = ConfigResolver::guess(new Composer([]));
 
-        self::assertSame(DefaultPreset::class, $preset);
+        self::assertSame('default', $preset);
     }
 
     public function testGuessComposerWithoutRequire(): void
@@ -46,7 +46,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath("{$this->baseFixturePath}ComposerWithoutRequire" . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame(DefaultPreset::class, $preset);
+        self::assertSame('default', $preset);
     }
 
     public function testGuessSymfony(): void
