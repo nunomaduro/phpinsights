@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Application;
 
+use NunoMaduro\PhpInsights\Application\DefaultPreset;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPresetException;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
@@ -13,12 +15,10 @@ use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
-use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Tests\Fakes\FakeInput;
 
 final class ConfigResolverTest extends TestCase
@@ -37,7 +37,7 @@ final class ConfigResolverTest extends TestCase
     {
         $preset = ConfigResolver::guess(new Composer([]));
 
-        self::assertSame('default', $preset);
+        self::assertSame(DefaultPreset::class, $preset);
     }
 
     public function testGuessComposerWithoutRequire(): void
@@ -46,7 +46,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath("{$this->baseFixturePath}ComposerWithoutRequire" . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('default', $preset);
+        self::assertSame(DefaultPreset::class, $preset);
     }
 
     public function testGuessSymfony(): void
@@ -125,7 +125,7 @@ final class ConfigResolverTest extends TestCase
 
     public function testUnknownPresetThrowException(): void
     {
-        $this->expectException(InvalidOptionsException::class);
+        $this->expectException(InvalidPresetException::class);
 
         $config = ['preset' => 'UnknownPreset'];
 
