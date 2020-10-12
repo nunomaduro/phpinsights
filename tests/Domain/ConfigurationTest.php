@@ -79,7 +79,7 @@ final class ConfigurationTest extends TestCase
         self::assertStringNotContainsString('..', $configuration->getPaths()[0]);
     }
 
-    public function testInvalidPresetThrowsException()
+    public function testInvalidPresetThrowsException(): void
     {
         $this->expectException(InvalidOptionsException::class);
         new Configuration(['preset' => \stdClass::class]);

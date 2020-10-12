@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application;
 
-use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPresetException;
 use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
@@ -13,6 +12,7 @@ use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPresetException;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -27,7 +27,7 @@ final class ConfigResolver
 
     private const COMPOSER_FILENAME = 'composer.json';
 
-    private const DEFAULT_PRESET =  DefaultPreset::class;
+    private const DEFAULT_PRESET = DefaultPreset::class;
 
     private const PRESETS = [
         DrupalPreset::class,
@@ -43,6 +43,7 @@ final class ConfigResolver
      * @param array<string, string|array> $config
      *
      * @return \NunoMaduro\PhpInsights\Domain\Configuration
+     *
      * @throws \JsonException
      */
     public static function resolve(array $config, InputInterface $input): Configuration
@@ -50,11 +51,12 @@ final class ConfigResolver
         $paths = PathResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
         $composer = self::getComposer($input, $paths[0]);
-        $preset = self::resolvePreset($config['preset'] ?? '', $composer);
+        /** @var string $tesPreset */
+        $tesPreset = $config['preset'] ?? '';
+        $preset = self::resolvePreset($tesPreset, $composer);
         $config['preset'] = $preset;
         $presetData = self::preparePreset($preset::get($composer), $config);
         $config = self::mergeConfig($presetData, $config);
-
 
         if ($composer->getName() === '') {
             $config = self::excludeGlobalInsights($config);
@@ -85,7 +87,8 @@ final class ConfigResolver
      */
     public static function guess(Composer $composer): string
     {
-        if ($preset = self::guessPresetClass('', $composer)) {
+        $preset = self::guessPresetClass('', $composer);
+        if ($preset !== '') {
             return $preset::getName();
         }
 
@@ -203,15 +206,9 @@ final class ConfigResolver
         return $preset;
     }
 
-    /**
-     * @param string $testPreset
-     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
-     *
-     * @return string
-     */
     private static function resolvePreset(string $testPreset, Composer $composer): string
     {
-        if (empty($testPreset) || $testPreset === 'default') {
+        if ($testPreset === '' || $testPreset === 'default') {
             return self::DEFAULT_PRESET;
         }
 
@@ -224,12 +221,6 @@ final class ConfigResolver
         throw new InvalidPresetException('A preset must implement the ' . Preset::class . ' interface');
     }
 
-    /**
-     * @param string $preset
-     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
-     *
-     * @return string
-     */
     private static function guessPresetClass(string $preset, Composer $composer): string
     {
         foreach (self::PRESETS as $presetClass) {

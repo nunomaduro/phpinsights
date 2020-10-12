@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use Closure;
-use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
+use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
@@ -39,9 +39,6 @@ final class Configuration
         'vscode' => 'vscode://file/%f:%l',
     ];
 
-    /**
-     * @var string
-     */
     private string $preset = DefaultPreset::class;
 
     /**
@@ -51,9 +48,6 @@ final class Configuration
      */
     private array $paths;
 
-    /**
-     * @var string
-     */
     private string $commonPath;
 
     /**
@@ -228,18 +222,7 @@ final class Configuration
      */
     private function resolveConfig(array $config): void
     {
-        $resolver = new OptionsResolver();
-        $resolver->setDefaults([
-            'preset' => $this->preset,
-            'paths' => [(string) getcwd()],
-            'common_path' => '',
-            'exclude' => [],
-            'add' => [],
-            'requirements' => [],
-            'remove' => [],
-            'config' => [],
-            'fix' => false,
-        ]);
+        $resolver = $this->makeOptionsResolver();
 
         $resolver->setDefined('ide');
         $resolver->setAllowedValues('preset', $this->validatePresetClass());
@@ -272,6 +255,23 @@ final class Configuration
         ) {
             $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
+    }
+
+    private function makeOptionsResolver(): OptionsResolver
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'preset' => $this->preset,
+            'paths' => [(string) getcwd()],
+            'common_path' => '',
+            'exclude' => [],
+            'add' => [],
+            'requirements' => [],
+            'remove' => [],
+            'config' => [],
+            'fix' => false,
+        ]);
+        return $resolver;
     }
 
     private function validateAddedInsight(): Closure
