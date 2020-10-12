@@ -217,6 +217,11 @@ final class Configuration
         return $this->cacheKey;
     }
 
+    public static function isValidPreset(string $testPreset): bool
+    {
+        return is_a($testPreset, Preset::class, true);
+    }
+
     /**
      * @param array<string, string|array|null> $config
      */
@@ -365,10 +370,5 @@ final class Configuration
         return static function ($value): bool {
             return self::isValidPreset($value);
         };
-    }
-
-    public static function isValidPreset(string $testPreset): bool
-    {
-        return is_a($testPreset, Preset::class, true);
     }
 }
