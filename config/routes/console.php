@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 use NunoMaduro\PhpInsights\Application\Console\Commands\AnalyseCommand;
 use NunoMaduro\PhpInsights\Application\Console\Commands\FixCommand;
+use NunoMaduro\PhpInsights\Application\Console\Commands\InternalProcessorCommand;
 use NunoMaduro\PhpInsights\Application\Console\Commands\InvokableCommand;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\FixDefinition;
+use NunoMaduro\PhpInsights\Application\Console\Definitions\InternalProcessorDefinition;
 
 return (static function (): array {
     $container = require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'container.php';
@@ -23,8 +25,16 @@ return (static function (): array {
         FixDefinition::get()
     );
 
+    $internalProcessorCommand = new InvokableCommand(
+        InternalProcessorCommand::NAME,
+        $container->get(InternalProcessorCommand::class),
+        InternalProcessorDefinition::get()
+    );
+    $internalProcessorCommand->setHidden(true);
+
     return [
         $analyseCommand,
         $fixCommand,
+        $internalProcessorCommand,
     ];
 })();

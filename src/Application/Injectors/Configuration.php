@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Injectors;
 
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
+use NunoMaduro\PhpInsights\Application\Console\Commands\InternalProcessorCommand;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\DefinitionBinder;
 use NunoMaduro\PhpInsights\Domain\Configuration as DomainConfiguration;
+use NunoMaduro\PhpInsights\Domain\Container;
+use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Input\ArgvInput;
 
 /**
@@ -26,6 +29,13 @@ final class Configuration
         return [
             DomainConfiguration::class => static function (): DomainConfiguration {
                 $input = new ArgvInput();
+                if (
+                    $input->getFirstArgument() === InternalProcessorCommand::NAME &&
+                    Container::make()->get(CacheInterface::class)->has('current_configuration')
+                ) {
+                    // Use cache only for internal:processor, not other commands
+                    return Container::make()->get(CacheInterface::class)->get('current_configuration');
+                }
 
                 DefinitionBinder::bind($input);
                 $configPath = ConfigResolver::resolvePath($input);
