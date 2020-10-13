@@ -223,7 +223,7 @@ final class Configuration
     {
         return is_a($testPreset, Preset::class, true);
     }
-  
+
     public function getNumberOfThreads(): int
     {
         return $this->threads;
@@ -382,7 +382,7 @@ final class Configuration
             return self::isValidPreset($value);
         };
     }
-  
+
     /**
      * @see https://github.com/phpstan/phpstan-src/commit/9124c66dcc55a222e21b1717ba5f60771f7dda92
      */
