@@ -91,10 +91,12 @@ final class Configuration
 
     private string $cacheKey;
 
+    private int $threads;
+
     /**
      * Configuration constructor.
      *
-     * @param array<string, string|array|null> $config
+     * @param array<string, string|int|array|null> $config
      */
     public function __construct(array $config)
     {
@@ -221,9 +223,14 @@ final class Configuration
     {
         return is_a($testPreset, Preset::class, true);
     }
+  
+    public function getNumberOfThreads(): int
+    {
+        return $this->threads;
+    }
 
     /**
-     * @param array<string, string|array|null> $config
+     * @param array<string, string|int|array|null> $config
      */
     private function resolveConfig(array $config): void
     {
@@ -231,10 +238,13 @@ final class Configuration
 
         $resolver->setDefined('ide');
         $resolver->setAllowedValues('preset', $this->validatePresetClass());
-
+        $resolver->setDefined('threads');
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
+        $resolver->setAllowedTypes('threads', ['null', 'int']);
+        $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
+
         $config = $resolver->resolve($config);
 
         $this->preset = $config['preset'];
@@ -260,6 +270,7 @@ final class Configuration
         ) {
             $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
+        $this->threads = $config['threads'] ?? $this->getNumberOfCore();
     }
 
     private function makeOptionsResolver(): OptionsResolver
@@ -292,7 +303,7 @@ final class Configuration
                     ));
                 }
 
-                if (! is_array($insights)) {
+                if (! \is_array($insights)) {
                     throw new InvalidConfiguration(sprintf(
                         'Added insights for metric "%s" should be in an array.',
                         $metric
@@ -370,5 +381,42 @@ final class Configuration
         return static function ($value): bool {
             return self::isValidPreset($value);
         };
+    }
+  
+    /**
+     * @see https://github.com/phpstan/phpstan-src/commit/9124c66dcc55a222e21b1717ba5f60771f7dda92
+     */
+    private function getNumberOfCore(): int
+    {
+        $cores = 2;
+        if (is_file('/proc/cpuinfo')) {
+            // Linux (and potentially Windows with linux sub systems)
+            $cpuinfo = file_get_contents('/proc/cpuinfo');
+            if ($cpuinfo !== false) {
+                preg_match_all('/^processor/m', $cpuinfo, $matches);
+                return \count($matches[0]);
+            }
+        }
+
+        if (\DIRECTORY_SEPARATOR === '\\') {
+            // Windows
+            $process = @popen('wmic cpu get NumberOfLogicalProcessors', 'rb');
+            if ($process !== false) {
+                fgets($process);
+                $cores = (int) fgets($process);
+                pclose($process);
+            }
+
+            return $cores;
+        }
+
+        $process = @\popen('sysctl -n hw.ncpu', 'rb');
+        if ($process !== false) {
+            // *nix (Linux, BSD and Mac)
+            $cores = (int) fgets($process);
+            pclose($process);
+        }
+
+        return $cores;
     }
 }

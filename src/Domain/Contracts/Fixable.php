@@ -15,4 +15,6 @@ interface Fixable extends Insight
      * @return array<\NunoMaduro\PhpInsights\Domain\Details>
      */
     public function getFixPerFile(): array;
+
+    public function addFileFixed(string $file): void;
 }
