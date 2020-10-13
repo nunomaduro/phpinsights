@@ -9,6 +9,6 @@ use RuntimeException;
 /**
  * @internal
  */
-final class InvalidPresetException extends RuntimeException
+final class InvalidPreset extends RuntimeException
 {
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
-use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPresetException;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
@@ -125,7 +125,7 @@ final class ConfigResolverTest extends TestCase
 
     public function testUnknownPresetThrowException(): void
     {
-        $this->expectException(InvalidPresetException::class);
+        $this->expectException(InvalidPreset::class);
 
         $config = ['preset' => 'UnknownPreset'];
 

@@ -12,7 +12,7 @@ use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
-use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPresetException;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPreset;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -218,7 +218,7 @@ final class ConfigResolver
             return $preset;
         }
 
-        throw new InvalidPresetException('A preset must implement the ' . Preset::class . ' interface');
+        throw new InvalidPreset('A preset must implement the ' . Preset::class . ' interface');
     }
 
     private static function guessPresetClass(string $preset, Composer $composer): string
