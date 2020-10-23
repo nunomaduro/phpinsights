@@ -42,6 +42,12 @@ final class Configuration
         'disable-security-check',
     ];
 
+    private const ACCEPTED_FORMATS = [
+        'console',
+        'json',
+        'checkstyle'
+    ];
+
     private const LINKS = [
         'textmate' => 'txmt://open?url=file://%f&line=%l',
         'macvim' => 'mvim://open?url=file://%f&line=%l',
@@ -124,6 +130,14 @@ final class Configuration
     public static function getAcceptedRequirements(): array
     {
         return self::ACCEPTED_REQUIREMENTS;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public static function getAcceptedFormats(): array
+    {
+        return self::ACCEPTED_FORMATS;
     }
 
     /**
@@ -253,6 +267,7 @@ final class Configuration
             'remove' => [],
             'config' => [],
             'fix' => false,
+            'format' => ['console']
         ]);
 
         $resolver->setDefined('ide');
@@ -267,6 +282,8 @@ final class Configuration
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
+        $resolver->setAllowedTypes('format', 'array');
+        $resolver->setAllowedValues('format', $this->validateFormats());
 
         $config = $resolver->resolve($config);
 
@@ -286,6 +303,7 @@ final class Configuration
         $this->config = $config['config'];
         $this->requirements = $config['requirements'];
         $this->fix = $config['fix'];
+        $this->format = $config['format'];
 
         if (array_key_exists('ide', $config)
             && is_string($config['ide'])
@@ -360,6 +378,26 @@ final class Configuration
         $fileFormatterPattern = self::LINKS[$ide] ?? $ide;
 
         return new FileLinkFormatter($fileFormatterPattern);
+    }
+
+    private function validateFormats()
+    {
+        return static function ($values): bool {
+            $invalidValues = array_diff(
+                $values,
+                self::getAcceptedFormats()
+            );
+
+            if ($invalidValues !== []) {
+                throw new InvalidConfiguration(sprintf(
+                    'Unknown format [%s], valid values are [%s].',
+                    implode(', ', $invalidValues),
+                    implode(', ', self::getAcceptedFormats())
+                ));
+            }
+
+            return true;
+        };
     }
 
     private function validateRequirements(): Closure

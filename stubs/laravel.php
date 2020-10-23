@@ -62,6 +62,8 @@ return [
     |
     */
 
+    'format' => ['console'],
+
     'exclude' => [
         //  'path/to/directory-or-file'
     ],

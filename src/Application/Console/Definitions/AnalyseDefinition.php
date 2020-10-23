@@ -56,7 +56,7 @@ final class AnalyseDefinition extends BaseDefinition
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
                 'Format to output the result in [console, json, checkstyle]',
-                ['console']
+                config('insights.format', ['console'])
             ),
             new InputOption(
                 'composer',
