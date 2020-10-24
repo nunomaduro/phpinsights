@@ -24,7 +24,7 @@ final class SyntaxCheckTest extends TestCase
                 self::assertCount(1, $insight->getDetails());
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 $detail = $insight->getDetails()[0];
-                self::assertSame('PHP syntax error: syntax error, unexpected \';\', expecting \'{\'', $detail->getMessage());
+                self::assertStringContainsString('PHP syntax error: syntax error, unexpected', $detail->getMessage());
                 self::assertSame(2, $detail->getLine());
                 self::assertStringContainsString('SemiColonAfterExtendClass.php', $detail->getFile());
             }
@@ -46,7 +46,7 @@ final class SyntaxCheckTest extends TestCase
                 self::assertCount(1, $insight->getDetails());
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 $detail = $insight->getDetails()[0];
-                self::assertSame('PHP syntax error: syntax error, unexpected \';\', expecting \'{\'', $detail->getMessage());
+                self::assertStringContainsString('PHP syntax error: syntax error, unexpected', $detail->getMessage());
                 self::assertSame(2, $detail->getLine());
                 self::assertStringContainsString('Fixtures/InvalidPhpCode/SemiColonAfterExtendClass.php', $detail->getFile());
             }

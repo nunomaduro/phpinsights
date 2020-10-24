@@ -26,7 +26,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
     public function hasIssue(): bool
     {
-        return count($this->details) > 0;
+        return \count($this->details) > 0;
     }
 
     public function getDetails(): array
@@ -45,20 +45,31 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $binary = sprintf(
             '%s %s',
             escapeshellcmd($phpPath),
-            escapeshellarg(dirname(__DIR__, 3) . '/vendor/bin/parallel-lint')
+            escapeshellarg(\dirname(__DIR__, 3) . '/vendor/bin/parallel-lint')
         );
         if (DIRECTORY_SEPARATOR === '\\') {
-            $binary = dirname(__DIR__, 3) . '\vendor\bin\parallel-lint.bat';
+            $binary = \dirname(__DIR__, 3) . '\vendor\bin\parallel-lint.bat';
+        }
+
+        $toAnalyse = '.';
+        if (\count($this->collector->getFiles()) === 1) {
+            // We ask to analyse one file, just proceed it
+            $files = $this->collector->getFiles();
+            $toAnalyse = \array_pop($files);
+        } elseif (rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR) !== getcwd()) {
+            $toAnalyse = $this->collector->getCommonPath();
         }
 
         $cmdLine = sprintf(
-            '%s --no-colors --no-progress --json %s .',
+            '%s --no-colors --no-progress --json %s %s',
             $binary,
-            implode(' ', $toExclude)
+            implode(' ', $toExclude),
+            $toAnalyse
         );
 
-        $process = Process::fromShellCommandline($cmdLine, $this->collector->getCommonPath());
+        $process = Process::fromShellCommandline($cmdLine);
         $process->run();
+
         $output = json_decode($process->getOutput(), true);
         $errors = $output['results']['errors'] ?? [];
 
