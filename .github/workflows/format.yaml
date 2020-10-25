@@ -52,7 +52,7 @@ jobs:
               run: |
                   URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
                   FILES=$(curl -s -X GET -G $URL | jq -r '.[] |  select( .status == "added" or .status == "modified") | .filename')
-                  php bin/phpinsights analyse $FILES --ansi -v --no-interaction --format=github-action
+                  php bin/phpinsights analyse $FILES --ansi -v --no-interaction --format=github-action --min-quality=0 --min-complexity=0 --min-architecture=0 --min-style=0
 
             - name: PHPInsight
               run: composer run insights
