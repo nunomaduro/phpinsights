@@ -8,27 +8,6 @@ services:
 php:
   - 7.4
 
-env:
-  - COMPOSER_FLAGS="--prefer-lowest"
-  - COMPOSER_FLAGS=""
-
-before_script:
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
-
-script:
-  - |
-    if [[ -z $COMPOSER_FLAGS ]]; then
-      composer run test
-    else
-      composer run phpstan:test
-      composer run ecs:test
-      composer run phpunit:test
-      composer run insights -- --disable-security-check
-    fi
-  - rm -rf vendor/
-  - composer install --no-dev
-  - composer run insights -- --disable-security-check
-
 jobs:
   include:
     - stage: build docker image
