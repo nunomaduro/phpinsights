@@ -35,7 +35,6 @@ final class GithubAction implements Formatter
     {
         $this->decorated = new Console($input, $output);
         $this->output = $output;
-        $this->baseDir = Container::make()->get(Configuration::class)->getCommonPath();
     }
 
     /**
@@ -45,6 +44,8 @@ final class GithubAction implements Formatter
      */
     public function format(InsightCollection $insightCollection, array $metrics): void
     {
+        $this->baseDir = Container::make()->get(Configuration::class)->getCommonPath();
+
         // Call The Console Formatter to get summary and recap,
         // not issues by passing an empty array for metrics.
         $this->decorated->format($insightCollection, []);

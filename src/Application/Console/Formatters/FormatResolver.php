@@ -27,7 +27,6 @@ final class FormatResolver
         OutputInterface $consoleOutput
     ): Formatter {
         $requestedFormats = $input->getOption('format');
-
         if (! is_array($requestedFormats)) {
             $consoleOutput->writeln(
                 '<fg=red>Could not understand requested format, using fallback [console] instead.</>'
@@ -40,8 +39,11 @@ final class FormatResolver
         foreach ($requestedFormats as $requestedFormat) {
             try {
                 $formatter = self::stringToFormatterClass($requestedFormat);
+                $formatterConstructor = new \ReflectionMethod($formatter, '__construct');
 
-                $instance = new $formatter($input, $output);
+                $instance = $formatterConstructor->getNumberOfParameters() === 1
+                    ? new $formatter($output)
+                    : new $formatter($input, $output);
 
                 if (! ($instance instanceof Formatter)) {
                     $consoleOutput->writeln(
