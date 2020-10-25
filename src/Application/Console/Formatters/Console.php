@@ -145,6 +145,9 @@ final class Console implements Formatter
      */
     public function formatFix(InsightCollection $insightCollection, array $metrics): void
     {
+        $this->config = Container::make()->get(Configuration::class);
+        $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
+
         $results = $insightCollection->results();
         $this->style->newLine();
 
