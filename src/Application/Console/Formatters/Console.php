@@ -110,9 +110,6 @@ final class Console implements Formatter
         $this->totalWidth = (new Terminal())->getWidth();
 
         $outputFormatterStyle = new OutputFormatterStyle();
-        $this->config = Container::make()->get(Configuration::class);
-
-        $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
         $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
     }
 
@@ -123,6 +120,9 @@ final class Console implements Formatter
      */
     public function format(InsightCollection $insightCollection, array $metrics): void
     {
+        $this->config = Container::make()->get(Configuration::class);
+        $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
+
         $results = $insightCollection->results();
 
         $this->summary($results, $insightCollection->getCollector()->getAnalysedPaths())
