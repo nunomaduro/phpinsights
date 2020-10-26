@@ -51,9 +51,7 @@ final class ConfigResolver
         $paths = PathResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
         $composer = self::getComposer($input, $paths[0]);
-        /** @var string $tesPreset */
-        $tesPreset = $config['preset'] ?? '';
-        $preset = self::resolvePreset($tesPreset, $composer);
+        $preset = self::resolvePreset($config['preset'] ?? '', $composer);
         $config['preset'] = $preset;
         $presetData = self::preparePreset($preset::get($composer), $config);
         $config = self::mergeConfig($presetData, $config);
@@ -83,16 +81,17 @@ final class ConfigResolver
     }
 
     /**
-     * Guesses the preset based in information from composer.
+     * Guesses the preset class based in information from composer and/or a preset name.
      */
-    public static function guess(Composer $composer): string
+    public static function guess(Composer $composer, string $presetName = ''): string
     {
-        $preset = self::guessPresetClass('', $composer);
-        if ($preset !== '') {
-            return $preset::getName();
+        foreach (self::PRESETS as $presetClass) {
+            if ($presetClass::shouldBeApplied($composer) || $presetName === $presetClass::getName()) {
+                return $presetClass;
+            }
         }
 
-        return 'default';
+        return $presetName;
     }
 
     /**
@@ -208,27 +207,16 @@ final class ConfigResolver
 
     private static function resolvePreset(string $testPreset, Composer $composer): string
     {
-        if ($testPreset === '' || $testPreset === 'default') {
-            return self::DEFAULT_PRESET;
+        if (Configuration::isValidPreset($testPreset)) {
+            return $testPreset;
         }
 
-        $preset = self::guessPresetClass($testPreset, $composer);
+        $testPreset =  self::guess($composer, $testPreset);
 
-        if (Configuration::isValidPreset($preset)) {
-            return $preset;
+        if ($testPreset) {
+            return $testPreset;
         }
 
-        throw new InvalidPreset('A preset must implement the ' . Preset::class . ' interface');
-    }
-
-    private static function guessPresetClass(string $preset, Composer $composer): string
-    {
-        foreach (self::PRESETS as $presetClass) {
-            if ($presetClass::shouldBeApplied($composer) || $preset === $presetClass::getName()) {
-                return $presetClass;
-            }
-        }
-
-        return $preset;
+        return self::DEFAULT_PRESET;
     }
 }
