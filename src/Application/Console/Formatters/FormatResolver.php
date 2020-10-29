@@ -42,8 +42,11 @@ final class FormatResolver
         foreach ($requestedFormats as $requestedFormat) {
             try {
                 $formatter = self::stringToFormatterClass($requestedFormat);
+                $formatterConstructor = new \ReflectionMethod($formatter, '__construct');
 
-                $instance = new $formatter($input, $output);
+                $instance = $formatterConstructor->getNumberOfParameters() === 1
+                    ? new $formatter($output)
+                    : new $formatter($input, $output);
 
                 if (! ($instance instanceof Formatter)) {
                     $consoleOutput->writeln(
