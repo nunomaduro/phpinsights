@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use Closure;
-use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
-use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
-use NunoMaduro\PhpInsights\Application\DefaultPreset;
-use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
+use NunoMaduro\PhpInsights\Application\DefaultPreset;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
+use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
+use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 
 /**
  * @internal
@@ -40,12 +41,6 @@ final class Configuration
         'min-architecture',
         'min-style',
         'disable-security-check',
-    ];
-
-    private const ACCEPTED_FORMATS = [
-        'console',
-        'json',
-        'checkstyle'
     ];
 
     private const LINKS = [
@@ -112,6 +107,8 @@ final class Configuration
 
     private int $threads;
 
+    private array $format;
+
     /**
      * Configuration constructor.
      *
@@ -130,14 +127,6 @@ final class Configuration
     public static function getAcceptedRequirements(): array
     {
         return self::ACCEPTED_REQUIREMENTS;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public static function getAcceptedFormats(): array
-    {
-        return self::ACCEPTED_FORMATS;
     }
 
     /**
@@ -251,6 +240,11 @@ final class Configuration
         return $this->threads;
     }
 
+    public function getFormats(): array
+    {
+        return $this->format;
+    }
+
     /**
      * @param array<string, string|int|array|null> $config
      */
@@ -272,6 +266,7 @@ final class Configuration
 
         $resolver->setDefined('ide');
         $resolver->setDefined('threads');
+        $resolver->setDefined('format');
         $resolver->setAllowedValues(
             'preset',
             array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
@@ -283,7 +278,10 @@ final class Configuration
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
         $resolver->setAllowedTypes('format', 'array');
-        $resolver->setAllowedValues('format', $this->validateFormats());
+        $resolver->setAllowedValues(
+            'format',
+            $this->validateFormats()
+        );
 
         $config = $resolver->resolve($config);
 
@@ -385,14 +383,14 @@ final class Configuration
         return static function ($values): bool {
             $invalidValues = array_diff(
                 $values,
-                self::getAcceptedFormats()
+                array_keys(FormatResolver::FORMATTERS)
             );
 
             if ($invalidValues !== []) {
                 throw new InvalidConfiguration(sprintf(
                     'Unknown format [%s], valid values are [%s].',
                     implode(', ', $invalidValues),
-                    implode(', ', self::getAcceptedFormats())
+                    implode(', ', array_keys(FormatResolver::FORMATTERS))
                 ));
             }
 

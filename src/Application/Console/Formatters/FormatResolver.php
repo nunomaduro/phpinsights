@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Application\Console\Formatters;
 
 use InvalidArgumentException;
-use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
+use NunoMaduro\PhpInsights\Domain\Container;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 
 /**
  * @internal
  */
 final class FormatResolver
 {
-    private const FORMATTERS = [
+    public const FORMATTERS = [
         'console' => Console::class,
         'json' => Json::class,
         'checkstyle' => Checkstyle::class,
@@ -26,7 +28,7 @@ final class FormatResolver
         OutputInterface $output,
         OutputInterface $consoleOutput
     ): Formatter {
-        $requestedFormats = $input->getOption('format');
+        $requestedFormats = !empty($input->getOption('format')) ? $input->getOption('format') : Container::make()->get(Configuration::class)->getFormats();
 
         if (! is_array($requestedFormats)) {
             $consoleOutput->writeln(
