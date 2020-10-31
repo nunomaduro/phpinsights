@@ -48,7 +48,10 @@ parameters:
             message: "#^Method Tests\\\\TestCase\\:\\:.*\\(\\) is not final, but since the containing class is abstract, it should be\\.$#"
             count: 2
             path: tests/TestCase.php
-
+        -
+            message: "#^Parameter \\#.* of class Composer\\\\Package\\\\Locker constructor expects .*$#"
+            count: 3
+            path: src/Domain/ComposerLoader.php
 
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
