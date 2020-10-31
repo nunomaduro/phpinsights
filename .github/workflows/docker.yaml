@@ -13,6 +13,7 @@ jobs:
     name: Docker image build
     env:
       publish: ${{ github.event_name == 'push' }}
+      repository: 'nunomaduro/phpinsights'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,11 +24,11 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD}}" | docker login -u "${{ secrets.DOCKER_USERNAME}}" --password-stdin
         if: ${{ env.publish == 'true' }}
       - name: Build image
-        run: docker build -f docker/Dockerfile -t ${{ github.repository }}:latest .
+        run: docker build -f docker/Dockerfile -t ${{ env.repository }}:latest .
       - name: Tag image
         run: |
-          docker tag ${{ github.repository}}:latest ${{ github.repository }}:${{ env.RELEASE_VERSION }}
+          docker tag ${{ env.repository }}:latest ${{ env.repository }}:${{ env.RELEASE_VERSION }}
         if: ${{ env.publish == 'true' }}
       - name: Push image to hub.docker.com registry
-        run: docker push ${{ github.repository }}
+        run: docker push ${{ env.repository }}
         if: ${{ env.publish == 'true' }}
