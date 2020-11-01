@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use Closure;
-use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
-use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
-use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
+use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\FileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
@@ -25,15 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class Configuration
 {
-    private const PRESETS = [
-        DrupalPreset::class,
-        LaravelPreset::class,
-        SymfonyPreset::class,
-        YiiPreset::class,
-        Magento2Preset::class,
-        DefaultPreset::class,
-    ];
-
     private const ACCEPTED_REQUIREMENTS = [
         'min-quality',
         'min-complexity',
@@ -52,7 +39,7 @@ final class Configuration
         'vscode' => 'vscode://file/%f:%l',
     ];
 
-    private string $preset = 'default';
+    private string $preset = DefaultPreset::class;
 
     /**
      * List of paths to analyse.
@@ -232,6 +219,11 @@ final class Configuration
         return $this->cacheKey;
     }
 
+    public static function isValidPreset(string $testPreset): bool
+    {
+        return is_a($testPreset, Preset::class, true);
+    }
+
     public function getNumberOfThreads(): int
     {
         return $this->threads;
@@ -242,26 +234,11 @@ final class Configuration
      */
     private function resolveConfig(array $config): void
     {
-        $resolver = new OptionsResolver();
-        $resolver->setDefaults([
-            'preset' => 'default',
-            'paths' => [(string) getcwd()],
-            'common_path' => '',
-            'exclude' => [],
-            'add' => [],
-            'requirements' => [],
-            'remove' => [],
-            'config' => [],
-            'fix' => false,
-        ]);
+        $resolver = $this->makeOptionsResolver();
 
         $resolver->setDefined('ide');
+        $resolver->setAllowedValues('preset', $this->validatePresetClass());
         $resolver->setDefined('threads');
-        $resolver->setAllowedValues(
-            'preset',
-            array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
-        );
-
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
@@ -294,6 +271,23 @@ final class Configuration
             $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
         $this->threads = $config['threads'] ?? $this->getNumberOfCore();
+    }
+
+    private function makeOptionsResolver(): OptionsResolver
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'preset' => $this->preset,
+            'paths' => [(string) getcwd()],
+            'common_path' => '',
+            'exclude' => [],
+            'add' => [],
+            'requirements' => [],
+            'remove' => [],
+            'config' => [],
+            'fix' => false,
+        ]);
+        return $resolver;
     }
 
     private function validateAddedInsight(): Closure
@@ -379,6 +373,13 @@ final class Configuration
             }
 
             return true;
+        };
+    }
+
+    private function validatePresetClass(): Closure
+    {
+        return static function ($value): bool {
+            return self::isValidPreset($value);
         };
     }
 

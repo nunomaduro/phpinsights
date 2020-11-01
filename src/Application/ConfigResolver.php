@@ -11,7 +11,6 @@ use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Configuration;
-use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -26,7 +25,7 @@ final class ConfigResolver
 
     private const COMPOSER_FILENAME = 'composer.json';
 
-    private const DEFAULT_PRESET = 'default';
+    private const DEFAULT_PRESET = DefaultPreset::class;
 
     private const PRESETS = [
         DrupalPreset::class,
@@ -34,32 +33,26 @@ final class ConfigResolver
         SymfonyPreset::class,
         YiiPreset::class,
         Magento2Preset::class,
-        DefaultPreset::class,
     ];
 
     /**
      * Merge the given config with the specified preset.
      *
      * @param array<string, string|array> $config
+     *
+     * @return \NunoMaduro\PhpInsights\Domain\Configuration
+     *
+     * @throws \JsonException
      */
     public static function resolve(array $config, InputInterface $input): Configuration
     {
         $paths = PathResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
         $composer = self::getComposer($input, $paths[0]);
-
-        /** @var string $preset */
-        $preset = $config['preset'] ?? self::guess($composer);
-
-        /** @var Preset $presetClass */
-        foreach (self::PRESETS as $presetClass) {
-            if ($presetClass::getName() === $preset) {
-                $presetData = self::preparePreset($presetClass::get($composer), $config);
-                $config = self::mergeConfig($presetData, $config);
-
-                break;
-            }
-        }
+        $preset = self::resolvePreset($config, $composer);
+        $config['preset'] = $preset;
+        $presetData = self::preparePreset($preset::get($composer), $config);
+        $config = self::mergeConfig($presetData, $config);
 
         if ($composer->getName() === '') {
             $config = self::excludeGlobalInsights($config);
@@ -86,13 +79,13 @@ final class ConfigResolver
     }
 
     /**
-     * Guesses the preset based in information from composer.
+     * Guesses the preset class based in information from composer and/or a preset name.
      */
-    public static function guess(Composer $composer): string
+    public static function guess(Composer $composer, string $presetName = ''): string
     {
         foreach (self::PRESETS as $presetClass) {
-            if ($presetClass::shouldBeApplied($composer)) {
-                return $presetClass::getName();
+            if ($presetClass::shouldBeApplied($composer) || $presetName === $presetClass::getName()) {
+                return $presetClass;
             }
         }
 
@@ -208,5 +201,23 @@ final class ConfigResolver
         $preset['remove'] = array_diff($removedRulesByPreset, $intersectRules);
 
         return $preset;
+    }
+
+    /**
+     * @param array<string, string|array> $config
+     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
+     *
+     * @return string
+     */
+    private static function resolvePreset(array $config, Composer $composer): string
+    {
+        /** @var string $testPreset */
+        $testPreset = $config['preset'] ?? '';
+
+        if (Configuration::isValidPreset($testPreset)) {
+            return $testPreset;
+        }
+
+        return self::guess($composer, $testPreset);
     }
 }

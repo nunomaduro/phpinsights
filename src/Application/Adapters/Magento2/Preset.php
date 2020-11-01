@@ -7,12 +7,13 @@ namespace NunoMaduro\PhpInsights\Application\Adapters\Magento2;
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
+use NunoMaduro\PhpInsights\Domain\Contracts\GuessablePreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\Preset as PresetContract;
 
 /**
  * @internal
  */
-final class Preset implements PresetContract
+final class Preset implements PresetContract, GuessablePreset
 {
     private const CONFIG = [
         'exclude' => [
