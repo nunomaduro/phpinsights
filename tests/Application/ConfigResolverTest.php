@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Tests\Application;
 
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
-use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Drupal\Preset as DrupalPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
+use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Application\Composer;
 use NunoMaduro\PhpInsights\Application\ConfigResolver;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
@@ -37,7 +40,7 @@ final class ConfigResolverTest extends TestCase
     {
         $preset = ConfigResolver::guess(new Composer([]));
 
-        self::assertSame('default', $preset);
+        self::assertSame(DefaultPreset::class, $preset);
     }
 
     public function testGuessComposerWithoutRequire(): void
@@ -46,7 +49,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath("{$this->baseFixturePath}ComposerWithoutRequire" . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('default', $preset);
+        self::assertSame(DefaultPreset::class, $preset);
     }
 
     public function testGuessSymfony(): void
@@ -55,7 +58,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath($this->baseFixturePath . 'ComposerSymfony' . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('symfony', $preset);
+        self::assertSame(SymfonyPreset::class, $preset);
     }
 
     public function testGuessLaravel(): void
@@ -64,7 +67,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath($this->baseFixturePath . 'ComposerLaravel' . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('laravel', $preset);
+        self::assertSame(LaravelPreset::class, $preset);
     }
 
     public function testGuessYii(): void
@@ -73,7 +76,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath($this->baseFixturePath . 'ComposerYii' . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('yii', $preset);
+        self::assertSame(YiiPreset::class , $preset);
     }
 
     public function testGuessMagento2(): void
@@ -82,7 +85,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath($this->baseFixturePath . 'ComposerMagento2' . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('magento2', $preset);
+        self::assertSame(Magento2Preset::class, $preset);
     }
 
     public function testGuessDrupal(): void
@@ -91,7 +94,7 @@ final class ConfigResolverTest extends TestCase
             Composer::fromPath($this->baseFixturePath . 'ComposerDrupal' . DIRECTORY_SEPARATOR . 'composer.json')
         );
 
-        self::assertSame('drupal', $preset);
+        self::assertSame(DrupalPreset::class, $preset);
     }
 
     public function testResolvedConfigIsCorrectlyMerged(): void
@@ -123,16 +126,16 @@ final class ConfigResolverTest extends TestCase
         );
     }
 
-    public function testUnknownPresetThrowException(): void
+    public function testUnknownPresetReturnsDefault(): void
     {
-        $this->expectException(InvalidPreset::class);
-
         $config = ['preset' => 'UnknownPreset'];
 
-        ConfigResolver::resolve(
+        $config = ConfigResolver::resolve(
             $config,
             FakeInput::paths([$this->baseFixturePath . 'ComposerWithoutRequire'])
         );
+
+        self::assertEquals(DefaultPreset::class, $config->getPreset());
     }
 
     public function testUnknownMetricAddedThrowException(): void

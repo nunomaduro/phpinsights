@@ -11,8 +11,6 @@ use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Configuration;
-use NunoMaduro\PhpInsights\Domain\Contracts\Preset;
-use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidPreset;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -51,7 +49,7 @@ final class ConfigResolver
         $paths = PathResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
         $composer = self::getComposer($input, $paths[0]);
-        $preset = self::resolvePreset($config['preset'] ?? '', $composer);
+        $preset = self::resolvePreset($config, $composer);
         $config['preset'] = $preset;
         $presetData = self::preparePreset($preset::get($composer), $config);
         $config = self::mergeConfig($presetData, $config);
@@ -91,7 +89,7 @@ final class ConfigResolver
             }
         }
 
-        return $presetName;
+        return self::DEFAULT_PRESET;
     }
 
     /**
@@ -205,18 +203,21 @@ final class ConfigResolver
         return $preset;
     }
 
-    private static function resolvePreset(string $testPreset, Composer $composer): string
+    /**
+     * @param array<string, string|array> $config
+     * @param \NunoMaduro\PhpInsights\Application\Composer $composer
+     *
+     * @return string
+     */
+    private static function resolvePreset(array $config, Composer $composer): string
     {
+        /** @var string $testPreset */
+        $testPreset = $config['preset'] ?? '';
+
         if (Configuration::isValidPreset($testPreset)) {
             return $testPreset;
         }
 
-        $testPreset =  self::guess($composer, $testPreset);
-
-        if ($testPreset) {
-            return $testPreset;
-        }
-
-        return self::DEFAULT_PRESET;
+        return self::guess($composer, $testPreset);
     }
 }
