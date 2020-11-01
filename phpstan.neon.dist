@@ -48,7 +48,27 @@ parameters:
             message: "#^Method Tests\\\\TestCase\\:\\:.*\\(\\) is not final, but since the containing class is abstract, it should be\\.$#"
             count: 2
             path: tests/TestCase.php
-
+        -
+            message: '#^Parameter \#3 \$installationManager of class Composer\\Package\\Locker constructor expects Composer\\Installer\\InstallationManager, Composer\\Repository\\RepositoryManager given.#'
+            path: src/Domain/ComposerLoader.php
+        -
+            message: '#^Parameter \#4 \$composerFileContents of class Composer\\Package\\Locker constructor expects string, Composer\\Installer\\InstallationManager given.#'
+            path: src/Domain/ComposerLoader.php
+        -
+            message: '#^Parameter \#5 \$process of class Composer\\Package\\Locker constructor expects Composer\\Util\\ProcessExecutor\|null, string given.#'
+            path: src/Domain/ComposerLoader.php
+        -
+            message: '#^Cannot call method getName\(\) on ReflectionType\|null.#'
+            path: src/Domain/ComposerLoader.php
+        -
+            message: '#Class Composer\\Package\\Locker constructor invoked with 4 parameters, 5 required.#'
+            path: src/Domain/ComposerLoader.php
+        -
+            message: '#^Parameter \#3 \$repositoryManager of class Composer\\Package\\Locker constructor expects Composer\\Repository\\RepositoryManager, Composer\\Installer\\InstallationManager given#'
+            path: src/Domain/ComposerLoader.php
+        -
+            message: '#^Parameter \#4 \$installationManager of class Composer\\Package\\Locker constructor expects Composer\\Installer\\InstallationManager, string given.#'
+            path: src/Domain/ComposerLoader.php
 
     autoload_files:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
