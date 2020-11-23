@@ -107,6 +107,21 @@ final class ConfigurationTest extends TestCase
         self::assertGreaterThanOrEqual(1, $configuration->getNumberOfThreads());
     }
 
+    public function testDefineFormat(): void
+    {
+        $configuration = new Configuration(['formats' => ['json']]);
+
+        self::assertSame(['json'], $configuration->getFormats());
+    }
+
+    public function testDefineInvalidFormat(): void
+    {
+        $this->expectException(\NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration::class);
+        $this->expectExceptionMessage('Unknown format [html], valid values are [console, json, checkstyle, github-action]');
+
+        new Configuration(['formats' => ['html']]);
+    }
+
     /**
      * @dataProvider invalidThreadsNumber
      * @param int|string $invalid

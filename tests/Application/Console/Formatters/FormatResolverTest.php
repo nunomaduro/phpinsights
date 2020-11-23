@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Application\Console\Formatters;
 
-use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
-use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
-use NunoMaduro\PhpInsights\Application\Console\Formatters\Checkstyle;
-use NunoMaduro\PhpInsights\Application\Console\Formatters\Console;
-use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
-use NunoMaduro\PhpInsights\Application\Console\Formatters\GithubAction;
-use NunoMaduro\PhpInsights\Application\Console\Formatters\Json;
-use NunoMaduro\PhpInsights\Application\Console\Formatters\Multiple;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\Json;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\Console;
+use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\Multiple;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\Checkstyle;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\GithubAction;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
+use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 
 final class FormatResolverTest extends TestCase
 {
@@ -30,6 +31,7 @@ final class FormatResolverTest extends TestCase
 
     public function testItCreateAConsoleFormatterByDefault(): void
     {
+        new Configuration([]);
         $input = new ArrayInput([], AnalyseDefinition::get());
 
         $formatter = FormatResolver::resolve($input, $this->output, $this->consoleOutput);

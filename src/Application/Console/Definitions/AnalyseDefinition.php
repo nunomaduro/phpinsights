@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application\Console\Definitions;
 
-use Symfony\Component\Console\Input\InputDefinition;
+use NunoMaduro\PhpInsights\Domain\Container;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputDefinition;
 
 /**
  * @internal
@@ -56,6 +58,7 @@ final class AnalyseDefinition extends BaseDefinition
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
                 'Format to output the result in [console, json, checkstyle]',
+                []
             ),
             new InputOption(
                 'composer',

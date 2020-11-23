@@ -107,7 +107,7 @@ final class Configuration
 
     private int $threads;
 
-    private array $format;
+    private array $formats;
 
     /**
      * Configuration constructor.
@@ -242,7 +242,7 @@ final class Configuration
 
     public function getFormats(): array
     {
-        return $this->format;
+        return $this->formats;
     }
 
     /**
@@ -261,7 +261,7 @@ final class Configuration
             'remove' => [],
             'config' => [],
             'fix' => false,
-            'format' => ['console']
+            'formats' => [],
         ]);
 
         $resolver->setDefined('ide');
@@ -277,9 +277,10 @@ final class Configuration
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
-        $resolver->setAllowedTypes('format', 'array');
+        $resolver->setDefined('formats');
+        $resolver->setAllowedTypes('formats', 'array');
         $resolver->setAllowedValues(
-            'format',
+            'formats',
             $this->validateFormats()
         );
 
@@ -301,7 +302,7 @@ final class Configuration
         $this->config = $config['config'];
         $this->requirements = $config['requirements'];
         $this->fix = $config['fix'];
-        $this->format = $config['format'];
+        $this->formats = $config['formats'];
 
         if (array_key_exists('ide', $config)
             && is_string($config['ide'])
