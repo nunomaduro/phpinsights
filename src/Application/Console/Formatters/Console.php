@@ -27,6 +27,7 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Code\Functions;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code\Globally;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity\Complexity;
 use NunoMaduro\PhpInsights\Domain\Results;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -622,7 +623,7 @@ final class Console implements Formatter
                     $detailString .= '<fg=green>';
                 }
 
-                $detailString .= $line . PHP_EOL;
+                $detailString .= OutputFormatter::escape($line) . PHP_EOL;
 
                 if ($hasColor) {
                     $hasColor = false;
