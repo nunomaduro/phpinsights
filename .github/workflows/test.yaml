@@ -11,25 +11,16 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: ['7.4'] # infinite loop on 8.O..
+                php: ['7.4', '8.0']
                 dependency-version: [prefer-lowest, prefer-stable]
                 composer-version: [ v1, v2 ]
                 exclude:
                     -   dependency-version: prefer-lowest
                         php: '8.0'
-                    -   composer-version: 'v2'
-                        php: '8.0'
-                        # There is a bug with v2 and php8 : see https://github.com/composer/composer/issues/9331
 
         name: ${{ matrix.php }} - Composer ${{ matrix.composer-version }} --${{ matrix.dependency-version }}
 
         steps:
-            - name: "Configure Git"
-              if: ${{ matrix.os == 'windows-latest' }}
-              run: |
-                  git config --system core.autocrlf false
-                  git config --system core.eol lf
-
             - name: Checkout
               uses: actions/checkout@v2
 
@@ -37,18 +28,17 @@ jobs:
               uses: actions/cache@v1
               with:
                   path: ~/.composer/cache/files
-                  key: dependencies-php-${{ matrix.php }}-composer-${{ matrix.composer-version }}-${{ hashFiles('composer.json') }}
+                  key: dependencies-php-${{ matrix.php }}-composer-${{ matrix.composer-version }}
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  extensions: dom, mbstring, zip
+                  extensions: dom, mbstring, zip, xml
                   coverage: none
                   tools: composer:${{ matrix.composer-version }}
 
             - name: Install Composer dependencies
               run: composer update --${{ matrix.dependency-version }} --ansi --no-interaction --prefer-dist --ignore-platform-reqs
-
             - name: Unit Tests
-              run: php vendor/bin/phpunit --color=always
+              run: vendor/bin/phpunit --color=always
