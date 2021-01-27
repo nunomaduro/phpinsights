@@ -91,15 +91,25 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails
 
     private function retrieveAdvisoriesListForPackages(array $packagesName): array
     {
-        $client = HttpClient::createForBaseUri(self::PACKAGIST_ADVISORIES_URL);
-        // TODECIDE: Implement caching on this ?
-        // $client = new CachingHttpClient($client, new Store(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'phpinsights'));
+        $client = HttpClient::create();
 
-        $response = $client->request('GET', self::PACKAGIST_ADVISORIES_URL, [
-            'query' => ['packages' => $packagesName],
-        ]);
+        $chunks = array_chunk($packagesName, 30);
+        $responses = [];
+        // Launch async requests
+        foreach ($chunks as $packages) {
+            $responses[] = $client->request('GET', self::PACKAGIST_ADVISORIES_URL, [
+                'query' => ['packages' => $packages],
+            ]);
+        }
 
-        return $response->toArray();
+        $advisories = [];
+        /** @var \Symfony\Contracts\HttpClient\ResponseInterface $response */
+        foreach ($responses as $response) {
+            $advisories[] = $response->toArray()['advisories'];
+        }
+        $allAdvisories = array_merge([], ...$advisories);
+
+        return ['advisories' => $allAdvisories];
     }
 
     private function addIssuesDetails(string $packageName, string $version, array $issues): void

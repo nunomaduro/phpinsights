@@ -33,4 +33,13 @@ final class ForbiddenSecurityIssuesTest extends TestCase
 
         self::assertFalse($insight->hasIssue());
     }
+
+    public function testItCanCallApiWithVeryLargeLockFile(): void
+    {
+        // composer.lock taken from https://raw.githubusercontent.com/oroinc/orocommerce-application/4.1.11/composer.lock
+        $collector = new Collector(__DIR__ . '/Composer/Fixtures/LargeLockFile');
+        $insight = new ForbiddenSecurityIssues($collector, []);
+
+        self::assertTrue($insight->hasIssue());
+    }
 }
