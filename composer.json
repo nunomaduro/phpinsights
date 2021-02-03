@@ -23,6 +23,7 @@
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
         "composer/composer": "^1.7",
+        "enlightn/security-checker": "^1.4",
         "friendsofphp/php-cs-fixer": "^2.15",
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
@@ -32,8 +33,7 @@
         "slevomat/coding-standard": "^6.0",
         "squizlabs/php_codesniffer": "^3.4",
         "symfony/console": "^4.2|^5.0",
-        "symfony/finder": "^4.2|^5.0",
-        "symfony/http-client": "^4.3|^5.0"
+        "symfony/finder": "^4.2|^5.0"
     },
     "require-dev": {
         "illuminate/console": "^5.8|^6.0|^7.0",
