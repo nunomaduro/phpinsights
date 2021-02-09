@@ -58,7 +58,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
             return self::$details;
         }
 
-        return self::$details;
+        return self::$details ?? [];
     }
 
     private function getResult(): void
@@ -69,7 +69,12 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
             throw new ComposerNotFound('composer.lock not found. Try launch composer install');
         }
 
-        $packages = json_decode(file_get_contents($composerPath), true);
+        $composerContent = file_get_contents($composerPath);
+        if (false === $composerContent) {
+            throw new ComposerNotFound('Unable to get content in composer.lock');
+        }
+
+        $packages = json_decode($composerContent, true, 512, JSON_THROW_ON_ERROR);
         $packagesToCheck = array_combine(
             array_map(static function (array $detail): string {
                 return $detail['name'];
@@ -78,6 +83,10 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
                 return $detail['version'];
             }, $packages['packages'])
         );
+
+        if (false === $packagesToCheck) {
+            $packagesToCheck = [];
+        }
 
         try {
             $advisoryList = $this->retrieveAdvisoriesListForPackages(array_keys($packagesToCheck));
@@ -105,6 +114,11 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
         }
     }
 
+    /**
+     * @param array<string> $packagesName
+     *
+     * @return array<string, array<string, array<array<string, string>>>>
+     */
     private function retrieveAdvisoriesListForPackages(array $packagesName): array
     {
         $client = HttpClient::create();
@@ -128,6 +142,9 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
         return ['advisories' => $allAdvisories];
     }
 
+    /**
+     * @param array<array<string, string>> $issues
+     */
     private function addIssuesDetails(string $packageName, string $version, array $issues): void
     {
         foreach ($issues as $issue) {

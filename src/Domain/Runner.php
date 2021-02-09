@@ -54,7 +54,6 @@ final class Runner
 
         $this->cache = $container->get(CacheInterface::class);
 
-        /** @var \NunoMaduro\PhpInsights\Domain\Configuration $configuration */
         $this->configuration = $container->get(Configuration::class);
         $this->cacheKey = $this->configuration->getCacheKey();
         $this->threads = $this->configuration->getNumberOfThreads();

@@ -26,7 +26,7 @@ final class ForbiddenSecurityIssuesTest extends TestCase
 
     public function testItHasNoIssueOnProjectComposerLock(): void
     {
-        $path = getcwd();
+        $path = dirname(__DIR__, 3);
         $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
 
         $insight = new ForbiddenSecurityIssues($collector, []);

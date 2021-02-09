@@ -45,7 +45,7 @@ final class InsightCollectionFactory
 
         try {
             $files = array_map(
-                static fn (SplFileInfo $file) => $file->getRealPath(),
+                static fn (SplFileInfo $file) => $file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename(),
                 $this->filesRepository->within($paths, $this->config->getExcludes())->getFiles()
             );
         } catch (InvalidArgumentException $exception) {
@@ -79,10 +79,9 @@ final class InsightCollectionFactory
      */
     private function getInsights(string $metricClass): array
     {
-        /** @var HasInsights $metric */
         $metric = new $metricClass();
 
-        $insights = array_key_exists(HasInsights::class, class_implements($metricClass))
+        $insights = $metric instanceof HasInsights
             ? $metric->getInsights()
             : [];
 

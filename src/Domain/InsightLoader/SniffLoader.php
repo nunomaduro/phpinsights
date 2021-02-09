@@ -17,7 +17,7 @@ final class SniffLoader implements InsightLoader
 {
     public function support(string $insightClass): bool
     {
-        return array_key_exists(SniffContract::class, class_implements($insightClass));
+        return false !== class_implements($insightClass) && array_key_exists(SniffContract::class, class_implements($insightClass));
     }
 
     public function load(string $insightClass, string $dir, array $config, Collector $collector): Insight

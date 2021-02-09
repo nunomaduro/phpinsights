@@ -109,10 +109,9 @@ final class InternalProcessorCommand
      */
     private function loadInsights(string $metricClass): array
     {
-        /** @var HasInsights $metric */
         $metric = new $metricClass();
 
-        $insights = \array_key_exists(HasInsights::class, class_implements($metricClass))
+        $insights = $metric instanceof HasInsights
             ? $metric->getInsights()
             : [];
 

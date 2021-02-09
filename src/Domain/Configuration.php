@@ -301,6 +301,7 @@ final class Configuration
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
                 if (! class_exists($metric) ||
+                    false === class_implements($metric) ||
                     ! in_array(Metric::class, class_implements($metric), true)
                 ) {
                     throw new InvalidConfiguration(sprintf(
