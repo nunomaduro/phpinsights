@@ -70,7 +70,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $process = Process::fromShellCommandline($cmdLine);
         $process->run();
 
-        $output = json_decode($process->getOutput(), true);
+        $output = json_decode($process->getOutput(), true, 512, JSON_THROW_ON_ERROR);
         $errors = $output['results']['errors'] ?? [];
 
         foreach ($errors as $error) {

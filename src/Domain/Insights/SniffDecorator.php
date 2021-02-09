@@ -94,7 +94,7 @@ final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
         $sniffClass = $this->getInsightClass();
 
         $path = explode('\\', $sniffClass);
-        $name = (string) array_pop($path);
+        $name = array_pop($path);
 
         $name = str_replace('Sniff', '', $name);
 

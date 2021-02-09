@@ -157,8 +157,10 @@ final class ConfigResolver
         if ($composerPath === null) {
             $composerPath = rtrim($path, '/') . DIRECTORY_SEPARATOR . self::COMPOSER_FILENAME;
         }
-
-        if (strpos($composerPath, self::COMPOSER_FILENAME) === false || ! file_exists($composerPath)) {
+        if (strpos($composerPath, self::COMPOSER_FILENAME) === false) {
+            return new Composer([]);
+        }
+        if (! file_exists($composerPath)) {
             return new Composer([]);
         }
 

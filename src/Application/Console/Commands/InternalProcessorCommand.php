@@ -63,7 +63,10 @@ final class InternalProcessorCommand
         }
 
         $files = $this->cache->get($cacheKey, []);
-        if (! \is_array($files) || \count($files) === 0) {
+        if (! \is_array($files)) {
+            return 0;
+        }
+        if (\count($files) === 0) {
             return 0;
         }
 
@@ -97,9 +100,7 @@ final class InternalProcessorCommand
         $loaders = $container->get(InsightLoaderContract::INSIGHT_LOADER_TAG);
 
         // exclude InsightLoader, not used here
-        $this->insightsLoaders = array_filter($loaders, static function (InsightLoaderContract $loader): bool {
-            return ! $loader instanceof InsightLoader;
-        });
+        $this->insightsLoaders = array_filter($loaders, static fn (InsightLoaderContract $loader): bool => ! $loader instanceof InsightLoader);
     }
 
     /**
@@ -154,7 +155,7 @@ final class InternalProcessorCommand
     {
         $cacheKey = 'insights.' . $this->configuration->getCacheKey() . '.' . md5($file->getContents());
         // Do not use cache if fix is enabled to force processors to handle it
-        if ($this->configuration->hasFixEnabled() === false && $this->cache->has($cacheKey)) {
+        if (! $this->configuration->hasFixEnabled() && $this->cache->has($cacheKey)) {
             return;
         }
 
@@ -169,7 +170,7 @@ final class InternalProcessorCommand
             $fileProcessor->processFile($file);
         }
 
-        if ($this->configuration->hasFixEnabled() === true) {
+        if ($this->configuration->hasFixEnabled()) {
             // regenerate cache key in case fixer change contents
             $cacheKey = 'insights.' . $this->configuration->getCacheKey() . '.' . md5($file->getContents());
         }

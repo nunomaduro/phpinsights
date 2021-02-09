@@ -268,7 +268,7 @@ final class Console implements Formatter
         $lines = [];
         foreach (self::CODE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
-            $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
+            $lines[end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
         $this->writePercentageLines($lines);
@@ -310,7 +310,7 @@ final class Console implements Formatter
         $lines = [];
         foreach (self::ARCHITECTURE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
-            $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
+            $lines[end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
         $this->writePercentageLines($lines);

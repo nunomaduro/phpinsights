@@ -54,7 +54,7 @@ final class Checkstyle implements Formatter
                 foreach ($details as $detail) {
                     $fileName = PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath());
 
-                    if (isset($checkstyle->file) && (string) $checkstyle->file->attributes()['name'] === $fileName) {
+                    if (property_exists($checkstyle, 'file') && $checkstyle->file !== null && (string) $checkstyle->file->attributes()['name'] === $fileName) {
                         $file = $checkstyle->file;
                     } else {
                         $file = $checkstyle->addChild('file');

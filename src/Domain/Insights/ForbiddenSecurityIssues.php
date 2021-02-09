@@ -70,21 +70,17 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
         }
 
         $composerContent = file_get_contents($composerPath);
-        if (false === $composerContent) {
+        if ($composerContent === false) {
             throw new ComposerNotFound('Unable to get content in composer.lock');
         }
 
         $packages = json_decode($composerContent, true, 512, JSON_THROW_ON_ERROR);
         $packagesToCheck = array_combine(
-            array_map(static function (array $detail): string {
-                return $detail['name'];
-            }, $packages['packages']),
-            array_map(static function (array $detail): string {
-                return $detail['version'];
-            }, $packages['packages'])
+            array_map(static fn (array $detail): string => $detail['name'], $packages['packages']),
+            array_map(static fn (array $detail): string => $detail['version'], $packages['packages'])
         );
 
-        if (false === $packagesToCheck) {
+        if ($packagesToCheck === false) {
             $packagesToCheck = [];
         }
 
@@ -101,9 +97,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
         self::$details = [];
         $packagesToCheck = array_filter(
             $packagesToCheck,
-            static function (string $packageName) use ($advisoryList): bool {
-                return \array_key_exists($packageName, $advisoryList['advisories']);
-            },
+            static fn (string $packageName): bool => \array_key_exists($packageName, $advisoryList['advisories']),
             ARRAY_FILTER_USE_KEY
         );
 
