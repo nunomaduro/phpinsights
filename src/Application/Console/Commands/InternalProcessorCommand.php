@@ -19,6 +19,7 @@ use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Process\Process;
 
 /**
  * @internal
@@ -157,6 +158,13 @@ final class InternalProcessorCommand
         if ($this->configuration->hasFixEnabled() === false && $this->cache->has($cacheKey)) {
             return;
         }
+
+        if (! $this->isValidPhpFile($file)) {
+            // It's not a valid php file, don't process it to avoid sniffer/fixers error while parsing
+            $this->cacheDetailsForFile($cacheKey, $file);
+            return;
+        }
+
         /** @var FileProcessorContract $fileProcessor */
         foreach ($this->filesProcessors as $fileProcessor) {
             $fileProcessor->processFile($file);
@@ -209,5 +217,13 @@ final class InternalProcessorCommand
         }
 
         $this->cache->set($cacheKey, $fixByInsights);
+    }
+
+    private function isValidPhpFile(SplFileInfo $splFileInfo): bool
+    {
+        $checker = new Process([PHP_BINARY, '-l', $splFileInfo->getRealPath()]);
+        $checker->run();
+
+        return $checker->isSuccessful();
     }
 }

@@ -1,0 +1,59 @@
+name: Code style analysis
+
+on:
+    pull_request: ~
+    push:
+        branches:
+            - master
+
+jobs:
+    ci:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [ubuntu-latest]
+                php: [7.4]
+                dependency-version: [prefer-stable]
+
+        name: ${{ matrix.php }} - ${{ matrix.dependency-version }}
+
+        steps:
+
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, mbstring, zip
+                  coverage: none
+                  tools: cs2pr
+
+            - name: Install Composer dependencies
+              run: composer update --${{ matrix.dependency-version }} --ansi --no-interaction --prefer-dist
+
+            - name: PHPStan
+              run: composer run phpstan:test -- --error-format=checkstyle | cs2pr
+
+            - name: ECS
+              run: composer run ecs:test
+
+            - name: Rector
+              run: composer run rector:test -- --dry-run
+
+            - name: PHPInsight on modified files
+              run: |
+                  URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+                  FILES=$(curl -s -X GET -G $URL | jq -r '.[] |  select( .status == "added" or .status == "modified") | .filename')
+                  php bin/phpinsights analyse $FILES --ansi -v --no-interaction --format=github-action --min-quality=0 --min-complexity=0 --min-architecture=0 --min-style=0
+
+            - name: PHPInsight
+              run: composer run insights
+

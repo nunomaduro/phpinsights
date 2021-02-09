@@ -55,6 +55,6 @@ final class ComposerLoader
         /** @phpstan-ignore-next-line */
         return $lockerConstructor->getParameters()[2]->getType()->getName() === RepositoryManager::class
             ? new Locker($io, new JsonFile($lockFile, null, $io), self::$composer->getRepositoryManager(), self::$composer->getInstallationManager(), $composerContent)
-            : new Locker($io, new JsonFile($lockFile, null, $io), self::$composer->getInstallationManager(), $composerContent); /** @phpstan-ignore-line */
+            : new Locker($io, new JsonFile($lockFile, null, $io), self::$composer->getInstallationManager(), $composerContent);
     }
 }
