@@ -19,9 +19,16 @@ interface InsightLoader
     public function support(string $insightClass): bool;
 
     /**
-     * Create a new instance of insight.
+     * Loads an insight.
      *
      * @param array<string, int|string|array> $config Related to $insightClass
      */
-    public function load(string $insightClass, string $dir, array $config, Collector $collector): Insight;
+    public function load(string $insightClass, string $dir, array $config, Collector $collector): void;
+
+    /**
+     * Gets all loaded insights.
+     *
+     * @return array<Insight>
+     */
+    public function getLoadedInsights(): array;
 }

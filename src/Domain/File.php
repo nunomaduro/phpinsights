@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\SniffDecorator;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File as BaseFile;
 use PHP_CodeSniffer\Ruleset;
@@ -15,7 +15,7 @@ use Throwable;
 final class File extends BaseFile
 {
     /**
-     * @var array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>>
+     * @var array<array<SniffDecorator>>
      */
     private array $tokenListeners = [];
 
@@ -46,7 +46,7 @@ final class File extends BaseFile
                 continue;
             }
 
-            /** @var \NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator $sniff */
+            /** @var SniffDecorator $sniff */
             foreach ($this->tokenListeners[$token['code']] as $sniff) {
                 $this->activeSniff = $sniff;
 
@@ -60,7 +60,7 @@ final class File extends BaseFile
     }
 
     /**
-     * @param array<array<\NunoMaduro\PhpInsights\Domain\Insights\SniffDecorator>> $tokenListeners
+     * @param array<array<SniffDecorator>> $tokenListeners
      */
     public function processWithTokenListenersAndFileInfo(
         array $tokenListeners,

@@ -9,7 +9,7 @@ use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileProcessor;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
-use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
+use NunoMaduro\PhpInsights\Domain\Insights\Decorators\FixerDecorator;
 use PhpCsFixer\Differ\DifferInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use RuntimeException;

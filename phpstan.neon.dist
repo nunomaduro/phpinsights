@@ -13,6 +13,8 @@ parameters:
 
     ignoreErrors:
         - '#Offset 1 does not exist on array.#'
+        - "#Cannot access offset 'exclude' on array\\|int\\|string#"
+        - '#Parameter $nodes of method PhpParser\NodeTraverser::traverse() expects array<PhpParser\Node>, array<PhpParser\Node\Stmt>|null given.#'
         - '#iterator_to_array expects Traversable, iterable#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addConstant\(\) has parameter \$name with no typehint specified#'
         - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addFile\(\) has parameter \$filename with no typehint specified#'
@@ -26,6 +28,7 @@ parameters:
         - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Json has an unused parameter \$input#'
         - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Checkstyle has an unused parameter \$input#'
         - '#In method "NunoMaduro\\PhpInsights\\Domain\\File::process", caught "Throwable" must be rethrown#'
+        - '#In method "NunoMaduro\\PhpInsights\\Domain\\FileProcessors\\RectorFileProcessor::processFile", caught "Throwable" must be rethrown.#'
         - '#In method "NunoMaduro\\PhpInsights\\Domain\\FileProcessors\\FixerFileProcessor::processFile", caught "Throwable" must be rethrown#'
         - '#Empty catch block. If you are sure this is meant to be empty, please add a "// @ignoreException" comment in the catch block.#'
         - '#Casting to string something that#'

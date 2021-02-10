@@ -84,10 +84,7 @@ final class InsightFactory
             return;
         }
 
-        $runner = new Runner(
-            $consoleOutput,
-            $this->filesRepository
-        );
+        $runner = new Runner($consoleOutput, $this->filesRepository);
 
         // Add insights
         $insights = $this->loadInsights($this->insightsClasses);
@@ -115,14 +112,14 @@ final class InsightFactory
             /** @var InsightLoader $loader */
             foreach ($this->insightLoaders as $loader) {
                 if ($loader->support($insight)) {
-                    $insightsAdded[] = $loader->load(
-                        $insight,
-                        $path,
-                        $this->config->getConfigForInsight($insight),
-                        $this->collector
-                    );
+                    $loader->load($insight, $path, $this->config->getConfigForInsight($insight), $this->collector);
                 }
             }
+        }
+
+        /** @var InsightLoader $loader */
+        foreach ($this->insightLoaders as $loader) {
+            $insightsAdded = [...$insightsAdded, ...$loader->getLoadedInsights()];
         }
 
         return $insightsAdded;
