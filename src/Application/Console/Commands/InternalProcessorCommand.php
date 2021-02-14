@@ -188,7 +188,10 @@ final class InternalProcessorCommand
         $detailsByInsights = [];
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
         foreach ($this->allInsights as $insight) {
-            if (! $insight instanceof DetailsCarrier || ! $insight->hasIssue()) {
+            if (! $insight instanceof DetailsCarrier) {
+                continue;
+            }
+            if (! $insight->hasIssue()) {
                 continue;
             }
             $details = array_filter(
@@ -206,7 +209,10 @@ final class InternalProcessorCommand
         $fixByInsights = [];
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
         foreach ($this->allInsights as $insight) {
-            if (! $insight instanceof Fixable || $insight->getTotalFix() === 0) {
+            if (! $insight instanceof Fixable) {
+                continue;
+            }
+            if ($insight->getTotalFix() === 0) {
                 continue;
             }
             $details = array_filter(

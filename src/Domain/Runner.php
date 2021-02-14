@@ -196,10 +196,12 @@ final class Runner
         $detailsByInsights = $this->cache->get($cacheKey);
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
         foreach ($this->allInsights as $insight) {
-            if (! $insight instanceof DetailsCarrier || ! isset($detailsByInsights[$insight->getInsightClass()])) {
+            if (! $insight instanceof DetailsCarrier) {
                 continue;
             }
-
+            if (! isset($detailsByInsights[$insight->getInsightClass()])) {
+                continue;
+            }
             array_walk(
                 $detailsByInsights[$insight->getInsightClass()],
                 static function (Details $details) use ($insight): void {
@@ -214,10 +216,12 @@ final class Runner
         $fixByInsights = $this->cache->get($cacheKey);
         /** @var \NunoMaduro\PhpInsights\Domain\Contracts\Insight $insight */
         foreach ($this->allInsights as $insight) {
-            if (! $insight instanceof Fixable || ! isset($fixByInsights[$insight->getInsightClass()])) {
+            if (! $insight instanceof Fixable) {
                 continue;
             }
-
+            if (! isset($fixByInsights[$insight->getInsightClass()])) {
+                continue;
+            }
             array_walk(
                 $fixByInsights[$insight->getInsightClass()],
                 static function (Details $details) use ($insight): void {

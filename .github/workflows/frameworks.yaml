@@ -54,10 +54,11 @@ jobs:
               working-directory: ./project
               run: |
                   composer config prefer-stable true
+                  composer config minimum-stability dev
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
-              run: composer require --dev nunomaduro/phpinsights:"dev-${GITHUB_SHA}" -n --ansi
+              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Launch PHPInsights
               working-directory: ./project
@@ -114,6 +115,7 @@ jobs:
               working-directory: ./project
               run: |
                   composer config prefer-stable true
+                  composer config minimum-stability dev
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Require phpunit:^9
               working-directory: ./project
@@ -121,7 +123,7 @@ jobs:
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
-              run: composer require --dev nunomaduro/phpinsights:"dev-${GITHUB_SHA}" -n --ansi
+              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Artisan publish
               working-directory: ./project

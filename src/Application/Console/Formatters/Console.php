@@ -27,6 +27,7 @@ use NunoMaduro\PhpInsights\Domain\Metrics\Code\Functions;
 use NunoMaduro\PhpInsights\Domain\Metrics\Code\Globally;
 use NunoMaduro\PhpInsights\Domain\Metrics\Complexity\Complexity;
 use NunoMaduro\PhpInsights\Domain\Results;
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -182,10 +183,12 @@ final class Console implements Formatter
             $category = $category[count($category) - 2];
 
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
-                if (! $insight instanceof Fixable || $insight->getTotalFix() === 0) {
+                if (! $insight instanceof Fixable) {
                     continue;
                 }
-
+                if ($insight->getTotalFix() === 0) {
+                    continue;
+                }
                 $fix = "<fg=green>• [${category}] </><bold>{$insight->getTitle()}</bold>:";
 
                 $details = $insight->getFixPerFile();
@@ -625,7 +628,7 @@ final class Console implements Formatter
                     $detailString .= '<fg=green>';
                 }
 
-                $detailString .= $line . PHP_EOL;
+                $detailString .= OutputFormatter::escape($line) . PHP_EOL;
 
                 if ($hasColor) {
                     $hasColor = false;
@@ -636,6 +639,6 @@ final class Console implements Formatter
             return $detailString;
         }
 
-        return $detail->getMessage();
+        return OutputFormatter::escape($detail->getMessage());
     }
 }

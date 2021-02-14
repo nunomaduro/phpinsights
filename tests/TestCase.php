@@ -23,7 +23,10 @@ use Tests\Fakes\FakeInput;
 
 abstract class TestCase extends BaseTestCase
 {
-    private string $initialArgv;
+    /**
+     * @var array<string>
+     */
+    private array $initialArgv;
 
     /**
      * Call protected/private method of a class.
@@ -170,15 +173,15 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         // Replace temporarily current binary by phpinsights one, to execute subprocess
-        $this->initialArgv = $_SERVER['argv'][0];
-        $_SERVER['argv'][0] = getcwd() . '/bin/phpinsights';
+        $this->initialArgv = $_SERVER['argv'];
+        $_SERVER['argv'] = [getcwd() . '/bin/phpinsights'];
 
         parent::setUp();
     }
 
     protected function tearDown(): void
     {
-        $_SERVER['argv'][0] = $this->initialArgv;
+        $_SERVER['argv'] = $this->initialArgv;
         parent::tearDown();
     }
 
