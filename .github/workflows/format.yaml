@@ -49,6 +49,7 @@ jobs:
               run: composer run rector:test -- --dry-run
 
             - name: PHPInsight on modified files
+              if: github.event_name == 'pull_request'
               run: |
                   URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
                   FILES=$(curl -s -X GET -G $URL | jq -r '.[] |  select( .status == "added" or .status == "modified") | .filename')
