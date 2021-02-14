@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineGlobalConstants;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
@@ -101,6 +102,11 @@ return [
         ForbiddenTraits::class => [
             'exclude' => [
                 'src/Domain/Insights/FixPerFileCollector.php',
+            ],
+        ],
+        CyclomaticComplexityIsHigh::class => [
+            'exclude' => [
+                'src/Domain/Analyser.php',
             ],
         ],
     ],
