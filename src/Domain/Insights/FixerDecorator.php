@@ -102,7 +102,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
     {
         $fixerClass = $this->getInsightClass();
         $path = explode('\\', $fixerClass);
-        $name = (string) array_pop($path);
+        $name = array_pop($path);
         $name = str_replace('Fixer', '', $name);
 
         return ucfirst(mb_strtolower(trim((string) preg_replace('/(?<! )[A-Z]/', ' $0', $name))));
@@ -141,7 +141,9 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
     private function skipFilesFromExcludedFiles(SplFileInfo $file): bool
     {
         $path = $file->getRealPath();
-
-        return $path !== false && isset($this->exclude[$path]);
+        if ($path === false) {
+            return false;
+        }
+        return isset($this->exclude[$path]);
     }
 }

@@ -301,6 +301,7 @@ final class Configuration
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
                 if (! class_exists($metric) ||
+                    class_implements($metric) === false ||
                     ! in_array(Metric::class, class_implements($metric), true)
                 ) {
                     throw new InvalidConfiguration(sprintf(
@@ -393,7 +394,7 @@ final class Configuration
             $cpuinfo = file_get_contents('/proc/cpuinfo');
             if ($cpuinfo !== false) {
                 preg_match_all('/^processor/m', $cpuinfo, $matches);
-                return \count($matches[0]);
+                return is_countable($matches[0]) ? \count($matches[0]) : 0;
             }
         }
 

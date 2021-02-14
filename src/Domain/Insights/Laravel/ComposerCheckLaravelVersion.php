@@ -17,10 +17,13 @@ final class ComposerCheckLaravelVersion extends Insight
         } catch (ComposerNotFound $exception) {
             return true;
         }
-
-        return array_key_exists('require', $composer)
-            && array_key_exists('laravel/framework', $composer['require'])
-            && strpos($composer['require']['laravel/framework'], '5.8.*') === false;
+        if (! array_key_exists('require', $composer)) {
+            return false;
+        }
+        if (! array_key_exists('laravel/framework', $composer['require'])) {
+            return false;
+        }
+        return strpos($composer['require']['laravel/framework'], '5.8.*') === false;
     }
 
     public function getTitle(): string

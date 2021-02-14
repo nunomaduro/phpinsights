@@ -18,6 +18,9 @@ final class FixerLoader implements InsightLoader
 {
     public function support(string $insightClass): bool
     {
+        if (class_implements($insightClass) === false) {
+            return false;
+        }
         return array_key_exists(FixerInterface::class, class_implements($insightClass));
     }
 

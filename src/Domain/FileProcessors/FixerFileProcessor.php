@@ -91,8 +91,10 @@ final class FixerFileProcessor implements FileProcessor
                 Tokens::clearCache();
                 $tokens = clone $originalTokens;
             }
-
-            if (! $this->fixEnabled || ! $needFix) {
+            if (! $this->fixEnabled) {
+                return;
+            }
+            if (! $needFix) {
                 return;
             }
 

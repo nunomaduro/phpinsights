@@ -146,6 +146,9 @@ final class Console implements Formatter
      */
     public function formatFix(InsightCollection $insightCollection, array $metrics): void
     {
+        $this->config = Container::make()->get(Configuration::class);
+        $this->fileLinkFormatter = $this->config->getFileLinkFormatter();
+
         $results = $insightCollection->results();
         $this->style->newLine();
 
@@ -266,7 +269,7 @@ final class Console implements Formatter
         $lines = [];
         foreach (self::CODE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
-            $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
+            $lines[end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
         $this->writePercentageLines($lines);
@@ -308,7 +311,7 @@ final class Console implements Formatter
         $lines = [];
         foreach (self::ARCHITECTURE_METRIC_CLASSES as $metric) {
             $name = explode('\\', $metric);
-            $lines[(string) end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
+            $lines[end($name)] = (float) (new $metric())->getPercentage($insightCollection->getCollector());
         }
 
         $this->writePercentageLines($lines);
