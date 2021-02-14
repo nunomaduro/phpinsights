@@ -54,10 +54,12 @@ final class GithubAction implements Formatter
         $errors = [];
 
         foreach ($insightCollection->all() as $insight) {
-            if (! $insight instanceof HasDetails || ! $insight->hasIssue()) {
+            if (! $insight instanceof HasDetails) {
                 continue;
             }
-
+            if (! $insight->hasIssue()) {
+                continue;
+            }
             $details = $insight->getDetails();
             usort($details, $detailsComparator);
 

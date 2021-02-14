@@ -43,10 +43,12 @@ final class Checkstyle implements Formatter
         foreach ($metrics as $metricClass) {
             /** @var Insight $insight */
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
-                if (! $insight instanceof HasDetails || ! $insight->hasIssue()) {
+                if (! $insight instanceof HasDetails) {
                     continue;
                 }
-
+                if (! $insight->hasIssue()) {
+                    continue;
+                }
                 $details = $insight->getDetails();
                 usort($details, $detailsComparator);
 

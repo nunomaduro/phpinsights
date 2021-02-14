@@ -183,10 +183,12 @@ final class Console implements Formatter
             $category = $category[count($category) - 2];
 
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
-                if (! $insight instanceof Fixable || $insight->getTotalFix() === 0) {
+                if (! $insight instanceof Fixable) {
                     continue;
                 }
-
+                if ($insight->getTotalFix() === 0) {
+                    continue;
+                }
                 $fix = "<fg=green>• [${category}] </><bold>{$insight->getTitle()}</bold>:";
 
                 $details = $insight->getFixPerFile();
