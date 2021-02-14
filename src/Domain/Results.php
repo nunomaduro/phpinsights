@@ -148,7 +148,7 @@ final class Results
      */
     private function getPercentage(string $category): float
     {
-        $total = count($insights = $this->perCategoryInsights[$category]);
+        $total = count($insights = $this->perCategoryInsights[$category] ?? []);
         $issuesNotFound = 0;
 
         foreach ($insights as $insight) {
@@ -164,7 +164,7 @@ final class Results
 
     private function getInsightByCategory(string $insightClass, string $category): Insight
     {
-        foreach ($this->perCategoryInsights[$category] as $insight) {
+        foreach ($this->perCategoryInsights[$category] ?? [] as $insight) {
             if ($insight instanceof $insightClass) {
                 return $insight;
             }
