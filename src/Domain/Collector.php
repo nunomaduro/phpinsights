@@ -214,7 +214,7 @@ final class Collector
 
     public function currentMethodStop(string $name): void
     {
-        $this->methodComplexity[] = $this->currentMethodComplexity;
+        $this->methodComplexity[$this->currentFilename . ':' . $name] = $this->currentMethodComplexity;
         $this->methodLines[$this->currentFilename . ':' . $name] = $this->currentMethodLines;
     }
 
@@ -772,6 +772,25 @@ final class Collector
     public function getConstants(): int
     {
         return \count($this->getGlobalConstants()) + $this->getClassConstants();
+    }
+
+    /**
+     * @param array<string, \SplFileInfo> $excludedFiles
+     */
+    public function excludeComplexityFiles(array $excludedFiles): void
+    {
+        foreach (array_keys($this->methodComplexity) as $fileMethod) {
+            $file = explode(':', $fileMethod, 2);
+            if (array_key_exists($file[0], $excludedFiles)) {
+                unset($this->methodComplexity[$fileMethod]);
+            }
+        }
+
+        foreach (array_keys($this->classComplexity) as $file) {
+            if (array_key_exists($file, $excludedFiles)) {
+                unset($this->classComplexity[$file]);
+            }
+        }
     }
 
     /**
