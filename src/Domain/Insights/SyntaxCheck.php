@@ -45,10 +45,10 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $binary = sprintf(
             '%s %s',
             escapeshellcmd($phpPath),
-            escapeshellarg(\dirname(__DIR__, 3) . '/vendor/bin/parallel-lint')
+            escapeshellarg($this->vendorParentPathFind() . '/vendor/bin/parallel-lint')
         );
         if (DIRECTORY_SEPARATOR === '\\') {
-            $binary = \dirname(__DIR__, 3) . '\vendor\bin\parallel-lint.bat';
+            $binary = $this->vendorParentPathFind() . '\vendor\bin\parallel-lint.bat';
         }
 
         $toAnalyse = '.';
@@ -70,7 +70,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $process = Process::fromShellCommandline($cmdLine);
         $process->run();
 
-        $output = json_decode($process->getOutput(), true);
+        $output = json_decode($process->getOutput(), true, 512, JSON_THROW_ON_ERROR);
         $errors = $output['results']['errors'] ?? [];
 
         foreach ($errors as $error) {
@@ -81,5 +81,14 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
                     ->setMessage('PHP syntax error: ' . trim($matches[1]));
             }
         }
+    }
+
+    private function vendorParentPathFind(): string
+    {
+        $baseProjectPath = \dirname(__DIR__, 3);
+        if (file_exists($baseProjectPath . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php')) {
+            return $baseProjectPath;
+        }
+        return \dirname(__DIR__, 6);
     }
 }

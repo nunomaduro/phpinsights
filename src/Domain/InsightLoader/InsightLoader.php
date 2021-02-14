@@ -15,6 +15,9 @@ final class InsightLoader implements LoaderContract
 {
     public function support(string $insightClass): bool
     {
+        if (class_implements($insightClass) === false) {
+            return false;
+        }
         return array_key_exists(Insight::class, class_implements($insightClass));
     }
 

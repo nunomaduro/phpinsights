@@ -55,9 +55,13 @@ final class Preset implements PresetContract
         $requirements = $composer->getRequirements();
 
         foreach (array_keys($requirements) as $requirement) {
-            if (strpos($requirement, 'magento/magento-cloud-metapackage') !== false
-                || strpos($requirement, 'magento/product-community-edition') !== false
-                || strpos($requirement, 'magento/product-enterprise-edition') !== false) {
+            if (strpos($requirement, 'magento/magento-cloud-metapackage') !== false) {
+                return true;
+            }
+            if (strpos($requirement, 'magento/product-community-edition') !== false) {
+                return true;
+            }
+            if (strpos($requirement, 'magento/product-enterprise-edition') !== false) {
                 return true;
             }
         }
