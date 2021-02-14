@@ -637,6 +637,6 @@ final class Console implements Formatter
             return $detailString;
         }
 
-        return $detail->getMessage();
+        return OutputFormatter::escape($detail->getMessage());
     }
 }
