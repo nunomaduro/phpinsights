@@ -39,4 +39,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         SetList::PHP_74,
         SetList::PHPUNIT_CODE_QUALITY,
     ]);
+    $parameters->set(Option::SKIP, [
+        \Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector::class,
+    ]);
 };
