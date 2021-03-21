@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
 
 /**
  * @see \Tests\Domain\Insights\CyclomaticComplexityIsHighTest
  */
-final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
+final class CyclomaticComplexityIsHigh extends Insight implements HasDetails, GlobalInsight
 {
+    /**
+     * @var array<Details>
+     */
+    private array $details = [];
+
     public function hasIssue(): bool
     {
-        $maxComplexity = $this->getMaxComplexity();
-
-        foreach ($this->collector->getClassComplexity() as $complexity) {
-            if ($complexity > $maxComplexity) {
-                return true;
-            }
-        }
-
-        return false;
+        return count($this->details) > 0;
     }
 
     public function getTitle(): string
@@ -35,6 +33,15 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
 
     public function getDetails(): array
     {
+        return $this->details;
+    }
+
+    public function process(): void
+    {
+        // Exclude in collector all excluded files
+        if (count($this->excludedFiles) > 0) {
+            $this->collector->excludeComplexityFiles($this->excludedFiles);
+        }
         $complexityLimit = $this->getMaxComplexity();
 
         $classesComplexity = array_filter(
@@ -42,13 +49,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails
             static fn ($complexity): bool => $complexity > $complexityLimit
         );
 
-        uasort($classesComplexity, static fn ($left, $right) => $right - $left);
-
-        $classesComplexity = array_reverse(
-            $this->filterFilesWithoutExcluded($classesComplexity)
-        );
-
-        return array_map(static fn ($class, $complexity): Details => Details::make()
+        $this->details = array_map(static fn ($class, $complexity): Details => Details::make()
             ->setFile($class)
             ->setMessage("${complexity} cyclomatic complexity"), array_keys($classesComplexity), $classesComplexity);
     }

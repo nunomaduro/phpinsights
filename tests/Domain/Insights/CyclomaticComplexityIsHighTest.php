@@ -9,7 +9,8 @@ use NunoMaduro\PhpInsights\Domain\Analyser;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
-use PHPUnit\Framework\TestCase;
+use NunoMaduro\PhpInsights\Domain\Metrics\Complexity\Complexity;
+use Tests\TestCase;
 
 final class CyclomaticComplexityIsHighTest extends TestCase
 {
@@ -20,7 +21,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         $insight = new CyclomaticComplexityIsHigh($collector, []);
 
         self::assertFalse($insight->hasIssue());
-        self::assertIsArray($insight->getDetails());
+        self::assertCount(0, $insight->getDetails());
     }
 
     public function testClassHasToMuchCyclomaticComplexity(): void
@@ -35,6 +36,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         $analyzer = new Analyser();
         $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files, $commonPath);
         $insight = new CyclomaticComplexityIsHigh($collector, []);
+        $insight->process();
 
         self::assertTrue($insight->hasIssue());
         self::assertIsArray($insight->getDetails());
@@ -67,6 +69,7 @@ final class CyclomaticComplexityIsHighTest extends TestCase
         $analyzer = new Analyser();
         $collector = $analyzer->analyse([__DIR__ . '/Fixtures/'], $files, $commonPath);
         $insight = new CyclomaticComplexityIsHigh($collector, ['maxComplexity' => 10]);
+        $insight->process();
 
         self::assertTrue($insight->hasIssue());
         self::assertIsArray($insight->getDetails());
@@ -85,5 +88,26 @@ final class CyclomaticComplexityIsHighTest extends TestCase
 
         self::assertContains('VeryMuchToComplexClass.php', $files);
         self::assertContains('13 cyclomatic complexity', $messages);
+    }
+
+    public function testItNoReturnIssueWhenFileExcluded(): void
+    {
+        $fileLocation = __DIR__ . '/Fixtures/VeryMuchToComplexClass.php';
+        $collection = $this->runAnalyserOnConfig(
+            [
+                'config' => [
+                    CyclomaticComplexityIsHigh::class => [
+                        'exclude' => [$fileLocation],
+                    ],
+                ],
+            ],
+            [$fileLocation]
+        );
+
+        foreach ($collection->allFrom(new Complexity()) as $insight) {
+            if ($insight->getInsightClass() === CyclomaticComplexityIsHigh::class) {
+                self::assertFalse($insight->hasIssue());
+            }
+        }
     }
 }
