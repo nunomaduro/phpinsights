@@ -83,7 +83,11 @@ final class ConfigurationTest extends TestCase
         $sysCommand = 'nproc';
 
         if (!file_exists('/usr/bin/nproc')) {
-            self::markTestSkipped('Unable to find nproc to get expected cores');
+            $sysCommand = 'sysctl -n hw.logicalcpu';
+
+            if (!file_exists('/usr/sbin/sysctl')) {
+                self::markTestSkipped('Unable to find nproc to get expected cores');
+            }
         }
 
         $command = Process::fromShellCommandline($sysCommand);
