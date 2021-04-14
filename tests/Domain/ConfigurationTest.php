@@ -80,11 +80,13 @@ final class ConfigurationTest extends TestCase
 
     public function testGetNumberOfThreads(): void
     {
+        $sysCommand = 'nproc';
+
         if (!file_exists('/usr/bin/nproc')) {
             self::markTestSkipped('Unable to find nproc to get expected cores');
         }
 
-        $command = Process::fromShellCommandline('nproc');
+        $command = Process::fromShellCommandline($sysCommand);
         $command->run();
         $expected = (int) $command->getOutput();
 
