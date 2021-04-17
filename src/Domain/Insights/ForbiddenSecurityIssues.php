@@ -80,7 +80,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
             array_map(static fn (array $detail): string => $detail['version'], $packages['packages'])
         );
 
-        if ($packagesToCheck === false) {
+        if ($packagesToCheck == false) {
             $packagesToCheck = [];
         }
 
