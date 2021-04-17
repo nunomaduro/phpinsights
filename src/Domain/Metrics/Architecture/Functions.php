@@ -7,8 +7,8 @@ namespace NunoMaduro\PhpInsights\Domain\Metrics\Architecture;
 use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
+use SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff;
 
 final class Functions implements HasValue, HasInsights
 {
