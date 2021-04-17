@@ -22,28 +22,28 @@ final class AnalyseDefinition extends BaseDefinition
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Minimal Quality level to reach without throw error',
-                0
+                '0'
             ),
             new InputOption(
                 'min-complexity',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Minimal Complexity level to reach without throw error',
-                0
+                '0'
             ),
             new InputOption(
                 'min-architecture',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Minimal Architecture level to reach without throw error',
-                0
+                '0'
             ),
             new InputOption(
                 'min-style',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 'Minimal Style level to reach without throw error',
-                0
+                '0'
             ),
             new InputOption(
                 'disable-security-check',
