@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Composer;
 
+use Composer\Composer;
 use Composer\IO\NullIO;
+use Composer\Package\Loader\ValidatingArrayLoader;
 use Composer\Util\ConfigValidator;
 use NunoMaduro\PhpInsights\Domain\ComposerFinder;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
@@ -46,7 +48,11 @@ final class ComposerMustBeValid extends Insight implements HasDetails
     {
         $validator = new ConfigValidator(new NullIO());
 
-        [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector));
+        if ($this->isComposerV2()) {
+            [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector), ValidatingArrayLoader::CHECK_ALL, $this->config['composerVersionCheck'] ?? ConfigValidator::CHECK_VERSION);
+        } else {
+            [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector), ValidatingArrayLoader::CHECK_ALL);
+        }
 
         foreach (array_merge($errors, $publishErrors, $warnings) as $issue) {
             if (strpos($issue, ' : ') !== false) {
@@ -57,5 +63,10 @@ final class ComposerMustBeValid extends Insight implements HasDetails
         }
 
         $this->analyzed = true;
+    }
+
+    private function isComposerV2(): bool
+    {
+        return strpos(Composer::VERSION, '2') === 0;
     }
 }
