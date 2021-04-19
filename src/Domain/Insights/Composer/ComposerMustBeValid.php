@@ -49,7 +49,7 @@ final class ComposerMustBeValid extends Insight implements HasDetails
         $validator = new ConfigValidator(new NullIO());
 
         if ($this->isComposerV2()) {
-            [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector), ValidatingArrayLoader::CHECK_ALL, $this->config['composerVersionCheck'] ?? ConfigValidator::CHECK_VERSION);
+            [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector), ValidatingArrayLoader::CHECK_ALL, (int) ($this->config['composerVersionCheck'] ?? ConfigValidator::CHECK_VERSION));
         } else {
             [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector), ValidatingArrayLoader::CHECK_ALL);
         }
