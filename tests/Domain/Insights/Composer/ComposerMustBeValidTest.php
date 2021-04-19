@@ -47,7 +47,7 @@ final class ComposerMustBeValidTest extends TestCase
     {
         $path = __DIR__ . '/Fixtures/WithVersion';
         $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
-        $insight = new ComposerMustBeValid($collector, ['composerVersionCheck' => false]);
+        $insight = new ComposerMustBeValid($collector, ['composerVersionCheck' => 0]);
 
         self::assertTrue($insight->hasIssue());
         self::assertIsArray($insight->getDetails());
