@@ -47,7 +47,7 @@ jobs:
                   tools: composer:${{ matrix.composer-version }}
 
             - name: Install Composer dependencies
-              run: composer update --${{ matrix.dependency-version }} --ansi  --no-interaction --prefer-dist --no-dev --ignore-platform-reqs
+              run: composer update --${{ matrix.dependency-version }} --ansi  --no-interaction --prefer-dist --no-dev
 
             - name: Test launching phpinsights
               run: php bin/phpinsights analyse --ansi -v --no-interaction --disable-security-check --flush-cache
