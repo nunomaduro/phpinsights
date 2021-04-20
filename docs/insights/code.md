@@ -13,7 +13,8 @@ The following insights are organised in different metrics :
 
 This sniff disallows public properties.
 
-**Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff`
+**Insight Class v1.0**: `ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff`
+**Insight Class v2.0**: `SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff`
 
 ## Unused private elements <Badge text="^1.0"/> <Badge text="Code\Classes" type="warn"/>
 
@@ -92,6 +93,35 @@ This sniff ensures all switch statements are defined correctly.
 This sniff ensures all language constructs contain a single space between themselves and their content
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\LanguageConstructSpacingSniff`
+
+## Element name minimal length <Badge text=">=1.0 <2.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+
+**Insight Class**: `ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff::class => [
+    'minLength' => 3,
+    'allowedShortNames' => ['i', 'id', 'to', 'up'],
+]
+```
+</details>
+
+## Max nesting level <Badge text=">=1.0 <2.0"/> <Badge text="Code\Code" type="warn"/> <Badge text="configurable"/>
+
+**Insight Class**: `ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff::class => [
+    'maxNestingLevel' => 2,
+]
+```
+</details>
 
 ## Useless Variable <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
@@ -754,7 +784,7 @@ There must be a comment when fall-through is intentional in a non-empty case bod
 
 ## Phpdoc scalar <Badge text="^1.10"/> <Badge text="Code\Comments" type="warn"/> <Badge text="configurable"/>
 
-Scalar types should always be written in the same form. 
+Scalar types should always be written in the same form.
 `int` not `integer`, `bool` not `boolean`, `float` not `real` or `double`.
 
 **Insight Class**: `PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer`

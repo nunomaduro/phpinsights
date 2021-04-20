@@ -29,6 +29,54 @@ This sniff checks if the declaration of the class is correct
 
 **Insight Class**: `PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff`
 
+## Class trait and interface length <Badge text=">=1.0 <2.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+
+This sniff checks the size of your classes/traits/interface
+
+**Insight Class**: `ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff::class => [
+    'maxLength' => 200,
+]
+```
+</details>
+
+## Method per class limit <Badge text=">=1.0 <2.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+
+This sniff checks if the number of methods per class is under a limit.
+
+**Insight Class**: `ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class => [
+    'maxCount' => 10,
+]
+```
+</details>
+
+## Property per class limit <Badge text=">=1.0 <2.0"/> <Badge text="Architecture\Classes" type="warn"/> <Badge text="configurable"/>
+
+This sniff checks if the number of properties per class is under a limit.
+
+**Insight Class**: `ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class => [
+    'maxCount' => 10,
+]
+```
+</details>
+
 ## One class per file <Badge text="^1.0"/> <Badge text="Architecture\Classes" type="warn"/>
 
 This sniff checks that only one class is declared per file.
@@ -87,13 +135,14 @@ This sniff reports use of superfluous prefix or suffix "Exception" for exception
 
 This sniff checks the size of functions
 
-**Insight Class**: `SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff`
+**Insight Class v1.0**: `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff`
+**Insight Class v2.0**: `SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff`
 
 <details>
     <summary>Configuration</summary>
 
 ```php
-\SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff::class => [
+\ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class => [
     'maxLength' => 20,
 ]
 ```
