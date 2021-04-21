@@ -115,7 +115,7 @@ This insight checks if the `composer.json` is valid.
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid`
 
 <details>
-    <summary>Configuration</summary>
+   <summary>Configuration</summary>
 
 ```php
 ComposerMustBeValid::class => [
