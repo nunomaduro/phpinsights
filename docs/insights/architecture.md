@@ -136,13 +136,24 @@ This sniff reports use of superfluous prefix or suffix "Exception" for exception
 This sniff checks the size of functions
 
 **Insight Class v1.0**: `ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff`
-**Insight Class v2.0**: `SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff`
 
 <details>
     <summary>Configuration</summary>
 
 ```php
 \ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class => [
+    'maxLength' => 20,
+]
+```
+</details>
+
+**Insight Class v2.0**: `SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff`
+
+<details>
+    <summary>Configuration</summary>
+
+```php
+\SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff::class => [
     'maxLength' => 20,
 ]
 ```
