@@ -20,7 +20,7 @@ final class Kernel
      *
      * @noRector Rector\DeadCode\Rector\ClassConst\RemoveUnusedClassConstantRector
      */
-    public const VERSION = 'v1.14.1';
+    public const VERSION = 'v2.0.0';
 
     /**
      * Bootstraps the usage of the package.

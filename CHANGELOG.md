@@ -4,6 +4,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.0.0]
+### Added
+- Minimal PHP version is now PHP 7.4 ([#391](https://github.com/nunomaduro/phpinsights/pull/391))
+- Support multiple path to analyse ([#384](https://github.com/nunomaduro/phpinsights/pull/384))
+- Autofixer ([#337](https://github.com/nunomaduro/phpinsights/pull/337))
+- Syntax check Insight is now using [PHP-Parallel-lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint) ([#373](https://github.com/nunomaduro/phpinsights/pull/373), [#437](https://github.com/nunomaduro/phpinsights/pull/437)) 
+- Cache on analysis ([#407](https://github.com/nunomaduro/phpinsights/pull/407))
+- Allow to override preset config ([#420](https://github.com/nunomaduro/phpinsights/pull/420))
+- Support Composer v2 ([#433](https://github.com/nunomaduro/phpinsights/pull/433), [#442](https://github.com/nunomaduro/phpinsights/pull/442))
+- Support phploc v7 ([#428](https://github.com/nunomaduro/phpinsights/pull/428))
+- Parallelization of analysis ([#414](https://github.com/nunomaduro/phpinsights/pull/414))
+- Support PHP8 ([#448](https://github.com/nunomaduro/phpinsights/pull/448))
+- CheckStyle report use the dot notation format to be using with Checkstyle parsers ([#464](https://github.com/nunomaduro/phpinsights/pull/464)) 
+- Allow to use `version` in composer.json ([#473](https://github.com/nunomaduro/phpinsights/pull/473)) 
+- Upgrade to [Slevomat/Coding-standard v7](https://github.com/slevomat/coding-standard) ([#477](https://github.com/nunomaduro/phpinsights/pull/477))
+- New option to show summary only ([#481](https://github.com/nunomaduro/phpinsights/pull/481))
+
+### Fixed
+- Performance issues ([#382](https://github.com/nunomaduro/phpinsights/pull/382), [#387](https://github.com/nunomaduro/phpinsights/pull/387), [#405](https://github.com/nunomaduro/phpinsights/pull/405))
+- Check that lock file exist ([#389](https://github.com/nunomaduro/phpinsights/pull/389))
+- Avoid conflict with phpcs config file ([#402](https://github.com/nunomaduro/phpinsights/pull/402))
+- Clean display message without file target ([#404](https://github.com/nunomaduro/phpinsights/pull/404))
+- IDE Link with colors ([#413](https://github.com/nunomaduro/phpinsights/pull/413))
+- No error trigger when Details Message issue contains console styling ([#447](https://github.com/nunomaduro/phpinsights/pull/447))
+- Excluded files from Cyclomatic Complexity are no more take in account for score ([#460](https://github.com/nunomaduro/phpinsights/pull/460))
+
+### Changed
+- Refactoring code ([#391](https://github.com/nunomaduro/phpinsights/pull/391), [#393](https://github.com/nunomaduro/phpinsights/pull/393))
+- Process Security Checks at during the project inspection ([#406](https://github.com/nunomaduro/phpinsights/pull/406)) 
+- Drop Travis-CI and use GithubAction ([#448](https://github.com/nunomaduro/phpinsights/pull/448))
+- Drop `object-calisthenics/phpcs-calisthenics-rules` dependency ([#477](https://github.com/nunomaduro/phpinsights/pull/477)) 
+
+## Deprecated
+- Some insights are 
+
 ## [v1.14.1]
 ### Changed
 - Switch service to discover vulnerabilities ([#453](https://github.com/nunomaduro/phpinsights/pull/453))
