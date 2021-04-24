@@ -53,7 +53,7 @@ parameters:
             count: 3
             path: src/Domain/ComposerLoader.php
 
-    autoload_files:
+    bootstrapFiles:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
 

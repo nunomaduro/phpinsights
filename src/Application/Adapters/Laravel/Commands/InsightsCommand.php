@@ -20,6 +20,15 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
  */
 final class InsightsCommand extends Command
 {
+    /** @var array<int, string> */
+    const FUNDING_MESSAGES = [
+        '',
+        '  - Star or contribute to PHP Insights:',
+        '    <options=bold>https://github.com/nunomaduro/phpinsights</>',
+        '  - Sponsor the maintainers:',
+        '    <options=bold>https://github.com/sponsors/nunomaduro</>',
+    ];
+
     protected $name = 'insights';
 
     protected $description = 'Analyze the code quality';
@@ -57,7 +66,9 @@ final class InsightsCommand extends Command
         $result = $analyseCommand->__invoke($this->input, $output);
 
         if ($output instanceof ConsoleOutputInterface) {
-            $output->getErrorOutput()->writeln('✨ See something that needs to be improved? <options=bold>Create an issue</> or send us a <options=bold>pull request</>: <fg=cyan;options=bold>https://github.com/nunomaduro/phpinsights</>');
+            foreach (self::FUNDING_MESSAGES as $message) {
+                $output->getErrorOutput()->writeln($message);
+            }
         }
 
         return $result;
