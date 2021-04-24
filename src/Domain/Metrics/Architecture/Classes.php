@@ -8,9 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
-use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
-use ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff;
-use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\OneClassPerFileSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes\ClassDeclarationSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
@@ -36,9 +33,6 @@ final class Classes implements HasValue, HasInsights
             ForbiddenNormalClasses::class,
             ValidClassNameSniff::class,
             ClassDeclarationSniff::class,
-            ClassTraitAndInterfaceLengthSniff::class,
-            MethodPerClassLimitSniff::class,
-            PropertyPerClassLimitSniff::class,
             OneClassPerFileSniff::class,
             SuperfluousInterfaceNamingSniff::class,
             SuperfluousAbstractClassNamingSniff::class,

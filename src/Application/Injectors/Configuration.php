@@ -45,6 +45,9 @@ final class Configuration
                     $config = require $configPath;
                 }
 
+                /**
+                 * @noRector Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector
+                 */
                 $fixOption = $input->hasOption('fix') && (bool) $input->getOption('fix') === true;
 
                 $config['fix'] = $fixOption || $input->getFirstArgument() === 'fix';

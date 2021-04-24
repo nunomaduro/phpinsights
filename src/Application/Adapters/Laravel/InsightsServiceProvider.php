@@ -23,6 +23,9 @@ final class InsightsServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        /**
+         * @noRector Rector\DeadCode\Rector\If_\RemoveDeadInstanceOfRector
+         */
         if ($this->app instanceof Application) {
             $this->publishes([
                 __DIR__ . '/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),

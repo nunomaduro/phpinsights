@@ -11,15 +11,14 @@ use NunoMaduro\PhpInsights\Domain\Contracts\HasMax;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasPercentage;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
-use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UnnecessaryFinalModifierSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\PropertyDeclarationSniff;
 use PhpCsFixer\Fixer\ClassNotation\ProtectedToPrivateFixer;
 use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
 use SlevomatCodingStandard\Sniffs\Classes\ClassConstantVisibilitySniff;
 use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
-use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Classes\UselessLateStaticBindingSniff;
 
 /**
@@ -55,7 +54,6 @@ final class Classes implements HasValue, HasPercentage, HasAvg, HasMax, HasInsig
         return [
             //FullyQualifiedClassNameAfterKeywordSniff::class,
             ForbiddenPublicPropertySniff::class,
-            UnusedPrivateElementsSniff::class,
             ForbiddenSetterSniff::class,
             UnnecessaryFinalModifierSniff::class,
             PropertyDeclarationSniff::class,

@@ -36,6 +36,9 @@ final class InsightsCommand extends Command
         }
 
         $configuration = require $configPath;
+        /**
+         * @noRector Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector
+         */
         $configuration['fix'] = $this->hasOption('fix') && (bool) $this->option('fix') === true;
         $configuration = ConfigResolver::resolve($configuration, $this->input);
 

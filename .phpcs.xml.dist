@@ -196,26 +196,4 @@
 
     <!-- Complexity -->
     <!-- -->
-
-    <!-- Object calisthenics -->
-    <rule ref="vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics/ruleset.xml">
-        <exclude name="ObjectCalisthenics.ControlStructures.NoElse"/>
-        <exclude name="ObjectCalisthenics.CodeAnalysis.OneObjectOperatorPerLine"/>
-
-        <!-- Code > Classes -->
-        <exclude name="ObjectCalisthenics.Classes.ForbiddenPublicProperty"/>
-        <exclude name="ObjectCalisthenics.NamingConventions.NoSetter"/>
-
-        <!-- Code > Code -->
-        <exclude name="ObjectCalisthenics.Metrics.MaxNestingLevel"/>
-        <exclude name="ObjectCalisthenics.NamingConventions.ElementNameMinimalLength"/>
-
-        <!-- Architecture > Classes -->
-        <exclude name="ObjectCalisthenics.Files.ClassTraitAndInterfaceLength"/>
-        <exclude name="ObjectCalisthenics.Metrics.MethodPerClassLimit"/>
-        <exclude name="ObjectCalisthenics.Metrics.PropertyPerClassLimit"/>
-
-        <!-- Architecture > Functions -->
-        <exclude name="ObjectCalisthenics.Files.FunctionLength"/>
-    </rule>
 </ruleset>

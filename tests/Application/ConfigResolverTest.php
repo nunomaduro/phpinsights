@@ -13,7 +13,6 @@ use NunoMaduro\PhpInsights\Domain\LinkFormatter\NullFileLinkFormatter;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
 use PHPUnit\Framework\TestCase;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
-use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
