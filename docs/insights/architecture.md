@@ -113,6 +113,18 @@ This insight checks if the `composer.json` is valid.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid`
 
+<details>
+   <summary>Configuration</summary>
+
+```php
+ComposerMustBeValid::class => [
+    //optional configuration value for composer version 2 only
+    //you can allow 'version' in your composer.json and disable the check of it so that you don't get an error
+    'composerVersionCheck' => 0,
+]
+```
+</details>
+
 ## Composer.lock must be fresh <Badge text="^1.7"/> <Badge text="Architecture\Composer" type="warn"/>
 
 This insight verifies that the `composer.lock` is not outdated.
