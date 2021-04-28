@@ -12,8 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class InvokableCommand extends BaseCommand
 {
-    /** @var array<int, string> */
-    const FUNDING_MESSAGES = [
+    private const FUNDING_MESSAGES = [
         '  - Star or contribute to PHP Insights:',
         '    <options=bold>https://github.com/nunomaduro/phpinsights</>',
         '  - Sponsor the maintainers:',

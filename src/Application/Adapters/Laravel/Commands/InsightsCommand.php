@@ -20,8 +20,7 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
  */
 final class InsightsCommand extends Command
 {
-    /** @var array<int, string> */
-    const FUNDING_MESSAGES = [
+    private const FUNDING_MESSAGES = [
         '  - Star or contribute to PHP Insights:',
         '    <options=bold>https://github.com/nunomaduro/phpinsights</>',
         '  - Sponsor the maintainers:',
