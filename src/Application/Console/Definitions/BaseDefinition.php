@@ -29,6 +29,12 @@ abstract class BaseDefinition
                 InputOption::VALUE_OPTIONAL,
                 'The configuration file path'
             ),
+            new InputOption(
+                'summary',
+                's',
+                InputOption::VALUE_NONE,
+                'Display summary only',
+            ),
         ]);
     }
 }
