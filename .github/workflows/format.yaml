@@ -58,3 +58,6 @@ jobs:
             - name: PHPInsight
               run: composer run insights
 
+            - name: PHPInsight - Summary only
+              run: composer run insights -- --summary
+
