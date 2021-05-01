@@ -275,9 +275,14 @@ final class Configuration
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedTypes('diff_context', 'int');
+        $resolver->setAllowedValues('diff_context', static fn ($value) => $value >= 0);
         $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
 
-        $config = $resolver->resolve($config);
+        try {
+            $config = $resolver->resolve($config);
+        } catch (\Throwable $throwable) {
+            throw new InvalidConfiguration($throwable->getMessage(), $throwable->getCode(), $throwable);
+        }
 
         $this->preset = $config['preset'];
 
