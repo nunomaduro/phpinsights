@@ -14,10 +14,12 @@ final class Differ implements DifferInterface
 
     public function __construct()
     {
+        $diffContext = Container::make()->get(Configuration::class)->getDiffContext();
+
         $outputBuilder = new StrictUnifiedDiffOutputBuilder([
             'collapseRanges' => true,
             'commonLineThreshold' => 1,
-            'contextLines' => 0,
+            'contextLines' => $diffContext,
             'fromFile' => '',
             'toFile' => '',
         ]);
