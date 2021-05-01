@@ -178,3 +178,18 @@ composer bin phpinsights require nunomaduro/phpinsights
 
 Between 2 analysis, issues are cached. 
 PHPInsights is smart enough to invalidate cache when it detect changes in your code, but you may completly flush cache before analysis by adding `--flush-cache` flag.
+
+## Configure diff <Badge text="^2.0"/>
+
+Some insights display a diff output.
+If you want more context on the diff, configure it in the `phpinsights.php` file:
+
+```php
+<?php
+
+return [
+    // ...
+    'diff_context' => 3,
+    // ...
+];
+```
