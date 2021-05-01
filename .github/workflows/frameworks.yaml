@@ -62,7 +62,7 @@ jobs:
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Launch PHPInsights
               working-directory: ./project
-              run: php vendor/bin/phpinsights -n --ansi
+              run: php vendor/bin/phpinsights -n --disable-security-check --ansi
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Launch PHPInsights Fixer
               working-directory: ./project
@@ -131,7 +131,7 @@ jobs:
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Launch PHPInsights
               working-directory: ./project
-              run: php artisan insights --ansi
+              run: php artisan insights --disable-security-check --ansi
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Launch PHPInsights Fixer
               working-directory: ./project
