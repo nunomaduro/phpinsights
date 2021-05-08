@@ -52,4 +52,25 @@ final class SyntaxCheckTest extends TestCase
             }
         }
     }
+
+    public function testExcludesPathsFromPreset(): void
+    {
+        $basepath = __DIR__ . '/Fixtures/InvalidPhpCode';
+
+        /** @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insights */
+        $insights = $this->runAnalyserOnPreset(
+            'laravel',
+            [$basepath . '/_ide_helper.php', $basepath . '/UnclosedComment.php'],
+            [$basepath] // simulate analysing a project directory
+        );
+
+        foreach ($insights->all() as $insight) {
+            if ($insight instanceof SyntaxCheck) {
+                self::assertTrue($insight->hasIssue());
+                $detail = $insight->getDetails()[0];
+                self::assertStringNotContainsString('Fixtures/InvalidPhpCode/_ide_helper.php', $detail->getFile());
+                self::assertStringNotContainsString('PHP syntax error: Cannot use League\\Container', $detail->getMessage());
+            }
+        }
+    }
 }

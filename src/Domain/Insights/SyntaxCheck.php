@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use NunoMaduro\PhpInsights\Domain\Configuration;
+use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -37,10 +39,6 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     public function process(): void
     {
         $phpPath = (string) Config::getExecutablePath('php');
-        $toExclude = array_map(
-            static fn (string $file): string => '--exclude ' . escapeshellarg($file),
-            array_merge($this->excludedFiles, LocalFilesRepository::DEFAULT_EXCLUDE)
-        );
 
         $binary = sprintf(
             '%s %s',
@@ -63,7 +61,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $cmdLine = sprintf(
             '%s --no-colors --no-progress --json %s %s',
             $binary,
-            implode(' ', $toExclude),
+            implode(' ', $this->getShellExcludeArgs()),
             $toAnalyse
         );
 
@@ -81,6 +79,21 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
                     ->setMessage('PHP syntax error: ' . trim($matches[1]));
             }
         }
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getShellExcludeArgs(): array
+    {
+        $configuration = Container::make()->get(Configuration::class);
+
+        $rootExcludes = $configuration->getExcludes();
+
+        return array_map(
+            static fn (string $file): string => '--exclude ' . escapeshellarg($file),
+            array_merge($rootExcludes, $this->excludedFiles, LocalFilesRepository::DEFAULT_EXCLUDE)
+        );
     }
 
     private function vendorParentPathFind(): string
