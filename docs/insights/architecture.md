@@ -166,7 +166,7 @@ This sniff checks the size of functions
 
 ```php
 \SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff::class => [
-    'maxLength' => 20,
+    'maxLinesLength' => 20,
 ]
 ```
 </details>
