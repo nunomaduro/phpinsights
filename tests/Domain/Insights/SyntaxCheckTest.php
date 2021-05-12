@@ -35,6 +35,7 @@ final class SyntaxCheckTest extends TestCase
     public function testHasIssueOnDirectory(): void
     {
         $basepath = __DIR__ . '/Fixtures/InvalidPhpCode';
+
         /** @var \NunoMaduro\PhpInsights\Domain\Insights\InsightCollection $insights */
         $insights = $this->runAnalyserOnPreset(
             'default',
@@ -44,11 +45,15 @@ final class SyntaxCheckTest extends TestCase
 
         foreach ($insights->all() as $insight) {
             if ($insight instanceof SyntaxCheck) {
-                self::assertTrue($insight->hasIssue());
-                self::assertCount(3, $insight->getDetails());
-
                 $details = $insight->getDetails();
                 usort($details, static fn (Details $a, Details $b): int => $a->getFile() <=> $b->getFile());
+
+                self::assertTrue($insight->hasIssue());
+                if (PHP_MAJOR_VERSION === 7) {
+                    self::assertCount(2, $details);
+                } else {
+                    self::assertCount(3, $details);
+                }
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
                 $detail = $details[0];
