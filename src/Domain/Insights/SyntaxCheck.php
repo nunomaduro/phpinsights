@@ -83,6 +83,9 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     }
 
     /**
+     * Converts all sources of excluded files into a list of escaped `--exclude` args for parallel-lint.
+     * This insight uses paths as-is rather than resolving them, As parallel-lint resolves paths itself.
+     *
      * @return array<string>
      */
     private function getShellExcludeArgs(): array
@@ -90,10 +93,11 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $configuration = Container::make()->get(Configuration::class);
 
         $rootExcludes = $configuration->getExcludes();
+        $localExcludes = $this->config['exclude'] ?? [];
 
         return array_map(
             static fn (string $file): string => '--exclude ' . escapeshellarg($file),
-            array_merge($rootExcludes, $this->excludedFiles, LocalFilesRepository::DEFAULT_EXCLUDE)
+            array_merge($rootExcludes, $localExcludes, LocalFilesRepository::DEFAULT_EXCLUDE)
         );
     }
 
