@@ -133,7 +133,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
 
     public function addDiff(string $file, string $diff): void
     {
-        $diff = substr($diff, 8);
+        $diff = trim(substr($diff, 8));
 
         $this->errors[] = Details::make()->setFile($file)->setDiff($diff)->setMessage($diff);
     }

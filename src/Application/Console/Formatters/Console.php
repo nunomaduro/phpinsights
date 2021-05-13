@@ -627,6 +627,8 @@ final class Console implements Formatter
             $detailString = '';
 
             foreach (explode(PHP_EOL, $detail->getMessage()) as $line) {
+                $detailString .= PHP_EOL;
+
                 if (mb_strpos($line, '-') === 0) {
                     $hasColor = true;
                     $detailString .= '<fg=red>';
@@ -637,7 +639,7 @@ final class Console implements Formatter
                     $detailString .= '<fg=green>';
                 }
 
-                $detailString .= OutputFormatter::escape($line) . PHP_EOL;
+                $detailString .= OutputFormatter::escape($line);
 
                 if ($hasColor) {
                     $hasColor = false;

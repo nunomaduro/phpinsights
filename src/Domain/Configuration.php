@@ -106,6 +106,8 @@ final class Configuration
 
     private int $threads;
 
+    private int $diffContext;
+
     /**
      * Configuration constructor.
      *
@@ -237,6 +239,11 @@ final class Configuration
         return $this->threads;
     }
 
+    public function getDiffContext(): int
+    {
+        return $this->diffContext;
+    }
+
     /**
      * @param array<string, string|int|array|null> $config
      */
@@ -253,6 +260,7 @@ final class Configuration
             'remove' => [],
             'config' => [],
             'fix' => false,
+            'diff_context' => 1,
         ]);
 
         $resolver->setDefined('ide');
@@ -266,9 +274,15 @@ final class Configuration
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $resolver->setAllowedTypes('threads', ['null', 'int']);
+        $resolver->setAllowedTypes('diff_context', 'int');
+        $resolver->setAllowedValues('diff_context', static fn ($value) => $value >= 0);
         $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
 
-        $config = $resolver->resolve($config);
+        try {
+            $config = $resolver->resolve($config);
+        } catch (\Throwable $throwable) {
+            throw new InvalidConfiguration($throwable->getMessage(), $throwable->getCode(), $throwable);
+        }
 
         $this->preset = $config['preset'];
 
@@ -286,6 +300,7 @@ final class Configuration
         $this->config = $config['config'];
         $this->requirements = $config['requirements'];
         $this->fix = $config['fix'];
+        $this->diffContext = $config['diff_context'];
 
         if (array_key_exists('ide', $config)
             && is_string($config['ide'])
