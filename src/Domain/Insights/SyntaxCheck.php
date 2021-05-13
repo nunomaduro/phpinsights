@@ -93,6 +93,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         $configuration = Container::make()->get(Configuration::class);
 
         $rootExcludes = $configuration->getExcludes();
+        /** @var array<string> $localExcludes */
         $localExcludes = $this->config['exclude'] ?? [];
 
         return array_map(
