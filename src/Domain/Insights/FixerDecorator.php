@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
 
@@ -145,5 +146,10 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
             return false;
         }
         return isset($this->exclude[$path]);
+    }
+
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        // TODO: Implement getDefinition() method.
     }
 }
