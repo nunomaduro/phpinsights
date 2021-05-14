@@ -8,7 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Collector;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasInsights;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasValue;
 use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
-use SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 
 final class Functions implements HasValue, HasInsights
 {
