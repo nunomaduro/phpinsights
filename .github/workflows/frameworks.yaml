@@ -44,6 +44,7 @@ jobs:
               run: |
                   composer config name phpinsights/symfony-tester
                   composer config description "Symfony test"
+                  composer require composer/composer:^${{ matrix.composer-version }}
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Linking library
               working-directory: ./project
