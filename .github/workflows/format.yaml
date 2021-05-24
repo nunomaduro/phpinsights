@@ -42,8 +42,8 @@ jobs:
             - name: PHPStan
               run: composer run phpstan:test -- --error-format=checkstyle | cs2pr
 
-            - name: ECS
-              run: composer run ecs:test
+            - name: PHP CS Fixer
+              run: composer run csfixer:test -- --dry-run
 
             - name: Rector
               run: composer run rector:test -- --dry-run

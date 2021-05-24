@@ -80,20 +80,20 @@
     "scripts": {
         "website:copy-changelog": "@php -r \"copy('CHANGELOG.md', 'docs/changelog.md');\"",
         "website:copy-logo": "@php -r \"(is_dir('docs/.vuepress/public') || mkdir('docs/.vuepress/public')) && copy('art/logo_mixed.gif', 'docs/.vuepress/public/logo.gif') && copy('art/heart.svg', 'docs/.vuepress/public/heart.svg') && copy('art/heart.png', 'docs/.vuepress/public/heart.png');\"",
-        "ecs:test": "ecs check src --ansi --config vendor/symplify/easy-coding-standard/config/set/clean-code.php",
+        "csfixer:test": "php-cs-fixer fix -v --diff-format udiff",
         "phpstan:test": "phpstan analyse --ansi",
         "phpunit:test": "phpunit --colors=always",
         "rector:test": "rector process --ansi",
         "insights": "bin/phpinsights analyse --ansi -v --no-interaction",
         "test": [
             "@phpstan:test",
-            "@ecs:test",
+            "@csfixer:test --dry-run",
             "@rector:test --dry-run",
             "@phpunit:test",
             "@insights"
         ],
         "fix": [
-            "@ecs:test --fix",
+            "@csfixer:test",
             "@insights --fix --quiet",
             "@rector:test"
         ],

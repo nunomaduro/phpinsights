@@ -95,7 +95,8 @@ final class Runner
             );
 
             // process them
-            array_walk($filesCached,
+            array_walk(
+                $filesCached,
                 function (SplFileInfo $file): void {
                     $this->processFile($file);
                 }
