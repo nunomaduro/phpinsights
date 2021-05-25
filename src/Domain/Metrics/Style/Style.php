@@ -63,6 +63,7 @@ use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer;
 use PhpCsFixer\Fixer\Phpdoc\AlignMultilineCommentFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocIndentFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocInlineTagNormalizerFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocVarAnnotationCorrectOrderFixer;
 use PhpCsFixer\Fixer\PhpTag\FullOpeningTagFixer;
@@ -180,6 +181,7 @@ final class Style implements HasInsights
             SingleQuoteFixer::class,
             StandardizeNotEqualsFixer::class,
             PhpdocIndentFixer::class,
+            PhpdocInlineTagNormalizerFixer::class,
             PhpdocTrimFixer::class,
             PhpdocVarAnnotationCorrectOrderFixer::class,
             SingleClassElementPerStatementFixer::class,
