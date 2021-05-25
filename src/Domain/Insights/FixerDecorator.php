@@ -139,6 +139,11 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
         $this->errors[] = Details::make()->setFile($file)->setDiff($diff)->setMessage($diff);
     }
 
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return $this->fixer->getDefinition();
+    }
+
     private function skipFilesFromExcludedFiles(SplFileInfo $file): bool
     {
         $path = $file->getRealPath();
@@ -146,10 +151,5 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
             return false;
         }
         return isset($this->exclude[$path]);
-    }
-
-    public function getDefinition(): FixerDefinitionInterface
-    {
-        return $this->fixer->getDefinition();
     }
 }
