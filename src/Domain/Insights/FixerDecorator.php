@@ -150,6 +150,6 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
 
     public function getDefinition(): FixerDefinitionInterface
     {
-        // TODO: Implement getDefinition() method.
+        return $this->fixer->getDefinition();
     }
 }
