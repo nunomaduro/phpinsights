@@ -32,6 +32,6 @@ final class Differ implements DifferInterface
      */
     public function diff(string $old, string $new, ?\SplFileInfo $file = null): string
     {
-        return $this->differ->diff($old, $new);
+        return $this->differ->diff($old, $new, $file);
     }
 }
