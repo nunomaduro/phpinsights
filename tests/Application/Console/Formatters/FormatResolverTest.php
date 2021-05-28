@@ -87,9 +87,21 @@ final class FormatResolverTest extends TestCase
         self::assertInstanceOf(GithubAction::class, $formatters[0]);
     }
 
+    public function testItCreateACodeClimateFormatter(): void
+    {
+        $input = new ArrayInput(['--format' => ['codeclimate']], AnalyseDefinition::get());
+
+        $formatter = FormatResolver::resolve($input, $this->output, $this->consoleOutput);
+
+        self::assertInstanceOf(Multiple::class, $formatter);
+        $formatters = $this->getFormattersInMultiple($formatter);
+        self::assertCount(1, $formatters);
+        self::assertInstanceOf(CodeClimate::class, $formatters[0]);
+    }
+
     public function testItCreateMultipleFormatters(): void
     {
-        $input = new ArrayInput(['--format' => ['console', 'checkstyle', 'github-action']], AnalyseDefinition::get());
+        $input = new ArrayInput(['--format' => ['console', 'checkstyle', 'github-action', 'codeclimate']], AnalyseDefinition::get());
 
         $formatter = FormatResolver::resolve($input, $this->output, $this->consoleOutput);
 

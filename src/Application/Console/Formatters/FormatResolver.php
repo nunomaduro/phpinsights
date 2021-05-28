@@ -19,6 +19,7 @@ final class FormatResolver
         'json' => Json::class,
         'checkstyle' => Checkstyle::class,
         'github-action' => GithubAction::class,
+        'codeclimate' => CodeClimate::class,
     ];
 
     public static function resolve(
