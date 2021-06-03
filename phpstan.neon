@@ -53,7 +53,7 @@ parameters:
             message: "#^Parameter \\#.* of class Composer\\\\Package\\\\Locker constructor expects .*$#"
             count: 3
             path: src/Domain/ComposerLoader.php
-
+        - "#^Parameter \\#1 \\$input of function array_flip expects array\\<int\\|string\\>, array\\<string, array\\|float\\|int\\|string\\> given\\.$#"
     bootstrapFiles:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
