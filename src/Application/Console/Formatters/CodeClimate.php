@@ -36,7 +36,7 @@ final class CodeClimate implements Formatter
     {
         $data = $this->issues($insightCollection, $metrics);
 
-        $this->output->write(json_encode($data));
+        $this->output->write(json_encode($data, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -44,7 +44,7 @@ final class CodeClimate implements Formatter
      *
      * @param array<string> $metrics
      *
-     * @return array<string, array<int, array<string, int|string>>|null>
+     * @return array<int, array<string, array<string, array<string, int|null>|string>|string|null>>
      */
     private function issues(InsightCollection $insightCollection, array $metrics): array
     {
