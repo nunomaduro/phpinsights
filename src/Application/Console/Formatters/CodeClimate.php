@@ -55,7 +55,7 @@ final class CodeClimate implements Formatter
             'Complexity' => 'Complexity',
             'Architecture' => 'Bug Risk',
             'Style' => 'Style',
-            'Security' => 'Security'
+            'Security' => 'Security',
         ];
 
         $detailsComparator = new DetailsComparator();
@@ -66,7 +66,6 @@ final class CodeClimate implements Formatter
 
             /** @var Insight $insight */
             foreach ($insightCollection->allFrom(new $metricClass()) as $insight) {
-
                 if (! $insight->hasIssue()) {
                     continue;
                 }
@@ -99,7 +98,7 @@ final class CodeClimate implements Formatter
                                 'begin' => $detail->hasLine() ? $detail->getLine() : null,
                             ],
                         ],
-                        'category' => $climateCategories[$category]
+                        'category' => $climateCategories[$category],
                     ];
                 }
             }
