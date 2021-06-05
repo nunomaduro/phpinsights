@@ -7,6 +7,7 @@ namespace Tests\Application\Console\Formatters;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\Checkstyle;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\CodeClimate;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\Console;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\GithubAction;
@@ -107,7 +108,7 @@ final class FormatResolverTest extends TestCase
 
         self::assertInstanceOf(Multiple::class, $formatter);
         $formatters = $this->getFormattersInMultiple($formatter);
-        self::assertCount(3, $formatters);
+        self::assertCount(4, $formatters);
         self::assertInstanceOf(Console::class, $formatters[0]);
         self::assertInstanceOf(Checkstyle::class, $formatters[1]);
         self::assertInstanceOf(GithubAction::class, $formatters[2]);
