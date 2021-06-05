@@ -7,6 +7,7 @@ namespace Tests\Application\Console\Formatters;
 use NunoMaduro\PhpInsights\Application\Console\Contracts\Formatter;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\Checkstyle;
+use NunoMaduro\PhpInsights\Application\Console\Formatters\CodeClimate;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\Console;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\FormatResolver;
 use NunoMaduro\PhpInsights\Application\Console\Formatters\GithubAction;
@@ -87,15 +88,27 @@ final class FormatResolverTest extends TestCase
         self::assertInstanceOf(GithubAction::class, $formatters[0]);
     }
 
-    public function testItCreateMultipleFormatters(): void
+    public function testItCreateACodeClimateFormatter(): void
     {
-        $input = new ArrayInput(['--format' => ['console', 'checkstyle', 'github-action']], AnalyseDefinition::get());
+        $input = new ArrayInput(['--format' => ['codeclimate']], AnalyseDefinition::get());
 
         $formatter = FormatResolver::resolve($input, $this->output, $this->consoleOutput);
 
         self::assertInstanceOf(Multiple::class, $formatter);
         $formatters = $this->getFormattersInMultiple($formatter);
-        self::assertCount(3, $formatters);
+        self::assertCount(1, $formatters);
+        self::assertInstanceOf(CodeClimate::class, $formatters[0]);
+    }
+
+    public function testItCreateMultipleFormatters(): void
+    {
+        $input = new ArrayInput(['--format' => ['console', 'checkstyle', 'github-action', 'codeclimate']], AnalyseDefinition::get());
+
+        $formatter = FormatResolver::resolve($input, $this->output, $this->consoleOutput);
+
+        self::assertInstanceOf(Multiple::class, $formatter);
+        $formatters = $this->getFormattersInMultiple($formatter);
+        self::assertCount(4, $formatters);
         self::assertInstanceOf(Console::class, $formatters[0]);
         self::assertInstanceOf(Checkstyle::class, $formatters[1]);
         self::assertInstanceOf(GithubAction::class, $formatters[2]);
