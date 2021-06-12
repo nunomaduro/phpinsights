@@ -59,7 +59,7 @@ jobs:
             - name: Install PHPInsights
               working-directory: ./project
               run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
+              continue-on-error: true
             - name: Launch PHPInsights
               working-directory: ./project
               run: php vendor/bin/phpinsights -n --disable-security-check --ansi
