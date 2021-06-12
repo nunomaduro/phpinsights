@@ -9,7 +9,6 @@ use Composer\Factory;
 use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Package\Locker;
-use Composer\Repository\RepositoryManager;
 
 /**
  * @internal
