@@ -22,7 +22,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
-        "composer/composer": "^1.7 || ^2.0",
+        "composer/composer": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.0.0",
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2",
@@ -109,10 +109,11 @@
         "website:copy-changelog": "Copy package changelog to the website",
         "website:copy-logo": "Copy logo from art directory to the website",
         "rector:test": "Run the rector tests.",
+        "csfixer:test": "Run the PhpCsFixer tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
         "insights": "Run the phpinsights tests",
-        "test": "Run all tests including phpstan, phpunit and ecs.",
+        "test": "Run all tests including phpstan, phpunit and phpcs.",
         "fix": "Run ecs, phpinsights and rector fixers."
     }
 }

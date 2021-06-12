@@ -49,12 +49,6 @@ final class ComposerLoader
             throw new \InvalidArgumentException('Unable to get content of ' . $composerPath);
         }
 
-        $lockerConstructor = new \ReflectionMethod(Locker::class, '__construct');
-
-        // In composer v2, RepositoryManager is no longer needed
-        /** @phpstan-ignore-next-line */
-        return $lockerConstructor->getParameters()[2]->getType()->getName() === RepositoryManager::class
-            ? new Locker($io, new JsonFile($lockFile, null, $io), self::$composer->getRepositoryManager(), self::$composer->getInstallationManager(), $composerContent)
-            : new Locker($io, new JsonFile($lockFile, null, $io), self::$composer->getInstallationManager(), $composerContent);
+        return new Locker($io, new JsonFile($lockFile, null, $io), self::$composer->getInstallationManager(), $composerContent);
     }
 }
