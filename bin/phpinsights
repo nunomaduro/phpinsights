@@ -6,6 +6,13 @@ declare(strict_types=1);
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use Symfony\Component\Console\Application;
 
+if (!defined('T_MATCH')) {
+    // Avoid conflict using php-codesniffer and php-cs-fixer together.
+    // codesniffer register this constant with string, cs-fixer v3 expect it as int
+    // @TODO: Drop when require PHP8.0+
+    define('T_MATCH', 341);
+}
+
 (static function () {
     require file_exists(__DIR__ . '/../vendor/autoload.php')
         ? __DIR__ . '/../vendor/autoload.php'
