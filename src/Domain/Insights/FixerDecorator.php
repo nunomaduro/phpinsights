@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Insight as InsightContract;
 use NunoMaduro\PhpInsights\Domain\Details;
 use NunoMaduro\PhpInsights\Domain\Helper\Files;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
 
@@ -136,6 +137,11 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
         $diff = trim(substr($diff, 8));
 
         $this->errors[] = Details::make()->setFile($file)->setDiff($diff)->setMessage($diff);
+    }
+
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return $this->fixer->getDefinition();
     }
 
     private function skipFilesFromExcludedFiles(SplFileInfo $file): bool

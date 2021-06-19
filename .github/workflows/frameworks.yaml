@@ -15,7 +15,7 @@ jobs:
                 os: [ubuntu-latest]
                 version: ['^4.4', '@stable', '@dev'] # Test current LTS, current release, and future release
                 php: ['7.4', '8.0']
-                composer-version: [v1, v2]
+                composer-version: [v2]
                 exclude:
                     - version: '^4.4'
                       php: '8.0'
@@ -44,7 +44,6 @@ jobs:
               run: |
                   composer config name phpinsights/symfony-tester
                   composer config description "Symfony test"
-                  composer require composer/composer:^${{ matrix.composer-version }}
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Linking library
               working-directory: ./project
@@ -60,7 +59,7 @@ jobs:
             - name: Install PHPInsights
               working-directory: ./project
               run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
+              continue-on-error: true
             - name: Launch PHPInsights
               working-directory: ./project
               run: php vendor/bin/phpinsights -n --disable-security-check --ansi
@@ -77,7 +76,7 @@ jobs:
                 os: [ubuntu-latest]
                 version: ['^7.0', '^8.0']
                 php: ['7.4', '8.0']
-                composer-version: [v1, v2]
+                composer-version: [v2]
                 exclude:
                     - version: '^7.0'
                       php: '8.0'
