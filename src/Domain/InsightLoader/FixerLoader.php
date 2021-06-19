@@ -9,8 +9,8 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Contracts\InsightLoader;
 use NunoMaduro\PhpInsights\Domain\Insights\FixerDecorator;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\Fixer\WhitespacesAwareFixerInterface;
 use PhpCsFixer\WhitespacesFixerConfig;
 
 /**
@@ -39,7 +39,7 @@ final class FixerLoader implements InsightLoader
         }
 
         if (isset($config['indent'])) {
-            if ($fixer instanceof WhitespacesAwareFixerInterface) {
+            if ($fixer instanceof WhitespacesAwareFixerInterface && is_string($config['indent'])) {
                 $fixerConfig = new WhitespacesFixerConfig($config['indent']);
                 $fixer->setWhitespacesConfig($fixerConfig);
             }
