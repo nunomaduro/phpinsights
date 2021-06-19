@@ -27,19 +27,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Path to phpstan with extensions, that PHPSTan in Rector uses to determine types
     //$parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, getcwd() . '/phpstan.neon.dist');
 
-    $parameters->set(Option::SETS, [
-        SetList::ARRAY_STR_FUNCTIONS_TO_STATIC_CALL,
-        SetList::CODE_QUALITY,
-        SetList::DEAD_CODE,
-        SetList::DOCTRINE_CODE_QUALITY,
-        SetList::EARLY_RETURN,
-        SetList::PHP_71,
-        SetList::PHP_72,
-        SetList::PHP_73,
-        SetList::PHP_74,
-        SetList::PHPUNIT_CODE_QUALITY,
-    ]);
+    $containerConfigurator->import(SetList::CODE_QUALITY);
+    $containerConfigurator->import(SetList::DEAD_CODE);
+    $containerConfigurator->import(SetList::EARLY_RETURN);
+    $containerConfigurator->import(SetList::PHP_71);
+    $containerConfigurator->import(SetList::PHP_72);
+    $containerConfigurator->import(SetList::PHP_73);
+    $containerConfigurator->import(SetList::PHP_74);
+
     $parameters->set(Option::SKIP, [
         \Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector::class,
+        \Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector::class,
     ]);
 };

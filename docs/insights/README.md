@@ -124,3 +124,12 @@ For example, to remove "Unused Parameters" Insight only for some file:
     ],
 ```
 
+<Badge text="^2.0"/> For insights that come from PHP-CS-Fixer and implements `WhitespacesAwareFixerInterface`, you can also configure the indentation to respect: 
+
+```php
+    'configure' => [
+        \PhpCsFixer\Fixer\Basic\BraceFixer::class => [
+            'indent' => '  ',
+		],
+    ],
+```

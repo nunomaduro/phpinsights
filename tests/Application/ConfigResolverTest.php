@@ -17,7 +17,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Tests\Fakes\FakeInput;
 
 final class ConfigResolverTest extends TestCase
@@ -27,7 +26,6 @@ final class ConfigResolverTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->baseFixturePath = dirname(__DIR__) . DIRECTORY_SEPARATOR .
             'Fixtures' . DIRECTORY_SEPARATOR . 'ConfigResolver' . DIRECTORY_SEPARATOR;
     }
@@ -124,7 +122,7 @@ final class ConfigResolverTest extends TestCase
 
     public function testUnknownPresetThrowException(): void
     {
-        $this->expectException(InvalidOptionsException::class);
+        $this->expectException(InvalidConfiguration::class);
 
         $config = ['preset' => 'UnknownPreset'];
 

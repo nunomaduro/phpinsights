@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Application\Console\Commands\AnalyseCommand;
 use NunoMaduro\PhpInsights\Application\Console\Definitions\AnalyseDefinition;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
+use NunoMaduro\PhpInsights\Domain\Exceptions\InvalidConfiguration;
 use NunoMaduro\PhpInsights\Domain\Kernel;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use RuntimeException;
@@ -43,11 +44,18 @@ final class InsightsCommand extends Command
         }
 
         $configuration = require $configPath;
-        /**
-         * @noRector Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector
-         */
         $configuration['fix'] = $this->hasOption('fix') && (bool) $this->option('fix') === true;
-        $configuration = ConfigResolver::resolve($configuration, $this->input);
+        try {
+            $configuration = ConfigResolver::resolve($configuration, $this->input);
+        } catch (InvalidConfiguration $exception) {
+            $this->output->writeln([
+                '',
+                '  <bg=red;options=bold> Invalid configuration </>',
+                '    <fg=red>•</> <options=bold>' . $exception->getMessage() . '</>',
+                '',
+            ]);
+            return 1;
+        }
 
         $container = Container::make();
         if (! $container instanceof \League\Container\Container) {

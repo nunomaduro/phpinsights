@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use PhpCsFixer\Diff\v3_0\Differ as BaseDiffer;
-use PhpCsFixer\Diff\v3_0\Output\StrictUnifiedDiffOutputBuilder;
+use PhpCsFixer\Diff\Differ as BaseDiffer;
+use PhpCsFixer\Diff\Output\StrictUnifiedDiffOutputBuilder;
 use PhpCsFixer\Differ\DifferInterface;
 
 final class Differ implements DifferInterface
@@ -14,10 +14,12 @@ final class Differ implements DifferInterface
 
     public function __construct()
     {
+        $diffContext = Container::make()->get(Configuration::class)->getDiffContext();
+
         $outputBuilder = new StrictUnifiedDiffOutputBuilder([
             'collapseRanges' => true,
             'commonLineThreshold' => 1,
-            'contextLines' => 0,
+            'contextLines' => $diffContext,
             'fromFile' => '',
             'toFile' => '',
         ]);
@@ -28,7 +30,7 @@ final class Differ implements DifferInterface
     /**
      * {@inheritdoc}
      */
-    public function diff($old, $new): string
+    public function diff(string $old, string $new, ?\SplFileInfo $file = null): string
     {
         return $this->differ->diff($old, $new);
     }

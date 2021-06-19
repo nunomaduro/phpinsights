@@ -42,6 +42,7 @@ parameters:
             message: '#generic class ReflectionClass#'
             path: src/Domain/Reflection.php
         - '#NunoMaduro\\PhpInsights\\Domain\\File::addFixableError#'
+        - '#NunoMaduro\\PhpInsights\\Domain\\Differ#'
         - '#iterable type PhpCsFixer\\Tokenizer\\Tokens#'
         - '#Method NunoMaduro\\PhpInsights\\Application\\Console\\Definitions\\BaseDefinition::get\(\) is not final#'
         -
@@ -52,7 +53,7 @@ parameters:
             message: "#^Parameter \\#.* of class Composer\\\\Package\\\\Locker constructor expects .*$#"
             count: 3
             path: src/Domain/ComposerLoader.php
-
+        - "#^Parameter \\#1 \\$input of function array_flip expects array\\<int\\|string\\>, array\\<string, array\\|float\\|int\\|string\\> given\\.$#"
     bootstrapFiles:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
