@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Minimal PHP version is now PHP 7.4 ([#391](https://github.com/nunomaduro/phpinsights/pull/391))
 - Support multiple path to analyse ([#384](https://github.com/nunomaduro/phpinsights/pull/384))
 - Autofixer ([#337](https://github.com/nunomaduro/phpinsights/pull/337))
-- Syntax check Insight is now using [PHP-Parallel-lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint) ([#373](https://github.com/nunomaduro/phpinsights/pull/373), [#437](https://github.com/nunomaduro/phpinsights/pull/437)) 
+- Syntax check Insight is now using [PHP-Parallel-lint](https://github.com/php-parallel-lint/PHP-Parallel-Lint) ([#373](https://github.com/nunomaduro/phpinsights/pull/373), [#437](https://github.com/nunomaduro/phpinsights/pull/437), [#487](https://github.com/nunomaduro/phpinsights/pull/487)) 
 - Cache on analysis ([#407](https://github.com/nunomaduro/phpinsights/pull/407))
 - Allow to override preset config ([#420](https://github.com/nunomaduro/phpinsights/pull/420))
 - Support Composer v2 ([#433](https://github.com/nunomaduro/phpinsights/pull/433), [#442](https://github.com/nunomaduro/phpinsights/pull/442))
@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Allow to use `version` in composer.json ([#473](https://github.com/nunomaduro/phpinsights/pull/473)) 
 - Upgrade to [Slevomat/Coding-standard v7](https://github.com/slevomat/coding-standard) ([#477](https://github.com/nunomaduro/phpinsights/pull/477))
 - New option to show summary only ([#481](https://github.com/nunomaduro/phpinsights/pull/481))
+- Support PHP-CS-Fixer v3 ([#490](https://github.com/nunomaduro/phpinsights/pull/490))
+- CodeClimate Formatter ([#498](https://github.com/nunomaduro/phpinsights/pull/498))
+- Configuring Fixers indentation ([#502](https://github.com/nunomaduro/phpinsights/pull/502))
+- Diff output configurable ([#482](https://github.com/nunomaduro/phpinsights/pull/482))
 
 ### Fixed
 - Performance issues ([#382](https://github.com/nunomaduro/phpinsights/pull/382), [#387](https://github.com/nunomaduro/phpinsights/pull/387), [#405](https://github.com/nunomaduro/phpinsights/pull/405))
@@ -32,12 +36,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Refactoring code ([#391](https://github.com/nunomaduro/phpinsights/pull/391), [#393](https://github.com/nunomaduro/phpinsights/pull/393))
-- Process Security Checks at during the project inspection ([#406](https://github.com/nunomaduro/phpinsights/pull/406)) 
+- Process Security Checks during the project inspection ([#406](https://github.com/nunomaduro/phpinsights/pull/406)) 
 - Drop Travis-CI and use GithubAction ([#448](https://github.com/nunomaduro/phpinsights/pull/448))
-- Drop `object-calisthenics/phpcs-calisthenics-rules` dependency ([#477](https://github.com/nunomaduro/phpinsights/pull/477)) 
+- Drop `object-calisthenics/phpcs-calisthenics-rules` dependency ([#477](https://github.com/nunomaduro/phpinsights/pull/477))
 
-## Deprecated
-- Some insights are 
+### Deprecated
+- Some Insights hare now deprecated or namespace changed. Find them [here (#477)][#477](https://github.com/nunomaduro/phpinsights/pull/477)
 
 ## [v1.14.1]
 ### Changed
