@@ -159,7 +159,7 @@ This sniff checks the size of functions
 ```
 </details>
 
-**Insight Class v2.0**: `SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff`
+**Insight Class v2.0**: `SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff`
 
 <details>
     <summary>Configuration</summary>
