@@ -46,7 +46,6 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
             implode(' ', $this->getShellExcludeArgs()),
             $toAnalyse
         );
-
         $process = Process::fromShellCommandline($cmdLine);
 
         if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
@@ -69,16 +68,16 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
     private function getBinary(): string
     {
-        $parentPath = $this->vendorParentPathFind();
+        $parentPath = $this->composerBinaryFolderFind(dirname(__DIR__, 3));
 
         if (DIRECTORY_SEPARATOR === '\\') {
-            return $parentPath . '\vendor\bin\parallel-lint.bat';
+            return $parentPath . '\parallel-lint.bat';
         }
 
         return sprintf(
             '%s %s',
             escapeshellcmd((string) Config::getExecutablePath('php')),
-            escapeshellarg($parentPath . '/vendor/bin/parallel-lint')
+            escapeshellarg($parentPath . '/parallel-lint')
         );
     }
 
@@ -113,12 +112,20 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         return '.';
     }
 
-    private function vendorParentPathFind(): string
+    /**
+     * Recursively search for composer binary folder path
+     */
+    private function composerBinaryFolderFind(string $directory): string
     {
-        $baseProjectPath = \dirname(__DIR__, 3);
-        if (file_exists($baseProjectPath . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php')) {
-            return $baseProjectPath;
+        $composerBinaryFolder = DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'bin';
+
+        if (file_exists($directory . $composerBinaryFolder)) {
+            return $directory . $composerBinaryFolder;
         }
-        return \dirname(__DIR__, 6);
+        if (dirname($directory) === $directory) {
+            throw new \RuntimeException('Unable to find composer binary folder');
+        }
+
+        return $this->composerBinaryFolderFind(dirname($directory));
     }
 }
