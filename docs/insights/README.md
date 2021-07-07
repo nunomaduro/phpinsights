@@ -66,7 +66,7 @@ For example, if you want to enable "Fully Qualified ClassName In Annotation":
 
 ```php
     'add' => [
-        \NunoMaduro\PhpInsights\Domain\Metrics\Code\Comment::class => [
+        \NunoMaduro\PhpInsights\Domain\Metrics\Code\Comments::class => [
             \SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff::class
         ]
     ]
