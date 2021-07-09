@@ -58,7 +58,7 @@ php artisan insights
 
 You can also use `phpinsights` via Docker:
 ```bash
-docker run -it --rm -v $(pwd):/app nunomaduro/phpinsights
+docker run -it --rm -v "$(pwd):/app" nunomaduro/phpinsights
 ```
 
 ## Analyse a sub-directory or a specific file
