@@ -22,17 +22,17 @@ final class LocalFilesRepository implements FilesRepository
     /**
      * @var array<\Symfony\Component\Finder\SplFileInfo>
      */
-    private ?array $files = null;
-
-    /**
-     * @var array<mixed>
-     */
-    private ?array $fileList = null;
+    private array $files = [];
 
     /**
      * @var array<string>
      */
-    private ?array $directoryList = null;
+    private array $paths = [];
+
+    /**
+     * @var array<string>
+     */
+    private array $exclude = [];
 
     public function __construct(Finder $finder)
     {
@@ -44,84 +44,109 @@ final class LocalFilesRepository implements FilesRepository
         return (string) getcwd();
     }
 
+    /**
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
+     */
     public function getFiles(): array
     {
-        if ($this->files === null) {
-            $this->files = $this->getFilesList();
+        if (count($this->files) !== 0) {
+            return $this->files;
         }
 
-        return $this->files;
+        $withPathInfo = static function (string $path): array {
+            return [
+                'dirname' => $dirname = pathinfo($path, PATHINFO_DIRNAME),
+                'basename' => $basename = pathinfo($path, PATHINFO_BASENAME),
+                'full_path' => $dirname . DIRECTORY_SEPARATOR . $basename,
+                'is_file' => ! is_dir($path) && is_file($path),
+            ];
+        };
+
+        $paths = array_map($withPathInfo, $this->paths);
+
+        $directories = array_filter($paths, fn (array $path): bool => ! $path['is_file']);
+        $files = array_filter($paths, fn (array $path): bool => $path['is_file']);
+
+        return $this->files = array_merge(
+            $this->filesWithinDirectories($directories, $this->exclude),
+            $this->filesAtPaths($files)
+        );
     }
 
     public function within(array $paths, array $exclude = []): FilesRepository
     {
-        foreach ($paths as $path) {
-            $pathInfo = pathinfo($path);
-
-            if (! is_dir($path) && is_file($path)) {
-                $this->fileList['dirname'][] = $pathInfo['dirname'];
-                $this->fileList['basename'][] = $pathInfo['basename'];
-                $this->fileList['full_path'][] = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'];
-            } else {
-                $this->directoryList[] = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'];
-            }
-        }
-
-        $directoryFiles = $this->directoryList === null ? [] : $this->getDirectoryFiles($exclude);
-        $singleFiles = $this->fileList === null ? [] : $this->getSingleFiles();
-
-        $this->files = array_merge($directoryFiles, $singleFiles);
+        $this->paths = $paths;
+        $this->exclude = $exclude;
 
         return $this;
     }
 
     /**
+     * @param array<array> $directories
      * @param array<string> $exclude
      *
-     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    private function getDirectoryFiles(array $exclude = []): array
+    private function filesWithinDirectories(array $directories, array $exclude = []): array
     {
-        $this->finder = Finder::create()
+        if (count($directories) === 0) {
+            return [];
+        }
+
+        $directories = array_unique(array_column($directories, 'full_path'));
+
+        $finder = (clone $this->finder)
             ->files()
             ->name(['*.php'])
             ->exclude(self::DEFAULT_EXCLUDE)
             ->notName(['*.blade.php'])
             ->ignoreUnreadableDirs()
-            ->in($this->directoryList ?? [])
+            ->in($directories)
             ->notPath($exclude);
 
         foreach ($exclude as $value) {
             if (substr($value, -4) === '.php') {
-                $this->finder->notName($value);
+                $finder->notName($value);
             }
         }
 
-        return $this->getFilesList();
+        return $this->getFilesList($finder);
     }
 
     /**
-     * @return array<string, \Symfony\Component\Finder\SplFileInfo>
+     * @param array<array> $paths
+     *
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    private function getSingleFiles(): array
+    private function filesAtPaths(array $paths): array
     {
-        $this->finder = Finder::create()
-            ->in($this->fileList['dirname'] ?? [])
-            ->name($this->fileList['basename'] ?? '')
-            ->filter(fn (SplFileInfo $file): bool => in_array(
-                $file->getPathname(),
-                $this->fileList['full_path'] ?? '',
-                true
-            ));
+        if (count($paths) === 0) {
+            return [];
+        }
 
-        return $this->getFilesList();
+        $directories = array_unique(array_column($paths, 'dirname'));
+        $basenames = array_unique(array_column($paths, 'basename'));
+        $full_paths = array_column($paths, 'full_path');
+
+        $fullPathIsMatched = fn (SplFileInfo $file): bool => in_array(
+            $file->getPathname(),
+            $full_paths,
+            true
+        );
+
+        $finder = (clone $this->finder)
+            ->in($directories)
+            ->name($basenames)
+            ->filter($fullPathIsMatched);
+
+        return $this->getFilesList($finder);
     }
 
     /**
      * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    private function getFilesList(): array
+    private function getFilesList(Finder $finder): array
     {
-        return iterator_to_array($this->finder->getIterator(), true);
+        return iterator_to_array($finder->getIterator(), true);
     }
 }
