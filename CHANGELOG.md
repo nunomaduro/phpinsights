@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.0.1]
+### Fixed
+- Fix double slash when inspect absolute folder path at first level of root ([#509](https://github.com/nunomaduro/phpinsights/pull/509))
+- Fix retrieving composer binary path in SyntaxCheck ([#505](https://github.com/nunomaduro/phpinsights/pull/505))
+- Fix in documentations ([#507](https://github.com/nunomaduro/phpinsights/pull/507), [#515](https://github.com/nunomaduro/phpinsights/pull/515))
+
+## Changed
+- More robust docker example in doc ([#516](https://github.com/nunomaduro/phpinsights/pull/516))
+
 ## [v2.0.0]
 ### Added
 - Minimal PHP version is now PHP 7.4 ([#391](https://github.com/nunomaduro/phpinsights/pull/391))
