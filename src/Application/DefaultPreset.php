@@ -28,6 +28,7 @@ final class DefaultPreset implements PresetContract
                 'bower_components',
                 'node_modules',
                 'vendor',
+                'vendor-bin',
                 '.phpstorm.meta.php',
             ],
             'add' => [
