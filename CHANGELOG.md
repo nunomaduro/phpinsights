@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix retrieving composer binary path in SyntaxCheck ([#505](https://github.com/nunomaduro/phpinsights/pull/505))
 - Fix in documentations ([#507](https://github.com/nunomaduro/phpinsights/pull/507), [#515](https://github.com/nunomaduro/phpinsights/pull/515))
 
-## Changed
+### Changed
 - More robust docker example in doc ([#516](https://github.com/nunomaduro/phpinsights/pull/516))
 
 ## [v2.0.0]
