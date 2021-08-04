@@ -51,7 +51,7 @@ jobs:
             - uses: actions/checkout@v2
             - uses: shivammathur/setup-php@v1
               with:
-                  php-version: 7.3
+                  php-version: 8.0
             - run: composer install --prefer-dist --no-progress --no-suggest
             - run: vendor/bin/phpinsights -n --ansi --format=github-action
 ```
