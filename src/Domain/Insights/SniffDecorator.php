@@ -39,7 +39,7 @@ final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
         $this->sniff = $sniff;
         $this->excludedFiles = [];
 
-        if (count($this->getIgnoredFilesPath()) > 0) {
+        if ($this->getIgnoredFilesPath() !== []) {
             $this->excludedFiles = Files::find($dir, $this->getIgnoredFilesPath());
         }
     }
@@ -83,7 +83,7 @@ final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
      */
     public function hasIssue(): bool
     {
-        return count($this->errors) !== 0;
+        return $this->errors !== [];
     }
 
     /**

@@ -28,7 +28,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
     public function hasIssue(): bool
     {
-        return \count($this->details) > 0;
+        return $this->details !== [];
     }
 
     public function getDetails(): array

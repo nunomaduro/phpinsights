@@ -31,7 +31,7 @@ final class ComposerMustBeValid extends Insight implements HasDetails
             $this->process();
         }
 
-        return count($this->details) > 0;
+        return $this->details !== [];
     }
 
     public function getTitle(): string

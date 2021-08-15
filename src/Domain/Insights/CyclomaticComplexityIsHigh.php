@@ -20,7 +20,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails, Gl
 
     public function hasIssue(): bool
     {
-        return count($this->details) > 0;
+        return $this->details !== [];
     }
 
     public function getTitle(): string
@@ -39,7 +39,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails, Gl
     public function process(): void
     {
         // Exclude in collector all excluded files
-        if (count($this->excludedFiles) > 0) {
+        if ($this->excludedFiles !== []) {
             $this->collector->excludeComplexityFiles($this->excludedFiles);
         }
         $complexityLimit = $this->getMaxComplexity();

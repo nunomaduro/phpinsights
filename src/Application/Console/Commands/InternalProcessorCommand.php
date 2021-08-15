@@ -66,7 +66,7 @@ final class InternalProcessorCommand
         if (! \is_array($files)) {
             return 0;
         }
-        if (\count($files) === 0) {
+        if ($files === []) {
             return 0;
         }
 

@@ -11,7 +11,7 @@ final class ForbiddenNormalClasses extends Insight implements HasDetails
 {
     public function hasIssue(): bool
     {
-        return count($this->getDetails()) > 0;
+        return $this->getDetails() !== [];
     }
 
     public function getTitle(): string

@@ -45,7 +45,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
         $this->fixer = $fixer;
         $this->exclude = [];
 
-        if (count($exclude) > 0) {
+        if ($exclude !== []) {
             $this->exclude = Files::find($dir, $exclude);
         }
     }
@@ -93,7 +93,7 @@ final class FixerDecorator implements FixerInterface, InsightContract, DetailsCa
      */
     public function hasIssue(): bool
     {
-        return count($this->errors) !== 0;
+        return $this->errors !== [];
     }
 
     /**

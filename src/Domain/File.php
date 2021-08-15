@@ -109,7 +109,7 @@ final class File extends BaseFile
         $severity,
         $isFixable = false
     ): bool {
-        $message = count($data) > 0 ? vsprintf($message, $data) : $message;
+        $message = $data !== [] ? vsprintf($message, $data) : $message;
 
         if ($isFixable && $this->isFixable) {
             if ($this->fixEnabled) {

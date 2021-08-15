@@ -16,6 +16,6 @@ final class Globally implements HasPercentage
             - $collector->getInterfaces()
             - count($collector->getTraits());
 
-        return count($collector->getFiles()) > 0 ? $value / count($collector->getFiles()) * 100 : 0;
+        return $collector->getFiles() !== [] ? $value / count($collector->getFiles()) * 100 : 0;
     }
 }

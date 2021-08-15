@@ -41,6 +41,6 @@ final class Classes implements HasValue, HasInsights
 
     public function getPercentage(Collector $collector): float
     {
-        return count($collector->getFiles()) > 0 ? $collector->getClasses() / count($collector->getFiles()) * 100 : 0;
+        return $collector->getFiles() !== [] ? $collector->getClasses() / count($collector->getFiles()) * 100 : 0;
     }
 }
