@@ -49,7 +49,7 @@ jobs:
         name: PHP Insights checks
         steps:
             - uses: actions/checkout@v2
-            - uses: shivammathur/setup-php@v1
+            - uses: shivammathur/setup-php@v2
               with:
                   php-version: 8.0
             - run: composer install --prefer-dist --no-progress --no-suggest
