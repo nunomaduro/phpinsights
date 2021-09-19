@@ -55,7 +55,7 @@ final class AnalyseDefinition extends BaseDefinition
                 'format',
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
-                'Format to output the result in [console, json, checkstyle, codeclimate]',
+                'Format to output the result in [console, json, checkstyle, codeclimate, github-action]',
                 ['console']
             ),
             new InputOption(
