@@ -81,7 +81,7 @@ final class CodeClimate implements Formatter
                 /** @var Details $detail */
                 foreach ($details as $detail) {
                     $data[] = [
-                        'checkname' => $insight->getInsightClass(),
+                        'check_name' => $insight->getInsightClass(),
                         'description' => $detail->hasMessage() ? $detail->getMessage() : null,
                         'fingerprint' => md5(
                             implode(
@@ -99,6 +99,7 @@ final class CodeClimate implements Formatter
                             ],
                         ],
                         'category' => $climateCategories[$category],
+                        'severity' => 'minor',
                     ];
                 }
             }
