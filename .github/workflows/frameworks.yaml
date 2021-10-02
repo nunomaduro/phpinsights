@@ -14,13 +14,10 @@ jobs:
             matrix:
                 os: [ubuntu-latest]
                 version: ['^4.4', '@stable', '@dev'] # Test current LTS, current release, and future release
-                php: ['7.4', '8.0']
+                php: ['7.4', '8.0', '8.1']
                 composer-version: [v2]
-                exclude:
-                    - version: '^4.4'
-                      php: '8.0'
         env:
-            allow_failure: ${{ matrix.version == '@dev' || matrix.php == '8.0' }}
+            allow_failure: ${{ matrix.version == '@dev' }}
         name: "Symfony skeleton:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
@@ -58,7 +55,7 @@ jobs:
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
-              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi
+              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
               continue-on-error: true
             - name: Launch PHPInsights
               working-directory: ./project
@@ -74,14 +71,14 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^7.0', '^8.0']
-                php: ['7.4', '8.0']
+                version: ['^8.0', 'dev-master']
+                php: ['7.4', '8.0', '8.1']
                 composer-version: [v2]
                 exclude:
-                    - version: '^7.0'
-                      php: '8.0'
+                    -   version: 'dev-master'
+                        php: '7.4'
         env:
-            allow_failure: ${{ matrix.php == '8.0' }}
+            allow_failure: ${{ matrix.php == '8.0' || matrix.version == 'dev-master' }}
         name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
@@ -123,7 +120,7 @@ jobs:
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
-              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi
+              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Artisan publish
               working-directory: ./project
