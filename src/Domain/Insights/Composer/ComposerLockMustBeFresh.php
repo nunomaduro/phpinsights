@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights\Composer;
 
+use Composer\Package\Locker;
 use NunoMaduro\PhpInsights\Domain\ComposerLoader;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -21,7 +22,7 @@ final class ComposerLockMustBeFresh extends Insight implements HasDetails
             $composer = ComposerLoader::getInstance($this->collector);
             $locker = $composer->getLocker();
 
-            if (null === $locker) {
+            if (! $locker instanceof Locker) {
                 return true;
             }
             if (! $locker->isLocked()) {
