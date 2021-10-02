@@ -1,6 +1,6 @@
 # Configure Insights
 
-The default configuration attached with `PHP Insights` is opiniated and may be not convenient for you.
+The default configuration attached with `PHP Insights` is opinionated and may be not convenient for you.
 
 Here you will learn how to configure PHPInsights for your project. 
 
