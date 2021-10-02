@@ -47,7 +47,7 @@ final class FixerLoader implements InsightLoader
             unset($config['indent']);
         }
 
-        if ($fixer instanceof ConfigurableFixerInterface && count($config) > 0) {
+        if ($fixer instanceof ConfigurableFixerInterface && $config !== []) {
             $fixer->configure($config);
         }
 

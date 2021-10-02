@@ -149,7 +149,7 @@ final class Runner
             $runningProcesses[] = $process;
         }
 
-        while (\count($runningProcesses) > 0) {
+        while ($runningProcesses !== []) {
             foreach ($runningProcesses as $i => $runningProcess) {
                 if (! $runningProcess->isRunning()) {
                     $progressBar->advance(\count($filesByThread[$i]));

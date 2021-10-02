@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
 use Rector\Core\ValueObject\PhpVersion;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [__DIR__ . '/src', __DIR__ . '/bin']);
-    $parameters->set(Option::AUTOLOAD_PATHS, [
+    $parameters->set(Option::BOOTSTRAP_FILES, [
         __DIR__ . '/vendor/squizlabs/php_codesniffer/autoload.php',
     ]);
 
@@ -21,8 +22,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::IMPORT_SHORT_CLASSES, false);
     // skip classes used in PHP DocBlocks, like in /** @var \Some\Class */ [default: true]
     $parameters->set(Option::IMPORT_DOC_BLOCKS, false);
-    // Run Rector only on changed files
-    $parameters->set(Option::ENABLE_CACHE, true);
 
     // Path to phpstan with extensions, that PHPSTan in Rector uses to determine types
     //$parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, getcwd() . '/phpstan.neon.dist');
@@ -38,5 +37,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::SKIP, [
         \Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector::class,
         \Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector::class,
+        RemoveUnusedPromotedPropertyRector::class,
     ]);
 };
