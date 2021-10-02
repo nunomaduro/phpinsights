@@ -192,7 +192,7 @@ This sniff detects statement conditions that are only set to one of the constant
 
 ## Useless Overriding Method <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff detects the use of methods that only call their parent classes's method with the same name and arguments.
+This sniff detects the use of methods that only call their parent class's method with the same name and arguments.
 These methods are not required.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMethodSniff`
@@ -223,7 +223,7 @@ This sniff discourages the use of the PHP `goto` language construct.
 
 ## No silenced errors <Badge text="^1.0"/> <Badge text="Code\Code" type="warn"/>
 
-This sniff detects when any code prefixed with an asperand is encountered.
+This sniff detects when any code prefixed with an ampersand is encountered.
 
 **Insight Class**: `PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff`
 
