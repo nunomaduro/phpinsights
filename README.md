@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nunomaduro/phpinsights/master/art/logo.gif" width="350" alt="PHP Insights">
-  <img src="https://raw.githubusercontent.com/nunomaduro/phpinsights/master/art/preview.png" width="882" alt="PHP Insights Preview">
+  <img src="/art/logo.gif" width="350" alt="PHP Insights">
+  <img src="/art/preview.png" width="882" alt="PHP Insights Preview">
   <p align="center">
     <a href="https://travis-ci.org/nunomaduro/phpinsights"><img src="https://img.shields.io/travis/nunomaduro/phpinsights/master.svg" alt="Build Status"></a>
     <a href="https://packagist.org/packages/nunomaduro/phpinsights"><img src="https://poser.pugx.org/nunomaduro/phpinsights/d/total.svg" alt="Total Downloads"></a>
