@@ -58,6 +58,6 @@ parameters:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
     reportUnmatchedIgnoredErrors: false
 
-    excludes_analyse:
+    excludePaths:
         - %rootDir%/../../../tests/*/Fixtures/*
         - %rootDir%/../../../tests/Fixtures/*
