@@ -13,7 +13,7 @@ jobs:
             fail-fast: true
             matrix:
                 os: [ubuntu-latest]
-                version: ['^4.4', '@stable', '@dev'] # Test current LTS, current release, and future release
+                version: ['^6.0', '^5.0', '^4.4', '@stable', '@dev'] # Test current LTS, current release, and future release
                 php: ['7.4', '8.0', '8.1']
                 composer-version: [v2]
         env:
@@ -71,7 +71,7 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^8.0', 'dev-master']
+                version: ['^9.0', '^8.0', 'dev-master']
                 php: ['7.4', '8.0', '8.1']
                 composer-version: [v2]
                 exclude:
