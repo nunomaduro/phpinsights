@@ -54,7 +54,7 @@ final class ComposerMustBeValid extends Insight implements HasDetails
             [$errors, $publishErrors, $warnings] = $validator->validate(ComposerFinder::getPath($this->collector), ValidatingArrayLoader::CHECK_ALL);
         }
 
-        foreach (array_merge($errors, $publishErrors, $warnings) as $issue) {
+        foreach ([...$errors, ...$publishErrors, ...$warnings] as $issue) {
             if (strpos($issue, ' : ') !== false) {
                 $issue = explode(' : ', $issue)[1];
             }
