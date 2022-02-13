@@ -30,7 +30,8 @@ final class ForbiddenGlobals extends Insight implements HasDetails
         $details = [];
 
         foreach ($this->collector->getGlobalVariableAccesses() as $file => $global) {
-            if ($this->shouldSkipFile($file)) {
+            $filePath = current(explode(':', $file));
+            if ($this->shouldSkipFile($filePath)) {
                 continue;
             }
 
