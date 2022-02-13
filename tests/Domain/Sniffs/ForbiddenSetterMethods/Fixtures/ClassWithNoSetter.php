@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Domain\Insights\ForbiddenSetterMethods\Fixtures;
+namespace Tests\Domain\Sniffs\ForbiddenSetterMethods\Fixtures;
 
 class ClassWithNoSetter
 {
