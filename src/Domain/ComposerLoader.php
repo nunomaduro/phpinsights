@@ -27,7 +27,7 @@ final class ComposerLoader
 
             $io = new NullIO();
             $composerPath = ComposerFinder::getPath($collector);
-            self::$composer = (new Factory())->createComposer($io, ComposerFinder::getPath($collector), false, null, false);
+            self::$composer = (new Factory())->createComposer($io, ComposerFinder::getPath($collector), false, null, true);
             self::$composer->setLocker(self::getLocker($composerPath, $io));
         }
 
