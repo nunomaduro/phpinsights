@@ -39,14 +39,6 @@ final class InsightCollection
     }
 
     /**
-     * @return array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>
-     */
-    public function getInsightsPerMetric(): array
-    {
-        return $this->insightsPerMetric;
-    }
-
-    /**
      * Gets all insights.
      *
      * @return array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>
