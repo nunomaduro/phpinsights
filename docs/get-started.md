@@ -133,10 +133,17 @@ For changing the output format you can add the `format` flag. The following form
 - console
 - json
 - checkstyle
+- html
 
 ```bash
 ./vendor/bin/phpinsights analyse --format=json
 ```
+
+::: Twig for HTML
+The HTML formatter requires Twig to render.
+So you have to add it do your dependencies if you want to use it.
+`composer require --dev twig/twig: ^2.0`
+:::
 
 ## Saving output to file
 
@@ -145,6 +152,7 @@ A common use case is parsing the output formatted as json to a json file.
 
 ```bash
 ./vendor/bin/phpinsights analyse --format=json > test.json
+./vendor/bin/phpinsights analyse --format=html > test.html
 ```
 
 When piping the result remember to add the no interaction flag `-n`, as the part where you need to interact is also getting piped. (the json format does not have any interaction)

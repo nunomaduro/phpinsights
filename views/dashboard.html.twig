@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
+
+    <title>PHP Insights</title>
+</head>
+<body>
+<div class="container-fluid">
+
+    <h1>PHP Insights</h1>
+
+    <p>
+        <time datetime="{{ 'now'|date('Y-m-d H:i:s') }}">{{ 'now'|date('Y-m-d') }}</time>
+        <code>{{ dir }}</code>
+    </p>
+
+    <div class="row">
+        <div class="col">{% include 'partials/stats_per_metric.html.twig' with {'id': 'quality', 'title': 'code quality', 'score': results.codeQuality} %}</div>
+        <div class="col">{% include 'partials/stats_per_metric.html.twig' with {'id': 'complexity', 'title': 'complexity', 'score': results.complexity} %}</div>
+        <div class="col">{% include 'partials/stats_per_metric.html.twig' with {'id': 'structure', 'title': 'structure', 'score': results.structure} %}</div>
+        <div class="col">{% include 'partials/stats_per_metric.html.twig' with {'id': 'style', 'title': 'style', 'score': results.style} %}</div>
+    </div>
+
+    <div class="alert alert-light">
+        score scale:
+        <span class="text-danger">■</span> 1 - 49
+        <span class="text-warning">■</span> 50 - 79
+        <span class="text-success">■</span> 80 - 100
+    </div>
+
+    {% include 'partials/insights_per_metric.html.twig' with {'id': 'quality', 'title': 'code quality', 'metricNamespacePart': '\\Code\\'} %}
+    {% include 'partials/insights_per_metric.html.twig' with {'id': 'complexity', 'title': 'complexity', 'metricNamespacePart': '\\Complexity\\'} %}
+    {% include 'partials/insights_per_metric.html.twig' with {'id': 'structure', 'title': 'structure', 'metricNamespacePart': '\\Architecture\\'} %}
+    {% include 'partials/insights_per_metric.html.twig' with {'id': 'style', 'title': 'style', 'metricNamespacePart': '\\Style\\'} %}
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha256-fzFFyH01cBVPYzl16KT40wqjhgPtq6FFUB6ckN2+GGw=" crossorigin="anonymous"></script>
+</body>
+</html>

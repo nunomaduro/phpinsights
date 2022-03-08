@@ -25,6 +25,7 @@ parameters:
         - '#Access to an undefined property PHP_CodeSniffer\\Sniffs\\Sniff::\$#'
         - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Json has an unused parameter \$input#'
         - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Checkstyle has an unused parameter \$input#'
+        - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Html has an unused parameter \$input#'
         - '#In method "NunoMaduro\\PhpInsights\\Domain\\File::process", caught "Throwable" must be rethrown#'
         - '#In method "NunoMaduro\\PhpInsights\\Domain\\FileProcessors\\FixerFileProcessor::processFile", caught "Throwable" must be rethrown#'
         - '#Empty catch block. If you are sure this is meant to be empty, please add a "// @ignoreException" comment in the catch block.#'

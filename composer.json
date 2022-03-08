@@ -46,10 +46,14 @@
         "phpunit/phpunit": "^8.0|^9.0",
         "rector/rector": "0.11.56",
         "symfony/var-dumper": "^4.2|^5.0|^6.0",
-        "thecodingmachine/phpstan-strict-rules": "^0.12.0"
+        "roave/no-floaters": "^1.1",
+        "symplify/easy-coding-standard": "^6.0",
+        "thecodingmachine/phpstan-strict-rules": "^0.11.0",
+        "twig/twig": "^2.0"
     },
     "suggest": {
-        "ext-simplexml": "It is needed for the checkstyle formatter"
+        "ext-simplexml": "It is needed for the checkstyle formatter",
+        "twig/twig": "Twig:^2.0 is needed to support the HTML formattter"
     },
     "autoload-dev": {
         "psr-4": {
