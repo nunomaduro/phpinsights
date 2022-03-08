@@ -20,7 +20,6 @@ final class FormatResolver
         'checkstyle' => Checkstyle::class,
         'github-action' => GithubAction::class,
         'codeclimate' => CodeClimate::class,
-        'html' => Html::class,
     ];
 
     public static function resolve(
