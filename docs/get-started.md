@@ -1,6 +1,6 @@
 # Get started
 
-> **Requires:** [PHP 7.2+](https://php.net/releases/)
+> **Requires:** [PHP 7.4+](https://php.net/releases/)
 
 First, install PHP Insights via the `Composer` package manager:
 ```bash
