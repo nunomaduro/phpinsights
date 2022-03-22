@@ -15,7 +15,7 @@ use Symfony\Component\Finder\Finder;
  */
 final class LocalFilesRepository implements FilesRepository
 {
-    public const DEFAULT_EXCLUDE = ['vendor', 'tests', 'Tests', 'test', 'Test'];
+    public const DEFAULT_EXCLUDE = ['vendor'];
 
     private Finder $finder;
 
