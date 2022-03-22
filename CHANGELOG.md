@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.2.0]
+### Fixed
+- Fix ComposerLoader ([#566](https://github.com/nunomaduro/phpinsights/pull/566))
+- Fix exclude ForbiddenGlobals sniff ([#562](https://github.com/nunomaduro/phpinsights/pull/562))
+
+### Changed
+- Bump docker to php 8.0 ([#570](https://github.com/nunomaduro/phpinsights/pull/570))
+
 ## [v2.1.0]
 ### Added
 - Support for Laravel 9
