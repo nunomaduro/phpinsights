@@ -6,7 +6,7 @@ For now the Complexity section is only one Insight in one Metric:
 
 ## Cyclomatic Complexity is high <Badge text="^1.0"/> <Badge text="Complexity" type="warn"/>
 
-This insight checks complexity cyclomatic on your classes. It raises an issue if complexity is over `5`.
+This insight checks complexity cyclomatic on your classes, the lower the score the easier your code is to understand. It raises an issue if complexity is over `5`.
 
 **Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh`
 
