@@ -741,7 +741,7 @@ This sniff orders the elements of classes/interfaces/traits.
         'method_protected',
         'method_private',  
     ],
-    'sortAlgorithm' => 'none' // possible values ['none', 'alpha']
+    'sort_algorithm' => 'none' // possible values ['none', 'alpha']
 ]
 ```
 </details>
