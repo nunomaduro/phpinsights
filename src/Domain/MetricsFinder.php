@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain;
 
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes as Architecture_Classes;
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer as Architecture_Composer;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Constants as Architecture_Constants;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Files as Architecture_Files;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Functions as Architecture_Functions;
@@ -40,7 +39,6 @@ final class MetricsFinder
             Code_Globally::class,
             Complexity_Complexity::class,
             Architecture_Classes::class,
-            Architecture_Composer::class,
             Architecture_Constants::class,
             Architecture_Files::class,
             Architecture_Functions::class,

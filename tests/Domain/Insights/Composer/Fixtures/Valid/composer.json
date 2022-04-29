@@ -1,7 +1,0 @@
-{
-    "name": "dummy/foo-package",
-    "description": "Hey look at me",
-    "type": "project",
-    "license": "MIT",
-    "require": {}
-}

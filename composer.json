@@ -22,7 +22,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-tokenizer": "*",
-        "composer/composer": "^2.0",
+        "composer/semver": "^3.3",
         "friendsofphp/php-cs-fixer": "^3.0.0",
         "justinrainbow/json-schema": "^5.1",
         "league/container": "^3.2|^4.2",
