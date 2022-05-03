@@ -1,5 +1,0 @@
-{
-    "require": {
-        "symfony/var-dumper": "4.3.0"
-    }
-}

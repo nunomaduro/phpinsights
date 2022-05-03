@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerLockMustBeFresh;
-use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
-use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName;
-use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustExist;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 
 /**
@@ -70,10 +66,6 @@ final class Kernel
     public static function getGlobalInsights(): array
     {
         return [
-            ComposerMustBeValid::class,
-            ComposerLockMustBeFresh::class,
-            ComposerMustContainName::class,
-            ComposerMustExist::class,
             ForbiddenSecurityIssues::class,
         ];
     }

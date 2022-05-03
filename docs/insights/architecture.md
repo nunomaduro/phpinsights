@@ -3,7 +3,6 @@
 The following insights are organised in different metrics :
 
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes` <Badge text="Architecture\Classes" type="warn" vertical="middle"/>
-* `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Composer` <Badge text="Architecture\Composer" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Constants` <Badge text="Architecture\Constants" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Files` <Badge text="Architecture\Files" type="warn" vertical="middle"/>
 * `NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Functions` <Badge text="Architecture\Functions" type="warn" vertical="middle"/>
@@ -94,42 +93,6 @@ This sniff reports use of superfluous prefix or suffix "Interface" for interface
 This sniff reports use of superfluous prefix or suffix "Abstract" for abstract classes.
 
 **Insight Class**: `SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff`
-
-## `composer.json` must exist <Badge text="^1.0"/> <Badge text="Architecture\Composer" type="warn"/>
-
-This insight verifies there is `composer.json`.
-
-**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustExist`
-
-## The name property in the `composer.json` <Badge text="^1.0"/> <Badge text="Architecture\Composer" type="warn"/>
-
-This insight checks if the name section in `composer.json` contains default values (e.g. `laravel/laravel` or `symfony/symfony`).
-
-**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustContainName`
-
-## Composer.json must be valid <Badge text="^1.7"/> <Badge text="Architecture\Composer" type="warn"/>
-
-This insight checks if the `composer.json` is valid.
-
-**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid`
-
-<details>
-   <summary>Configuration</summary>
-
-```php
-ComposerMustBeValid::class => [
-    //optional configuration value for composer version 2 only
-    //you can allow 'version' in your composer.json and disable the check of it so that you don't get an error
-    'composerVersionCheck' => 0,
-]
-```
-</details>
-
-## Composer.lock must be fresh <Badge text="^1.7"/> <Badge text="Architecture\Composer" type="warn"/>
-
-This insight verifies that the `composer.lock` is not outdated.
-
-**Insight Class**: `NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerLockMustBeFresh`
 
 ## Define `globals` is prohibited <Badge text="^1.0"/> <Badge text="Architecture\Constants" type="warn"/>
 

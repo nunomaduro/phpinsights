@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Application;
 
-use Composer\Semver\Semver;
-
 /**
  * @internal
- *
- * @see \Tests\Application\ComposerTest
  */
 final class Composer
 {
@@ -50,24 +46,5 @@ final class Composer
     public function getName(): string
     {
         return $this->config['name'] ?? '';
-    }
-
-    public function hasPhpVersion(): bool
-    {
-        return isset($this->getRequirements()['php']);
-    }
-
-    public function lowestPhpVersionIsGreaterThenOrEqualTo(string $version): bool
-    {
-        $composerVersion = $this->getPhpVersion();
-        preg_match("/\d+(\.\d+)/", $composerVersion, $matches);
-        $composerVersion = $matches[0];
-
-        return Semver::satisfies($composerVersion, $version);
-    }
-
-    private function getPhpVersion(): string
-    {
-        return $this->getRequirements()['php'];
     }
 }
