@@ -82,14 +82,18 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^8.0', 'dev-master']
+                version: ['^9.0', '^8.0', 'dev-master']
                 php: ['7.4', '8.0', '8.1']
                 composer-version: [v2]
                 exclude:
+                    -   version: '^9.0'
+                        php: '7.4'
                     -   version: 'dev-master'
                         php: '7.4'
+                    -   version: 'dev-master'
+                        php: '8.0'
         env:
-            allow_failure: ${{ matrix.php == '8.0' || matrix.version == 'dev-master' }}
+            allow_failure: ${{ matrix.php == '8.1' || matrix.version == 'dev-master' }}
         name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
