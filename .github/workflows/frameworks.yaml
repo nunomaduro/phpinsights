@@ -16,6 +16,13 @@ jobs:
                 version: ['^4.4', '@stable', '@dev'] # Test current LTS, current release, and future release
                 php: ['7.4', '8.0', '8.1']
                 composer-version: [v2]
+                include:
+                  - version: '^4.4'
+                    psr-simple-cache-version: '^1.0|^2.0'
+                  - version: '@stable'
+                    psr-simple-cache-version: '^1.0|^2.0|^3.0'
+                  - version: '@dev'
+                    psr-simple-cache-version: '^1.0|^2.0|^3.0'
         env:
             allow_failure: ${{ matrix.version == '@dev' }}
         name: "Symfony skeleton:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
@@ -52,6 +59,10 @@ jobs:
               run: |
                   composer config prefer-stable true
                   composer config minimum-stability dev
+              continue-on-error: ${{ env.allow_failure == 'true' }}
+            - name: Require psr/simple-cache
+              working-directory: ./project
+              run: composer require "psr/simple-cache:${{ matrix.psr-simple-cache-version }}"
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
