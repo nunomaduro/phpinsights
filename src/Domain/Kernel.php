@@ -42,6 +42,13 @@ final class Kernel
         if (! defined('PHP_CODESNIFFER_VERBOSITY')) {
             define('PHP_CODESNIFFER_VERBOSITY', 0);
         }
+
+        /**
+         * Require Tokens utils From PHP Codesniffer.
+         */
+        require_once file_exists(__DIR__ . '/../../vendor/squizlabs/php_codesniffer/src/Util/Tokens.php')
+            ? __DIR__ . '/../../vendor/squizlabs/php_codesniffer/src/Util/Tokens.php'
+            : __DIR__ . '/../../../../../vendor/squizlabs/php_codesniffer/src/Util/Tokens.php';
     }
 
     /**
