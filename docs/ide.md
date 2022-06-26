@@ -17,7 +17,7 @@ that support hyperlinks.
 
 ## Configuration
 
-In your `phpinsights.php` file, add the config `'ide' => 'myide'`.
+In your `insights.php` file, add the config `'ide' => 'myide'`.
 
 For example:
 
