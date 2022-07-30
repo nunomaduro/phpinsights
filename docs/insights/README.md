@@ -58,6 +58,16 @@ For example:
     ],
 ```
 
+## Enable analyse of test folders
+
+By default, `phpinsights` will exclude test folders from analyse, those folders are any named `tests`, `Tests`, `test` or `Test`.
+
+This behaviour can be disabled in your `phpinsights.php`.
+
+```php
+    'dont_exclude_tests' => true,
+```
+
 ## Add Insights
 
 If you create an Insight, or an Insight is not enabled, you can enable it in the `add` section.

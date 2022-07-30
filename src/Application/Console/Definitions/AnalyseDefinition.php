@@ -52,6 +52,12 @@ final class AnalyseDefinition extends BaseDefinition
                 'Disable Security issues check to not throw error if vulnerability is found'
             ),
             new InputOption(
+                'dont-exclude-tests',
+                null,
+                InputOption::VALUE_NONE,
+                'Don\'t exclude tests directories from analyse.'
+            ),
+            new InputOption(
                 'format',
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,

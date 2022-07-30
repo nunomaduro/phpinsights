@@ -20,7 +20,7 @@ final class ConfigurationTest extends TestCase
         self::assertEquals([getcwd()], $configuration->getPaths());
         self::assertEquals('default', $configuration->getPreset());
         self::assertEquals([], $configuration->getAdd());
-        self::assertEquals([], $configuration->getExcludes());
+        self::assertEquals(['tests/', 'Tests/', 'test/', 'Test/'], $configuration->getExcludes());
         self::assertEquals([], $configuration->getConfig());
         self::assertEquals([], $configuration->getRemoves());
     }
@@ -122,6 +122,35 @@ final class ConfigurationTest extends TestCase
         $this->expectException(InvalidConfiguration::class);
         $this->expectExceptionMessage('The option "threads" with value');
         new Configuration(['threads' => $invalid]);
+    }
+
+    public function testDontExcludeTests(): void
+    {
+        $configuration = new Configuration(['dont_exclude_tests' => true, 'exclude' => ['some/path']]);
+
+        self::assertSame(['some/path'], $configuration->getExcludes());
+    }
+
+    public function testDontExcludeTestsWithDefaultValue(): void
+    {
+        $configuration = new Configuration(['exclude' => ['some/path']]);
+
+        self::assertSame(['some/path', 'tests/', 'Tests/', 'test/', 'Test/'], $configuration->getExcludes());
+    }
+
+    public function testDontExcludeTestsWithInvalidValue(): void
+    {
+        $this->expectException(InvalidConfiguration::class);
+        $this->expectExceptionMessage('The option "dont_exclude_tests" with value');
+
+        new Configuration(['dont_exclude_tests' => 'aaa']);
+    }
+
+    public function testDefineDontExcludeTests(): void
+    {
+        $configuration = new Configuration(['dont_exclude_tests' => false, 'exclude' => ['some/path']]);
+
+        self::assertSame(['some/path', 'tests/', 'Tests/', 'test/', 'Test/'], $configuration->getExcludes());
     }
 
     /**

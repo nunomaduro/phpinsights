@@ -254,6 +254,7 @@ final class Configuration
             'preset' => 'default',
             'paths' => [(string) getcwd()],
             'common_path' => '',
+            'dont_exclude_tests' => false,
             'exclude' => [],
             'add' => [],
             'requirements' => [],
@@ -273,6 +274,7 @@ final class Configuration
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
         $resolver->setAllowedValues('config', $this->validateConfigInsights());
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
+        $resolver->setAllowedTypes('dont_exclude_tests', 'bool');
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedTypes('diff_context', 'int');
         $resolver->setAllowedValues('diff_context', static fn ($value) => $value >= 0);
@@ -301,6 +303,10 @@ final class Configuration
         $this->requirements = $config['requirements'];
         $this->fix = $config['fix'];
         $this->diffContext = $config['diff_context'];
+
+        if (! $config['dont_exclude_tests']) {
+            $this->exclude = array_merge($this->exclude, ['tests/', 'Tests/', 'test/', 'Test/']);
+        }
 
         if (array_key_exists('ide', $config)
             && is_string($config['ide'])

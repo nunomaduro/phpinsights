@@ -47,7 +47,7 @@ final class ConfigResolver
     public static function resolve(array $config, InputInterface $input): Configuration
     {
         $paths = PathResolver::resolve($input);
-        $config = self::mergeInputRequirements($config, $input);
+        $config = self::mergeInputConfigs($config, $input);
         $composer = self::getComposer($input, $paths[0]);
 
         /** @var string $preset */
@@ -133,14 +133,18 @@ final class ConfigResolver
     }
 
     /**
-     * Merge requirements config from console input.
+     * Merge config values from console input.
      *
      * @param array<string, string|array> $config
      *
      * @return array<string, string|array>
      */
-    private static function mergeInputRequirements(array $config, InputInterface $input): array
+    private static function mergeInputConfigs(array $config, InputInterface $input): array
     {
+        if ($input->hasOption('dont-exclude-tests') && $input->getOption('dont-exclude-tests')) {
+            $config['dont_exclude_tests'] = true;
+        }
+
         $requirements = Configuration::getAcceptedRequirements();
         foreach ($requirements as $requirement) {
             if ($input->hasParameterOption('--' . $requirement)) {

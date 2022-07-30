@@ -15,8 +15,6 @@ use Symfony\Component\Finder\Finder;
  */
 final class LocalFilesRepository implements FilesRepository
 {
-    public const DEFAULT_EXCLUDE = ['vendor', 'tests', 'Tests', 'test', 'Test'];
-
     private Finder $finder;
 
     /**
@@ -85,17 +83,10 @@ final class LocalFilesRepository implements FilesRepository
         $this->finder = Finder::create()
             ->files()
             ->name(['*.php'])
-            ->exclude(self::DEFAULT_EXCLUDE)
             ->notName(['*.blade.php'])
             ->ignoreUnreadableDirs()
             ->in($this->directoryList ?? [])
             ->notPath($exclude);
-
-        foreach ($exclude as $value) {
-            if (substr($value, -4) === '.php') {
-                $this->finder->notName($value);
-            }
-        }
 
         return $this->getFilesList();
     }

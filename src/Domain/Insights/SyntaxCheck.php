@@ -9,7 +9,6 @@ use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Details;
-use NunoMaduro\PhpInsights\Infrastructure\Repositories\LocalFilesRepository;
 use PHP_CodeSniffer\Config;
 use Symfony\Component\Process\Process;
 
@@ -97,7 +96,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
         return array_map(
             static fn (string $file): string => '--exclude ' . escapeshellarg($file),
-            array_merge($rootExcludes, $localExcludes, LocalFilesRepository::DEFAULT_EXCLUDE)
+            array_merge($rootExcludes, $localExcludes)
         );
     }
 

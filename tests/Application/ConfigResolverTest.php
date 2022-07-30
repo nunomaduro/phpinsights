@@ -229,6 +229,23 @@ final class ConfigResolverTest extends TestCase
         self::assertEquals(1, $config->getMinComplexity());
     }
 
+    public function testMergeInputDontExcludeTests(): void
+    {
+        $input = new ArrayInput(
+            [
+                '--dont-exclude-tests' => 1,
+            ],
+            new InputDefinition([
+                new InputArgument('paths'),
+                new InputOption('dont-exclude-tests', null, InputOption::VALUE_NONE),
+            ])
+        );
+
+        $config = ConfigResolver::resolve([], $input);
+
+        self::assertNotContains(['tests/'], $config->getExcludes());
+    }
+
     public function testOverridePresetByConfig(): void
     {
         $preset = LaravelPreset::get(new Composer([]));

@@ -50,6 +50,8 @@ return [
     |
     */
 
+    'dont_exclude_tests' => false,
+
     'exclude' => [
         //  'path/to/directory-or-file'
     ],
