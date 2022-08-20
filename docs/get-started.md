@@ -176,8 +176,8 @@ composer bin phpinsights require nunomaduro/phpinsights
 
 ## Flush cache results <Badge text="^2.0"/>
 
-Between 2 analysis, issues are cached. 
-PHPInsights is smart enough to invalidate cache when it detect changes in your code, but you may completely flush cache before analysis by adding `--flush-cache` flag.
+Between 2 analyses, issues are cached. 
+PHPInsights is smart enough to invalidate cache when it detects changes in your code, but you may completely flush cache before analysis by adding `--flush-cache` flag.
 
 ## Configure diff <Badge text="^2.0"/>
 
