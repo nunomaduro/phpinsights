@@ -37,7 +37,7 @@
         "symfony/console": "^4.2|^5.0|^6.0",
         "symfony/finder": "^4.2|^5.0|^6.0",
         "symfony/http-client": "^4.3|^5.0|^6.0",
-        "symfony/process": "^5.4"
+        "symfony/process": "^5.4|^6.0"
     },
     "require-dev": {
         "ergebnis/phpstan-rules": "^0.15.0",
