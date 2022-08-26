@@ -107,6 +107,8 @@ final class Configuration
     private int $threads;
 
     private int $diffContext;
+    
+    private float $timeout;
 
     /**
      * Configuration constructor.
@@ -244,6 +246,11 @@ final class Configuration
         return $this->diffContext;
     }
 
+    public function getTimeout(): float
+    {
+        return $this->timeout;
+    }
+
     /**
      * @param array<string, string|int|array|null> $config
      */
@@ -265,6 +272,7 @@ final class Configuration
 
         $resolver->setDefined('ide');
         $resolver->setDefined('threads');
+        $resolver->setDefined('timeout');
         $resolver->setAllowedValues(
             'preset',
             array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
@@ -277,6 +285,7 @@ final class Configuration
         $resolver->setAllowedTypes('diff_context', 'int');
         $resolver->setAllowedValues('diff_context', static fn ($value) => $value >= 0);
         $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
+        $resolver->setAllowedValues('timeout', static fn ($value) => $value >= 0);
 
         try {
             $config = $resolver->resolve($config);
@@ -302,22 +311,25 @@ final class Configuration
         $this->fix = $config['fix'];
         $this->diffContext = $config['diff_context'];
 
-        if (array_key_exists('ide', $config)
+        if (
+            array_key_exists('ide', $config)
             && is_string($config['ide'])
             && $config['ide'] !== ''
         ) {
             $this->fileLinkFormatter = $this->resolveIde($config['ide']);
         }
         $this->threads = $config['threads'] ?? $this->getNumberOfCore();
+        $this->timeout = $config['timeout'] ?? 60;
     }
 
     private function validateAddedInsight(): Closure
     {
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
-                if (! class_exists($metric) ||
+                if (
+                    !class_exists($metric) ||
                     class_implements($metric) === false ||
-                    ! in_array(Metric::class, class_implements($metric), true)
+                    !in_array(Metric::class, class_implements($metric), true)
                 ) {
                     throw new InvalidConfiguration(sprintf(
                         'Unable to use "%s" class as metric in section add.',
@@ -325,7 +337,7 @@ final class Configuration
                     ));
                 }
 
-                if (! \is_array($insights)) {
+                if (!\is_array($insights)) {
                     throw new InvalidConfiguration(sprintf(
                         'Added insights for metric "%s" should be in an array.',
                         $metric
@@ -333,7 +345,7 @@ final class Configuration
                 }
 
                 foreach ($insights as $insight) {
-                    if (! class_exists($insight)) {
+                    if (!class_exists($insight)) {
                         throw new InvalidConfiguration(sprintf(
                             'Unable to add "%s" insight, class doesn\'t exists.',
                             $insight
@@ -350,7 +362,7 @@ final class Configuration
     {
         return static function ($values): bool {
             foreach (array_keys($values) as $insight) {
-                if (! class_exists((string) $insight)) {
+                if (!class_exists((string) $insight)) {
                     throw new InvalidConfiguration(sprintf(
                         'Unable to config "%s" insight, class doesn\'t exists.',
                         $insight
@@ -364,8 +376,10 @@ final class Configuration
 
     private function resolveIde(string $ide): FileLinkFormatterContract
     {
-        if (! isset(self::LINKS[$ide]) &&
-            mb_strpos($ide, '://') === false) {
+        if (
+            !isset(self::LINKS[$ide]) &&
+            mb_strpos($ide, '://') === false
+        ) {
             throw new InvalidConfiguration(sprintf(
                 'Unknown IDE "%s". Try one in this list [%s] or provide pattern link handler',
                 $ide,

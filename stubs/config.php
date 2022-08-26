@@ -82,11 +82,11 @@ return [
     */
 
     'requirements' => [
-//        'min-quality' => 0,
-//        'min-complexity' => 0,
-//        'min-architecture' => 0,
-//        'min-style' => 0,
-//        'disable-security-check' => false,
+        //        'min-quality' => 0,
+        //        'min-complexity' => 0,
+        //        'min-architecture' => 0,
+        //        'min-style' => 0,
+        //        'disable-security-check' => false,
     ],
 
     /*
@@ -102,4 +102,16 @@ return [
 
     'threads' => null,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Timeout
+    |--------------------------------------------------------------------------
+    | Here you may adjust the timeout (in seconds) for PHPInsights to run before
+    | a ProcessTimedOutException is thrown.
+    | This accept float > 0. Default is 60 seconds, which is the default value
+    | of Symfony's setTimeout function.
+    |
+    */
+
+    'timeout' => 60,
 ];
