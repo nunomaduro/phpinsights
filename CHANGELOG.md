@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.4.0]
+### Added
+* add laravel 9 to GH actions test suite ([#581](https://github.com/nunomaduro/phpinsights/pull/581))
+
+### Changed
+* Allow psr/simple-cache ^2.0 and ^3.0 ([#580](https://github.com/nunomaduro/phpinsights/pull/580))
+
+## [v2.3.0]
+### Changed
+* Feature/doc updates ([#571](https://github.com/nunomaduro/phpinsights/pull/571))
+* Update config key for ordered class elements fixer ([#574](https://github.com/nunomaduro/phpinsights/pull/574))
+* Remove composer dependency, insights, and tests ([#575](https://github.com/nunomaduro/phpinsights/pull/575))
+
 ## [v2.2.0]
 ### Fixed
 - Fix ComposerLoader ([#566](https://github.com/nunomaduro/phpinsights/pull/566))
