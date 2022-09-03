@@ -64,6 +64,10 @@ jobs:
               working-directory: ./project
               run: composer require "psr/simple-cache:${{ matrix.psr-simple-cache-version }}"
               continue-on-error: ${{ env.allow_failure == 'true' }}
+            - name: Allow plugin
+              working-directory: ./project
+              run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+              continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
               run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
@@ -132,6 +136,10 @@ jobs:
             - name: Require phpunit:^9
               working-directory: ./project
               run: composer require --dev phpunit/phpunit:^9.0 --update-with-dependencies -n --ansi
+              continue-on-error: ${{ env.allow_failure == 'true' }}
+            - name: Allow plugin
+              working-directory: ./project
+              run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Install PHPInsights
               working-directory: ./project
