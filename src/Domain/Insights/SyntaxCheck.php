@@ -113,7 +113,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     }
 
     /**
-     * Recursively search for composer binary folder path
+     * Recursively search for composer binary folder path.
      */
     private function composerBinaryFolderFind(string $directory): string
     {

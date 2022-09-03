@@ -50,10 +50,11 @@ final class Preset implements PresetContract
         $requirements = $composer->getRequirements();
 
         foreach (array_keys($requirements) as $requirement) {
-            $requirement = (string) $requirement;
+            if (strpos($requirement, 'johnpbloch/wordpress') !== false) {
+                return true;
+            }
 
-            if (strpos($requirement, 'johnpbloch/wordpress') !== false
-                || strpos($requirement, 'roots/wordpress') !== false) {
+            if (strpos($requirement, 'roots/wordpress') !== false) {
                 return true;
             }
         }
