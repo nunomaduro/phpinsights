@@ -17,7 +17,7 @@
 </p>
 
 **PHP Insights** was carefully crafted to simplify the analysis of your code directly from your terminal, and is the perfect starting point to analyze the code quality of your PHP projects.
-It was created by **[Nuno Maduro](https://github.com/nunomaduro)**, logo design **[Caneco](https://github.com/caneco)**, and currently is maintained by **[Chris Gmyr](https://github.com/cmgmyr)** and **[Steve McDougall](https://github.com/JustSteveKing)**.
+It was created by **[Nuno Maduro](https://github.com/nunomaduro)**, logo design **[Caneco](https://github.com/caneco)**, and currently is maintained by **[Chris Gmyr](https://github.com/cmgmyr)**, **[Jibé Barth](https://github.com/Jibbarth)**, and **[Steve McDougall](https://github.com/JustSteveKing)**.
 
 ## 🚀 Quick start
 
