@@ -130,6 +130,6 @@ final class Preset implements PresetContract
 ## Create a new `Formatter`
 
 The package has support for formatting the result. 
-All formats implements the contract `src/Application/Console/Contracts/Formatter`.
+All formats implement the contract `src/Application/Console/Contracts/Formatter`.
 
 You are welcome to contribute with new formats or improve on the ones we already have.
