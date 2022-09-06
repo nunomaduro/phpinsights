@@ -58,6 +58,38 @@ For example:
     ],
 ```
 
+## Exclude insight per particular method
+
+Open the insight class and look for `private const NAME` constant.
+
+> If the `NAME` constant doesn't exist, go to the `2nd option` paragraph (below).
+
+Copy value of the `NAME` constant and open a class with method that you would like exclude insight for. In the phpDoc add `@phpcsSuppress` annotation.
+
+#### Example
+
+After running `vendor/bin/phpinsights` you saw an error:
+
+```bash
+• [Code] Unused parameter:
+  src/YourClass.php:19: Unused parameter $thisIsUnusedParameter.
+```
+
+After verififcation [in documentation](https://phpinsights.com/insights/code.html#unused-parameter), you know that `\SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff` class is responsible for the `[Code] Unused parameter` error and it contains `private const NAME = 'SlevomatCodingStandard.Functions.UnusedParameter’;`. Let's use it together with the `@phpcsSuppress` annotation:
+
+```php
+final class YourClass
+{
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
+    public function yourMethod(array $thisIsUnusedParameter): void
+    {
+        // ...
+    }
+}
+```
+
 ## Add Insights
 
 If you create an Insight, or an Insight is not enabled, you can enable it in the `add` section.
