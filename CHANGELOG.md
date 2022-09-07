@@ -4,10 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.6.0]
+### Added
+- Describe how to exclude insight per particular method ([#543](https://github.com/nunomaduro/phpinsights/pull/543))
+
+### Changed
+- Update diff dependency ([#599](https://github.com/nunomaduro/phpinsights/pull/599))
+
 ## [v2.5.0]
 ### Added
 - Add WordPress adapter ([#378](https://github.com/nunomaduro/phpinsights/pull/378))
-- 
+
 ### Changed
 - docs: Add White border to work on Dark Mode Theme ([#545](https://github.com/nunomaduro/phpinsights/pull/545))
 - Fix always loading CodeSniffer tokens ([#542](https://github.com/nunomaduro/phpinsights/pull/542))
