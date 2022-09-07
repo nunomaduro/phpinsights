@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use PhpCsFixer\Diff\Differ as BaseDiffer;
-use PhpCsFixer\Diff\Output\StrictUnifiedDiffOutputBuilder;
+use SebastianBergmann\Diff\Differ as BaseDiffer;
+use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
 use PhpCsFixer\Differ\DifferInterface;
 
 final class Differ implements DifferInterface
