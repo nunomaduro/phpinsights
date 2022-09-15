@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.6.1]
+### Changed
+- Changed the foreground color of the box labels in console output ([#600](https://github.com/nunomaduro/phpinsights/pull/600))
+
 ## [v2.6.0]
 ### Added
 - Describe how to exclude insight per particular method ([#543](https://github.com/nunomaduro/phpinsights/pull/543))
