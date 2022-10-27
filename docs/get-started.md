@@ -82,7 +82,7 @@ php artisan insights path/to/analyse
 ## Fixing errors automatically <Badge text="^2.0"/>
 
 Some Insights support automatic fixing. 
-To fix your code automatically, two way are possibles: 
+To fix your code automatically, there are two possibilities: 
 
 * Add `--fix` option to your command. The output will be the classical output, with a summary of all issues fixed.
 * Or launch `phpinsights fix [directory]`
@@ -166,7 +166,7 @@ The PHP Insights console command has different verbosity levels, which determine
 
 ## Avoid Composer conflicts
 
-If you have trouble while requiring `phpinsights` with composer, try install it with [bamarni/composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin) to isolate it from others dependencies:
+If you have trouble while requiring `phpinsights` with composer, try installing it with [bamarni/composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin) to isolate it from others dependencies:
 
 ```bash
 composer require --dev bamarni/composer-bin-plugin

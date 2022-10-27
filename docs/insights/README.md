@@ -39,7 +39,7 @@ return [
 By default, `phpinsights` will analyse all your php files in your project directory, except folders `bower_components`, `node_modules` and `vendor`.
 
 ::: tip For others preset
-In addition to theses folders :
+In addition to these folders :
 - With the **laravel** preset, `phpinsights` will exclude `config`, `storage`, `resources`, `bootstrap`, `nova`, `database`, `server.php`, `_ide_helper.php`, `_ide_helper_models.php`, `app/Providers/TelescopeServiceProvider.php` and `public`.
 - With the **symfony** preset, `phpinsights` will exclude `var`, `translations`, `config`, and `public`.
 - With the **magento2** preset, `phpinsights` will exclude `bin`, `dev`, `generated`, `lib`, `phpserver`, `pub`, `setup`, `update`, `var`, `app/autoload.php`, `app/bootstrap.php`, `app/functions.php` and `index.php`.
@@ -75,7 +75,7 @@ After running `vendor/bin/phpinsights` you saw an error:
   src/YourClass.php:19: Unused parameter $thisIsUnusedParameter.
 ```
 
-After verififcation [in documentation](https://phpinsights.com/insights/code.html#unused-parameter), you know that `\SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff` class is responsible for the `[Code] Unused parameter` error and it contains `private const NAME = 'SlevomatCodingStandard.Functions.UnusedParameter’;`. Let's use it together with the `@phpcsSuppress` annotation:
+After verification [in documentation](https://phpinsights.com/insights/code.html#unused-parameter), you know that `\SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff` class is responsible for the `[Code] Unused parameter` error and it contains `private const NAME = 'SlevomatCodingStandard.Functions.UnusedParameter’;`. Let's use it together with the `@phpcsSuppress` annotation:
 
 ```php
 final class YourClass
