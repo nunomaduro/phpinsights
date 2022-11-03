@@ -160,7 +160,7 @@ For example, to remove "Unused Parameters" Insight only for some file:
 
 ```php
     'configure' => [
-        \PhpCsFixer\Fixer\Basic\BraceFixer::class => [
+        \PhpCsFixer\Fixer\Basic\BracesFixer::class => [
             'indent' => '  ',
 		],
     ],
