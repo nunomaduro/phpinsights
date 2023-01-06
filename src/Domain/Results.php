@@ -170,6 +170,6 @@ final class Results
             }
         }
 
-        throw new InsightClassNotFound("${insightClass} not found in ${category}");
+        throw new InsightClassNotFound("{$insightClass} not found in {$category}");
     }
 }
