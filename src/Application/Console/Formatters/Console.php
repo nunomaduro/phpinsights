@@ -197,7 +197,7 @@ final class Console implements Formatter
                 if ($insight->getTotalFix() === 0) {
                     continue;
                 }
-                $fix = "<fg=green>• [${category}] </><bold>{$insight->getTitle()}</bold>:";
+                $fix = "<fg=green>• [{$category}] </><bold>{$insight->getTitle()}</bold>:";
 
                 $details = $insight->getFixPerFile();
                 /** @var Details $detail */
@@ -380,7 +380,7 @@ final class Console implements Formatter
 
                 $previousCategory = $category;
 
-                $issue = "\n<fg=red>•</> [${category}] <bold>{$insight->getTitle()}</bold>";
+                $issue = "\n<fg=red>•</> [{$category}] <bold>{$insight->getTitle()}</bold>";
 
                 if (! $insight instanceof HasDetails && ! $this->style->getOutput()->isVerbose()) {
                     $this->style->writeln($issue);
@@ -419,7 +419,7 @@ final class Console implements Formatter
                         $detailString .= ($detailString !== '' ? ': ' : '') . $this->parseDetailMessage($detail);
                     }
 
-                    $issue .= "\n  ${detailString}";
+                    $issue .= "\n  {$detailString}";
                 }
 
                 if (! $this->style->getOutput()->isVerbose() && $totalDetails > 3) {
