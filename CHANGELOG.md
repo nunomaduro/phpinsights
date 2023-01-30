@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.7.0]
+### Added
+- Added support for slevomat/coding-standard:8.0 ([#611](https://github.com/nunomaduro/phpinsights/pull/611))
+
+### Changed
+- Fixed some wording and typos ([#606](https://github.com/nunomaduro/phpinsights/pull/606))
+- Docs: fixed typo ([#608](https://github.com/nunomaduro/phpinsights/pull/608))
+- Fixes typos in stub files. ([#607](https://github.com/nunomaduro/phpinsights/pull/607))
+- Grammar change ([#610](https://github.com/nunomaduro/phpinsights/pull/610))
+
 ## [v2.6.1]
 ### Changed
 - Changed the foreground color of the box labels in console output ([#600](https://github.com/nunomaduro/phpinsights/pull/600))
