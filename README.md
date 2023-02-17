@@ -1,7 +1,3 @@
-<a href="https://supportukrainenow.org/"><img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg" width="100%"></a>
-
-------
-
 <p align="center">
   <img src="/art/logo.gif" width="350" alt="PHP Insights">
   <img src="/art/preview.png" width="882" alt="PHP Insights Preview">
