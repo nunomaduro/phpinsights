@@ -17,18 +17,26 @@ It was created by **[Nuno Maduro](https://github.com/nunomaduro)**, logo design 
 
 ## 🚀 Quick start
 
+
+### First, install:
+
 ```
-# First, install:
 composer require nunomaduro/phpinsights --dev
+```
 
-# Then, use it:
+### Then, use it:
+```
 ./vendor/bin/phpinsights
+```
 
-# For Laravel:
+### For Laravel:
 First, publish the configuration file:
+```
 php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider"
+```
 
 Then, use it:
+```
 php artisan insights
 ```
 
