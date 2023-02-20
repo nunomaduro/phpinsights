@@ -13,7 +13,7 @@ features:
       details: Designed to work out-of-the-box with Laravel, Symfony, Yii, WordPress, Magento2, and more.
     - title: Quality Checks
       details: Contains built-in checks for making code reliable, loosely coupled, simple, and clean.
-footer: MIT Licensed | Copyright © 2019 Nuno Maduro
+footer: MIT Licensed | Copyright © 2023 Nuno Maduro
 ---
 
 # Quick start
