@@ -51,7 +51,7 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails, Gl
 
         $this->details = array_map(static fn ($class, $complexity): Details => Details::make()
             ->setFile($class)
-            ->setMessage("${complexity} cyclomatic complexity"), array_keys($classesComplexity), $classesComplexity);
+            ->setMessage("$complexity cyclomatic complexity"), array_keys($classesComplexity), $classesComplexity);
     }
 
     private function getMaxComplexity(): int
