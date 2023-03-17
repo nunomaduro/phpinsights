@@ -14,7 +14,7 @@ jobs:
             matrix:
                 os: [ubuntu-latest]
                 version: ['^5.4', '@stable', '@dev'] # Test current LTS, current release, and future release
-                php: ['7.4', '8.0', '8.1']
+                php: ['7.4', '8.0', '8.1', '8.2']
                 composer-version: [v2]
                 include:
                   - version: '^5.4'
@@ -29,7 +29,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   path: phpinsights
             - name: Setup PHP
@@ -87,7 +87,7 @@ jobs:
             matrix:
                 os: [ubuntu-latest]
                 version: ['^9.0', '^8.0', 'dev-master']
-                php: ['7.4', '8.0', '8.1']
+                php: ['7.4', '8.0', '8.1', '8.2']
                 composer-version: [v2]
                 exclude:
                     -   version: '^9.0'
@@ -102,7 +102,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   path: phpinsights
             - name: Setup PHP
