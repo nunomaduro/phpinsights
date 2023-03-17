@@ -23,8 +23,6 @@ jobs:
                         php: '8.1'
                     -   dependency-version: prefer-lowest
                         php: '8.2'
-        env:
-            allow_failure: ${{ matrix.php == '7.4' }}
         name: ${{ matrix.php }} - ${{ matrix.os }} - Composer ${{ matrix.composer-version }} --${{ matrix.dependency-version }}
 
         steps:
