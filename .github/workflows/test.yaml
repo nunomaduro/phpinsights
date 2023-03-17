@@ -9,7 +9,7 @@ jobs:
     ci:
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
                 php: ['7.4', '8.0', '8.1']
                 dependency-version: [prefer-lowest, prefer-stable]

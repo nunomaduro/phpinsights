@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
+use Cmgmyr\PHPLOC\Analyser as BaseAnalyser;
 use ReflectionMethod;
-use SebastianBergmann\PHPLOC\Analyser as BaseAnalyser;
 
 /**
- * Code originally taken from {SebastianBergmann\PHPLOC\Analyser}.
+ * Code originally taken from {Cmgmyr\PHPLOC\Analyser}.
  *
  * @method string|false getNamespaceName(array $tokens, int $i)
  * @method bool         isClassDeclaration(array $tokens, int $i)
