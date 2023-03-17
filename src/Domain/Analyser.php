@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain;
 
-use ReflectionMethod;
 use Cmgmyr\PHPLOC\Analyser as BaseAnalyser;
+use ReflectionMethod;
 
 /**
  * Code originally taken from {Cmgmyr\PHPLOC\Analyser}.
