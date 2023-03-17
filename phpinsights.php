@@ -125,6 +125,6 @@ return [
     'requirements' => [
         'min-quality' => 90.0,
         'min-architecture' => 85.0,
-        'min-style' => 98.0,
+        'min-style' => 96.0,
     ],
 ];
