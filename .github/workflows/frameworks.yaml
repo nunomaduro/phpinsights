@@ -96,8 +96,6 @@ jobs:
                         php: '7.4'
                     -   version: 'dev-master'
                         php: '8.0'
-        env:
-            allow_failure: ${{ matrix.php == '8.1' || matrix.version == 'dev-master' }}
         name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
