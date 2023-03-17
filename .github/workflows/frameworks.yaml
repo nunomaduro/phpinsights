@@ -86,16 +86,12 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^9.0', '^8.0', 'dev-master']
+                version: ['^9.0', '^8.0']
                 php: ['7.4', '8.0', '8.1', '8.2']
                 composer-version: [v2]
                 exclude:
                     -   version: '^9.0'
                         php: '7.4'
-                    -   version: 'dev-master'
-                        php: '7.4'
-                    -   version: 'dev-master'
-                        php: '8.0'
         name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
