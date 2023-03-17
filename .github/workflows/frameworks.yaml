@@ -10,7 +10,7 @@ jobs:
     symfony:
         runs-on: ${{ matrix.os }}
         strategy:
-            fail-fast: true
+            fail-fast: false
             matrix:
                 os: [ubuntu-latest]
                 version: ['^5.4', '@stable', '@dev'] # Test current LTS, current release, and future release
