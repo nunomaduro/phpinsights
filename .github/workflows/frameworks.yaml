@@ -89,6 +89,13 @@ jobs:
                 version: ['^10.0', '^9.0', '^8.0']
                 php: ['7.4', '8.0', '8.1', '8.2']
                 composer-version: [v2]
+                include:
+                    -   version: '^10.0'
+                        phpunit: '^10.0'
+                    -   version: '^9.0'
+                        phpunit: '^9.0'
+                    -   version: '^8.0'
+                        phpunit: '^9.0'
                 exclude:
                     -   version: '^9.0'
                         php: '7.4'
@@ -131,9 +138,9 @@ jobs:
                   composer config prefer-stable true
                   composer config minimum-stability dev
               continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Require phpunit:^9
+            - name: Require phpunit
               working-directory: ./project
-              run: composer require --dev phpunit/phpunit:^9.0 --update-with-dependencies -n --ansi
+              run: composer require --dev phpunit/phpunit:${{ matrix.phpunit }} --update-with-dependencies -n --ansi
               continue-on-error: ${{ env.allow_failure == 'true' }}
             - name: Allow plugin
               working-directory: ./project
