@@ -146,7 +146,7 @@ final class ForbiddenSecurityIssues extends Insight implements HasDetails, Globa
                 continue;
             }
             self::$details[] = Details::make()->setMessage(
-                "${packageName}@{$version} {$issue['title']} - {$issue['link']}"
+                "$packageName@$version {$issue['title']} - {$issue['link']}"
             );
         }
     }
