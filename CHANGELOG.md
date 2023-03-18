@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.8.0]
+### Added
+* Added Laravel 10 and PHP 8.1 Support [#626](https://github.com/nunomaduro/phpinsights/pull/626)
+* fix string interpolation deprecation messages in PHP 8.2 [#628](https://github.com/nunomaduro/phpinsights/pull/628)
+
+### Changed
+* Update readme.md to 2023 [#627](https://github.com/nunomaduro/phpinsights/pull/627)
+* update phploc [#630](https://github.com/nunomaduro/phpinsights/pull/630)
+* update GH actions [#631](https://github.com/nunomaduro/phpinsights/pull/631)
+* Update Quick start [#625](https://github.com/nunomaduro/phpinsights/pull/625)
+* Adjust interpolation [#632](https://github.com/nunomaduro/phpinsights/pull/632)
+
 ## [v2.7.0]
 ### Added
 - Added support for slevomat/coding-standard:8.0 ([#611](https://github.com/nunomaduro/phpinsights/pull/611))
