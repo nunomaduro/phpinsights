@@ -14,6 +14,15 @@ jobs:
                 php: ['7.4', '8.0', '8.1', '8.2']
                 dependency-version: [prefer-lowest, prefer-stable]
                 composer-version: [ v2 ]
+                include:
+                    -   php: '8.2'
+                        phpunit: '^10.0'
+                    -   php: '8.1'
+                        phpunit: '^10.0'
+                    -   php: '8.0'
+                        phpunit: '^9.0'
+                    -   php: '7.4'
+                        phpunit: '^9.0'
                 exclude:
                     -   dependency-version: prefer-lowest
                         php: '8.0'
@@ -43,5 +52,14 @@ jobs:
 
             - name: Install Composer dependencies
               run: composer update --${{ matrix.dependency-version }} --ansi --no-interaction --prefer-dist
-            - name: Unit Tests
+
+            - name: Force PHPUnit version
+              run: composer require --dev phpunit/phpunit:${{ matrix.phpunit }} --update-with-dependencies -n --ansi
+
+            - name: Unit Tests via PHPUnit 9
+              if: matrix.phpunit == '^9.0'
+              run: vendor/bin/phpunit --color=always -c phpunit9.xml
+
+            - name: Unit Tests via PHPUnit 10
+              if: matrix.phpunit == '^10.0'
               run: vendor/bin/phpunit --color=always
