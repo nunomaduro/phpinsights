@@ -51,7 +51,8 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
             $process->setWorkingDirectory($this->collector->getCommonPath());
         }
-        $process->run();
+        $configuration = Container::make()->get(Configuration::class);
+        $process->setTimeout($configuration->getTimeout())->run();
 
         $output = json_decode($process->getOutput(), true, 512, JSON_THROW_ON_ERROR);
         $errors = $output['results']['errors'] ?? [];

@@ -18,6 +18,7 @@ return [
     */
 
     'preset' => 'wordpress',
+
     /*
     |--------------------------------------------------------------------------
     | IDE
@@ -37,6 +38,7 @@ return [
     */
 
     'ide' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Configuration
@@ -87,4 +89,29 @@ return [
 //        'disable-security-check' => false,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Threads
+    |--------------------------------------------------------------------------
+    |
+    | Here you may adjust how many threads (core) PHPInsights can use to perform
+    | the analysis. This is optional, don't provide it and the tool will guess
+    | the max core number available. It accepts null value or integer > 0.
+    |
+    */
+
+    'threads' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Timeout
+    |--------------------------------------------------------------------------
+    | Here you may adjust the timeout (in seconds) for PHPInsights to run before
+    | a ProcessTimedOutException is thrown.
+    | This accepts an int > 0. Default is 60 seconds, which is the default value
+    | of Symfony's setTimeout function.
+    |
+    */
+
+    'timeout' => 60,
 ];

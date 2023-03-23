@@ -13,7 +13,7 @@ return [
     | to make your code reliable, simple, and clean. However, you can always
     | adjust the `Metrics` and `Insights` below in this configuration file.
     |
-    | Supported: "default", "laravel", "symfony", "magento2", "drupal"
+    | Supported: "default", "laravel", "symfony", "magento2", "drupal", "wordpress"
     |
     */
 
@@ -95,11 +95,23 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may adjust how many threads (core) PHPInsights can use to perform
-    | the analyse. This is optional, don't provide it and the tool will guess
+    | the analysis. This is optional, don't provide it and the tool will guess
     | the max core number available. It accepts null value or integer > 0.
     |
     */
 
     'threads' => null,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Timeout
+    |--------------------------------------------------------------------------
+    | Here you may adjust the timeout (in seconds) for PHPInsights to run before
+    | a ProcessTimedOutException is thrown.
+    | This accepts an int > 0. Default is 60 seconds, which is the default value
+    | of Symfony's setTimeout function.
+    |
+    */
+
+    'timeout' => 60,
 ];
