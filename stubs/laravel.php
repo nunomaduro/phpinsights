@@ -27,7 +27,7 @@ return [
     | to make your code reliable, simple, and clean. However, you can always
     | adjust the `Metrics` and `Insights` below in this configuration file.
     |
-    | Supported: "default", "laravel", "symfony", "magento2", "drupal"
+    | Supported: "default", "laravel", "symfony", "magento2", "drupal", "wordpress"
     |
     */
 
@@ -60,7 +60,7 @@ return [
     |
     | Here you may adjust all the various `Insights` that will be used by PHP
     | Insights. You can either add, remove or configure `Insights`. Keep in
-    | mind that all added `Insights` must belong to a specific `Metric`.
+    | mind, that all added `Insights` must belong to a specific `Metric`.
     |
     */
 
