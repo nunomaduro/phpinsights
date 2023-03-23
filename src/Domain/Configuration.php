@@ -108,7 +108,7 @@ final class Configuration
 
     private int $diffContext;
     
-    private float $timeout;
+    private int $timeout;
 
     /**
      * Configuration constructor.
@@ -246,7 +246,7 @@ final class Configuration
         return $this->diffContext;
     }
 
-    public function getTimeout(): float
+    public function getTimeout(): int
     {
         return $this->timeout;
     }

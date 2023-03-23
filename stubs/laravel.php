@@ -131,7 +131,7 @@ return [
     |--------------------------------------------------------------------------
     | Here you may adjust the timeout (in seconds) for PHPInsights to run before
     | a ProcessTimedOutException is thrown.
-    | This accept float > 0. Default is 60 seconds, which is the default value
+    | This accepts an int > 0. Default is 60 seconds, which is the default value
     | of Symfony's setTimeout function.
     |
     */

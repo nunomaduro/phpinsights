@@ -140,7 +140,7 @@ final class ConfigurationTest extends TestCase
 
     public function testDefineTimeout(): void
     {
-        $expected = (float) random_int(60, 120);
+        $expected = random_int(60, 120);
         $configuration = new Configuration(['timeout' => $expected]);
 
         self::assertSame($expected, $configuration->getTimeout());
