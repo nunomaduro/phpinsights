@@ -107,7 +107,7 @@ final class Configuration
     private int $threads;
 
     private int $diffContext;
-    
+
     private int $timeout;
 
     /**
@@ -327,9 +327,9 @@ final class Configuration
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
                 if (
-                    !class_exists($metric) ||
+                    ! class_exists($metric) ||
                     class_implements($metric) === false ||
-                    !in_array(Metric::class, class_implements($metric), true)
+                    ! in_array(Metric::class, class_implements($metric), true)
                 ) {
                     throw new InvalidConfiguration(sprintf(
                         'Unable to use "%s" class as metric in section add.',
@@ -337,7 +337,7 @@ final class Configuration
                     ));
                 }
 
-                if (!\is_array($insights)) {
+                if (! \is_array($insights)) {
                     throw new InvalidConfiguration(sprintf(
                         'Added insights for metric "%s" should be in an array.',
                         $metric
@@ -345,7 +345,7 @@ final class Configuration
                 }
 
                 foreach ($insights as $insight) {
-                    if (!class_exists($insight)) {
+                    if (! class_exists($insight)) {
                         throw new InvalidConfiguration(sprintf(
                             'Unable to add "%s" insight, class doesn\'t exists.',
                             $insight
@@ -362,7 +362,7 @@ final class Configuration
     {
         return static function ($values): bool {
             foreach (array_keys($values) as $insight) {
-                if (!class_exists((string) $insight)) {
+                if (! class_exists((string) $insight)) {
                     throw new InvalidConfiguration(sprintf(
                         'Unable to config "%s" insight, class doesn\'t exists.',
                         $insight
@@ -377,7 +377,7 @@ final class Configuration
     private function resolveIde(string $ide): FileLinkFormatterContract
     {
         if (
-            !isset(self::LINKS[$ide]) &&
+            ! isset(self::LINKS[$ide]) &&
             mb_strpos($ide, '://') === false
         ) {
             throw new InvalidConfiguration(sprintf(
