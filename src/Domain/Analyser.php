@@ -177,9 +177,9 @@ final class Analyser
                         $collector->incrementInterfaces();
                     } elseif (isset($tokens[$i - 2]) &&
                         \is_array($tokens[$i - 2])) {
-                        if ($tokens[$i - 2][0] === \T_ABSTRACT) {
+                        if ($tokens[$i - 2][0] === \T_ABSTRACT || $tokens[$i - 2][0] === \T_READONLY && $tokens[$i - 4][0] === \T_ABSTRACT) {
                             $collector->addAbstractClass($filename);
-                        } elseif ($tokens[$i - 2][0] === \T_FINAL || $tokens[$i - 4][0] === \T_FINAL) {
+                        } elseif ($tokens[$i - 2][0] === \T_FINAL || $tokens[$i - 2][0] === \T_READONLY && $tokens[$i - 4][0] === \T_FINAL) {
                             $collector->addConcreteFinalClass($filename);
                         } else {
                             $collector->addConcreteNonFinalClass($filename);
