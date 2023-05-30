@@ -10,6 +10,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * This sniff disallows setter methods.
  */
+#[\AllowDynamicProperties]
 final class ForbiddenSetterSniff implements Sniff
 {
     private const ERROR_MESSAGE = <<<'EOD'
