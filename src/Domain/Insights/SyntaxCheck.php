@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
+use Illuminate\Support\Str;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
@@ -46,6 +47,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
             implode(' ', $this->getShellExcludeArgs()),
             $toAnalyse
         );
+
         $process = Process::fromShellCommandline($cmdLine);
 
         if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
@@ -77,7 +79,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
         return sprintf(
             '%s %s',
-            escapeshellcmd((string) Config::getExecutablePath('php')),
+            (string) Str::of(Config::getExecutablePath('php'))->replace(' ', '\ '),
             escapeshellarg($parentPath . '/parallel-lint')
         );
     }
