@@ -47,7 +47,6 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
             implode(' ', $this->getShellExcludeArgs()),
             $toAnalyse
         );
-
         $process = Process::fromShellCommandline($cmdLine);
 
         if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
