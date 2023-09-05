@@ -20,15 +20,10 @@ jobs:
       - name: Get Release version
         run: echo "RELEASE_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
         if: ${{ env.publish == 'true' }}
-      - name: Login to docker hub
-        run: echo "${{ secrets.DOCKER_PASSWORD}}" | docker login -u "${{ secrets.DOCKER_USERNAME}}" --password-stdin
-        if: ${{ env.publish == 'true' }}
-      - name: Build image
-        run: docker build -f docker/Dockerfile -t ${{ env.repository }}:latest .
-      - name: Tag image
-        run: |
-          docker tag ${{ env.repository }}:latest ${{ env.repository }}:${{ env.RELEASE_VERSION }}
-        if: ${{ env.publish == 'true' }}
-      - name: Push image to hub.docker.com registry
-        run: docker push ${{ env.repository }}
-        if: ${{ env.publish == 'true' }}
+      - uses: docker/build-push-action@v4
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ env.repository }}:latest , ${{ env.repository }}:${{ env.RELEASE_VERSION }}
+          push: ${{ env.publish == 'true' }}
