@@ -78,7 +78,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
         return sprintf(
             '%s %s',
-            (string) Str::of(Config::getExecutablePath('php'))->replace(' ', '\ '),
+            (string) preg_replace('#\\s+#',  '\\ ',Config::getExecutablePath('php')),
             escapeshellarg($parentPath . '/parallel-lint')
         );
     }
