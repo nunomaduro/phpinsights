@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
-use Illuminate\Support\Str;
 use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Container;
 use NunoMaduro\PhpInsights\Domain\Contracts\GlobalInsight;
@@ -78,7 +77,7 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
 
         return sprintf(
             '%s %s',
-            preg_replace('#\\s+#',  '\\ ', (string) Config::getExecutablePath('php')),
+            preg_replace('#\\s+#', '\\ ', (string) Config::getExecutablePath('php')),
             escapeshellarg($parentPath . '/parallel-lint')
         );
     }
