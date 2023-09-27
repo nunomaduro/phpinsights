@@ -50,11 +50,9 @@ final class SyntaxCheckTest extends TestCase
 
                 self::assertTrue($insight->hasIssue());
                 if (PHP_MAJOR_VERSION === 7) {
-                    self::assertCount(2, $details);
-                } elseif (PHP_VERSION_ID < 80200) {
-                    self::assertCount(4, $details);
-                } else {
                     self::assertCount(3, $details);
+                } else {
+                    self::assertCount(4, $details);
                 }
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
