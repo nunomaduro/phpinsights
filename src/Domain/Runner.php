@@ -13,6 +13,7 @@ use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -151,11 +152,17 @@ final class Runner
 
         while ($runningProcesses !== []) {
             foreach ($runningProcesses as $i => $runningProcess) {
-                if (! $runningProcess->isRunning()) {
-                    $progressBar->advance(\count($filesByThread[$i]));
-                    unset($runningProcesses[$i]);
+                if ($runningProcess->isRunning()) {
+                    usleep(1000);
+                    continue;
                 }
-                usleep(1000);
+
+                if (! $runningProcess->isSuccessful()) {
+                    throw new ProcessFailedException($runningProcess);
+                }
+
+                $progressBar->advance(\count($filesByThread[$i]));
+                unset($runningProcesses[$i]);
             }
         }
 
