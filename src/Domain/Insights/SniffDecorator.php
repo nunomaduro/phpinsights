@@ -36,9 +36,7 @@ final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
 
     /**
      * SniffDecorator constructor.
-     * 
-     * @param Sniff         $sniff
-     * @param string        $dir
+     *
      * @param array<string> $exclude
      */
     public function __construct(Sniff $sniff, string $dir, array $exclude)
