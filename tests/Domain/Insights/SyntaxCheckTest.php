@@ -49,10 +49,10 @@ final class SyntaxCheckTest extends TestCase
                 usort($details, static fn (Details $a, Details $b): int => $a->getFile() <=> $b->getFile());
 
                 self::assertTrue($insight->hasIssue());
-                if (PHP_MAJOR_VERSION === 7) {
-                    self::assertCount(2, $details);
-                } else {
+                if (PHP_MAJOR_VERSION === 7 || PHP_VERSION_ID >= 80200) {
                     self::assertCount(3, $details);
+                } else {
+                    self::assertCount(4, $details);
                 }
 
                 /** @var \NunoMaduro\PhpInsights\Domain\Details $detail */
