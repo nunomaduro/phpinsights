@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Application\Adapters\Laravel\Preset as LaravelPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Magento2\Preset as Magento2Preset;
 use NunoMaduro\PhpInsights\Application\Adapters\Symfony\Preset as SymfonyPreset;
 use NunoMaduro\PhpInsights\Application\Adapters\Yii\Preset as YiiPreset;
+use NunoMaduro\PhpInsights\Application\Adapters\WordPress\Preset as WordPressPreset;
 use NunoMaduro\PhpInsights\Application\DefaultPreset;
 use NunoMaduro\PhpInsights\Domain\Contracts\FileLinkFormatter as FileLinkFormatterContract;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
@@ -31,6 +32,7 @@ final class Configuration
         SymfonyPreset::class,
         YiiPreset::class,
         Magento2Preset::class,
+        WordPressPreset::class,
         DefaultPreset::class,
     ];
 
