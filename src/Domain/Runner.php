@@ -157,7 +157,7 @@ final class Runner
                     continue;
                 }
 
-                if (!$runningProcess->isSuccessful()) {
+                if (! $runningProcess->isSuccessful()) {
                     throw new ProcessFailedException($runningProcess);
                 }
 
