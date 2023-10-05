@@ -11,10 +11,12 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: ['7.4', '8.0', '8.1', '8.2']
+                php: ['7.4', '8.0', '8.1', '8.2', '8.3']
                 dependency-version: [prefer-lowest, prefer-stable]
                 composer-version: [ v2 ]
                 include:
+                    -   php: '8.3'
+                        phpunit: '^10.0'
                     -   php: '8.2'
                         phpunit: '^10.0'
                     -   php: '8.1'
@@ -30,6 +32,8 @@ jobs:
                         php: '8.1'
                     -   dependency-version: prefer-lowest
                         php: '8.2'
+                    -   dependency-version: prefer-lowest
+                        php: '8.3'
         name: ${{ matrix.php }} - Composer ${{ matrix.composer-version }} --${{ matrix.dependency-version }}
 
         steps:
