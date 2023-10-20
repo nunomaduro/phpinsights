@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.9.0]
+### Added
+* Add option to set timeout [#595](https://github.com/nunomaduro/phpinsights/pull/595)
+
+### Fixed
+* fix readonly final class architecture side effect issue PHP8.2 [#645](https://github.com/nunomaduro/phpinsights/pull/645)
+* add quotes around binary path [#655](https://github.com/nunomaduro/phpinsights/pull/655)
+* Fix error: The option "preset" with value "wordpress" is invalid [#646](https://github.com/nunomaduro/phpinsights/pull/646)
+* Fix non-existing default property [#652](https://github.com/nunomaduro/phpinsights/pull/652)
+* PHP 8.2 fix for dynamic property $exclude [#653](https://github.com/nunomaduro/phpinsights/pull/653)
+* Prevent the runner to swallow its threads error [#641](https://github.com/nunomaduro/phpinsights/pull/641)
+
+### Changed
+* Update GitHub actions [#633](https://github.com/nunomaduro/phpinsights/pull/633)
+* Test against php 8.3 [#660](https://github.com/nunomaduro/phpinsights/pull/660)
+
 ## [v2.8.0]
 ### Added
 * Added Laravel 10 and PHP 8.1 Support [#626](https://github.com/nunomaduro/phpinsights/pull/626)
