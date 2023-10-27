@@ -108,6 +108,8 @@ final class LocalFilesRepository implements FilesRepository
         $this->finder = Finder::create()
             ->in($this->fileList['dirname'] ?? [])
             ->name($this->fileList['basename'] ?? '')
+            ->ignoreDotFiles(false)
+            ->ignoreVCS(false)
             ->filter(fn (SplFileInfo $file): bool => in_array(
                 $file->getPathname(),
                 $this->fileList['full_path'] ?? '',
