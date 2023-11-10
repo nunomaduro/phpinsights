@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.10.0]
+### Changed
+* disable default ignore for dot/vcs files for single files [#663](https://github.com/nunomaduro/phpinsights/pull/663)
+
 ## [v2.9.0]
 ### Added
 * Add option to set timeout [#595](https://github.com/nunomaduro/phpinsights/pull/595)
