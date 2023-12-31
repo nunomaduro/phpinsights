@@ -48,14 +48,7 @@ final class Results
      */
     public function getComplexity(): float
     {
-        $avg = $this->collector->getAverageComplexityPerMethod() - 1.0;
-
-        return (float) number_format(
-            100.0 - max(min($avg * 100.0 / 3.0, 100.0), 0.0),
-            1,
-            '.',
-            ''
-        );
+        return $this->getPercentageForComplexity();
     }
 
     /**
@@ -158,6 +151,32 @@ final class Results
         }
 
         $percentage = (bool) $issuesNotFound ? $issuesNotFound * 100.0 / $total : 100.0;
+
+        return (float) number_format($percentage, 1, '.', '');
+    }
+
+    /**
+     * Returns the percentage of the given category.
+     */
+    private function getPercentageForComplexity(): float
+    {
+        // Calculate total number of files multiplied by number of insights for complexity metric
+        $complexityInsights = $this->perCategoryInsights['Complexity'] ?? [];
+        $totalFiles = count($this->collector->getFiles()) * count($complexityInsights);
+
+        // For each metric count the number of files with problem
+        $filesWithProblems = 0;
+
+        foreach ($complexityInsights as $insight) {
+            if ($insight instanceof HasDetails) {
+                $filesWithProblems += count($insight->getDetails());
+            }
+        }
+
+        // Percentage result is 100% - percentage of files with problems
+        $percentage = $totalFiles > 0
+            ? 100 - ($filesWithProblems * 100 / $totalFiles)
+            : 100;
 
         return (float) number_format($percentage, 1, '.', '');
     }

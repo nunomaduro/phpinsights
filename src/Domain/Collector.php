@@ -69,7 +69,7 @@ final class Collector
     private int $totalMethodComplexity = 0;
 
     /**
-     * @var array<int>
+     * @var array<string, int>
      */
     private array $methodComplexity = [];
 
@@ -486,7 +486,15 @@ final class Collector
         return $this->logicalLines;
     }
 
-    public function getMethodComplexity(): int
+    /**
+     * @return array<string, int>
+     */
+    public function getMethodComplexity(): array
+    {
+        return $this->methodComplexity;
+    }
+
+    public function getTotalMethodComplexity(): int
     {
         return $this->totalMethodComplexity;
     }
