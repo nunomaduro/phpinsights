@@ -42,7 +42,7 @@ final class DefaultPreset implements PresetContract
                     'linesCountBetweenDifferentAnnotationsTypes' => 1,
                 ],
                 DeclareStrictTypesSniff::class => [
-                    'newlinesCountBeforeDeclare' => 2,
+                    'linesCountBeforeDeclare' => 2,
                     'spacesCountAroundEqualsSign' => 0,
                 ],
                 UnusedUsesSniff::class => [
