@@ -69,7 +69,7 @@ final class InsightCollectionFactory
             );
         }
 
-        return new InsightCollection($collector, $insightsForCollection);
+        return new InsightCollection($collector, $insightsForCollection, $this->config);
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NunoMaduro\PhpInsights\Domain\Insights;
 
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\Metric;
 use NunoMaduro\PhpInsights\Domain\Results;
 
@@ -22,15 +23,18 @@ final class InsightCollection
 
     private ?Results $results = null;
 
+    private Configuration $configuration;
+
     /**
      * Creates a new instance of the Insight Collection.
      *
      * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $insightsPerMetric
      */
-    public function __construct(Collector $collector, array $insightsPerMetric)
+    public function __construct(Collector $collector, array $insightsPerMetric, Configuration $configuration)
     {
         $this->collector = $collector;
         $this->insightsPerMetric = $insightsPerMetric;
+        $this->configuration = $configuration;
     }
 
     public function getCollector(): Collector
@@ -87,7 +91,7 @@ final class InsightCollection
             $perCategory[$category] = [...$perCategory[$category], ...$insights];
         }
 
-        $this->results = new Results($this->collector, $perCategory);
+        $this->results = new Results($this->collector, $perCategory, $this->configuration);
 
         return $this->results;
     }

@@ -8,6 +8,7 @@ use NunoMaduro\PhpInsights\Domain\Contracts\Fixable;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Exceptions\InsightClassNotFound;
+use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 
 /**
@@ -24,15 +25,18 @@ final class Results
      */
     private array $perCategoryInsights;
 
+    private Configuration $configuration;
+
     /**
      * Creates a new instance of results.
      *
      * @param  array<string, array<\NunoMaduro\PhpInsights\Domain\Contracts\Insight>>  $perCategoryInsights
      */
-    public function __construct(Collector $collector, array $perCategoryInsights)
+    public function __construct(Collector $collector, array $perCategoryInsights, Configuration $configuration)
     {
         $this->collector = $collector;
         $this->perCategoryInsights = $perCategoryInsights;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -48,7 +52,8 @@ final class Results
      */
     public function getComplexity(): float
     {
-        $avg = $this->collector->getAverageComplexityPerMethod() - 1.0;
+        $config = $this->configuration->getConfigForInsight(CyclomaticComplexityIsHigh::class);
+        $avg = $this->collector->getAverageComplexityPerMethod() - $config['maxComplexity'] ?? 1.0;
 
         return (float) number_format(
             100.0 - max(min($avg * 100.0 / 3.0, 100.0), 0.0),

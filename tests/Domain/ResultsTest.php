@@ -6,6 +6,7 @@ namespace Tests\Domain;
 
 use NunoMaduro\PhpInsights\Application\Console\Formatters\PathShortener;
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenSecurityIssues;
 use NunoMaduro\PhpInsights\Domain\Results;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +33,7 @@ final class ResultsTest extends TestCase
     {
         $collector = new Collector([$this->baseFixturePath], $this->commonPath);
 
-        $results = new Results($collector, ['Security' => []]);
+        $results = new Results($collector, ['Security' => []], new Configuration([]));
 
         self::assertEquals(0, $results->getTotalSecurityIssues());
     }
@@ -46,7 +47,7 @@ final class ResultsTest extends TestCase
             'Security' => [new ForbiddenSecurityIssues($collector, [])],
         ];
 
-        $results = new Results($collector, $categories);
+        $results = new Results($collector, $categories, new Configuration([]));
 
         self::assertGreaterThan(0, $results->getTotalSecurityIssues());
     }
@@ -55,7 +56,7 @@ final class ResultsTest extends TestCase
     {
         $collector = new Collector([$this->baseFixturePath], $this->commonPath);
 
-        $result = new Results($collector, self::CATEGORIES);
+        $result = new Results($collector, self::CATEGORIES, new Configuration([]));
 
         self::assertFalse($result->hasInsightInCategory(
             ForbiddenSecurityIssues::class,
@@ -71,7 +72,7 @@ final class ResultsTest extends TestCase
             'Security' => [new ForbiddenSecurityIssues($collector, [])],
         ];
 
-        $result = new Results($collector, $categories);
+        $result = new Results($collector, $categories, new Configuration([]));
 
         self::assertTrue($result->hasInsightInCategory(
             ForbiddenSecurityIssues::class,

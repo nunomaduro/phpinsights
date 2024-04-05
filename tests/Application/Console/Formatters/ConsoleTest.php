@@ -6,6 +6,7 @@ namespace Tests\Application\Console\Formatters;
 
 use NunoMaduro\PhpInsights\Application\Console\Formatters\Console;
 use NunoMaduro\PhpInsights\Domain\Collector;
+use NunoMaduro\PhpInsights\Domain\Configuration;
 use NunoMaduro\PhpInsights\Domain\Contracts\HasDetails;
 use NunoMaduro\PhpInsights\Domain\Contracts\Insight;
 use NunoMaduro\PhpInsights\Domain\Details;
@@ -65,7 +66,8 @@ final class ConsoleTest extends TestCase
 
         $insightCollection = new InsightCollection(
             new Collector([], '.'),
-            [Style::class => [$insight]]
+            [Style::class => [$insight]],
+            new Configuration([])
         );
 
         $output = new BufferedOutput();
@@ -103,7 +105,8 @@ final class ConsoleTest extends TestCase
 
         $insightCollection = new InsightCollection(
             new Collector([], '.'),
-            [Style::class => [$insight]]
+            [Style::class => [$insight]],
+            new Configuration([])
         );
 
         $output = new BufferedOutput();
