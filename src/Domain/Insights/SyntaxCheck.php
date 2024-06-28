@@ -40,6 +40,10 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
     {
         $toAnalyse = $this->getTarget();
 
+        if ($toAnalyse === '.') {
+            $toAnalyse = realpath($this->collector->getCommonPath());
+        }
+
         $cmdLine = sprintf(
             '%s --no-colors --no-progress --json %s %s',
             $this->getBinary(),
@@ -48,9 +52,6 @@ final class SyntaxCheck extends Insight implements HasDetails, GlobalInsight
         );
         $process = Process::fromShellCommandline($cmdLine);
 
-        if ($toAnalyse === '.' && getcwd() !== rtrim($this->collector->getCommonPath(), DIRECTORY_SEPARATOR)) {
-            $process->setWorkingDirectory($this->collector->getCommonPath());
-        }
         $configuration = Container::make()->get(Configuration::class);
         $process->setTimeout($configuration->getTimeout())->run();
 
