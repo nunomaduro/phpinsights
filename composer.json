@@ -1,5 +1,5 @@
 {
-    "name": "nunomaduro/phpinsights",
+    "name": "o-kazuhide-takahashi/phpinsights",
     "description": "Instant PHP quality checks from your console.",
     "keywords": [
         "php",
@@ -12,8 +12,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Kazuhide Takahashi",
+            "email": "o.kazuhide.takahashi@gmail.com"
         }
     ],
     "require": {
