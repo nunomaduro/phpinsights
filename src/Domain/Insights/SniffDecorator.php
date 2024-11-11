@@ -50,7 +50,7 @@ final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
     }
 
     /**
-     * @return array<string>
+     * @return array<int|string>
      */
     public function register(): array
     {
