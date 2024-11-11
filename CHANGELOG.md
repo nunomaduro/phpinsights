@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.12.0]
+### Changed
+* Add support for sebastian/diff 6.0 by @IsraelPinheiro in [#692](https://github.com/nunomaduro/phpinsights/pull/692)
+* Fixed type error by @elnur-ibr in [#699](https://github.com/nunomaduro/phpinsights/pull/699)
+* Refs #695 - Fix deprecation for dynamic property by @Jibbarth in [#697](https://github.com/nunomaduro/phpinsights/pull/697)
+
+## [v2.11.0]
+### Changed
+* Upgrade to SF7 by @damien-louis in [#666](https://github.com/nunomaduro/phpinsights/pull/666)
+
 ## [v2.10.0]
 ### Changed
 * disable default ignore for dot/vcs files for single files [#663](https://github.com/nunomaduro/phpinsights/pull/663)
