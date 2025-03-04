@@ -15,7 +15,7 @@ use Throwable;
 
 final class ForbiddenSecurityIssues extends Insight implements HasDetails, GlobalInsight
 {
-    private const PACKAGIST_ADVISORIES_URL = 'https://repo.packagist.org/api/security-advisories/';
+    private const PACKAGIST_ADVISORIES_URL = 'https://packagist.org/api/security-advisories/';
 
     /**
      * @var array<Details>
