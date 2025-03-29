@@ -425,7 +425,7 @@ final class Configuration
             $cpuinfo = file_get_contents('/proc/cpuinfo');
             if ($cpuinfo !== false) {
                 preg_match_all('/^processor/m', $cpuinfo, $matches);
-                return is_countable($matches[0]) ? \count($matches[0]) : 0;
+                return \count($matches[0]);
             }
         }
 

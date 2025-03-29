@@ -26,7 +26,7 @@ final class OutputDecorator
     {
         foreach (self::STYLES as $styleClass) {
             /** @var Style $style */
-            $style = new $styleClass();
+            $style = new $styleClass(); // @phpstan-ignore-line
 
             $style->addTo($output);
         }

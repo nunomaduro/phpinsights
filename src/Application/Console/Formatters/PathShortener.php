@@ -30,7 +30,7 @@ final class PathShortener
             $index++;
         }
 
-        $prefix = mb_substr($first, 0, $index ?? 0);
+        $prefix = mb_substr($first, 0, $index ? $index : 0);
 
         return mb_substr($prefix, 0, (int) mb_strrpos($prefix, DIRECTORY_SEPARATOR) + 1);
     }

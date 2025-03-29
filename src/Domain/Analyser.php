@@ -233,7 +233,7 @@ final class Analyser
                                     continue;
                                 }
 
-                                if (isset($tokens[$j][0])) {
+                                if (isset($tokens[$j][0])) { // @phpstan-ignore-line
                                     switch ($tokens[$j][0]) {
                                         case \T_PRIVATE:
                                             $visibility = \T_PRIVATE;

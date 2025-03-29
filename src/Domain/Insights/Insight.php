@@ -38,7 +38,7 @@ abstract class Insight implements InsightContract
 
         if ($exclude !== []) {
             $this->excludedFiles = Files::find(
-                (string) (getcwd() ?? $collector->getCommonPath()),
+                (string) (getcwd() ?: $collector->getCommonPath()),
                 $exclude
             );
         }

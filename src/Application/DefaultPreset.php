@@ -52,7 +52,7 @@ final class DefaultPreset implements PresetContract
                     'ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach' => true,
                 ],
                 PropertyTypeHintSniff::class => [
-                    'enableNativeTypeHint' => PHP_VERSION_ID >= 70_400,
+                    'enableNativeTypeHint' => true,
                 ],
             ],
         ];

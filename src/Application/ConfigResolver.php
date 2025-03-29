@@ -54,7 +54,7 @@ final class ConfigResolver
         $preset = $config['preset'] ?? self::guess($composer);
 
         /** @var Preset $presetClass */
-        foreach (self::PRESETS as $presetClass) {
+        foreach (self::PRESETS as $presetClass) { // @phpstan-ignore-line
             if ($presetClass::getName() === $preset) {
                 $presetData = self::preparePreset($presetClass::get($composer), $config);
                 $config = self::mergeConfig($presetData, $config);

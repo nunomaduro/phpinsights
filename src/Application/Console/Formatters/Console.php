@@ -117,7 +117,7 @@ final class Console implements Formatter
         $this->totalWidth = (new Terminal())->getWidth();
 
         $outputFormatterStyle = new OutputFormatterStyle();
-        $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref');
+        $this->supportHyperLinks = method_exists($outputFormatterStyle, 'setHref'); // @phpstan-ignore-line
     }
 
     /**

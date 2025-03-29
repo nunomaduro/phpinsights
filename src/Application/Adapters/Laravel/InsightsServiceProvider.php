@@ -26,7 +26,7 @@ final class InsightsServiceProvider extends ServiceProvider
         /**
          * @noRector Rector\DeadCode\Rector\If_\RemoveDeadInstanceOfRector
          */
-        if ($this->app instanceof Application) {
+        if ($this->app instanceof Application) { // @phpstan-ignore-line
             $this->publishes([
                 __DIR__ . '/../../../../stubs/laravel.php' => $this->app->configPath('insights.php'),
             ], 'config');

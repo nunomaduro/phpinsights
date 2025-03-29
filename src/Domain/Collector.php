@@ -657,7 +657,7 @@ final class Collector
         return $this->getLines() - $this->getCommentLines();
     }
 
-    public function getAverageClassLength(): float|int
+    public function getAverageClassLength(): float
     {
         return $this->getAverage($this->classLines);
     }

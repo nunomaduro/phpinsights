@@ -123,7 +123,7 @@ final class InternalProcessorCommand
         $insights = array_diff($insights, $this->configuration->getRemoves());
 
         $insightsAdded = [];
-        $path = (string) (getcwd() ?? $this->configuration->getCommonPath());
+        $path = (string) (getcwd() ?: $this->configuration->getCommonPath());
         $collector = new Collector([], $path);
         foreach ($insights as $insight) {
             /** @var InsightLoader $loader */
