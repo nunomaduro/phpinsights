@@ -26,11 +26,14 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails, Gl
     public function getTitle(): string
     {
         return sprintf(
-            'Having `classes` with more than %s cyclomatic complexity is prohibited - Consider refactoring',
+            'Having `classes` with total cyclomatic complexity more than %s is prohibited - Consider refactoring',
             $this->getMaxComplexity()
         );
     }
 
+    /**
+     * @return array<int, Details>
+     */
     public function getDetails(): array
     {
         return $this->details;
@@ -49,9 +52,13 @@ final class CyclomaticComplexityIsHigh extends Insight implements HasDetails, Gl
             static fn ($complexity): bool => $complexity > $complexityLimit
         );
 
-        $this->details = array_map(static fn ($class, $complexity): Details => Details::make()
-            ->setFile($class)
-            ->setMessage("{$complexity} cyclomatic complexity"), array_keys($classesComplexity), $classesComplexity);
+        $this->details = array_map(
+            static fn ($class, $complexity): Details => Details::make()
+                ->setFile($class)
+                ->setMessage(sprintf('%d cyclomatic complexity', $complexity)),
+            array_keys($classesComplexity),
+            $classesComplexity
+        );
     }
 
     private function getMaxComplexity(): int
