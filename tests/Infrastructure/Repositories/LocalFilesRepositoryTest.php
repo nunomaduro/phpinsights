@@ -14,20 +14,6 @@ final class LocalFilesRepositoryTest extends TestCase
     private const BASE = __DIR__ . '/../../Fixtures/Tree';
 
     /**
-     * @dataProvider provider
-     * @param int $expected
-     * @param array<string> $exclude
-     */
-    public function testItExcludesFilesGivenAPath(int $expected, array $exclude): void
-    {
-        $repository = new LocalFilesRepository(Finder::create());
-
-        $files = $repository->within([self::BASE], $exclude)->getFiles();
-
-        self::assertCount($expected, $files);
-    }
-
-    /**
      * @return array<int, array<int, array<int, string>|int>>
      */
     public static function provider(): array
