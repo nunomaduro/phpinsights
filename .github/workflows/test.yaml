@@ -60,7 +60,7 @@ jobs:
               run: composer update --${{ matrix.dependency-version }} --ansi --no-interaction --prefer-dist
 
             - name: Force PHPUnit version
-              run: composer require --dev phpunit/phpunit:${{ matrix.phpunit }} --update-with-dependencies -n --ansi
+              run: composer require --dev phpunit/phpunit:${{ matrix.phpunit }} --with-all-dependencies -n --ansi
 
             - name: Unit Tests
               run: vendor/bin/phpunit
