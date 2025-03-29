@@ -60,14 +60,12 @@ final class SniffDecorator implements Sniff, Insight, DetailsCarrier, Fixable
     /**
      * @param int $stackPtr
      *
-     * @return int|void
-     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function process(File $file, $stackPtr)
+    public function process(File $file, $stackPtr): int|null
     {
         if ($file instanceof InsightFile && $this->skipFilesFromIgnoreFiles($file)) {
-            return;
+            return null;
         }
 
         return $this->sniff->process($file, $stackPtr);

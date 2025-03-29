@@ -1,3 +1,1 @@
 <?php
-
-$_POST['global'];

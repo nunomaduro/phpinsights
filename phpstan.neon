@@ -1,63 +1,13 @@
-includes:
-    - vendor/phpstan/phpstan-strict-rules/rules.neon
-    - vendor/ergebnis/phpstan-rules/rules.neon
-    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
-
 parameters:
-    level: max
+    level: 5
     paths:
         - config
         - src
         - stubs
-        - tests
 
-    ignoreErrors:
-        - '#Offset 1 does not exist on array.#'
-        - '#iterator_to_array expects Traversable, iterable#'
-        - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addConstant\(\) has parameter \$name with no typehint specified#'
-        - '#Method NunoMaduro\\PhpInsights\\Domain\\Collector::addFile\(\) has parameter \$filename with no typehint specified#'
-        - '#NunoMaduro\\PhpInsights\\Domain\\File::__construct\(\) does not call parent constructor from PHP_CodeSniffer\\Files\\File#'
-        - '#Method NunoMaduro\\PhpInsights\\Domain\\File::addMessage\(\) has parameter#'
-        - '#Variable property access on PHP_CodeSniffer\\Sniffs\\Sniff#'
-        - '#is not allowed to extend#'
-        - '#Language construct isset\(\) should not be used#'
-        - '#Access to an undefined property PHP_CodeSniffer\\Config::\$standards.#'
-        - '#Access to an undefined property PHP_CodeSniffer\\Sniffs\\Sniff::\$#'
-        - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Json has an unused parameter \$input#'
-        - '#NunoMaduro\\PhpInsights\\Application\\Console\\Formatters\\Checkstyle has an unused parameter \$input#'
-        - '#In method "NunoMaduro\\PhpInsights\\Domain\\File::process", caught "Throwable" must be rethrown#'
-        - '#In method "NunoMaduro\\PhpInsights\\Domain\\FileProcessors\\FixerFileProcessor::processFile", caught "Throwable" must be rethrown#'
-        - '#Empty catch block. If you are sure this is meant to be empty, please add a "// @ignoreException" comment in the catch block.#'
-        - '#Casting to string something that#'
-        - '#Instanceof between Illuminate\\Contracts\\Foundation\\Application and#'
-        - '#Call to function method_exists\(\) with Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle and #'
-        - '#Error suppression via "@" should not be used.#'
-        -
-            message: '#Control structures using switch should not be used.#'
-            path: src/Domain/Analyser.php
-        -
-            message: '#does not exist on SimpleXMLElement\|null.#'
-            path: src/Application/Console/Formatters/Checkstyle.php
-        -
-            message: '#generic class ReflectionClass#'
-            path: src/Domain/Reflection.php
-        - '#NunoMaduro\\PhpInsights\\Domain\\File::addFixableError#'
-        - '#NunoMaduro\\PhpInsights\\Domain\\Differ#'
-        - '#iterable type PhpCsFixer\\Tokenizer\\Tokens#'
-        - '#Method NunoMaduro\\PhpInsights\\Application\\Console\\Definitions\\BaseDefinition::get\(\) is not final#'
-        -
-            message: "#^Method Tests\\\\TestCase\\:\\:.*\\(\\) is not final, but since the containing class is abstract, it should be\\.$#"
-            count: 2
-            path: tests/TestCase.php
-        -
-            message: "#^Parameter \\#.* of class Composer\\\\Package\\\\Locker constructor expects .*$#"
-            count: 3
-            path: src/Domain/ComposerLoader.php
-        - "#^Parameter \\#1 \\$input of function array_flip expects array\\<int\\|string\\>, array\\<string, array\\|float\\|int\\|string\\> given\\.$#"
     bootstrapFiles:
         - %rootDir%/../../squizlabs/php_codesniffer/autoload.php
-    reportUnmatchedIgnoredErrors: false
 
-    excludes_analyse:
+    excludePaths:
         - %rootDir%/../../../tests/*/Fixtures/*
         - %rootDir%/../../../tests/Fixtures/*

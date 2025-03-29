@@ -254,7 +254,7 @@ final class ConfigResolverTest extends TestCase
     /**
      * @return array<string, array<string>>
      */
-    public function provideValidIde(): array
+    public static function provideValidIde(): array
     {
         return [
             'Sublime Text' => ['sublime'],

@@ -30,7 +30,7 @@ final class LocalFilesRepositoryTest extends TestCase
     /**
      * @return array<int, array<int, array<int, string>|int>>
      */
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             [3, ['FolderA/ClassA.php']],

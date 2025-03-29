@@ -39,9 +39,9 @@ final class Analyser
     /**
      * @param array<int|float|array<string>, int|float|array<string>> $args
      *
-     * @return int|float|array<string>
+     * @return int|float|array<string>|bool
      */
-    public function __call(string $method, array $args)
+    public function __call(string $method, array $args): mixed
     {
         $method = new ReflectionMethod(BaseAnalyser::class, $method);
         $method->setAccessible(true);

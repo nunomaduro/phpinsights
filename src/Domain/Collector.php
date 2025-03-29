@@ -649,10 +649,7 @@ final class Collector
         return $this->getLines() - $this->getCommentLines();
     }
 
-    /**
-     * @return float|int
-     */
-    public function getAverageClassLength()
+    public function getAverageClassLength(): float|int
     {
         return $this->getAverage($this->classLines);
     }
@@ -813,10 +810,8 @@ final class Collector
      * Returns the sum value from the given array.
      *
      * @param  array<string, float|int>  $array
-     *
-     * @return int|float
      */
-    private function getSum(array $array)
+    private function getSum(array $array): int|float
     {
         return array_sum($array);
     }
@@ -825,10 +820,8 @@ final class Collector
      * Returns the maximum value from the given array.
      *
      * @param  array<string, float|int>  $array
-     *
-     * @return int|float
      */
-    private function getMaximum(array $array)
+    private function getMaximum(array $array): int|float
     {
         return $array !== [] ? \max($array) : 0;
     }

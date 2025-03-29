@@ -46,7 +46,7 @@ final class FixerFileProcessor implements FileProcessor
         if (! $insight instanceof FixerDecorator) {
             throw new RuntimeException(sprintf(
                 'Unable to add %s, not a Fixer instance',
-                get_class($insight)
+                $insight::class
             ));
         }
 

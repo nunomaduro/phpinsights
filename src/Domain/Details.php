@@ -6,8 +6,7 @@ namespace NunoMaduro\PhpInsights\Domain;
 
 final class Details
 {
-    /** @var mixed */
-    private $original;
+    private mixed $original;
 
     private ?string $file = null;
 
@@ -31,10 +30,7 @@ final class Details
         return $this;
     }
 
-    /**
-     * @param mixed $original
-     */
-    public function setOriginal($original): Details
+    public function setOriginal(mixed $original): Details
     {
         $this->original = $original;
 
@@ -109,10 +105,7 @@ final class Details
         return $this->function !== null;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOriginal()
+    public function getOriginal(): mixed
     {
         return $this->original;
     }

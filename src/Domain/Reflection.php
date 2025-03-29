@@ -27,10 +27,8 @@ final class Reflection
 
     /**
      * Sets an private attribute value on the given instance.
-     *
-     * @param mixed $value
      */
-    public function set(string $attribute, $value): Reflection
+    public function set(string $attribute, mixed $value): Reflection
     {
         self::setProperty(
             $this->reflectionClass,
@@ -44,10 +42,8 @@ final class Reflection
 
     /**
      * Gets an private attribute value on the given instance.
-     *
-     * @return mixed
      */
-    public function get(string $attribute)
+    public function get(string $attribute): mixed
     {
         $property = $this->reflectionClass->getProperty($attribute);
 
@@ -57,16 +53,13 @@ final class Reflection
     }
 
     /**
-     * @param mixed $instance
-     * @param mixed $value
-     *
      * @throws ReflectionException
      */
     private static function setProperty(
         ReflectionClass $class,
-        $instance,
+        mixed $instance,
         string $attribute,
-        $value
+        mixed $value
     ): void {
         try {
             $property = $class->getProperty($attribute);

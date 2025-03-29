@@ -13,12 +13,10 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
-                php: ['7.4', '8.0', '8.1', '8.2', '8.3']
+                php: ['8.1', '8.2', '8.3', '8.4']
                 dependency-version: [prefer-lowest, prefer-stable]
                 composer-version: [v2]
                 exclude:
-                    -   dependency-version: prefer-lowest
-                        php: '8.0'
                     -   dependency-version: prefer-lowest
                         php: '8.1'
                     -   dependency-version: prefer-lowest
@@ -35,10 +33,10 @@ jobs:
                 git config --system core.eol lf
 
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Cache dependencies
-              uses: actions/cache@v1
+              uses: actions/cache@v4
               with:
                   path: ~/.composer/cache/files
                   key: dependencies-php-${{ matrix.php }}-composer-${{ matrix.composer-version }}-${{ hashFiles('composer.json') }}

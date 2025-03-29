@@ -127,7 +127,7 @@ final class ConfigurationTest extends TestCase
     /**
      * @return array<array<string|int|float>>
      */
-    public function invalidThreadsNumber(): array
+    public static function invalidThreadsNumber(): array
     {
         return [
             [0],

@@ -1,10 +1,3 @@
-> [!CAUTION]
-> This package is no longer actively maintained. Please use at your own risk, or fork the package. Docs are available within the `docs/` directory.
->
-> If you are willing to be a maintainer of this package, please reach out to [Nuno Maduro](https://github.com/nunomaduro), or create a new issue stating your interest.
-
----
-
 <p align="center">
   <img src="/art/logo.gif" width="350" alt="PHP Insights">
   <img src="/art/preview.png" width="882" alt="PHP Insights Preview">
@@ -20,7 +13,6 @@
 </p>
 
 **PHP Insights** was carefully crafted to simplify the analysis of your code directly from your terminal, and is the perfect starting point to analyze the code quality of your PHP projects.
-It was created by **[Nuno Maduro](https://github.com/nunomaduro)** with logo design **[Caneco](https://github.com/caneco)**.
 
 ## 🚀 Quick start
 

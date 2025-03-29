@@ -63,7 +63,7 @@ final class InsightCollection
      */
     public function allFrom(Metric $metric): array
     {
-        return $this->insightsPerMetric[get_class($metric)] ?? [];
+        return $this->insightsPerMetric[$metric::class] ?? [];
     }
 
     /**

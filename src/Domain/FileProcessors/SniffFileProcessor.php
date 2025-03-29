@@ -46,7 +46,7 @@ final class SniffFileProcessor implements FileProcessor
         if (! $insight instanceof SniffDecorator) {
             throw new RuntimeException(sprintf(
                 'Unable to add %s, not an Sniff instance',
-                get_class($insight)
+                $insight::class
             ));
         }
 

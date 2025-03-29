@@ -13,16 +13,14 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^5.4', '@stable', '@dev'] # Test current LTS, current release, and future release
-                php: ['7.4', '8.0', '8.1', '8.2', '8.3']
+                version: ['@stable', '@dev'] # Test current LTS, current release, and future release
+                php: ['8.1', '8.2', '8.3']
                 composer-version: [v2]
                 include:
-                  - version: '^5.4'
-                    psr-simple-cache-version: '^1.0|^2.0'
                   - version: '@stable'
-                    psr-simple-cache-version: '^1.0|^2.0|^3.0'
+                    psr-simple-cache-version: '^2.0|^3.0'
                   - version: '@dev'
-                    psr-simple-cache-version: '^1.0|^2.0|^3.0'
+                    psr-simple-cache-version: '^2.0|^3.0'
         env:
             allow_failure: ${{ matrix.version == '@dev' }}
         name: "Symfony skeleton:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
@@ -86,28 +84,21 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^10.0', '^9.0', '^8.0']
-                php: ['7.4', '8.0', '8.1', '8.2', '8.3']
+                version: ['^10.0', '^11.0', '^12.0']
+                php: ['8.1', '8.2', '8.3']
                 composer-version: [v2]
                 include:
                     -   version: '^10.0'
                         phpunit: '^10.0'
-                    -   version: '^9.0'
-                        phpunit: '^9.0'
-                    -   version: '^8.0'
-                        phpunit: '^9.0'
-                exclude:
-                    -   version: '^9.0'
-                        php: '7.4'
-                    -   version: '^10.0'
-                        php: '7.4'
-                    -   version: '^10.0'
-                        php: '8.0'
+                    -   version: '^11.0'
+                        phpunit: '^11.0'
+                    -   version: '^12.0'
+                        phpunit: '^11.0'
         name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   path: phpinsights
             - name: Setup PHP
