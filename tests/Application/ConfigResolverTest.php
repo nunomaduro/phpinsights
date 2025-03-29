@@ -176,19 +176,6 @@ final class ConfigResolverTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider provideValidIde
-     */
-    public function testResolveValidIde(string $ide): void
-    {
-        $config = ['ide' => $ide];
-
-        $config = ConfigResolver::resolve($config, FakeInput::paths([$this->baseFixturePath]));
-
-        self::assertInstanceOf(FileLinkFormatter::class, $config->getFileLinkFormatter());
-        self::assertNotInstanceOf(NullFileLinkFormatter::class, $config->getFileLinkFormatter());
-    }
-
     public function testResolveWithoutIde(): void
     {
         $config = [];

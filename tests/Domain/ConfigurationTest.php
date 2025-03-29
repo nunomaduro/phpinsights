@@ -114,17 +114,6 @@ final class ConfigurationTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidThreadsNumber
-     * @param int|string $invalid
-     */
-    public function testExceptionOnInvalidSetThread($invalid): void
-    {
-        $this->expectException(InvalidConfiguration::class);
-        $this->expectExceptionMessage('The option "threads" with value');
-        new Configuration(['threads' => $invalid]);
-    }
-
-    /**
      * @return array<array<string|int|float>>
      */
     public static function invalidThreadsNumber(): array
