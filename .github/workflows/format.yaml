@@ -45,9 +45,6 @@ jobs:
             - name: PHP CS Fixer
               run: composer run csfixer:test -- --dry-run
 
-            - name: Rector
-              run: composer run rector:test -- --dry-run
-
             - name: PHPInsight on modified files
               if: github.event_name == 'pull_request'
               run: |

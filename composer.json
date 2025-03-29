@@ -108,7 +108,6 @@
     "scripts-descriptions": {
         "website:copy-changelog": "Copy package changelog to the website",
         "website:copy-logo": "Copy logo from art directory to the website",
-        "rector:test": "Run the rector tests.",
         "csfixer:test": "Run the PhpCsFixer tests.",
         "phpstan:test": "Run the phpstan tests.",
         "phpunit:test": "Run the phpunit tests.",
