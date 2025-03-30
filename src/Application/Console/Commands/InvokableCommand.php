@@ -17,7 +17,7 @@ final class InvokableCommand extends BaseCommand
         '    <options=bold>https://github.com/nunomaduro/phpinsights</>',
         '  - Sponsor the maintainers:',
         '    <options=bold>https://github.com/sponsors/nunomaduro</>',
-        '  - Subscribe my YouTube channel:',
+        '  - Subscribe to my YouTube channel:',
         '    <options=bold>https://www.youtube.com/@nunomaduro</>',
     ];
 
