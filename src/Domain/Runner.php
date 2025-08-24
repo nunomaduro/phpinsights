@@ -57,7 +57,7 @@ final class Runner
 
         $this->configuration = $container->get(Configuration::class);
         $this->cacheKey = $this->configuration->getCacheKey();
-        $this->threads = $this->configuration->getNumberOfThreads();
+        $this->threads = max(1, $this->configuration->getNumberOfThreads());
     }
 
     /**
