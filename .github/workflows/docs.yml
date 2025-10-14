@@ -17,25 +17,23 @@ jobs:
           # fetch all commits to get last updated time or other git log info
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.18.2
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           # choose node.js version to use
           node-version: 22
-          # cache deps for pnpm
-          cache: pnpm
+          # cache deps for npm
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        working-directory: ./docs
+        run: npm ci
 
       # run build script
       - name: Build VuePress site
-        run: pnpm docs:build
+        working-directory: ./docs
+        run: npm run docs:build
 
       # please check out the docs of the workflow for more details
       # @see https://github.com/crazy-max/ghaction-github-pages
