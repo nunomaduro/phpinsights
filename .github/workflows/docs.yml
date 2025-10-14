@@ -30,7 +30,7 @@ jobs:
       # run build script
       - name: Build VuePress site
         working-directory: ./docs
-        run: npm run docs:build
+        run: npx vuepress build
 
       # please check out the docs of the workflow for more details
       # @see https://github.com/crazy-max/ghaction-github-pages
