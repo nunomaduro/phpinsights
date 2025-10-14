@@ -22,9 +22,6 @@ jobs:
         with:
           # choose node.js version to use
           node-version: 22
-          # cache deps for npm
-          cache: npm
-          cache-dependency-path: docs/package-lock.json
 
       - name: Install deps
         working-directory: ./docs
