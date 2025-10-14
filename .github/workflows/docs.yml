@@ -25,7 +25,7 @@ jobs:
 
       - name: Install deps
         working-directory: ./docs
-        run: npm ci
+        run: npm install
 
       # run build script
       - name: Build VuePress site
