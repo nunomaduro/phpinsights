@@ -27,6 +27,16 @@ jobs:
         working-directory: ./docs
         run: npm install
 
+      - name: Copy changelog
+        run: cp CHANGELOG.md docs/changelog.md
+
+      - name: Copy assets
+        run: |
+          mkdir -p docs/.vuepress/public
+          cp art/logo_mixed.gif docs/.vuepress/public/logo.gif
+          cp art/heart.svg docs/.vuepress/public/heart.svg
+          cp art/heart.png docs/.vuepress/public/heart.png
+        
       # run build script
       - name: Build VuePress site
         working-directory: ./docs
