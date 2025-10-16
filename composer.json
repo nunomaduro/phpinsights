@@ -25,7 +25,6 @@
         "cmgmyr/phploc": "^8.0.6",
         "composer/semver": "^3.4.4",
         "friendsofphp/php-cs-fixer": "^3.88.2",
-        "justinrainbow/json-schema": "^6.6.0",
         "league/container": "^5.1.0",
         "php-parallel-lint/php-parallel-lint": "^1.4.0",
         "psr/container": "^2.0.2",
