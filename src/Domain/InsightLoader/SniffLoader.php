@@ -17,10 +17,11 @@ final class SniffLoader implements InsightLoader
 {
     public function support(string $insightClass): bool
     {
-        if (class_implements($insightClass) === false) {
+        $interfaces = class_implements($insightClass);
+        if (!is_array($interfaces)) {
             return false;
         }
-        return array_key_exists(SniffContract::class, class_implements($insightClass));
+        return array_key_exists(SniffContract::class, $interfaces);
     }
 
     public function load(string $insightClass, string $dir, array $config, Collector $collector): Insight
