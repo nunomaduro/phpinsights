@@ -44,7 +44,6 @@ final class Analyser
     public function __call(string $method, array $args): mixed
     {
         $method = new ReflectionMethod(BaseAnalyser::class, $method);
-        $method->setAccessible(true);
 
         return $method->invoke(new BaseAnalyser(), ...$args);
     }
@@ -175,8 +174,10 @@ final class Analyser
                         $collector->incrementTraits();
                     } elseif ($token === \T_INTERFACE) {
                         $collector->incrementInterfaces();
-                    } elseif (isset($tokens[$i - 2]) &&
-                        \is_array($tokens[$i - 2])) {
+                    } elseif (
+                        isset($tokens[$i - 2]) &&
+                        \is_array($tokens[$i - 2])
+                    ) {
                         if ($tokens[$i - 2][0] === \T_ABSTRACT || $tokens[$i - 2][0] === \T_READONLY && $tokens[$i - 4][0] === \T_ABSTRACT) {
                             $collector->addAbstractClass($filename);
                         } elseif ($tokens[$i - 2][0] === \T_FINAL || $tokens[$i - 2][0] === \T_READONLY && $tokens[$i - 4][0] === \T_FINAL) {
@@ -205,8 +206,10 @@ final class Analyser
                         $next = $this->getNextNonWhitespaceTokenPos($tokens, $next);
                     }
 
-                    if (\is_array($tokens[$next]) &&
-                        $tokens[$next][0] === \T_STRING) {
+                    if (
+                        \is_array($tokens[$next]) &&
+                        $tokens[$next][0] === \T_STRING
+                    ) {
                         $functionName = $tokens[$next][1];
                     } else {
                         $currentBlock = 'anonymous function';
@@ -215,8 +218,10 @@ final class Analyser
                     }
 
                     if ($currentBlock === \T_FUNCTION) {
-                        if ($className === null &&
-                            $functionName !== 'anonymous function') {
+                        if (
+                            $className === null &&
+                            $functionName !== 'anonymous function'
+                        ) {
                             $collector->addNamedFunctions($functionName);
                         } else {
                             $static = false;
@@ -224,9 +229,11 @@ final class Analyser
 
                             for ($j = $i; $j > 0; $j--) {
                                 if (\is_string($tokens[$j])) {
-                                    if ($tokens[$j] === '{' ||
+                                    if (
+                                        $tokens[$j] === '{' ||
                                         $tokens[$j] === '}' ||
-                                        $tokens[$j] === ';') {
+                                        $tokens[$j] === ';'
+                                    ) {
                                         break;
                                     }
 
@@ -317,15 +324,19 @@ final class Analyser
                     break;
 
                 case \T_STRING:
-                    if ($value === 'define'
+                    if (
+                        $value === 'define'
                         && $tokens[$i - 1][1] !== '::'
                         && $tokens[$i - 1][1] !== '->'
-                        && (! isset($tokens[$i - 2][1]) || $tokens[$i - 2][1] !== 'function')) {
+                        && (! isset($tokens[$i - 2][1]) || $tokens[$i - 2][1] !== 'function')
+                    ) {
                         $j = $i + 1;
 
                         while (isset($tokens[$j]) && $tokens[$j] !== ';') {
-                            if (\is_array($tokens[$j]) &&
-                                $tokens[$j][0] === \T_CONSTANT_ENCAPSED_STRING) {
+                            if (
+                                \is_array($tokens[$j]) &&
+                                $tokens[$j][0] === \T_CONSTANT_ENCAPSED_STRING
+                            ) {
                                 $collector->addGlobalConstant(\str_replace('\'', '', $tokens[$j][1]));
 
                                 break;
@@ -344,18 +355,22 @@ final class Analyser
                     $n = $this->getNextNonWhitespaceTokenPos($tokens, $i);
                     $nn = $this->getNextNonWhitespaceTokenPos($tokens, $n);
 
-                    if ((bool) $n && (bool) $nn &&
+                    if (
+                        (bool) $n && (bool) $nn &&
                         isset($tokens[$n][0]) &&
                         ($tokens[$n][0] === \T_STRING ||
                             $tokens[$n][0] === \T_VARIABLE) &&
-                        $tokens[$nn] === '(') {
+                        $tokens[$nn] === '('
+                    ) {
                         if ($token === \T_DOUBLE_COLON) {
                             $collector->incrementStaticMethodCalls();
                         } else {
                             $collector->incrementNonStaticMethodCalls();
                         }
-                    } elseif ($token === \T_DOUBLE_COLON &&
-                        $tokens[$n][0] === \T_VARIABLE) {
+                    } elseif (
+                        $token === \T_DOUBLE_COLON &&
+                        $tokens[$n][0] === \T_VARIABLE
+                    ) {
                         $collector->incrementStaticAttributeAccesses();
                     } elseif ($token === \T_OBJECT_OPERATOR) {
                         $collector->incrementNonStaticAttributeAccesses();

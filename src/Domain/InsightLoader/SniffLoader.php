@@ -37,7 +37,9 @@ final class SniffLoader implements InsightLoader
         }
 
         foreach ($config as $property => $value) {
-            $sniff->{$property} = $value;
+            if (property_exists($sniff, $property)) {
+                $sniff->{$property} = $value;
+            }
         }
 
         return new SniffDecorator($sniff, $dir, $excludeConfig);

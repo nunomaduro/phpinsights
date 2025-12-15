@@ -277,7 +277,7 @@ final class Configuration
         $resolver->setDefined('timeout');
         $resolver->setAllowedValues(
             'preset',
-            array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
+            array_map(static fn(string $presetClass) => $presetClass::getName(), self::PRESETS)
         );
 
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
@@ -285,9 +285,9 @@ final class Configuration
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedTypes('diff_context', 'int');
-        $resolver->setAllowedValues('diff_context', static fn ($value) => $value >= 0);
-        $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
-        $resolver->setAllowedValues('timeout', static fn ($value) => $value >= 0);
+        $resolver->setAllowedValues('diff_context', static fn($value) => $value >= 0);
+        $resolver->setAllowedValues('threads', static fn($value) => $value === null || $value >= 1);
+        $resolver->setAllowedValues('timeout', static fn($value) => $value >= 0);
 
         try {
             $config = $resolver->resolve($config);
@@ -328,10 +328,11 @@ final class Configuration
     {
         return static function ($values): bool {
             foreach ($values as $metric => $insights) {
+                $interfaces = class_implements($metric);
                 if (
                     ! class_exists($metric) ||
-                    class_implements($metric) === false ||
-                    ! in_array(Metric::class, class_implements($metric), true)
+                    !is_array($interfaces) ||
+                    ! in_array(Metric::class, $interfaces, true)
                 ) {
                     throw new InvalidConfiguration(sprintf(
                         'Unable to use "%s" class as metric in section add.',
