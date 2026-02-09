@@ -8,7 +8,7 @@
     <a href="https://packagist.org/packages/nunomaduro/phpinsights"><img src="https://poser.pugx.org/nunomaduro/phpinsights/license.svg" alt="License"></a>
   </p>
   <p align="center">
-    <strong>For full documentation, visit <a href="https://phpinsights.com">phpinsights.com</a></strong>.
+    <strong>For full documentation, visit <a href="https://nunomaduro.github.io/phpinsights/">nunomaduro.github.io/phpinsights/</a></strong>.
   </p>
 </p>
 
