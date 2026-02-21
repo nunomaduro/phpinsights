@@ -39,8 +39,8 @@
         "symfony/process": "^6.4.20|^7.3.4"
     },
     "require-dev": {
-        "illuminate/console": "^10.48.28|^11.44.2|^12.33",
-        "illuminate/support": "^10.48.28|^11.44.2|^12.33",
+        "illuminate/console": "^10.48.28|^11.44.2|^12.33|^13.0",
+        "illuminate/support": "^10.48.28|^11.44.2|^12.33|^13.0",
         "mockery/mockery": "^1.6.12",
         "phpstan/phpstan": "^2.1.31",
         "phpunit/phpunit": "^10.5.45|^11.5.42",
