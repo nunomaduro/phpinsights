@@ -1,60 +1,60 @@
 name: Code style analysis
 
 on:
-    pull_request: ~
-    push:
-        branches:
-            - master
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
-    ci:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                os: [ubuntu-latest]
-                php: [8.1]
-                dependency-version: [prefer-stable]
+  ci:
+    runs-on: ${{ matrix.os }}
 
-        name: ${{ matrix.php }} - ${{ matrix.dependency-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        php: [8.1, '8.3', '8.4', '8.5']
+        dependency-version: [prefer-stable]
 
-        steps:
+    name: ${{ matrix.php }} - ${{ matrix.dependency-version }}
 
-            - name: Checkout
-              uses: actions/checkout@v4
-            - name: Cache dependencies
-              uses: actions/cache@v4
-              with:
-                  path: ~/.composer/cache/files
-                  key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  extensions: dom, mbstring, zip
-                  coverage: none
-                  tools: cs2pr
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-            - name: Install Composer dependencies
-              run: composer update --${{ matrix.dependency-version }} --ansi --no-interaction --prefer-dist
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, mbstring, zip
+          coverage: none
+          tools: cs2pr
 
-            - name: PHPStan
-              run: composer run phpstan:test -- --error-format=checkstyle | cs2pr
+      - name: Install Composer dependencies
+        run: composer update --${{ matrix.dependency-version }} --ansi --no-interaction --prefer-dist
 
-            - name: PHP CS Fixer
-              run: composer run csfixer:test -- --dry-run
+      - name: PHPStan
+        run: composer run phpstan:test -- --error-format=checkstyle | cs2pr
 
-            - name: PHPInsight on modified files
-              if: github.event_name == 'pull_request'
-              run: |
-                  URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-                  FILES=$(curl -s -X GET -G $URL | jq -r '.[] |  select( .status == "added" or .status == "modified") | select(.filename|endswith(".php")) |  .filename')
-                  php bin/phpinsights analyse $FILES --ansi -v --no-interaction --format=github-action --min-quality=0 --min-complexity=0 --min-architecture=0 --min-style=0
+      - name: PHP CS Fixer
+        run: composer run csfixer:test -- --dry-run
 
-            - name: PHPInsight
-              run: composer run insights
+      - name: PHPInsight on modified files
+        if: "github.event_name == 'pull_request'"
+        run: |
+          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+          FILES=$(curl -s -X GET -G $URL | jq -r '.[] |  select( .status == "added" or .status == "modified") | select(.filename|endswith(".php")) |  .filename')
+          php bin/phpinsights analyse $FILES --ansi -v --no-interaction --format=github-action --min-quality=0 --min-complexity=0 --min-architecture=0 --min-style=0
 
-            - name: PHPInsight - Summary only
-              run: composer run insights -- --summary
+      - name: PHPInsight
+        run: composer run insights
 
+      - name: PHPInsight - Summary only
+        run: composer run insights -- --summary

@@ -1,160 +1,212 @@
 name: Popular frameworks
 
 on:
-    push:
-        branches:
-            - master
-    pull_request: ~
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
-    symfony:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                os: [ubuntu-latest]
-                version: ['@stable', '@dev'] # Test current LTS, current release, and future release
-                php: ['8.1', '8.2', '8.3']
-                composer-version: [v2]
-                include:
-                  - version: '@stable'
-                    psr-simple-cache-version: '^2.0|^3.0'
-                  - version: '@dev'
-                    psr-simple-cache-version: '^2.0|^3.0'
-        env:
-            allow_failure: ${{ matrix.version == '@dev' }}
-        name: "Symfony skeleton:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
+  symfony:
+    runs-on: ${{ matrix.os }}
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-              with:
-                  path: phpinsights
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  extensions: dom, mbstring, zip
-                  coverage: none
-                  tools: composer:${{ matrix.composer-version }}
 
-            - name: Install Symfony Skeleton
-              run: composer create-project --no-progress --ansi symfony/skeleton:${{matrix.version}} project
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Improve composer
-              working-directory: ./project
-              run: |
-                  composer config name phpinsights/symfony-tester
-                  composer config description "Symfony test"
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Linking library
-              working-directory: ./project
-              run: |
-                composer config repositories.phpinsights '{"type":"path", "url": "../phpinsights/", "options":{"symlink": false}}'
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Composer config
-              working-directory: ./project
-              run: |
-                  composer config prefer-stable true
-                  composer config minimum-stability dev
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Require psr/simple-cache
-              working-directory: ./project
-              run: composer require "psr/simple-cache:${{ matrix.psr-simple-cache-version }}"
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Allow plugin
-              working-directory: ./project
-              run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Install PHPInsights
-              working-directory: ./project
-              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
-              continue-on-error: true
-            - name: Launch PHPInsights
-              working-directory: ./project
-              run: php vendor/bin/phpinsights -n --disable-security-check --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Launch PHPInsights Fixer
-              working-directory: ./project
-              run: php vendor/bin/phpinsights fix -n --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-    laravel:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                os: [ubuntu-latest]
-                version: ['^10.0', '^11.0', '^12.0']
-                php: ['8.1', '8.2', '8.3']
-                composer-version: [v2]
-                include:
-                    -   version: '^10.0'
-                        phpunit: '^10.0'
-                    -   version: '^11.0'
-                        phpunit: '^11.0'
-                    -   version: '^12.0'
-                        phpunit: '^11.0'
-                exclude:
-                    -   version: '^11.0'
-                        php: '8.1'
-                    -   version: '^12.0'
-                        php: '8.1'
-        name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        version: ['@stable', '@dev']
+        php: ['8.1', '8.2', '8.3']
+        composer-version: [v2]
+        include:
+          - version: @stable
+            psr-simple-cache-version: ^2.0|^3.0
+          - version: @dev
+            psr-simple-cache-version: ^2.0|^3.0
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                  path: phpinsights
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  extensions: dom, mbstring, zip
-                  coverage: none
-                  tools: composer:${{ matrix.composer-version }}
+    env:
+      allow_failure: ${{ matrix.version == '@dev' }}
 
-            - name: Install Laravel
-              run: composer create-project --prefer-dist --no-progress --ansi laravel/laravel:${{matrix.version}} project
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Improve composer
-              working-directory: ./project
-              run: |
-                  composer config name phpinsights/laravel-tester
-                  composer config description "laravel test"
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Linking library
-              working-directory: ./project
-              run: |
-                  composer config repositories.phpinsights '{"type":"path", "url": "../phpinsights/", "options":{"symlink": false}}'
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Composer config
-              working-directory: ./project
-              run: |
-                  composer config prefer-stable true
-                  composer config minimum-stability dev
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Require phpunit
-              working-directory: ./project
-              run: composer require --dev phpunit/phpunit:${{ matrix.phpunit }} --update-with-dependencies -n --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Allow plugin
-              working-directory: ./project
-              run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Install PHPInsights
-              working-directory: ./project
-              run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Artisan publish
-              working-directory: ./project
-              run: php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider" --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Launch PHPInsights
-              working-directory: ./project
-              run: php artisan insights -n --disable-security-check --ansi
-              continue-on-error: ${{ env.allow_failure == 'true' }}
-            - name: Launch PHPInsights Fixer
-              working-directory: ./project
-              run: php artisan insights -n --ansi --fix --disable-security-check
-              continue-on-error: ${{ env.allow_failure == 'true' }}
+
+    name: Symfony skeleton:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: phpinsights
+
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, mbstring, zip
+          coverage: none
+          tools: composer:${{ matrix.composer-version }}
+
+
+      - name: Install Symfony Skeleton
+        run: composer create-project --no-progress --ansi symfony/skeleton:${{matrix.version}} project
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Improve composer
+        working-directory: ./project
+        run: |
+          composer config name phpinsights/symfony-tester
+          composer config description "Symfony test"
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Linking library
+        working-directory: ./project
+        run: |
+          composer config repositories.phpinsights '{"type":"path", "url": "../phpinsights/", "options":{"symlink": false}}'
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Composer config
+        working-directory: ./project
+        run: |
+          composer config prefer-stable true
+          composer config minimum-stability dev
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Require psr/simple-cache
+        working-directory: ./project
+        run: composer require "psr/simple-cache:${{ matrix.psr-simple-cache-version }}"
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Allow plugin
+        working-directory: ./project
+        run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Install PHPInsights
+        working-directory: ./project
+        run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
+        continue-on-error: true
+
+
+      - name: Launch PHPInsights
+        working-directory: ./project
+        run: php vendor/bin/phpinsights -n --disable-security-check --ansi
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Launch PHPInsights Fixer
+        working-directory: ./project
+        run: php vendor/bin/phpinsights fix -n --ansi
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+  laravel:
+    runs-on: ${{ matrix.os }}
+
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        version: [^10.0, ^11.0, ^12.0]
+        php: ['8.1', '8.2', '8.3']
+        composer-version: [v2]
+        include:
+          - version: ^10.0
+            phpunit: ^10.0
+          - version: ^11.0
+            phpunit: ^11.0
+          - version: ^12.0
+            phpunit: ^11.0
+        exclude:
+          - version: ^11.0
+            php: '8.1'
+          - version: ^12.0
+            php: '8.1'
+
+
+    name: Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: phpinsights
+
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, mbstring, zip
+          coverage: none
+          tools: composer:${{ matrix.composer-version }}
+
+
+      - name: Install Laravel
+        run: composer create-project --prefer-dist --no-progress --ansi laravel/laravel:${{matrix.version}} project
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Improve composer
+        working-directory: ./project
+        run: |
+          composer config name phpinsights/laravel-tester
+          composer config description "laravel test"
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Linking library
+        working-directory: ./project
+        run: |
+          composer config repositories.phpinsights '{"type":"path", "url": "../phpinsights/", "options":{"symlink": false}}'
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Composer config
+        working-directory: ./project
+        run: |
+          composer config prefer-stable true
+          composer config minimum-stability dev
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Require phpunit
+        working-directory: ./project
+        run: composer require --dev phpunit/phpunit:${{ matrix.phpunit }} --update-with-dependencies -n --ansi
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Allow plugin
+        working-directory: ./project
+        run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Install PHPInsights
+        working-directory: ./project
+        run: composer require --dev "nunomaduro/phpinsights:*" -n --ansi --with-all-dependencies
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Artisan publish
+        working-directory: ./project
+        run: php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider" --ansi
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Launch PHPInsights
+        working-directory: ./project
+        run: php artisan insights -n --disable-security-check --ansi
+        continue-on-error: ${{ env.allow_failure == 'true' }}
+
+
+      - name: Launch PHPInsights Fixer
+        working-directory: ./project
+        run: php artisan insights -n --ansi --fix --disable-security-check
+        continue-on-error: ${{ env.allow_failure == 'true' }}
