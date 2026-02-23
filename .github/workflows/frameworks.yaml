@@ -84,7 +84,7 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                version: ['^11.0', '^12.0', '^13.0']
+                version: ['^11.0', '^12.0'] # TODO: add '^13.0' when released
                 php: ['8.3', '8.4', '8.5']
                 composer-version: [v2]
                 include:
@@ -92,8 +92,6 @@ jobs:
                         phpunit: '^11.0'
                     -   version: '^12.0'
                         phpunit: '^11.0'
-                    -   version: '^13.0'
-                        phpunit: '^12.0'
         name: "Laravel:${{ matrix.version }} - PHP${{ matrix.php }} - Composer ${{ matrix.composer-version }}"
 
         steps:
