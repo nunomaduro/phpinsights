@@ -75,7 +75,7 @@ After running `vendor/bin/phpinsights` you saw an error:
   src/YourClass.php:19: Unused parameter $thisIsUnusedParameter.
 ```
 
-After verification [in documentation](https://phpinsights.com/insights/code.html#unused-parameter), you know that `\SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff` class is responsible for the `[Code] Unused parameter` error and it contains `private const NAME = 'SlevomatCodingStandard.Functions.UnusedParameter’;`. Let's use it together with the `@phpcsSuppress` annotation:
+After verification [in documentation](https://nunomaduro.github.io/phpinsights/insights/code.html#unused-parameter), you know that `\SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff` class is responsible for the `[Code] Unused parameter` error and it contains `private const NAME = 'SlevomatCodingStandard.Functions.UnusedParameter’;`. Let's use it together with the `@phpcsSuppress` annotation:
 
 ```php
 final class YourClass
