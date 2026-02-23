@@ -14,6 +14,7 @@ use NunoMaduro\PhpInsights\Domain\MetricsFinder;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Util\MessageCollector;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -143,6 +144,10 @@ abstract class TestCase extends BaseTestCase
         /** @var Ruleset $ruleset */
         $ruleset = (new ReflectionClass(Ruleset::class))
             ->newInstanceWithoutConstructor();
+
+        $msgCacheProperty = (new ReflectionClass(Ruleset::class))->getProperty('msgCache');
+        $msgCacheProperty->setValue($ruleset, new MessageCollector());
+
         $ruleset->ruleset = [
             "PhpInsights.Sniffs.{$ruleName}" => [
                 'properties' => $properties,
