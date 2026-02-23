@@ -277,7 +277,7 @@ final class Configuration
         $resolver->setDefined('timeout');
         $resolver->setAllowedValues(
             'preset',
-            array_map(static fn(string $presetClass) => $presetClass::getName(), self::PRESETS)
+            array_map(static fn (string $presetClass) => $presetClass::getName(), self::PRESETS)
         );
 
         $resolver->setAllowedValues('add', $this->validateAddedInsight());
@@ -285,9 +285,9 @@ final class Configuration
         $resolver->setAllowedValues('requirements', $this->validateRequirements());
         $resolver->setAllowedTypes('threads', ['null', 'int']);
         $resolver->setAllowedTypes('diff_context', 'int');
-        $resolver->setAllowedValues('diff_context', static fn($value) => $value >= 0);
-        $resolver->setAllowedValues('threads', static fn($value) => $value === null || $value >= 1);
-        $resolver->setAllowedValues('timeout', static fn($value) => $value >= 0);
+        $resolver->setAllowedValues('diff_context', static fn ($value) => $value >= 0);
+        $resolver->setAllowedValues('threads', static fn ($value) => $value === null || $value >= 1);
+        $resolver->setAllowedValues('timeout', static fn ($value) => $value >= 0);
 
         try {
             $config = $resolver->resolve($config);
