@@ -32,10 +32,10 @@
         "sebastian/diff": "^5.1.1|^6.0.2|^7.0.0",
         "slevomat/coding-standard": "^8.22.1",
         "squizlabs/php_codesniffer": "^3.13.5",
-        "symfony/cache": "^6.4.20|^7.4.5|^8.0",
+        "symfony/cache": "^6.4.20|^7.4.5|^8.0.5",
         "symfony/console": "^6.4.20|^7.4.4|^8.0",
         "symfony/finder": "^6.4.17|^7.4.5|^8.0",
-        "symfony/http-client": "^6.4.19|^7.4.5|^8.0",
+        "symfony/http-client": "^6.4.19|^7.4.5|^8.0.5",
         "symfony/process": "^6.4.20|^7.4.5|^8.0"
     },
     "require-dev": {
@@ -44,7 +44,7 @@
         "mockery/mockery": "^1.6.12",
         "phpstan/phpstan": "^2.1.39",
         "phpunit/phpunit": "^10.5.45|^11.5.55",
-        "symfony/var-dumper": "^6.4.18|^7.4.4|^8.0"
+        "symfony/var-dumper": "^6.4.18|^7.4.4|^8.0.4"
     },
     "suggest": {
         "ext-simplexml": "It is needed for the checkstyle formatter"
