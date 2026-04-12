@@ -69,7 +69,11 @@ final class InsightsCommand extends Command
 
         $analyseCommand = $container->get(AnalyseCommand::class);
 
-        $output = (new Reflection($this->output))->get('output');
+        try {
+            $output = (new Reflection($this->output))->get('output');
+        } catch (\ReflectionException) {
+            $output = $this->output;
+        }
 
         $result = $analyseCommand->__invoke($this->input, $output);
 
