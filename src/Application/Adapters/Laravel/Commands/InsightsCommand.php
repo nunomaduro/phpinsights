@@ -15,6 +15,7 @@ use NunoMaduro\PhpInsights\Domain\Kernel;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Style\OutputStyle;
 
 /**
  * @internal
@@ -69,7 +70,9 @@ final class InsightsCommand extends Command
 
         $analyseCommand = $container->get(AnalyseCommand::class);
 
-        $output = (new Reflection($this->output))->get('output');
+        $output = $this->output instanceof OutputStyle
+            ? (new Reflection($this->output))->get('output')
+            : $this->output;
 
         $result = $analyseCommand->__invoke($this->input, $output);
 
