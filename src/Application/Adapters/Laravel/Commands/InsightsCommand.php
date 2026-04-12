@@ -15,7 +15,6 @@ use NunoMaduro\PhpInsights\Domain\Kernel;
 use NunoMaduro\PhpInsights\Domain\Reflection;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use Symfony\Component\Console\Style\OutputStyle;
 
 /**
  * @internal
