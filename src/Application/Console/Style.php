@@ -36,8 +36,7 @@ final class Style extends SymfonyStyle
 
         if ($stdin !== false && $this->output instanceof ConsoleOutput && $this->input->isInteractive()) {
             $this->newLine();
-            /** @var ConsoleSectionOutput $section */
-            $section = $this->output->section(); // @phpstan-ignore-line
+            $section = $this->output->section();
             $section->writeln(sprintf('<title>Press enter to see %s issues...</title>', strtolower($category)));
             fgetc($stdin);
             $section->clear(3);
