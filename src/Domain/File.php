@@ -100,14 +100,14 @@ final class File extends BaseFile
      * {@inheritdoc}
      */
     protected function addMessage(
-        $isError,
-        $message,
-        $line,
-        $column,
-        $sniffClassOrCode,
-        $data,
-        $severity,
-        $isFixable = false
+        bool $isError,
+        string $message,
+        int $line,
+        int $column,
+        string $sniffClassOrCode,
+        array $data,
+        int $severity,
+        bool $isFixable = false
     ): bool {
         $message = $data !== [] ? vsprintf($message, $data) : $message;
 
@@ -115,7 +115,11 @@ final class File extends BaseFile
             if ($this->fixEnabled) {
                 $this->activeSniff->addFileFixed($this->fileInfo->getRelativePathname());
             } else {
-                $this->fixableCount++;
+                if ($isError) {
+                    $this->fixableErrorCount++;
+                } else {
+                    $this->fixableWarningCount++;
+                }
             }
 
             return true;

@@ -28,17 +28,10 @@ final class ForbiddenSetterSniff implements Sniff
         return [T_FUNCTION];
     }
 
-    /**
-     * Runs the sniff on a file.
-     *
-     * @param int  $position
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-     */
-    public function process(File $file, $position): void
+    public function process(File $file, int $position): void
     {
         $methodName = $file->getDeclarationName($position);
-        if ($methodName === null) {
+        if ($methodName === '' || $methodName === null) {
             return;
         }
 
@@ -52,7 +45,7 @@ final class ForbiddenSetterSniff implements Sniff
             return;
         }
 
-        $file->addError(self::ERROR_MESSAGE, $position, self::class);
+        $file->addError(self::ERROR_MESSAGE, $position, 'PhpInsights.Sniffs.ForbiddenSetter');
     }
 
     /**
