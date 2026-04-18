@@ -39,11 +39,12 @@
         "symfony/process": "^7.4.5|^8.0.8"
     },
     "require-dev": {
-        "illuminate/console": "^11.44.2|^12.52|^13.4",
-        "illuminate/support": "^11.44.2|^12.52|^13.4",
+        "illuminate/console": "^11.44.2|^12.52|^13.5",
+        "illuminate/support": "^11.44.2|^12.52|^13.5",
         "mockery/mockery": "^1.6.12",
-        "phpstan/phpstan": "^2.1.46",
-        "phpunit/phpunit": "^11.5.55|^12.5.17",
+        "nunomaduro/pao": "^1.0.1",
+        "phpstan/phpstan": "^2.1.50",
+        "phpunit/phpunit": "^11.5.55|^12.5.22",
         "symfony/var-dumper": "^7.4.4|^8.0.8"
     },
     "suggest": {
