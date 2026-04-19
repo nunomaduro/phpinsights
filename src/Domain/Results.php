@@ -152,7 +152,7 @@ final class Results
 
         $percentage = (bool) $issuesNotFound ? $issuesNotFound * 100.0 / $total : 100.0;
 
-        return (float) number_format($percentage, 1, '.', '');
+        return floor($percentage * 10) / 10;
     }
 
     /**
@@ -178,7 +178,7 @@ final class Results
             ? 100 - ($filesWithProblems * 100 / $totalFiles)
             : 100;
 
-        return (float) number_format($percentage, 1, '.', '');
+        return floor($percentage * 10) / 10;
     }
 
     private function getInsightByCategory(string $insightClass, string $category): Insight
