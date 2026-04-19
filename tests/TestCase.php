@@ -130,16 +130,8 @@ abstract class TestCase extends BaseTestCase
         string $fixtureFile,
         array $properties = []
     ): LocalFile {
-        $sniffs = [self::getFilePathFromClass($sniffClassName)];
-
         $config = new Config();
         $config->standards = [];
-
-        $ruleName = str_replace(
-            'Sniff',
-            '',
-            class_basename($sniffClassName)
-        );
 
         /** @var Ruleset $ruleset */
         $ruleset = (new ReflectionClass(Ruleset::class))
@@ -148,14 +140,29 @@ abstract class TestCase extends BaseTestCase
         $msgCacheProperty = (new ReflectionClass(Ruleset::class))->getProperty('msgCache');
         $msgCacheProperty->setValue($ruleset, new MessageCollector());
 
-        $ruleset->ruleset = [
-            "PhpInsights.Sniffs.{$ruleName}" => [
-                'properties' => $properties,
-            ],
-        ];
+        // Manually register the sniff to bypass PHPCS naming convention validation
+        // which rejects sniffs outside the Standard\Sniffs\Category\SniffName namespace
+        $sniffObject = new $sniffClassName();
 
-        $ruleset->registerSniffs($sniffs, [], []);
-        $ruleset->populateTokenListeners();
+        foreach ($properties as $name => $value) {
+            $sniffObject->{$name} = $value;
+        }
+
+        $sniffCode = 'PhpInsights.Sniffs.' . str_replace('Sniff', '', class_basename($sniffClassName));
+
+        $ruleset->sniffs[$sniffClassName]    = $sniffObject;
+        $ruleset->sniffCodes[$sniffCode]     = $sniffClassName;
+        $ruleset->tokenListeners             = [];
+
+        foreach ($sniffObject->register() as $token) {
+            $ruleset->tokenListeners[$token][$sniffClassName] = [
+                'class'      => $sniffClassName,
+                'source'     => $sniffCode,
+                'tokenizers' => ['PHP'],
+                'ignore'     => [],
+                'include'    => [],
+            ];
+        }
 
         return new LocalFile($fixtureFile, $ruleset, $config);
     }
