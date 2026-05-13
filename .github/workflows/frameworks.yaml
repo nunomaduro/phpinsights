@@ -6,6 +6,9 @@ on:
             - master
     pull_request: ~
 
+permissions:
+  contents: read
+
 jobs:
     symfony:
         runs-on: ${{ matrix.os }}
@@ -27,11 +30,11 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
               with:
                   path: phpinsights
             - name: Setup PHP
-              uses: shivammathur/setup-php@v2
+              uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, mbstring, zip
@@ -96,11 +99,11 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
               with:
                   path: phpinsights
             - name: Setup PHP
-              uses: shivammathur/setup-php@v2
+              uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, mbstring, zip
