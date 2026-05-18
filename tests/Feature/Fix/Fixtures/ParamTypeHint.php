@@ -9,12 +9,8 @@ final class ParamTypeHint
 {
     /**
      * Do some calculation
-     * @param int $a
-     * @param int $b
-     *
-     * @return int
      */
-    public function sum($a, $b)
+    public function sum(int $a, int $b): int
     {
         return $a + $b;
     }
