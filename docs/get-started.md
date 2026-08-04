@@ -1,6 +1,6 @@
 # Get started
 
-> **Requires:** [PHP 7.4+](https://php.net/releases/)
+> **Requires:** [PHP 8.4+](https://php.net/releases/)
 
 First, install PHP Insights via the `Composer` package manager:
 ```bash
@@ -24,32 +24,6 @@ php artisan vendor:publish --provider="NunoMaduro\PhpInsights\Application\Adapte
 ```
 
 Then, use the `insights` Artisan command:
-```bash
-php artisan insights
-```
-
-> Note for Laravel 7 users: phpinsights requires [PHP 7.3+](https://php.net/releases/), and `PHPUnit 9.0+`. For upgrading PHPUnit, you can use following command:
- ```bash
- composer require --dev phpunit/phpunit:^9.0 --update-with-dependencies
- ```
-
-## Within Lumen
-
-Because we cannot use Artisan's publish command within a Lumen project you must manually copy the config file into your project:
-
-```bash
-cp vendor/nunomaduro/phpinsights/stubs/laravel.php config/insights.php
-```
-
-Then register the `phpinsights` provider and load the configuration into the application within your `bootstrap/app.php` file:
-
-```php
-$app->register(\NunoMaduro\PhpInsights\Application\Adapters\Laravel\InsightsServiceProvider::class);
-$app->configure('insights');
-```
-
-And setup is done, so you can now run `phpinsights` with the following command:
-
 ```bash
 php artisan insights
 ```
