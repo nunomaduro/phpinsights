@@ -153,6 +153,27 @@ composer bin phpinsights require nunomaduro/phpinsights
 Between 2 analyses, issues are cached. 
 PHPInsights is smart enough to invalidate cache when it detects changes in your code, but you may completely flush cache before analysis by adding `--flush-cache` flag.
 
+## Configure timeout
+
+Each insight runs its analysis process with a timeout, which defaults to `60` seconds.
+You can override it in the `phpinsights.php` file:
+
+```php
+<?php
+
+return [
+    // ...
+    'timeout' => 120,
+    // ...
+];
+```
+
+Or via the command line, which takes precedence over the config file:
+
+```bash
+./vendor/bin/phpinsights analyse --timeout=120
+```
+
 ## Configure diff <Badge text="^2.0"/>
 
 Some insights display a diff output.
