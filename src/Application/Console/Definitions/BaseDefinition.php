@@ -35,6 +35,12 @@ abstract class BaseDefinition
                 InputOption::VALUE_NONE,
                 'Display summary only',
             ),
+            new InputOption(
+                'timeout',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The timeout in seconds for the process running each insight'
+            ),
         ]);
     }
 }
