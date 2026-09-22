@@ -70,4 +70,36 @@ final class LocalFilesRepositoryTest extends TestCase
             self::fail('Path cannot be false.');
         }
     }
+
+    public function testExcludingSpecificPhpFileDoesNotExcludeFilesContainingThatNameInTheirPath(): void
+    {
+        $dir = sys_get_temp_dir() . '/phpinsights_test_' . bin2hex(random_bytes(6));
+        $observersDir = $dir . '/app/Observers';
+        mkdir($observersDir, 0777, true);
+        file_put_contents($dir . '/server.php', '<?php // server');
+        file_put_contents($observersDir . '/UserObserver.php', '<?php // UserObserver');
+        file_put_contents($dir . '/app/User.php', '<?php // User');
+
+        try {
+            $finder = new Finder();
+            $repository = new LocalFilesRepository($finder);
+            $repository->within([$dir], ['server.php']);
+
+            $fileNames = array_map(
+                static fn (SplFileInfo $file): string => $file->getFilename(),
+                array_values($repository->getFiles())
+            );
+
+            sort($fileNames);
+
+            self::assertSame(['User.php', 'UserObserver.php'], $fileNames);
+        } finally {
+            @unlink($dir . '/server.php');
+            @unlink($observersDir . '/UserObserver.php');
+            @unlink($dir . '/app/User.php');
+            @rmdir($observersDir);
+            @rmdir($dir . '/app');
+            @rmdir($dir);
+        }
+    }
 }
