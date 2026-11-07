@@ -47,8 +47,6 @@ final class Reflection
     {
         $property = $this->reflectionClass->getProperty($attribute);
 
-        $property->setAccessible(true);
-
         return $property->getValue($this->instance);
     }
 
@@ -63,7 +61,6 @@ final class Reflection
     ): void {
         try {
             $property = $class->getProperty($attribute);
-            $property->setAccessible(true);
             $property->setValue($instance, $value);
         } catch (ReflectionException $exception) {
             $parentClass = $class->getParentClass();

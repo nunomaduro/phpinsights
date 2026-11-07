@@ -17,7 +17,7 @@ jobs:
             matrix:
                 os: [ubuntu-latest]
                 version: ['@stable', '@dev'] # Test current LTS, current release, and future release
-                php: ['8.4', '8.5']
+                php: ['8.4', '8.5', '8.6']
                 composer-version: [v2]
                 include:
                   - version: '@stable'
@@ -88,7 +88,7 @@ jobs:
             matrix:
                 os: [ubuntu-latest]
                 version: ['^12.0'] # TODO: add '^13.0' when released
-                php: ['8.4', '8.5']
+                php: ['8.4', '8.5', '8.6']
                 composer-version: [v2]
                 include:
                     -   version: '^12.0'

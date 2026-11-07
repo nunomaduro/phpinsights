@@ -16,7 +16,7 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest, macos-latest, windows-latest]
-                php: ['8.4', '8.5']
+                php: ['8.4', '8.5', '8.6']
                 dependency-version: [prefer-lowest, prefer-stable]
                 composer-version: [v2]
                 exclude:
