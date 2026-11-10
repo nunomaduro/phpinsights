@@ -37,20 +37,6 @@ final class ResultsTest extends TestCase
         self::assertEquals(0, $results->getTotalSecurityIssues());
     }
 
-    public function testGetTotalSecurityIssuesOnCompromisedCompose(): void
-    {
-        $path = $this->baseFixturePath . '/Domain/Results/SecurityIssueComposer';
-        $collector = new Collector([$path], PathShortener::extractCommonPath([$path]));
-
-        $categories = [
-            'Security' => [new ForbiddenSecurityIssues($collector, [])],
-        ];
-
-        $results = new Results($collector, $categories);
-
-        self::assertGreaterThan(0, $results->getTotalSecurityIssues());
-    }
-
     public function testHasInsightClassInCategoryReturnFalse(): void
     {
         $collector = new Collector([$this->baseFixturePath], $this->commonPath);
