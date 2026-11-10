@@ -19,9 +19,9 @@
         "magento/magento2-functional-testing-framework": "~2.3.13",
         "pdepend/pdepend": "2.5.2",
         "phpmd/phpmd": "@stable",
-        "phpunit/phpunit": "~6.5.0",
+        "phpunit/phpunit": "^8.5.52",
         "sebastian/phpcpd": "~3.0.0",
-        "squizlabs/php_codesniffer": "3.3.1",
+        "squizlabs/php_codesniffer": "^3.13.6",
         "allure-framework/allure-phpunit": "~1.2.0"
     },
     "conflict": {
