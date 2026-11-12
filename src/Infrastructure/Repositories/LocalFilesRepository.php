@@ -82,19 +82,31 @@ final class LocalFilesRepository implements FilesRepository
      */
     private function getDirectoryFiles(array $exclude = []): array
     {
+        $notPaths = [];
+        $notNames = [];
+
+        foreach ($exclude as $value) {
+            if (substr($value, -4) === '.php') {
+                $notNames[] = $value;
+            } else {
+                $notPaths[] = $value;
+            }
+        }
+
         $this->finder = Finder::create()
             ->files()
             ->name(['*.php'])
             ->exclude(self::DEFAULT_EXCLUDE)
             ->notName(['*.blade.php'])
             ->ignoreUnreadableDirs()
-            ->in($this->directoryList ?? [])
-            ->notPath($exclude);
+            ->in($this->directoryList ?? []);
 
-        foreach ($exclude as $value) {
-            if (substr($value, -4) === '.php') {
-                $this->finder->notName($value);
-            }
+        if ($notPaths !== []) {
+            $this->finder->notPath($notPaths);
+        }
+
+        foreach ($notNames as $value) {
+            $this->finder->notName($value);
         }
 
         return $this->getFilesList();
