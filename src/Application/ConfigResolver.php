@@ -48,6 +48,7 @@ final class ConfigResolver
     {
         $paths = PathResolver::resolve($input);
         $config = self::mergeInputRequirements($config, $input);
+        $config = self::mergeInputTimeout($config, $input);
         $composer = self::getComposer($input, $paths[0]);
 
         /** @var string $preset */
@@ -146,6 +147,22 @@ final class ConfigResolver
             if ($input->hasParameterOption('--' . $requirement)) {
                 $config['requirements'][$requirement] = $input->getOption($requirement);
             }
+        }
+
+        return $config;
+    }
+
+    /**
+     * Merge timeout config from console input.
+     *
+     * @param array<string, string|array> $config
+     *
+     * @return array<string, string|array>
+     */
+    private static function mergeInputTimeout(array $config, InputInterface $input): array
+    {
+        if ($input->hasOption('timeout') && $input->getOption('timeout') !== null) {
+            $config['timeout'] = (int) $input->getOption('timeout');
         }
 
         return $config;

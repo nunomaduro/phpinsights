@@ -216,6 +216,34 @@ final class ConfigResolverTest extends TestCase
         self::assertEquals(1, $config->getMinComplexity());
     }
 
+    public function testMergeInputTimeout(): void
+    {
+        $config = ConfigResolver::resolve([], $this->timeoutInput(['--timeout' => 120]));
+
+        self::assertSame(120, $config->getTimeout());
+    }
+
+    public function testMergeInputTimeoutIsIgnoredWhenNotProvided(): void
+    {
+        $config = ConfigResolver::resolve(['timeout' => 30], $this->timeoutInput());
+
+        self::assertSame(30, $config->getTimeout());
+    }
+
+    /**
+     * @param array<string, string|int> $options
+     */
+    private function timeoutInput(array $options = []): ArrayInput
+    {
+        return new ArrayInput(
+            $options,
+            new InputDefinition([
+                new InputArgument('paths'),
+                new InputOption('timeout', null, InputOption::VALUE_OPTIONAL),
+            ])
+        );
+    }
+
     public function testOverridePresetByConfig(): void
     {
         $preset = LaravelPreset::get(new Composer([]));
